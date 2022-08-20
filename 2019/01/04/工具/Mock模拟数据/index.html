@@ -1,0 +1,825 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="文章内容整理于互联网，方便学习  一、学前预热 为了做到前后端并行开发，数据mock就成为环境搭建的重要一环  1.1 Web应用前后端分离 后台向前台提供API接口,只负责数据的提供和计算，而完全不处理展现 前台通过Http(Ajax)请求获取数据,　在浏览器端动态构建界面显示数据  1.2 利用Node+express提供模拟数据 优点：可以在浏览器端访问 缺点：如果是打包发布就无法访问模拟">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mock">
+<meta property="og:url" content="http://example.com/2019/01/04/%E5%B7%A5%E5%85%B7/Mock%E6%A8%A1%E6%8B%9F%E6%95%B0%E6%8D%AE/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="文章内容整理于互联网，方便学习  一、学前预热 为了做到前后端并行开发，数据mock就成为环境搭建的重要一环  1.1 Web应用前后端分离 后台向前台提供API接口,只负责数据的提供和计算，而完全不处理展现 前台通过Http(Ajax)请求获取数据,　在浏览器端动态构建界面显示数据  1.2 利用Node+express提供模拟数据 优点：可以在浏览器端访问 缺点：如果是打包发布就无法访问模拟">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1480597-db916b41fde14ca3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="article:published_time" content="2019-01-04T03:24:42.000Z">
+<meta property="article:modified_time" content="2022-06-06T11:45:58.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Mock">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1480597-db916b41fde14ca3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+  
+  
+  <title>Mock - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Mock"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-01-04 11:24" pubdate>
+          January 4, 2019 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          16k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          130 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Mock</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>文章内容整理于互联网，方便学习</p>
+</blockquote>
+<h2 id="一、学前预热"><a href="#一、学前预热" class="headerlink" title="一、学前预热"></a>一、学前预热</h2><blockquote>
+<p>为了做到前后端并行开发，数据<code>mock</code>就成为环境搭建的重要一环</p>
+</blockquote>
+<h3 id="1-1-Web应用前后端分离"><a href="#1-1-Web应用前后端分离" class="headerlink" title="1.1 Web应用前后端分离"></a>1.1 Web应用前后端分离</h3><ul>
+<li>后台向前台提供<code>API</code>接口,只负责数据的提供和计算，而完全不处理展现</li>
+<li>前台通过<code>Http(Ajax)</code>请求获取数据,　在浏览器端动态构建界面显示数据</li>
+</ul>
+<h3 id="1-2-利用Node-express提供模拟数据"><a href="#1-2-利用Node-express提供模拟数据" class="headerlink" title="1.2 利用Node+express提供模拟数据"></a>1.2 利用Node+express提供模拟数据</h3><ul>
+<li>优点：可以在浏览器端访问</li>
+<li>缺点：如果是打包发布就无法访问模拟数据, 只能是测试时使用</li>
+</ul>
+<blockquote>
+<p>修改build&#x2F;dev-server.js</p>
+</blockquote>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span>加载json数据<br>var apiData = require(<span class="hljs-string">&#x27;../src/mock/data.json&#x27;</span>)<br>var home = apiData.home;<br><br><span class="hljs-regexp">//</span>得到路由器<br>var apiRouter = express.Router()<br><br><span class="hljs-regexp">//</span>注册路由<br>apiRouter.get(<span class="hljs-string">&#x27;/home&#x27;</span>, <span class="hljs-keyword">function</span> (req, res) &#123;<br>    res.json(&#123;<br>      code: <span class="hljs-number">0</span>,   <span class="hljs-regexp">//</span><span class="hljs-number">0</span>代表正确数据<br>      data: seller<br>    &#125;)<br>&#125;)<br><span class="hljs-regexp">//</span>启用路由<br>app.use(<span class="hljs-string">&#x27;/api&#x27;</span>, apiRouter)<br><br><span class="hljs-regexp">//</span>访问http:<span class="hljs-regexp">//</span>localhost:<span class="hljs-number">8080</span><span class="hljs-regexp">/api/</span>home<br></code></pre></td></tr></table></figure>
+
+<h3 id="1-3-利用mockjs提供模拟数据"><a href="#1-3-利用mockjs提供模拟数据" class="headerlink" title="1.3 利用mockjs提供模拟数据"></a>1.3 利用mockjs提供模拟数据</h3><blockquote>
+<p>Mockjs: 用来拦截ajax请求, 生成随机数据返回</p>
+</blockquote>
+<ul>
+<li>优点：不可以在浏览器端访问</li>
+<li>缺点：打包发布运行模拟接口也是可以用的</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs php">import Mock <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;mockjs&#x27;</span>  <br>import apiData <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./data.json&#x27;</span><br><br>Mock.<span class="hljs-title function_ invoke__">mock</span>(<span class="hljs-string">&#x27;/api2/seller&#x27;</span>, &#123;<span class="hljs-attr">code</span>:<span class="hljs-number">0</span>, <span class="hljs-attr">data</span>:apiData.seller&#125;)<br>Mock.<span class="hljs-title function_ invoke__">mock</span>(<span class="hljs-string">&#x27;/api2/goods&#x27;</span>, &#123;<span class="hljs-attr">code</span>:<span class="hljs-number">0</span>, <span class="hljs-attr">data</span>:apiData.goods&#125;)<br>Mock.<span class="hljs-title function_ invoke__">mock</span>(<span class="hljs-string">&#x27;/api2/ratings&#x27;</span>, &#123;<span class="hljs-attr">code</span>:<span class="hljs-number">0</span>, <span class="hljs-attr">data</span>:apiData.ratings&#125;)<br></code></pre></td></tr></table></figure>
+
+<h3 id="1-4-使用postman工具测试接口"><a href="#1-4-使用postman工具测试接口" class="headerlink" title="1.4 使用postman工具测试接口"></a>1.4 使用postman工具测试接口</h3><ul>
+<li><code>postman</code>是用来测试<code>API</code>接口的<code>chrome</code>插件</li>
+<li><code>postman</code>也是一个活接口文档</li>
+</ul>
+<h3 id="1-5-ajax请求mock数据接口"><a href="#1-5-ajax请求mock数据接口" class="headerlink" title="1.5 ajax请求mock数据接口"></a>1.5 ajax请求mock数据接口</h3><ul>
+<li><code>vue-resource</code>是用于<code>ajax</code>请求的<code>vue</code>插件</li>
+<li><code>axios</code>是浏览器&#x2F;服务器端通用的<code>ajax</code>请求库</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">//使用示例</span><br><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">VueResource</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue-resource&#x27;</span> <br><span class="hljs-title class_">Vue</span>.<span class="hljs-title function_">use</span>(<span class="hljs-title class_">VueResource</span>)<br><br><span class="hljs-comment">//组件对象多了$http属性, 使用它发送ajax请求</span><br><span class="hljs-variable language_">this</span>.<span class="hljs-property">$http</span>.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/api2/seller&#x27;</span>).<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(response.<span class="hljs-property">body</span>)<br>&#125;, <span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;失败了&#x27;</span>)<br>&#125;)<br><br><span class="hljs-keyword">import</span> axios <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;axios&#x27;</span>  <br>axios.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/api2/seller&#x27;</span>).<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(response.<span class="hljs-property">body</span>)<br>&#125;, <span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;失败了&#x27;</span>)<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<h2 id="二、数据mock思路"><a href="#二、数据mock思路" class="headerlink" title="二、数据mock思路"></a>二、数据mock思路</h2><ul>
+<li>在<code>client</code>端处数据<code>mock</code></li>
+<li>在<code>server</code>端<code>mock</code></li>
+</ul>
+<blockquote>
+<ul>
+<li>第一种方式拦截了请求的发出，直接返回<code>mock</code>的数据，而第二种方式请求则真实地发出，只是在<code>server</code>端进行<code>route</code>拦截</li>
+<li>前后端分离的方式，就是在传统开发模式中加了一个<code>node</code>层，这样数据<code>mock</code>完全可以在<code>node server</code>端完成，基本思路如下</li>
+</ul>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/1480597-db916b41fde14ca3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" lazyload alt="mock"></p>
+<h3 id="2-1-mock思路说明"><a href="#2-1-mock思路说明" class="headerlink" title="2.1 mock思路说明"></a>2.1 mock思路说明</h3><ul>
+<li>只有线下开发模式，才会需要进行数据<code>mock</code></li>
+<li>根据请求的<code>url</code>，拼接形成一个<code>file path</code></li>
+<li>为了避免<code>node</code>缓存，删除<code>require.cache(path)</code></li>
+<li>读取<code>require(path)</code> ，如果该文件不存在或读取失败，则跳转到失败路由。这样简单的数据<code>mock</code>就实现了</li>
+</ul>
+<h3 id="2-2-代码描述"><a href="#2-2-代码描述" class="headerlink" title="2.2 代码描述"></a>2.2 代码描述</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 伪代码</span><br><span class="hljs-keyword">if</span> (process.<span class="hljs-property">env</span>.<span class="hljs-property">NODE_ENV</span> === <span class="hljs-string">&#x27;development&#x27;</span>) &#123;<br>  router.<span class="hljs-title function_">set</span>(<span class="hljs-string">&#x27;/api/*&#x27;</span>, mockapi)<br>&#125;<br> <br><span class="hljs-keyword">function</span> <span class="hljs-title function_">mockapi</span>(<span class="hljs-params">req, res, opts</span>) &#123;<br>    <span class="hljs-keyword">var</span> basePath = url.<span class="hljs-title function_">parse</span>(req.<span class="hljs-property">url</span>).<span class="hljs-property">pathname</span>;<br>         <br>    <span class="hljs-keyword">try</span> &#123;<br>        <span class="hljs-keyword">var</span> findPath = <span class="hljs-built_in">require</span>.<span class="hljs-title function_">resolve</span>(prefixPath + basePath + <span class="hljs-string">&#x27;.js&#x27;</span>);<br>        <span class="hljs-keyword">delete</span> <span class="hljs-built_in">require</span>.<span class="hljs-property">cache</span>[findPath]<br>        <span class="hljs-keyword">var</span> result = <span class="hljs-built_in">require</span>(findPath);<br>    &#125; <span class="hljs-keyword">catch</span> (err) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-title function_">next</span>(err);<br>    &#125;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> result === <span class="hljs-string">&#x27;function&#x27;</span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-title function_">result</span>(req, res, opts);<br>    &#125;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> result.<span class="hljs-property">status</span> === <span class="hljs-string">&#x27;undefined&#x27;</span> || <span class="hljs-keyword">typeof</span> result.<span class="hljs-property">body</span> === <span class="hljs-string">&#x27;undefined&#x27;</span>) &#123;<br>        <span class="hljs-title function_">next</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">&#x27;status 或 body 不存在&#x27;</span>))<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br>    res.<span class="hljs-title function_">writeHead</span>(result.<span class="hljs-property">status</span>, &#123;<br>        <span class="hljs-string">&#x27;Content-Type&#x27;</span>: <span class="hljs-string">&#x27;application/json;charset=UTF-8&#x27;</span><br>    &#125;);<br>     <br>    res.<span class="hljs-title function_">write</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(result.<span class="hljs-property">body</span>))<br>    res.<span class="hljs-title function_">end</span>();<br>    <span class="hljs-title function_">cb</span>()<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="三、Mock-js使用详解"><a href="#三、Mock-js使用详解" class="headerlink" title="三、Mock.js使用详解"></a>三、Mock.js使用详解</h2><h3 id="3-1-Mock-js实现的功能"><a href="#3-1-Mock-js实现的功能" class="headerlink" title="3.1 Mock.js实现的功能"></a>3.1 Mock.js实现的功能</h3><ul>
+<li>让前端攻城师独立于后端进行开发</li>
+<li>通过随机数据，模拟各种场景</li>
+<li>不需要修改既有代码，就可以拦截 <code>Ajax</code> 请求，返回模拟的响应数据</li>
+<li>支持生成随机的文本、数字、布尔值、日期、邮箱、链接、图片、颜色等。</li>
+</ul>
+<h3 id="3-2-Mock安装"><a href="#3-2-Mock安装" class="headerlink" title="3.2 Mock安装"></a>3.2 Mock安装</h3><h4 id="3-2-1-Node下使用"><a href="#3-2-1-Node下使用" class="headerlink" title="3.2.1 Node下使用"></a>3.2.1 Node下使用</h4><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-comment"># 安装</span><br>npm install mockjs<br><span class="hljs-regexp">//</span> 使用 Mock<br>var Mock = require(<span class="hljs-string">&#x27;mockjs&#x27;</span>)<br>var data = Mock.mock(&#123;<br>    <span class="hljs-regexp">//</span> 属性 list 的值是一个数组，其中含有 <span class="hljs-number">1</span> 到 <span class="hljs-number">10</span> 个元素<br>    <span class="hljs-string">&#x27;list|1-10&#x27;</span>: [&#123;<br>        <span class="hljs-regexp">//</span> 属性 id 是一个自增数，起始值为 <span class="hljs-number">1</span>，每次增 <span class="hljs-number">1</span><br>        <span class="hljs-string">&#x27;id|+1&#x27;</span>: <span class="hljs-number">1</span><br>    &#125;]<br>&#125;)<br><span class="hljs-regexp">//</span> 输出结果<br>console.log(JSON.stringify(data, null, <span class="hljs-number">4</span>))<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-2-2-RequireJS-AMD"><a href="#3-2-2-RequireJS-AMD" class="headerlink" title="3.2.2 RequireJS (AMD)"></a>3.2.2 RequireJS (AMD)</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 配置 Mock 路径</span><br><span class="hljs-built_in">require</span>.<span class="hljs-title function_">config</span>(&#123;<br>    <span class="hljs-attr">paths</span>: &#123;<br>        <span class="hljs-attr">mock</span>: <span class="hljs-string">&#x27;http://mockjs.com/dist/mock&#x27;</span><br>    &#125;<br>&#125;)<br><span class="hljs-comment">// 加载 Mock</span><br><span class="hljs-built_in">require</span>([<span class="hljs-string">&#x27;mock&#x27;</span>], <span class="hljs-keyword">function</span>(<span class="hljs-params">Mock</span>)&#123;<br>    <span class="hljs-comment">// 使用 Mock</span><br>    <span class="hljs-keyword">var</span> data = <span class="hljs-title class_">Mock</span>.<span class="hljs-title function_">mock</span>(&#123;<br>        <span class="hljs-string">&#x27;list|1-10&#x27;</span>: [&#123;<br>            <span class="hljs-string">&#x27;id|+1&#x27;</span>: <span class="hljs-number">1</span><br>        &#125;]<br>    &#125;)<br>    <span class="hljs-comment">// 输出结果</span><br>    <span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-property">innerHTML</span> +=<br>        <span class="hljs-string">&#x27;&lt;pre&gt;&#x27;</span> +<br>        <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(data, <span class="hljs-literal">null</span>, <span class="hljs-number">4</span>) +<br>        <span class="hljs-string">&#x27;&lt;/pre&gt;&#x27;</span><br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-3-使用语法"><a href="#3-3-使用语法" class="headerlink" title="3.3 使用语法"></a>3.3 使用语法</h3><ul>
+<li>&#96;&#96;&#96;<br>Mock.js<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs clean"><br>   <br><br>  的语法规范包括两部分<br><br>  - 数据模板定义规范<br>  - 数据占位符定义规范<br><br>#### <span class="hljs-number">3.3</span><span class="hljs-number">.1</span> 数据模板定义规范<br><br>- 数据模板中的每个属性由 <span class="hljs-number">3</span> 部分构成：属性名、生成规则、属性值<br><br></code></pre></td></tr></table></figure>
+&#x2F;&#x2F; 属性名   name<br>&#x2F;&#x2F; 生成规则 rule<br>&#x2F;&#x2F; 属性值   value<br>‘name|rule’: value<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><br><span class="hljs-bullet">-</span> 属性名 和 生成规则 之间用竖线 <span class="hljs-code">`|`</span> 分隔<br><span class="hljs-bullet">-</span> 生成规则 是可选的<br><span class="hljs-bullet">-</span> 生成规则 有 7 种格式<br><span class="hljs-bullet">  -</span> <span class="hljs-code">`&#x27;name|min-max&#x27;: value`</span><br><span class="hljs-bullet">  -</span> <span class="hljs-code">`&#x27;name|count&#x27;: value`</span><br><span class="hljs-bullet">  -</span> <span class="hljs-code">`&#x27;name|min-max.dmin-dmax&#x27;: value`</span><br><span class="hljs-bullet">  -</span> <span class="hljs-code">`&#x27;name|min-max.dcount&#x27;: value`</span><br><span class="hljs-bullet">  -</span> <span class="hljs-code">`&#x27;name|count.dmin-dmax&#x27;: value`</span><br><span class="hljs-bullet">  -</span> <span class="hljs-code">`&#x27;name|count.dcount&#x27;: value`</span><br><span class="hljs-bullet">  -</span> <span class="hljs-code">`&#x27;name|+step&#x27;: value`</span><br><span class="hljs-bullet">-</span> 生成规则 的 含义 需要依赖 属性值的类型 才能确定<br><span class="hljs-bullet">-</span> 属性值 中可以含有 <span class="hljs-code">`@`</span>占位符<br><span class="hljs-bullet">-</span> 属性值 还指定了最终值的初始值和类型<br><br><span class="hljs-section">#### 3.3.2 生成规则和示例</span><br><br><span class="hljs-bullet">-</span> 属性值是字符串 <span class="hljs-code">`String`</span><br><br><span class="hljs-bullet">  -</span> <span class="hljs-code">```</span><br><span class="hljs-code">    &#x27;name|min-max&#x27;: string</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>通过重复 <code>string</code>生成一个字符串，重复次数大于等于<code>min</code>，小于等于 <code>max</code></p>
+</li>
+<li><pre><code class="hljs">&#39;name|count&#39;: string
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br>    - 通过重复 `string`生成一个字符串，重复次数等于 `count`。<br><br>- 属性值是数字`Number`<br><br>  - ```<br><span class="hljs-title">    &#x27;name|+1&#x27;:</span> number<br></code></pre></td></tr></table></figure>
+
+- 属性值自动加 `1`，初始值为 `number`
+</code></pre>
+</li>
+<li><p>&#96;&#96;&#96;<br>‘name|min-max’: number</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br>  - 生成一个大于等于 `min`、小于等于 `max`的整数，属性值 `number` 只是用来确定类型<br><br>- ```<br><span class="hljs-title">  &#x27;name|min-max.dmin-dmax&#x27;:</span> number<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>生成一个浮点数，整数部分大于等于<code>min</code>、小于等于 <code>max</code>，小数部分保留 <code>dmin</code> 到 <code>dmax</code> 位</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs awk">Mock.mock(&#123;<br>    <span class="hljs-string">&#x27;number1|1-100.1-10&#x27;</span>: <span class="hljs-number">1</span>,<br>    <span class="hljs-string">&#x27;number2|123.1-10&#x27;</span>: <span class="hljs-number">1</span>,<br>    <span class="hljs-string">&#x27;number3|123.3&#x27;</span>: <span class="hljs-number">1</span>,<br>    <span class="hljs-string">&#x27;number4|123.10&#x27;</span>: <span class="hljs-number">1.123</span><br>&#125;)<br><span class="hljs-regexp">//</span> =&gt;<br>&#123;<br>    <span class="hljs-string">&quot;number1&quot;</span>: <span class="hljs-number">12.92</span>,<br>    <span class="hljs-string">&quot;number2&quot;</span>: <span class="hljs-number">123.51</span>,<br>    <span class="hljs-string">&quot;number3&quot;</span>: <span class="hljs-number">123.777</span>,<br>    <span class="hljs-string">&quot;number4&quot;</span>: <span class="hljs-number">123.1231091814</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>属性值是布尔型 <code>Boolean</code></p>
+<ul>
+<li>&#96;&#96;&#96;<br>‘name|1’: boolean<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br>  - 随机生成一个布尔值，值为 `true` 的概率是 `1/<span class="hljs-number">2</span>`，值为 `false` 的概率同样是 `1/<span class="hljs-number">2</span>`<br><br>- ```<br><span class="hljs-title">  &#x27;name|min-max&#x27;:</span> value<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>随机生成一个布尔值，值为 <code>value</code> 的概率是<code>min / (min + max)</code>，值为 <code>!value</code>的概率是 <code>max / (min + max)</code>\</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>属性值是对象 <code>Object</code></p>
+<ul>
+<li>&#96;&#96;&#96;<br>‘name|count’: object<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br>  - 从属性值 `object`中随机选取 `count`个属性<br><br>- ```<br><span class="hljs-title">  &#x27;name|min-max&#x27;:</span> object<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>从属性值 <code>object</code>中随机选取 <code>min</code> 到 <code>max</code> 个属性</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>属性值是数组 <code>Array</code></p>
+<ul>
+<li><pre><code class="hljs">&#39;name|1&#39;: array
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br>  - 从属性值 `array` 中随机选取 `1`个元素，作为最终值<br><br>- ```<br><span class="hljs-title">  &#x27;name|+1&#x27;:</span> array<br></code></pre></td></tr></table></figure>
+
+- 从属性值 `array`中顺序选取 `1` 个元素，作为最终值
+</code></pre>
+</li>
+<li><p>&#96;&#96;&#96;<br>‘name|min-max’: array</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br>  - 通过重复属性值`array` 生成一个新数组，重复次数大于等于 `min`，小于等于 `max`<br><br>- ```<br><span class="hljs-title">  &#x27;name|count&#x27;:</span> array<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>通过重复属性值 <code>array</code>生成一个新数组，重复次数为 <code>count</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>属性值是函数 <code>Function</code></p>
+<ul>
+<li>&#96;&#96;&#96;<br>‘name’: function<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br>    - 执行函数 `function`，取其返回值作为最终的属性值，函数的上下文为属性 `&#x27;name&#x27;` 所在的对象<br><br>- 属性值是正则表达式 `RegExp`<br><br>  - ```<br><span class="hljs-title">    &#x27;name&#x27;:</span> regexp<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>根据正则表达式 <code>regexp</code> 反向生成可以匹配它的字符串。用于生成自定义格式的字符串</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs awk">Mock.mock(&#123;<br>    <span class="hljs-string">&#x27;regexp1&#x27;</span>: <span class="hljs-regexp">/[a-z][A-Z][0-9]/</span>,<br>    <span class="hljs-string">&#x27;regexp2&#x27;</span>: <span class="hljs-regexp">/\w\W\s\S\d\D/</span>,<br>    <span class="hljs-string">&#x27;regexp3&#x27;</span>: <span class="hljs-regexp">/\d&#123;5,10&#125;/</span><br>&#125;)<br><span class="hljs-regexp">//</span> =&gt;<br>&#123;<br>    <span class="hljs-string">&quot;regexp1&quot;</span>: <span class="hljs-string">&quot;pJ7&quot;</span>,<br>    <span class="hljs-string">&quot;regexp2&quot;</span>: <span class="hljs-string">&quot;F)\fp1G&quot;</span>,<br>    <span class="hljs-string">&quot;regexp3&quot;</span>: <span class="hljs-string">&quot;561659409&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-3-3-数据占位符定义规范"><a href="#3-3-3-数据占位符定义规范" class="headerlink" title="3.3.3 数据占位符定义规范"></a>3.3.3 数据占位符定义规范</h4><blockquote>
+<p>占位符,只是在属性值字符串中占个位置，并不出现在最终的属性值中</p>
+</blockquote>
+<ul>
+<li>占位符 的格式为</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@占位符</span><br><span class="hljs-meta">@占位符(<span class="hljs-params">参数 [, 参数]</span>)</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>用 <code>@</code>来标识其后的字符串是 占位符</li>
+<li>占位符 引用的是 <code>Mock.Random</code> 中的方法</li>
+<li>通过 <code>Mock.Random.extend()</code> 来扩展自定义占位符</li>
+<li>占位符 也可以引用 数据模板 中的属性</li>
+<li>占位符 会优先引用 数据模板 中的属性</li>
+<li>占位符 支持 相对路径 和 绝对路径</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs php">Mock.<span class="hljs-title function_ invoke__">mock</span>(&#123;<br>    <span class="hljs-attr">name</span>: &#123;<br>        <span class="hljs-attr">first</span>: <span class="hljs-string">&#x27;@FIRST&#x27;</span>,<br>        <span class="hljs-attr">middle</span>: <span class="hljs-string">&#x27;@FIRST&#x27;</span>,<br>        <span class="hljs-attr">last</span>: <span class="hljs-string">&#x27;@LAST&#x27;</span>,<br>        <span class="hljs-attr">full</span>: <span class="hljs-string">&#x27;@first @middle @last&#x27;</span><br>    &#125;<br>&#125;)<br><span class="hljs-comment">// =&gt;</span><br>&#123;<br>    <span class="hljs-string">&quot;name&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;first&quot;</span>: <span class="hljs-string">&quot;Charles&quot;</span>,<br>        <span class="hljs-string">&quot;middle&quot;</span>: <span class="hljs-string">&quot;Brenda&quot;</span>,<br>        <span class="hljs-string">&quot;last&quot;</span>: <span class="hljs-string">&quot;Lopez&quot;</span>,<br>        <span class="hljs-string">&quot;full&quot;</span>: <span class="hljs-string">&quot;Charles Brenda Lopez&quot;</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-4-Mock-mock"><a href="#3-4-Mock-mock" class="headerlink" title="3.4 Mock.mock()"></a>3.4 Mock.mock()</h3><h4 id="3-4-1-Mock-mock-template"><a href="#3-4-1-Mock-mock-template" class="headerlink" title="3.4.1 Mock.mock( template )"></a>3.4.1 Mock.mock( template )</h4><ul>
+<li>根据数据模板生成模拟数据</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><code class="hljs javascript">&lt;!-- （必选）加载 <span class="hljs-title class_">Mock</span> --&gt;<br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;http://mockjs.com/dist/mock.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="hljs-comment">// Mock.mock( template )</span><br><span class="hljs-keyword">var</span> template = &#123;<br>    <span class="hljs-string">&#x27;title&#x27;</span>: <span class="hljs-string">&#x27;Syntax Demo&#x27;</span>,<br><br>    <span class="hljs-string">&#x27;string1|1-10&#x27;</span>: <span class="hljs-string">&#x27;★&#x27;</span>,<br>    <span class="hljs-string">&#x27;string2|3&#x27;</span>: <span class="hljs-string">&#x27;value&#x27;</span>,<br><br>    <span class="hljs-string">&#x27;number1|+1&#x27;</span>: <span class="hljs-number">100</span>,<br>    <span class="hljs-string">&#x27;number2|1-100&#x27;</span>: <span class="hljs-number">100</span>,<br>    <span class="hljs-string">&#x27;number3|1-100.1-10&#x27;</span>: <span class="hljs-number">1</span>,<br>    <span class="hljs-string">&#x27;number4|123.1-10&#x27;</span>: <span class="hljs-number">1</span>,<br>    <span class="hljs-string">&#x27;number5|123.3&#x27;</span>: <span class="hljs-number">1</span>,<br>    <span class="hljs-string">&#x27;number6|123.10&#x27;</span>: <span class="hljs-number">1.123</span>,<br><br>    <span class="hljs-string">&#x27;boolean1|1&#x27;</span>: <span class="hljs-literal">true</span>,<br>    <span class="hljs-string">&#x27;boolean2|1-2&#x27;</span>: <span class="hljs-literal">true</span>,<br><br>    <span class="hljs-string">&#x27;object1|2-4&#x27;</span>: &#123;<br>        <span class="hljs-string">&#x27;110000&#x27;</span>: <span class="hljs-string">&#x27;北京市&#x27;</span>,<br>        <span class="hljs-string">&#x27;120000&#x27;</span>: <span class="hljs-string">&#x27;天津市&#x27;</span>,<br>        <span class="hljs-string">&#x27;130000&#x27;</span>: <span class="hljs-string">&#x27;河北省&#x27;</span>,<br>        <span class="hljs-string">&#x27;140000&#x27;</span>: <span class="hljs-string">&#x27;山西省&#x27;</span><br>    &#125;,<br>    <span class="hljs-string">&#x27;object2|2&#x27;</span>: &#123;<br>        <span class="hljs-string">&#x27;310000&#x27;</span>: <span class="hljs-string">&#x27;上海市&#x27;</span>,<br>        <span class="hljs-string">&#x27;320000&#x27;</span>: <span class="hljs-string">&#x27;江苏省&#x27;</span>,<br>        <span class="hljs-string">&#x27;330000&#x27;</span>: <span class="hljs-string">&#x27;浙江省&#x27;</span>,<br>        <span class="hljs-string">&#x27;340000&#x27;</span>: <span class="hljs-string">&#x27;安徽省&#x27;</span><br>    &#125;,<br><br>    <span class="hljs-string">&#x27;array1|1&#x27;</span>: [<span class="hljs-string">&#x27;AMD&#x27;</span>, <span class="hljs-string">&#x27;CMD&#x27;</span>, <span class="hljs-string">&#x27;KMD&#x27;</span>, <span class="hljs-string">&#x27;UMD&#x27;</span>],<br>    <span class="hljs-string">&#x27;array2|1-10&#x27;</span>: [<span class="hljs-string">&#x27;Mock.js&#x27;</span>],<br>    <span class="hljs-string">&#x27;array3|3&#x27;</span>: [<span class="hljs-string">&#x27;Mock.js&#x27;</span>],<br><br>    <span class="hljs-string">&#x27;function&#x27;</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">title</span><br>    &#125;<br>&#125;<br><span class="hljs-keyword">var</span> data = <span class="hljs-title class_">Mock</span>.<span class="hljs-title function_">mock</span>(template)<br><br>$(<span class="hljs-string">&#x27;&lt;pre&gt;&#x27;</span>).<span class="hljs-title function_">text</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(data, <span class="hljs-literal">null</span>, <span class="hljs-number">4</span>))<br>    .<span class="hljs-title function_">appendTo</span>(<span class="hljs-string">&#x27;body&#x27;</span>)<br><span class="hljs-comment">//res</span><br>&#123;<br>    <span class="hljs-string">&quot;title&quot;</span>: <span class="hljs-string">&quot;Syntax Demo&quot;</span>,<br>    <span class="hljs-string">&quot;string1&quot;</span>: <span class="hljs-string">&quot;★★★&quot;</span>,<br>    <span class="hljs-string">&quot;string2&quot;</span>: <span class="hljs-string">&quot;valuevaluevalue&quot;</span>,<br>    <span class="hljs-string">&quot;number1&quot;</span>: <span class="hljs-number">100</span>,<br>    <span class="hljs-string">&quot;number2&quot;</span>: <span class="hljs-number">48</span>,<br>    <span class="hljs-string">&quot;number3&quot;</span>: <span class="hljs-number">99.05</span>,<br>    <span class="hljs-string">&quot;number4&quot;</span>: <span class="hljs-number">123.6</span>,<br>    <span class="hljs-string">&quot;number5&quot;</span>: <span class="hljs-number">123.516</span>,<br>    <span class="hljs-string">&quot;number6&quot;</span>: <span class="hljs-number">123.1236370317</span>,<br>    <span class="hljs-string">&quot;boolean1&quot;</span>: <span class="hljs-literal">false</span>,<br>    <span class="hljs-string">&quot;boolean2&quot;</span>: <span class="hljs-literal">true</span>,<br>    <span class="hljs-string">&quot;object1&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;120000&quot;</span>: <span class="hljs-string">&quot;天津市&quot;</span>,<br>        <span class="hljs-string">&quot;130000&quot;</span>: <span class="hljs-string">&quot;河北省&quot;</span><br>    &#125;,<br>    <span class="hljs-string">&quot;object2&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;320000&quot;</span>: <span class="hljs-string">&quot;江苏省&quot;</span>,<br>        <span class="hljs-string">&quot;330000&quot;</span>: <span class="hljs-string">&quot;浙江省&quot;</span><br>    &#125;,<br>    <span class="hljs-string">&quot;array1&quot;</span>: <span class="hljs-string">&quot;KMD&quot;</span>,<br>    <span class="hljs-string">&quot;array2&quot;</span>: [<br>        <span class="hljs-string">&quot;Mock.js&quot;</span><br>    ],<br>    <span class="hljs-string">&quot;array3&quot;</span>: [<br>        <span class="hljs-string">&quot;Mock.js&quot;</span>,<br>        <span class="hljs-string">&quot;Mock.js&quot;</span>,<br>        <span class="hljs-string">&quot;Mock.js&quot;</span><br>    ],<br>    <span class="hljs-string">&quot;function&quot;</span>: <span class="hljs-string">&quot;Syntax Demo&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-4-2-Mock-mock-rurl-template"><a href="#3-4-2-Mock-mock-rurl-template" class="headerlink" title="3.4.2 Mock.mock( rurl, template )"></a>3.4.2 Mock.mock( rurl, template )</h4><ul>
+<li>记录数据模板。当拦截到匹配 <code>rurl</code> 的 <code>Ajax</code> 请求时，将根据数据模板 <code>template</code>生成模拟数据，并作为响应数据返回</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs javascript">&lt;!-- （必选）加载 <span class="hljs-title class_">Mock</span> --&gt;<br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;http://mockjs.com/dist/mock.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="hljs-comment">// Mock.mock(rurl, template)</span><br><span class="hljs-title class_">Mock</span>.<span class="hljs-title function_">mock</span>(<span class="hljs-regexp">/\.json/</span>, &#123;<br>    <span class="hljs-string">&#x27;list|1-10&#x27;</span>: [&#123;<br>        <span class="hljs-string">&#x27;id|+1&#x27;</span>: <span class="hljs-number">1</span>,<br>        <span class="hljs-string">&#x27;email&#x27;</span>: <span class="hljs-string">&#x27;@EMAIL&#x27;</span><br>    &#125;]<br>&#125;)<br>$.<span class="hljs-title function_">ajax</span>(&#123;<br>    <span class="hljs-attr">url</span>: <span class="hljs-string">&#x27;1.json&#x27;</span>,<br>    <span class="hljs-attr">dataType</span>: <span class="hljs-string">&#x27;json&#x27;</span><br>&#125;).<span class="hljs-title function_">done</span>(<span class="hljs-params"><span class="hljs-keyword">function</span>(data, status, jqXHR)&#123;</span><br><span class="hljs-params">    $(<span class="hljs-string">&#x27;&lt;pre&gt;&#x27;</span>).text(<span class="hljs-built_in">JSON</span>.stringify(data, <span class="hljs-literal">null</span>, <span class="hljs-number">4</span>))</span><br><span class="hljs-params">        .appendTo(<span class="hljs-string">&#x27;body&#x27;</span>)</span><br><span class="hljs-params">&#125;</span>)<br>&#123;<br>    <span class="hljs-string">&quot;list&quot;</span>: [<br>        &#123;<br>            <span class="hljs-string">&quot;id&quot;</span>: <span class="hljs-number">1</span>,<br>            <span class="hljs-string">&quot;email&quot;</span>: <span class="hljs-string">&quot;k.sejuwxvego@xcwc.中国互联.公司&quot;</span><br>        &#125;,<br>        &#123;<br>            <span class="hljs-string">&quot;id&quot;</span>: <span class="hljs-number">2</span>,<br>            <span class="hljs-string">&quot;email&quot;</span>: <span class="hljs-string">&quot;f.hjns@rhivyrvhpb.ve&quot;</span><br>        &#125;,<br>        &#123;<br>            <span class="hljs-string">&quot;id&quot;</span>: <span class="hljs-number">3</span>,<br>            <span class="hljs-string">&quot;email&quot;</span>: <span class="hljs-string">&quot;g.bdwuuhm@czoybmyp.ms&quot;</span><br>        &#125;,<br>        &#123;<br>            <span class="hljs-string">&quot;id&quot;</span>: <span class="hljs-number">4</span>,<br>            <span class="hljs-string">&quot;email&quot;</span>: <span class="hljs-string">&quot;n.tkgs@javvkxz.bf&quot;</span><br>        &#125;<br>    ]<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-4-3-Mock-mock-rurl-function-options"><a href="#3-4-3-Mock-mock-rurl-function-options" class="headerlink" title="3.4.3 Mock.mock( rurl, function( options ) )"></a>3.4.3 Mock.mock( rurl, function( options ) )</h4><ul>
+<li>记录用于生成响应数据的函数。当拦截到匹配 <code>rurl</code> 的 <code>Ajax</code> 请求时，函数 <code>function(options)</code>将被执行，并把执行结果作为响应数据返回</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// Mock.mock(rurl, function(options))</span><br><span class="hljs-title class_">Mock</span>.<span class="hljs-title function_">mock</span>(<span class="hljs-regexp">/\.json/</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">options</span>) &#123;<br>    <span class="hljs-keyword">return</span> options<br>&#125;)<br>$.<span class="hljs-title function_">ajax</span>(&#123;<br>    <span class="hljs-attr">url</span>: <span class="hljs-string">&#x27;hello.json&#x27;</span>,<br>    <span class="hljs-attr">dataType</span>: <span class="hljs-string">&#x27;json&#x27;</span><br>&#125;).<span class="hljs-title function_">done</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">data, status, jqXHR</span>) &#123;<br>    $(<span class="hljs-string">&#x27;&lt;pre&gt;&#x27;</span>).<span class="hljs-title function_">text</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(data, <span class="hljs-literal">null</span>, <span class="hljs-number">4</span>))<br>        .<span class="hljs-title function_">appendTo</span>(<span class="hljs-string">&#x27;body&#x27;</span>)<br>&#125;)<br>$.<span class="hljs-title function_">ajax</span>(&#123;<br>    <span class="hljs-attr">url</span>: <span class="hljs-string">&#x27;hello.json&#x27;</span>,<br>    <span class="hljs-attr">dataType</span>: <span class="hljs-string">&#x27;json&#x27;</span>,<br>    <span class="hljs-attr">data</span>: &#123;<br>        <span class="hljs-attr">foo</span>: <span class="hljs-number">1</span>,<br>        <span class="hljs-attr">bar</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-attr">faz</span>: <span class="hljs-number">3</span><br>    &#125;<br>&#125;).<span class="hljs-title function_">done</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">data, status, jqXHR</span>) &#123;<br>    $(<span class="hljs-string">&#x27;&lt;pre&gt;&#x27;</span>).<span class="hljs-title function_">text</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(data, <span class="hljs-literal">null</span>, <span class="hljs-number">4</span>))<br>        .<span class="hljs-title function_">appendTo</span>(<span class="hljs-string">&#x27;body&#x27;</span>)<br>&#125;)<br>$.<span class="hljs-title function_">ajax</span>(&#123;<br>    <span class="hljs-attr">url</span>: <span class="hljs-string">&#x27;hello.json&#x27;</span>,<br>    <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;post&#x27;</span>,<br>    <span class="hljs-attr">dataType</span>: <span class="hljs-string">&#x27;json&#x27;</span>,<br>    <span class="hljs-attr">data</span>: &#123;<br>        <span class="hljs-attr">foo</span>: <span class="hljs-number">1</span>,<br>        <span class="hljs-attr">bar</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-attr">faz</span>: <span class="hljs-number">3</span><br>    &#125;<br>&#125;).<span class="hljs-title function_">done</span>(<span class="hljs-params"><span class="hljs-keyword">function</span>(data, status, jqXHR) &#123;</span><br><span class="hljs-params">    $(<span class="hljs-string">&#x27;&lt;pre&gt;&#x27;</span>).text(<span class="hljs-built_in">JSON</span>.stringify(data, <span class="hljs-literal">null</span>, <span class="hljs-number">4</span>))</span><br><span class="hljs-params">        .appendTo(<span class="hljs-string">&#x27;body&#x27;</span>)</span><br><span class="hljs-params">&#125;</span>)<br>&#123;<br>    <span class="hljs-string">&quot;url&quot;</span>: <span class="hljs-string">&quot;hello.json?foo=1&amp;bar=2&amp;faz=3&quot;</span>,<br>    <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;GET&quot;</span>,<br>    <span class="hljs-string">&quot;body&quot;</span>: <span class="hljs-literal">null</span><br>&#125;<br>&#123;<br>    <span class="hljs-string">&quot;url&quot;</span>: <span class="hljs-string">&quot;hello.json&quot;</span>,<br>    <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;GET&quot;</span>,<br>    <span class="hljs-string">&quot;body&quot;</span>: <span class="hljs-literal">null</span><br>&#125;<br>&#123;<br>    <span class="hljs-string">&quot;url&quot;</span>: <span class="hljs-string">&quot;hello.json&quot;</span>,<br>    <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;POST&quot;</span>,<br>    <span class="hljs-string">&quot;body&quot;</span>: <span class="hljs-string">&quot;foo=1&amp;bar=2&amp;faz=3&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-4-4-Mock-setup"><a href="#3-4-4-Mock-setup" class="headerlink" title="3.4.4 Mock.setup()"></a>3.4.4 Mock.setup()</h4><ul>
+<li>&#96;&#96;&#96;<br>Mock.setup( settings )<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br>  - 配置拦截 `Ajax` 请求时的行为。支持的配置项有：`timeout`<br><br>&gt; 指定被拦截的 `Ajax` 请求的响应时间，单位是毫秒。值可以是正整数，例如 `400`，表示 `400` 毫秒 后才会返回响应内容；也可以是横杠 `&#x27;-&#x27;` 风格的字符串，例如 `&#x27;<span class="hljs-number">200</span>-<span class="hljs-number">600</span>&#x27;`，表示响应时间介于 `200` 和 `600` 毫秒之间。默认值是`&#x27;<span class="hljs-number">10</span>-<span class="hljs-number">100</span>&#x27;`<br><br></code></pre></td></tr></table></figure>
+Mock.setup({<br>  timeout: 400<br>})<br>Mock.setup({<br>  timeout: ‘200-600’<br>})<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br>- 目前，接口 `Mock.setup( settings )`仅用于配置 `Ajax` 请求<br><br>#### <span class="hljs-number">3.4</span>.<span class="hljs-number">5</span> Mock.Random<br><br>- `Mock.Random` 是一个工具类，用于生成各种随机数据<br>- `Mock.Random`的方法在数据模板中称为『占位符』，书写格式为 `@`占位符(参数 [, 参数])<br><br></code></pre></td></tr></table></figure>
+var Random &#x3D; Mock.Random<br>Random.email()<br>&#x2F;&#x2F; &#x3D;&gt; “<a href="mailto:&#x6e;&#46;&#x63;&#x6c;&#97;&#114;&#x6b;&#x40;&#x6d;&#105;&#108;&#x6c;&#101;&#114;&#x2e;&#105;&#111;">&#x6e;&#46;&#x63;&#x6c;&#97;&#114;&#x6b;&#x40;&#x6d;&#105;&#108;&#x6c;&#101;&#114;&#x2e;&#105;&#111;</a>“<br>Mock.mock(‘@email’)<br>&#x2F;&#x2F; &#x3D;&gt; “<a href="mailto:&#121;&#x2e;&#108;&#x65;&#x65;&#x40;&#x6c;&#x65;&#119;&#x69;&#x73;&#x2e;&#111;&#114;&#x67;">&#121;&#x2e;&#108;&#x65;&#x65;&#x40;&#x6c;&#x65;&#119;&#x69;&#x73;&#x2e;&#111;&#114;&#x67;</a>“<br>Mock.mock( { email: ‘@email’ } )<br>&#x2F;&#x2F; &#x3D;&gt; { email: “<a href="mailto:&#x76;&#46;&#108;&#101;&#119;&#105;&#115;&#64;&#x68;&#97;&#x6c;&#108;&#46;&#103;&#x6f;&#118;">&#x76;&#46;&#108;&#101;&#119;&#105;&#115;&#64;&#x68;&#97;&#x6c;&#108;&#46;&#103;&#x6f;&#118;</a>“ }<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br>## 四、简单构建一套mock-server<br><br>&gt; 为了更好的分工合作，让前端能在不依赖后端环境的情况下进行开发，其中一种手段就是为前端开发者提供一个 web 容器，这个本地环境就是 mock-server<br><br>**一个比较好的 mock-server 该有的能力**<br><br>- 与线上环境一致的接口地址，每次构建前端代码时不需要修改调用接口的代码<br>- 所改即所得，具有热更新的能力，每次增加修改 `mock` 接口时不需要重启 `mock` 服务，更不用重启前端构建服务<br>- 能配合 `Webpack`<br>- `mock` 数据可以由工具生成不需要自己手动写<br>- 能模拟 `POST`、`GET` 请求<br><br>**搭建主要思路**<br><br>&gt; 以 `json-server` 作为 `mock` 服务器， `mock.js` 生成`mock` 数据，利用 `gulp + nodemon + browser-sync` 监听`mock`文件的改动重启 `node` 服务，刷新浏览器，以此达到一种相对完美的 `mock-server`要求<br><br>### <span class="hljs-number">4.1</span> json-server 搭配 mock.js<br><br>- 这里以`Webpack` 的前端工程为例<br><br></code></pre></td></tr></table></figure>
+cnpm install json-server mockjs –save<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br>- 在项目根目录新建 `mock`文件夹，新建 `mock/db.js` 作为 `mock` 数据源，`mock/server.js`作为 `mock`服务，`mock/routes.js`重写路由表<br><br></code></pre></td></tr></table></figure>
+var Mock &#x3D; require(‘mockjs’);</li>
+</ul>
+<p>module.exports &#x3D; {<br>  getComment: Mock.mock({<br>    “error”: 0,<br>    “message”: “success”,<br>    “result|40”: [{<br>      “author”: “@name”,<br>      “comment”: “@cparagraph”,<br>      “date”: “@datetime”<br>    }]<br>  }),<br>  addComment: Mock.mock({<br>    “error”: 0,<br>    “message”: “success”,<br>    “result”: []<br>  })<br>};</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br>- 这里我们利用 `mock.js` 生成 `mock` 数据，可以尽可能的还原真实数据，还可以减少数据构造的复杂度<br><br></code></pre></td></tr></table></figure>
+<p>&#x2F;&#x2F; routes.js<br>module.exports &#x3D; {<br>  “&#x2F;comment&#x2F;get.action”: “&#x2F;getComment”,<br>  “&#x2F;comment&#x2F;add.action”: “&#x2F;addComment”<br>}<br>&#x2F;&#x2F; server.js<br>const jsonServer &#x3D; require(‘json-server’)<br>const db &#x3D; require(‘.&#x2F;db.js’)<br>const routes &#x3D; require(‘.&#x2F;routes.js’)<br>const port &#x3D; 3000;</p>
+<p>const server &#x3D; jsonServer.create()<br>const router &#x3D; jsonServer.router(db)<br>const middlewares &#x3D; jsonServer.defaults()<br>const rewriter &#x3D; jsonServer.rewriter(routes)</p>
+<p>server.use(middlewares)<br>&#x2F;&#x2F; 将 POST 请求转为 GET<br>server.use((request, res, next) &#x3D;&gt; {<br>  request.method &#x3D; ‘GET’;<br>  next();<br>})</p>
+<p>server.use(rewriter) &#x2F;&#x2F; 注意：rewriter 的设置一定要在 router 设置之前<br>server.use(router)</p>
+<p>server.listen(port, () &#x3D;&gt; {<br>  console.log(‘open mock server at localhost:’ + port)<br>})</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><br><span class="hljs-bullet">- </span>启动服务<br><br></code></pre></td></tr></table></figure>
+<p>$ node mock&#x2F;server.js</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br><span class="hljs-title">- 打开 `http://localhost:</span><span class="hljs-number">3000</span>/comment/get.action`即可查看到我们想要的数据<br><br><span class="hljs-title">![image.png](http:</span>//upload-images.jianshu.io/upload_images/<span class="hljs-number">1480597</span>-<span class="hljs-number">7</span>c4747bf268572ad.png?imageMogr2/auto-orient/strip%<span class="hljs-number">7</span>CimageView2/<span class="hljs-number">2</span>/w/<span class="hljs-number">1240</span>)<br><br>&gt; 是不是这样就算搭建完了我们的 `mock-server` ？不，并没有。我们可以尝试修改一下 `db.js` 的文件内容，刷新浏览器发现 `mock` 数据并没有像我们想象的那样修改。那也就是说每次当我们需要添加 /修改 `mock` 数据使都需要重启一次 `mock` 服务<br><br>### <span class="hljs-number">4.2</span> 端口代理<br><br>&gt; 通过 `Webpack` 配置 `proxy` 代理<br><br></code></pre></td></tr></table></figure>
+<p>module.exports &#x3D; {</p>
+<p>  devServer: {<br>    &#x2F;&#x2F;其实很简单的，只要配置这个参数就可以了<br>    proxy: {<br>      ‘&#x2F;api&#x2F;‘: {<br>        target: ‘<a href="http://localhost:3000&#39;">http://localhost:3000&#39;</a>,<br>          changeOrigin: true,<br>        pathRewrite: {<br>          ‘^&#x2F;api’: ‘’<br>        }<br>      }<br>    }<br>  }<br>}</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br>- 接着在代码里进行 `ajax`请求就可以写成，这里以 `axios` 为例子<br><br></code></pre></td></tr></table></figure>
+<p>function getComments () {<br>  axios.get(‘api&#x2F;comment&#x2F;get.action’, {}).then((res) &#x3D;&gt; {<br>    console.log(res.data)<br>  })<br>}</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br>### <span class="hljs-number">4.3</span> 文件改动自动刷新<br><br>&gt; 我们希望更改 `mock`文件能和 `webpack` 热更新一样，所改即所得。这里我使用了 `nodemon`，利用 `gulp` 建立自动执行的任务。<br><br></code></pre></td></tr></table></figure>
+<p>cnpm install gulp gulp-nodemon browser-sync –save<br>&#x2F;&#x2F; gulpfile.js 的代码如下<br>onst path &#x3D; require(‘path’);<br>const gulp &#x3D; require(‘gulp’);<br>const nodemon &#x3D; require(‘gulp-nodemon’);<br>const browserSync &#x3D; require(‘browser-sync’).create();<br>const server &#x3D; path.resolve(__dirname, ‘mock’);</p>
+<p>&#x2F;&#x2F; browser-sync 配置，配置里启动 nodemon 任务<br>gulp.task(‘browser-sync’, [‘nodemon’], function() {<br>  browserSync.init(null, {<br>    proxy: “<a href="http://localhost:8080&quot;">http://localhost:8080&quot;</a>, &#x2F;&#x2F; 这里的端口和 webpack 的端口一致<br>    port: 8081<br>  });<br>});</p>
+<p>&#x2F;&#x2F; browser-sync 监听文件<br>gulp.task(‘mock’, [‘browser-sync’], function() {<br>  gulp.watch([‘.&#x2F;mock&#x2F;db.js’, ‘.&#x2F;mock&#x2F;**’], [‘bs-delay’]);<br>});</p>
+<p>&#x2F;&#x2F; 延时刷新<br>gulp.task(‘bs-delay’, function() {<br>  setTimeout(function() {<br>    browserSync.reload();<br>  }, 1000);<br>});</p>
+<p>&#x2F;&#x2F; 服务器重启<br>gulp.task(‘nodemon’, function(cb) {<br>  &#x2F;&#x2F; 设个变量来防止重复重启<br>  var started &#x3D; false;<br>  var stream &#x3D; nodemon({<br>    script: ‘.&#x2F;mock&#x2F;server.js’,<br>    &#x2F;&#x2F; 监听文件的后缀<br>    ext: “js”,<br>    env: {<br>      ‘NODE_ENV’: ‘development’<br>    },<br>    &#x2F;&#x2F; 监听的路径<br>    watch: [<br>      server<br>    ]<br>  });<br>  stream.on(‘start’, function() {<br>    if (!started) {<br>      cb();<br>      started &#x3D; true;<br>    }<br>  }).on(‘crash’, function() {<br>    console.error(‘application has crashed!\n’)<br>    stream.emit(‘restart’, 10)<br>  })<br>});</p>
+<p>&#96;&#96;&#96;</p>
+<ul>
+<li>这样以后我们在构建我们 <code>Webpack</code> 工程时只需要先执行 <code>npm run dev</code></li>
+<li>之后新建 <code>terminal</code> 执行 <code>gulp mock</code></li>
+<li>就可以搭建一个随改随变的 <code>mock-server</code> 环境</li>
+</ul>
+<p><strong>完整的代码详情</strong> <a target="_blank" rel="noopener" href="https://github.com/poetries/mock-server">https://github.com/poetries/mock-server</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%90%8E%E7%AB%AF/" class="category-chain-item">后端</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Mock/">#Mock</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Mock</div>
+      <div>http://example.com/2019/01/04/工具/Mock模拟数据/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>January 4, 2019</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/01/08/%E5%B7%A5%E5%85%B7/RESTful%20API/" title="RESTful API">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">RESTful API</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/12/26/%E5%B7%A5%E5%85%B7/hexo-%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/" title="hexo搭建博客">
+                        <span class="hidden-mobile">hexo搭建博客</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

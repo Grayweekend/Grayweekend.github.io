@@ -1,0 +1,696 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、节点1.1 节点属性 1234567891011121314151617181920Node.nodeName   &#x2F;&#x2F;返回节点名称，只读Node.nodeType   &#x2F;&#x2F;返回节点类型的常数值，只读Node.nodeValue  &#x2F;&#x2F;返回Text或Comment节点的文本值，只读Node.textContent  &#x2F;&#x2F;返回当前节点和它的所有后代节点的文本内容，可读写Node.baseURI">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js-api">
+<meta property="og:url" content="http://example.com/2018/01/05/html+css+js+ts/3-js%E5%B8%B8%E7%94%A8api/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、节点1.1 节点属性 1234567891011121314151617181920Node.nodeName   &#x2F;&#x2F;返回节点名称，只读Node.nodeType   &#x2F;&#x2F;返回节点类型的常数值，只读Node.nodeValue  &#x2F;&#x2F;返回Text或Comment节点的文本值，只读Node.textContent  &#x2F;&#x2F;返回当前节点和它的所有后代节点的文本内容，可读写Node.baseURI">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-01-05T06:48:16.000Z">
+<meta property="article:modified_time" content="2022-06-04T07:13:28.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>js-api - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="js-api"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-01-05 14:48" pubdate>
+          January 5, 2018 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          14k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          113 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">js-api</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="一、节点"><a href="#一、节点" class="headerlink" title="一、节点"></a>一、节点</h2><p><strong>1.1 节点属性</strong></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs awk">Node.nodeName   <span class="hljs-regexp">//</span>返回节点名称，只读<br>Node.nodeType   <span class="hljs-regexp">//</span>返回节点类型的常数值，只读<br>Node.nodeValue  <span class="hljs-regexp">//</span>返回Text或Comment节点的文本值，只读<br>Node.textContent  <span class="hljs-regexp">//</span>返回当前节点和它的所有后代节点的文本内容，可读写<br>Node.baseURI    <span class="hljs-regexp">//</span>返回当前网页的绝对路径<br><br>Node.ownerDocument  <span class="hljs-regexp">//</span>返回当前节点所在的顶层文档对象，即document<br>Node.nextSibling  <span class="hljs-regexp">//</span>返回紧跟在当前节点后面的第一个兄弟节点<br>Node.previousSibling  <span class="hljs-regexp">//</span>返回当前节点前面的、距离最近的一个兄弟节点<br>Node.parentNode   <span class="hljs-regexp">//</span>返回当前节点的父节点<br>Node.parentElement  <span class="hljs-regexp">//</span>返回当前节点的父Element节点<br>Node.childNodes   <span class="hljs-regexp">//</span>返回当前节点的所有子节点<br>Node.firstChild  <span class="hljs-regexp">//</span>返回当前节点的第一个子节点<br>Node.lastChild   <span class="hljs-regexp">//</span>返回当前节点的最后一个子节点<br><br><span class="hljs-regexp">//</span>parentNode接口<br>Node.children  <span class="hljs-regexp">//</span>返回指定节点的所有Element子节点<br>Node.firstElementChild  <span class="hljs-regexp">//</span>返回当前节点的第一个Element子节点<br>Node.lastElementChild   <span class="hljs-regexp">//</span>返回当前节点的最后一个Element子节点<br>Node.childElementCount  <span class="hljs-regexp">//</span>返回当前节点所有Element子节点的数目。<br></code></pre></td></tr></table></figure>
+
+<p><strong>1.2 操作</strong></p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Node</span>.</span></span>append<span class="hljs-constructor">Child(<span class="hljs-params">node</span>)</span>   <span class="hljs-comment">//向节点添加最后一个子节点</span><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Node</span>.</span></span>has<span class="hljs-constructor">ChildNodes()</span>   <span class="hljs-comment">//返回布尔值，表示当前节点是否有子节点</span><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Node</span>.</span></span>clone<span class="hljs-constructor">Node(<span class="hljs-params">true</span>)</span>;  <span class="hljs-comment">// 默认为false(克隆节点), true(克隆节点及其属性，以及后代)</span><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Node</span>.</span></span>insert<span class="hljs-constructor">Before(<span class="hljs-params">newNode</span>,<span class="hljs-params">oldNode</span>)</span>  <span class="hljs-comment">// 在指定子节点之前插入新的子节点</span><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Node</span>.</span></span>remove<span class="hljs-constructor">Child(<span class="hljs-params">node</span>)</span>   <span class="hljs-comment">//删除节点，在要删除节点的父节点上操作</span><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Node</span>.</span></span>replace<span class="hljs-constructor">Child(<span class="hljs-params">newChild</span>,<span class="hljs-params">oldChild</span>)</span>  <span class="hljs-comment">//替换节点</span><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Node</span>.</span></span>contains(node)  <span class="hljs-comment">//返回一个布尔值，表示参数节点是否为当前节点的后代节点。</span><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Node</span>.</span></span>compare<span class="hljs-constructor">DocumentPosition(<span class="hljs-params">node</span>)</span>   <span class="hljs-comment">//返回一个7个比特位的二进制值，表示参数节点和当前节点的关系</span><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Node</span>.</span></span>is<span class="hljs-constructor">EqualNode(<span class="hljs-params">noe</span>)</span>  <span class="hljs-comment">//返回布尔值，用于检查两个节点是否相等。所谓相等的节点，指的是两个节点的类型相同、属性相同、子节点相同。</span><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Node</span>.</span></span>normalize<span class="hljs-literal">()</span>   <span class="hljs-comment">//用于清理当前节点内部的所有Text节点。它会去除空的文本节点，并且将毗邻的文本节点合并成一个。</span><br><br><span class="hljs-comment">//ChildNode接口</span><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Node</span>.</span></span>remove<span class="hljs-literal">()</span>  <span class="hljs-comment">//用于删除当前节点</span><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Node</span>.</span></span>before<span class="hljs-literal">()</span>  <span class="hljs-comment">//</span><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Node</span>.</span></span>after<span class="hljs-literal">()</span><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Node</span>.</span></span>replace<span class="hljs-constructor">With()</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>1.3 Document节点</strong></p>
+<p><strong>1.3.1 Document节点的属性</strong></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs awk">document.doctype   <span class="hljs-regexp">//</span><br>document.documentElement  <span class="hljs-regexp">//</span>返回当前文档的根节点<br>document.defaultView   <span class="hljs-regexp">//</span>返回document对象所在的window对象<br>document.body   <span class="hljs-regexp">//</span>返回当前文档的&lt;body&gt;节点<br>document.head   <span class="hljs-regexp">//</span>返回当前文档的&lt;head&gt;节点<br>document.activeElement  <span class="hljs-regexp">//</span>返回当前文档中获得焦点的那个元素。<br><br><span class="hljs-regexp">//</span>节点集合属性<br>document.links  <span class="hljs-regexp">//</span>返回当前文档的所有a元素<br>document.forms  <span class="hljs-regexp">//</span>返回页面中所有表单元素<br>document.images  <span class="hljs-regexp">//</span>返回页面中所有图片元素<br>document.embeds  <span class="hljs-regexp">//</span>返回网页中所有嵌入对象<br>document.scripts  <span class="hljs-regexp">//</span>返回当前文档的所有脚本<br>document.styleSheets  <span class="hljs-regexp">//</span>返回当前网页的所有样式表<br><br><span class="hljs-regexp">//</span>文档信息属性<br>document.documentURI  <span class="hljs-regexp">//</span>表示当前文档的网址<br>document.URL  <span class="hljs-regexp">//</span>返回当前文档的网址<br>document.domain  <span class="hljs-regexp">//</span>返回当前文档的域名<br>document.lastModified  <span class="hljs-regexp">//</span>返回当前文档最后修改的时间戳<br>document.location  <span class="hljs-regexp">//</span>返回location对象，提供当前文档的URL信息<br>document.referrer  <span class="hljs-regexp">//</span>返回当前文档的访问来源<br>document.title    <span class="hljs-regexp">//</span>返回当前文档的标题<br>document.characterSet属性返回渲染当前文档的字符集，比如UTF-<span class="hljs-number">8</span>、ISO-<span class="hljs-number">8859</span>-<span class="hljs-number">1</span>。<br>document.readyState  <span class="hljs-regexp">//</span>返回当前文档的状态<br>document.designMode  <span class="hljs-regexp">//</span>控制当前文档是否可编辑，可读写<br>document.compatMode  <span class="hljs-regexp">//</span>返回浏览器处理文档的模式<br>document.cookie   <span class="hljs-regexp">//</span>用来操作Cookie<br></code></pre></td></tr></table></figure>
+
+<p><strong>1.3.2 Document节点的方法</strong></p>
+<p><strong>（1）读写方法</strong></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs awk">document.open()   <span class="hljs-regexp">//</span>用于新建并打开一个文档<br>document.close()   <span class="hljs-regexp">//</span>不安比open方法所新建的文档<br>document.write()   <span class="hljs-regexp">//</span>用于向当前文档写入内容<br>document.writeIn()  <span class="hljs-regexp">//</span>用于向当前文档写入内容，尾部添加换行符。<br></code></pre></td></tr></table></figure>
+
+<p><strong>（2）查找节点</strong></p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">document.query<span class="hljs-constructor">Selector(<span class="hljs-params">selectors</span>)</span>   <span class="hljs-comment">//接受一个CSS选择器作为参数，返回第一个匹配该选择器的元素节点。</span><br>document.query<span class="hljs-constructor">SelectorAll(<span class="hljs-params">selectors</span>)</span>  <span class="hljs-comment">//接受一个CSS选择器作为参数，返回所有匹配该选择器的元素节点。</span><br>document.get<span class="hljs-constructor">ElementsByTagName(<span class="hljs-params">tagName</span>)</span>  <span class="hljs-comment">//返回所有指定HTML标签的元素</span><br>document.get<span class="hljs-constructor">ElementsByClassName(<span class="hljs-params">className</span>)</span>   <span class="hljs-comment">//返回包括了所有class名字符合指定条件的元素</span><br>document.get<span class="hljs-constructor">ElementsByName(<span class="hljs-params">name</span>)</span>   <span class="hljs-comment">//用于选择拥有name属性的HTML元素（比如&lt;form&gt;、&lt;radio&gt;、&lt;img&gt;、&lt;frame&gt;、&lt;embed&gt;和&lt;object&gt;等）</span><br>document.get<span class="hljs-constructor">ElementById(<span class="hljs-params">id</span>)</span>   <span class="hljs-comment">//返回匹配指定id属性的元素节点。</span><br>document.element<span class="hljs-constructor">FromPoint(<span class="hljs-params">x</span>,<span class="hljs-params">y</span>)</span>  <span class="hljs-comment">//返回位于页面指定位置最上层的Element子节点。</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>（3）生成节点</strong></p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">document.create<span class="hljs-constructor">Element(<span class="hljs-params">tagName</span>)</span>   <span class="hljs-comment">//用来生成HTML元素节点。</span><br>document.create<span class="hljs-constructor">TextNode(<span class="hljs-params">text</span>)</span>   <span class="hljs-comment">//用来生成文本节点</span><br>document.create<span class="hljs-constructor">Attribute(<span class="hljs-params">name</span>)</span>  <span class="hljs-comment">//生成一个新的属性对象节点，并返回它。</span><br>document.create<span class="hljs-constructor">DocumentFragment()</span>  <span class="hljs-comment">//生成一个DocumentFragment对象</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>（4）事件方法</strong></p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">document.create<span class="hljs-constructor">Event(<span class="hljs-params">type</span>)</span>   <span class="hljs-comment">//生成一个事件对象，该对象能被element.dispatchEvent()方法使用</span><br>document.add<span class="hljs-constructor">EventListener(<span class="hljs-params">type</span>,<span class="hljs-params">listener</span>,<span class="hljs-params">capture</span>)</span>  <span class="hljs-comment">//注册事件</span><br>document.remove<span class="hljs-constructor">EventListener(<span class="hljs-params">type</span>,<span class="hljs-params">listener</span>,<span class="hljs-params">capture</span>)</span>  <span class="hljs-comment">//注销事件</span><br>document.dispatch<span class="hljs-constructor">Event(<span class="hljs-params">event</span>)</span>  <span class="hljs-comment">//触发事件</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>（5）其他</strong></p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">document.has<span class="hljs-constructor">Focus()</span>   <span class="hljs-comment">//返回一个布尔值，表示当前文档之中是否有元素被激活或获得焦点。</span><br>document.adopt<span class="hljs-constructor">Node(<span class="hljs-params">externalNode</span>)</span>  <span class="hljs-comment">//将某个节点，从其原来所在的文档移除，插入当前文档，并返回插入后的新节点。</span><br>document.import<span class="hljs-constructor">Node(<span class="hljs-params">externalNode</span>, <span class="hljs-params">deep</span>)</span>   <span class="hljs-comment">//从外部文档拷贝指定节点，插入当前文档。</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>1.4 Element节点</strong></p>
+<p><strong>1.4.1 Element节点的属性</strong></p>
+<p><strong>（1）特性属性</strong></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs awk">Element.attributes  <span class="hljs-regexp">//</span>返回当前元素节点的所有属性节点<br>Element.id  <span class="hljs-regexp">//</span>返回指定元素的id属性，可读写<br>Element.tagName  <span class="hljs-regexp">//</span>返回指定元素的大写标签名<br>Element.innerHTML   <span class="hljs-regexp">//</span>返回该元素包含的HTML代码，可读写<br>Element.outerHTML  <span class="hljs-regexp">//</span>返回指定元素节点的所有HTML代码，包括它自身和包含的的所有子元素，可读写<br>Element.className  <span class="hljs-regexp">//</span>返回当前元素的class属性，可读写<br>Element.classList  <span class="hljs-regexp">//</span>返回当前元素节点的所有class集合<br>Element.dataset   <span class="hljs-regexp">//</span>返回元素节点中所有的data-*属性。<br></code></pre></td></tr></table></figure>
+
+<p><strong>（2）尺寸属性</strong></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs awk">Element.clientHeight   <span class="hljs-regexp">//</span>返回元素节点可见部分的高度<br>Element.clientWidth   <span class="hljs-regexp">//</span>返回元素节点可见部分的宽度<br>Element.clientLeft   <span class="hljs-regexp">//</span>返回元素节点左边框的宽度<br>Element.clientTop   <span class="hljs-regexp">//</span>返回元素节点顶部边框的宽度<br>Element.scrollHeight  <span class="hljs-regexp">//</span>返回元素节点的总高度<br>Element.scrollWidth  <span class="hljs-regexp">//</span>返回元素节点的总宽度<br>Element.scrollLeft   <span class="hljs-regexp">//</span>返回元素节点的水平滚动条向右滚动的像素数值,通过设置这个属性可以改变元素的滚动位置<br>Element.scrollTop   <span class="hljs-regexp">//</span>返回元素节点的垂直滚动向下滚动的像素数值<br>Element.offsetHeight   <span class="hljs-regexp">//</span>返回元素的垂直高度(包含border,padding)<br>Element.offsetWidth    <span class="hljs-regexp">//</span>返回元素的水平宽度(包含border,padding)<br>Element.offsetLeft    <span class="hljs-regexp">//</span>返回当前元素左上角相对于Element.offsetParent节点的垂直偏移<br>Element.offsetTop   <span class="hljs-regexp">//</span>返回水平位移<br>Element.style  <span class="hljs-regexp">//</span>返回元素节点的行内样式<br></code></pre></td></tr></table></figure>
+
+<p><strong>（3）节点相关属性</strong></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs awk">Element.children   <span class="hljs-regexp">//</span>包括当前元素节点的所有子元素<br>Element.childElementCount   <span class="hljs-regexp">//</span>返回当前元素节点包含的子HTML元素节点的个数<br>Element.firstElementChild  <span class="hljs-regexp">//</span>返回当前节点的第一个Element子节点  <br>Element.lastElementChild   <span class="hljs-regexp">//</span>返回当前节点的最后一个Element子节点  <br>Element.nextElementSibling  <span class="hljs-regexp">//</span>返回当前元素节点的下一个兄弟HTML元素节点<br>Element.previousElementSibling  <span class="hljs-regexp">//</span>返回当前元素节点的前一个兄弟HTML节点<br>Element.offsetParent   <span class="hljs-regexp">//</span>返回当前元素节点的最靠近的、并且CSS的position属性不等于static的父元素。<br></code></pre></td></tr></table></figure>
+
+<p><strong>1.4.2 Element节点的方法</strong></p>
+<p><strong>（1）位置方法</strong></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs awk">getBoundingClientRect()  <br><span class="hljs-regexp">//</span> getBoundingClientRect返回一个对象，包含top,left,right,bottom,width,height <span class="hljs-regexp">//</span> width、height 元素自身宽高<br><span class="hljs-regexp">//</span> top 元素上外边界距窗口最上面的距离<br><span class="hljs-regexp">//</span> right 元素右外边界距窗口最上面的距离<br><span class="hljs-regexp">//</span> bottom 元素下外边界距窗口最上面的距离<br><span class="hljs-regexp">//</span> left 元素左外边界距窗口最上面的距离<br><span class="hljs-regexp">//</span> width 元素自身宽(包含border,padding) <br><span class="hljs-regexp">//</span> height 元素自身高(包含border,padding) <br><br>getClientRects()   <span class="hljs-regexp">//</span>返回当前元素在页面上形参的所有矩形。<br><br><span class="hljs-regexp">//</span> 元素在页面上的偏移量  <br>var rect = el.getBoundingClientRect()  <br>return &#123;   <br>  top: rect.top + document.body.scrollTop,   <br>  left: rect.left + document.body.scrollLeft  <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>（2）属性方法</strong></p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Element</span>.</span></span>get<span class="hljs-constructor">Attribute()</span>：读取指定属性  <br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Element</span>.</span></span>set<span class="hljs-constructor">Attribute()</span>：设置指定属性  <br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Element</span>.</span></span>has<span class="hljs-constructor">Attribute()</span>：返回一个布尔值，表示当前元素节点是否有指定的属性  <br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Element</span>.</span></span>remove<span class="hljs-constructor">Attribute()</span>：移除指定属性<br></code></pre></td></tr></table></figure>
+
+<p><strong>（3）查找方法</strong></p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Element</span>.</span></span>query<span class="hljs-constructor">Selector()</span>  <br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Element</span>.</span></span>query<span class="hljs-constructor">SelectorAll()</span>  <br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Element</span>.</span></span>get<span class="hljs-constructor">ElementsByTagName()</span>  <br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Element</span>.</span></span>get<span class="hljs-constructor">ElementsByClassName()</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>（4）事件方法</strong></p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Element</span>.</span></span>add<span class="hljs-constructor">EventListener()</span>：添加事件的回调函数  <br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Element</span>.</span></span>remove<span class="hljs-constructor">EventListener()</span>：移除事件监听函数  <br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Element</span>.</span></span>dispatch<span class="hljs-constructor">Event()</span>：触发事件<br><br><span class="hljs-comment">//ie8</span><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Element</span>.</span></span>attach<span class="hljs-constructor">Event(<span class="hljs-params">oneventName</span>,<span class="hljs-params">listener</span>)</span><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Element</span>.</span></span>detach<span class="hljs-constructor">Event(<span class="hljs-params">oneventName</span>,<span class="hljs-params">listener</span>)</span><br><br><span class="hljs-comment">// event对象  </span><br>var event = window.event<span class="hljs-pattern-match"><span class="hljs-operator">||</span>event;    </span><br><span class="hljs-pattern-match"></span><br><span class="hljs-pattern-match"><span class="hljs-operator">/</span><span class="hljs-operator">/</span> 事件的目标节点  </span><br><span class="hljs-pattern-match">var target = event.target <span class="hljs-operator">||</span> event.src<span class="hljs-constructor">Element</span>;</span><br><span class="hljs-pattern-match"></span><br><span class="hljs-pattern-match"><span class="hljs-operator">/</span><span class="hljs-operator">/</span> 事件代理  </span><br><span class="hljs-pattern-match">ul.add<span class="hljs-constructor">EventListener(&#x27;<span class="hljs-params">click</span>&#x27;, <span class="hljs-params">function</span>(<span class="hljs-params">event</span>)</span> &#123;   </span><br><span class="hljs-pattern-match">  <span class="hljs-keyword">if</span> (event.target.tag<span class="hljs-constructor">Name</span>.<span class="hljs-keyword">to</span><span class="hljs-constructor">LowerCase()</span> <span class="hljs-operator">==</span>= &#x27;li&#x27;) &#123;   </span><br><span class="hljs-pattern-match">    console.log(event.target.inner<span class="hljs-constructor">HTML</span>)   </span><br><span class="hljs-pattern-match">  &#125;  </span><br><span class="hljs-pattern-match">&#125;);</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>（5）其他</strong></p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Element</span>.</span></span>scroll<span class="hljs-constructor">IntoView()</span>   <span class="hljs-comment">//滚动当前元素，进入浏览器的可见区域</span><br><br><span class="hljs-comment">//解析HTML字符串，然后将生成的节点插入DOM树的指定位置。</span><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Element</span>.</span></span>insert<span class="hljs-constructor">AdjacentHTML(<span class="hljs-params">where</span>, <span class="hljs-params">htmlString</span>)</span>; <br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Element</span>.</span></span>insert<span class="hljs-constructor">AdjacentHTML(&#x27;<span class="hljs-params">beforeBegin</span>&#x27;, <span class="hljs-params">htmlString</span>)</span>; <span class="hljs-comment">// 在该元素前插入  </span><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Element</span>.</span></span>insert<span class="hljs-constructor">AdjacentHTML(&#x27;<span class="hljs-params">afterBegin</span>&#x27;, <span class="hljs-params">htmlString</span>)</span>; <span class="hljs-comment">// 在该元素第一个子元素前插入 </span><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Element</span>.</span></span>insert<span class="hljs-constructor">AdjacentHTML(&#x27;<span class="hljs-params">beforeEnd</span>&#x27;, <span class="hljs-params">htmlString</span>)</span>; <span class="hljs-comment">// 在该元素最后一个子元素后面插入 </span><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Element</span>.</span></span>insert<span class="hljs-constructor">AdjacentHTML(&#x27;<span class="hljs-params">afterEnd</span>&#x27;, <span class="hljs-params">htmlString</span>)</span>; <span class="hljs-comment">// 在该元素后插入</span><br><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Element</span>.</span></span>remove<span class="hljs-literal">()</span>  <span class="hljs-comment">//用于将当前元素节点从DOM中移除</span><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Element</span>.</span></span>focus<span class="hljs-literal">()</span>   <span class="hljs-comment">//用于将当前页面的焦点，转移到指定元素上</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="二、CSS操作"><a href="#二、CSS操作" class="headerlink" title="二、CSS操作"></a>二、CSS操作</h2><p><strong>（1）类名操作</strong></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//i</span>e8以下<br>Element.className  <span class="hljs-regexp">//</span>获取元素节点的类名<br>Element.className += <span class="hljs-string">&#x27; &#x27;</span> + newClassName  <span class="hljs-regexp">//</span>新增一个类名<br><br><span class="hljs-regexp">//</span>判断是否有某个类名<br><span class="hljs-keyword">function</span> hasClass(element,className)&#123;<br>  return new RegExp(className,<span class="hljs-string">&#x27;gi&#x27;</span>).test(element.className);<br>&#125;<br><br><span class="hljs-regexp">//</span>移除class<br><span class="hljs-keyword">function</span> removeClass(element,className)&#123;<br>  element.className = element.className.replace(new RegExp(<span class="hljs-string">&#x27;(^|\\b)&#x27;</span> + className.split(<span class="hljs-string">&#x27; &#x27;</span>).join(<span class="hljs-string">&#x27;|&#x27;</span>) + <span class="hljs-string">&#x27;(\\b|$)&#x27;</span>, <span class="hljs-string">&#x27;gi&#x27;</span>),<span class="hljs-string">&#x27;&#x27;</span>);<br>&#125;<br><br><span class="hljs-regexp">//i</span>e10 <br>element.classList.add(className)  <span class="hljs-regexp">//</span>新增<br>element.classList.remove(className)  <span class="hljs-regexp">//</span>删除<br>element.classList.contains(className)  <span class="hljs-regexp">//</span>是否包含<br>element.classList.toggle(className)  <span class="hljs-regexp">//</span>toggle class<br></code></pre></td></tr></table></figure>
+
+<p><strong>（2）style操作</strong></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs stylus">element<span class="hljs-selector-class">.setAttribute</span>(<span class="hljs-string">&#x27;style&#x27;</span>,<span class="hljs-string">&#x27;&#x27;</span>)<br><br>element<span class="hljs-selector-class">.style</span><span class="hljs-selector-class">.backgroundColor</span> = <span class="hljs-string">&#x27;red&#x27;</span><br><br>element<span class="hljs-selector-class">.style</span><span class="hljs-selector-class">.cssText</span> <span class="hljs-comment">//用来读写或删除整个style属性</span><br><br>element<span class="hljs-selector-class">.style</span><span class="hljs-selector-class">.setProperty</span>(propertyName,value)  <span class="hljs-comment">//设置css属性</span><br>element<span class="hljs-selector-class">.style</span><span class="hljs-selector-class">.getPropertyValue</span>(property)  <span class="hljs-comment">//获取css属性</span><br>element<span class="hljs-selector-class">.style</span><span class="hljs-selector-class">.removeProperty</span>(property)  <span class="hljs-comment">//删除css属性</span><br>操作非内联样式<br><span class="hljs-comment">//ie8</span><br>element<span class="hljs-selector-class">.currentStyle</span><span class="hljs-selector-attr">[attrName]</span><br><span class="hljs-comment">//ie9+</span><br>window<span class="hljs-selector-class">.getComputedStyle</span>(el,null)<span class="hljs-selector-attr">[attrName]</span> <br>window<span class="hljs-selector-class">.getComputedStyle</span>(el,null)<span class="hljs-selector-class">.getPropertyValue</span>(attrName)<br><span class="hljs-comment">//伪类</span><br>window<span class="hljs-selector-class">.getComputedStyle</span>(el,<span class="hljs-string">&#x27;:after&#x27;</span>)<span class="hljs-selector-attr">[attrName]</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="三、对象"><a href="#三、对象" class="headerlink" title="三、对象"></a>三、对象</h2><p><strong>3.1 Object对象</strong></p>
+<p><strong>（1）生成实例对象</strong></p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">var</span> o = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Object</span>()<br></code></pre></td></tr></table></figure>
+
+<p><strong>（2）属性</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">Object</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>   <span class="hljs-comment">//返回原型对象</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>（3）方法</strong></p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Object</span>.</span></span>keys(o)   <span class="hljs-comment">//遍历对象的可枚举属性</span><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Object</span>.</span></span>get<span class="hljs-constructor">OwnPropertyName(<span class="hljs-params">o</span>)</span>   <span class="hljs-comment">//遍历对象不可枚举的属性</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>对象实例的方法</strong></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">valueOf</span><span class="hljs-params">()</span></span>：返回当前对象对应的值。  <br><span class="hljs-function"><span class="hljs-title">toString</span><span class="hljs-params">()</span></span>：返回当前对象对应的字符串形式。  <br><span class="hljs-function"><span class="hljs-title">toLocaleString</span><span class="hljs-params">()</span></span>：返回当前对象对应的本地字符串形式。  <br><span class="hljs-function"><span class="hljs-title">hasOwnProperty</span><span class="hljs-params">()</span></span>：判断某个属性是否为当前对象自身的属性，还是继承自原型对象的属性。 <br><span class="hljs-function"><span class="hljs-title">isPrototypeOf</span><span class="hljs-params">()</span></span>：判断当前对象是否为另一个对象的原型。<br><span class="hljs-function"><span class="hljs-title">propertyIsEnumerable</span><span class="hljs-params">()</span></span>：判断某个属性是否可枚举。<br></code></pre></td></tr></table></figure>
+
+<p><strong>3.2 Array对象</strong></p>
+<p><strong>（1）生成实例对象</strong></p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">var</span> a = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>()<br></code></pre></td></tr></table></figure>
+
+<p><strong>（2）属性</strong></p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver"><span class="hljs-keyword">a</span>.<span class="hljs-built_in">length</span> <span class="hljs-comment"> //长度</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>（3）Array.isArray()</strong></p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Array</span>.</span></span>is<span class="hljs-constructor">Array(<span class="hljs-params">a</span>)</span>   <span class="hljs-comment">//用来判断一个值是否为数组</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>（4）Array实例的方法</strong></p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs scss"><span class="hljs-selector-tag">a</span><span class="hljs-selector-class">.valueof</span>()   <span class="hljs-comment">//返回数组本身</span><br><span class="hljs-selector-tag">a</span><span class="hljs-selector-class">.toString</span>()  <span class="hljs-comment">//返回数组的字符串形式</span><br><span class="hljs-selector-tag">a</span><span class="hljs-selector-class">.push</span>(value,vlaue....)   <span class="hljs-comment">//用于在数组的末端添加一个或多个元素，并返回添加新元素后的数组长度。</span><br><span class="hljs-built_in">pop</span>()   <span class="hljs-comment">//用于删除数组的最后一个元素，并返回该元素</span><br><span class="hljs-built_in">join</span>()  <span class="hljs-comment">//以参数作为分隔符，将所有数组成员组成一个字符串返回。如果不提供参数，默认用逗号分隔。</span><br><span class="hljs-built_in">concat</span>()  <span class="hljs-comment">//用于多个数组的合并。它将新数组的成员，添加到原数组的尾部，然后返回一个新数组，原数组不变。</span><br><span class="hljs-built_in">shift</span>()  <span class="hljs-comment">//用于删除数组的第一个元素，并返回该元素。</span><br><span class="hljs-built_in">unshift</span>(value)  <span class="hljs-comment">//用于在数组的第一个位置添加元素，并返回添加新元素后的数组长度。</span><br><span class="hljs-built_in">reverse</span>()   <span class="hljs-comment">//用于颠倒数组中元素的顺序，返回改变后的数组</span><br><span class="hljs-built_in">slice</span>(start_index, upto_index);   <span class="hljs-comment">//用于提取原数组的一部分，返回一个新数组，原数组不变。第一个参数为起始位置（从0开始），第二个参数为终止位置（但该位置的元素本身不包括在内）。如果省略第二个参数，则一直返回到原数组的最后一个成员。负数表示倒数第几个。</span><br><span class="hljs-built_in">splice</span>(index, count_to_remove, addElement1, addElement2, ...);   <span class="hljs-comment">//用于删除原数组的一部分成员，并可以在被删除的位置添加入新的数组成员，返回值是被删除的元素。第一个参数是删除的起始位置，第二个参数是被删除的元素个数。如果后面还有更多的参数，则表示这些就是要被插入数组的新元素。</span><br><span class="hljs-built_in">sort</span>()   <span class="hljs-comment">//对数组成员进行排序，默认是按照字典顺序排序。排序后，原数组将被改变。如果想让sort方法按照自定义方式排序，可以传入一个函数作为参数，表示按照自定义方法进行排序。该函数本身又接受两个参数，表示进行比较的两个元素。如果返回值大于0，表示第一个元素排在第二个元素后面；其他情况下，都是第一个元素排在第二个元素前面。</span><br><span class="hljs-built_in">map</span>()   <span class="hljs-comment">//对数组的所有成员依次调用一个函数，根据函数结果返回一个新数组。</span><br><span class="hljs-built_in">map</span>(elem,index,arr)   <span class="hljs-comment">//map方法接受一个函数作为参数。该函数调用时，map方法会将其传入三个参数，分别是当前成员、当前位置和数组本身。</span><br><span class="hljs-built_in">forEach</span>()   <span class="hljs-comment">//遍历数组的所有成员，执行某种操作,参数是一个函数。它接受三个参数，分别是当前位置的值、当前位置的编号和整个数组。</span><br><span class="hljs-attribute">filter</span>()   <span class="hljs-comment">//参数是一个函数，所有数组成员依次执行该函数，返回结果为true的成员组成一个新数组返回。该方法不会改变原数组。</span><br><span class="hljs-built_in">some</span>()    <span class="hljs-comment">//用来判断数组成员是否符合某种条件。接受一个函数作为参数，所有数组成员依次执行该函数，返回一个布尔值。该函数接受三个参数，依次是当前位置的成员、当前位置的序号和整个数组。只要有一个数组成员的返回值是true，则整个some方法的返回值就是true，否则false。</span><br><span class="hljs-built_in">every</span>()   <span class="hljs-comment">//用来判断数组成员是否符合某种条件。接受一个函数作为参数，所有数组成员依次执行该函数，返回一个布尔值。该函数接受三个参数，依次是当前位置的成员、当前位置的序号和整个数组。所有数组成员的返回值都是true，才返回true，否则false。</span><br><span class="hljs-built_in">reduce</span>()   <span class="hljs-comment">//依次处理数组的每个成员，最终累计为一个值。从左到右处理（从第一个成员到最后一个成员）</span><br><span class="hljs-built_in">reduceRight</span>()  <span class="hljs-comment">//依次处理数组的每个成员，最终累计为一个值。从右到左（从最后一个成员到第一个成员）</span><br><span class="hljs-built_in">indexOf</span>(s)   <span class="hljs-comment">//返回给定元素在数组中第一次出现的位置，如果没有出现则返回-1。可以接受第二个参数，表示搜索的开始位置</span><br><span class="hljs-built_in">lastIndexOf</span>()  <span class="hljs-comment">//返回给定元素在数组中最后一次出现的位置，如果没有出现则返回-1。</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>3.3 Number对象</strong></p>
+<p><strong>（1）生成对象</strong></p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">var</span> n = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Number</span>()<br></code></pre></td></tr></table></figure>
+
+<p><strong>（2）Number对象的属性</strong></p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-built_in">Number</span>.POSITIVE_INFINITY：正的无限，指向<span class="hljs-literal">Infinity</span>。  <br><span class="hljs-built_in">Number</span>.NEGATIVE_INFINITY：负的无限，指向-<span class="hljs-literal">Infinity</span>。  <br><span class="hljs-built_in">Number</span>.<span class="hljs-literal">NaN</span>：表示非数值，指向<span class="hljs-literal">NaN</span>。  <br><span class="hljs-built_in">Number</span>.MAX_VALUE：表示最大的正数，相应的，最小的负数为-<span class="hljs-built_in">Number</span>.MAX_VALUE。  <br><span class="hljs-built_in">Number</span>.MIN_VALUE：表示最小的正数（即最接近<span class="hljs-number">0</span>的正数，在<span class="hljs-number">64</span>位浮点数体系中为<span class="hljs-number">5e-324</span>），相应的，最接近<span class="hljs-number">0</span>的负数为-<span class="hljs-built_in">Number</span>.MIN_VALUE。  <br><span class="hljs-built_in">Number</span>.MAX_SAFE_INTEGER：表示能够精确表示的最大整数，即<span class="hljs-number">9007199254740991</span>。  <br><span class="hljs-built_in">Number</span>.MIN_SAFE_INTEGER：表示能够精确表示的最小整数，即<span class="hljs-number">-9007199254740991</span>。<br></code></pre></td></tr></table></figure>
+
+<p><strong>（4）Number对象实例的方法</strong></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">toString</span><span class="hljs-params">()</span></span>   <span class="hljs-comment">//用来将一个数值转为字符串形式.可以接受一个参数，表示输出的进制。如果省略这个参数，默认将数值先转为十进制，再输出字符串；否则，就根据参数指定的进制，将一个数字转化成某个进制的字符串。</span><br><span class="hljs-function"><span class="hljs-title">toFixed</span><span class="hljs-params">()</span></span>   <span class="hljs-comment">//用于将一个数转为指定位数的小数，返回这个小数对应的字符串。</span><br><span class="hljs-function"><span class="hljs-title">toExponential</span><span class="hljs-params">()</span></span>  <span class="hljs-comment">//用于将一个数转为科学计数法形式。可传入一个参数，参数表示小数点后有效数字的位数，范围为0到20，超出这个范围，会抛出一个RangeError。</span><br><span class="hljs-function"><span class="hljs-title">toPrecision</span><span class="hljs-params">()</span></span>  <span class="hljs-comment">//用于将一个数转为指定位数的有效数字。</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>3.4 String 对象</strong></p>
+<p><strong>（1）生成实例对象</strong></p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">var</span> s = <span class="hljs-keyword">new</span> <span class="hljs-built_in">String</span>()<br></code></pre></td></tr></table></figure>
+
+<p><strong>（2）String对象的属性</strong></p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arcade">s.<span class="hljs-built_in">length</span>   <span class="hljs-comment">//返回字符串的长度</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>（3）方法</strong></p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">s.chat<span class="hljs-constructor">At(<span class="hljs-params">index</span>)</span>   <span class="hljs-comment">//返回指定位置的字符</span><br>s.from<span class="hljs-constructor">CharCode()</span>    <span class="hljs-comment">//该方法的参数是一系列Unicode码点，返回对应的字符串。</span><br>s.<span class="hljs-built_in">char</span><span class="hljs-constructor">CodeAt(<span class="hljs-params">index</span>)</span>    <span class="hljs-comment">//返回给定位置字符的Unicode码点（十进制表示）</span><br>s.concat(s2)  <span class="hljs-comment">//用于连接两个字符串</span><br>s.slice(start,<span class="hljs-keyword">end</span>)   <span class="hljs-comment">//用于从原字符串取出子字符串并返回，不改变原字符串。第一个参数是子字符串的开始位置，第二个参数是子字符串的结束位置（不含该位置）。如果参数是负值，表示从结尾开始倒数计算的位置，即该负值加上字符串长度。</span><br>s.substring(start,<span class="hljs-keyword">end</span>)  <span class="hljs-comment">//用于从原字符串取出子字符串并返回，不改变原字符串.第一个参数表示子字符串的开始位置，第二个位置表示结束位置。</span><br>s.substr(start,length)   <span class="hljs-comment">//用于从原字符串取出子字符串并返回，不改变原字符串。第一个参数是子字符串的开始位置，第二个参数是子字符串的长度。如果第一个参数是负数，表示倒数计算的字符位置。如果第二个参数是负数，将被自动转为0，因此会返回空字符串。</span><br>s.index<span class="hljs-constructor">Of(<span class="hljs-params">s</span>)</span>   <span class="hljs-comment">//返回给定元素在字符串中第一次出现的位置，如果没有出现则返回-1。可以接受第二个参数，表示搜索的开始位置 </span><br>s.last<span class="hljs-constructor">IndexOf()</span>  <span class="hljs-comment">//返回给定元素在字符串中最后一次出现的位置，如果没有出现则返回-1。</span><br>s.trim<span class="hljs-literal">()</span>  <span class="hljs-comment">//用于去除字符串两端的空格，返回一个新字符串</span><br>s.<span class="hljs-keyword">to</span><span class="hljs-constructor">LowerCase()</span>  <span class="hljs-comment">//用于将一个字符串全部转为小写,返回一个新字符串，不改变原字符串。</span><br>s.<span class="hljs-keyword">to</span><span class="hljs-constructor">UpperCase()</span>  <span class="hljs-comment">//全部转为大写</span><br>s.locale<span class="hljs-constructor">Compare(<span class="hljs-params">s2</span>)</span>  <span class="hljs-comment">//用于比较两个字符串。它返回一个整数，如果小于0，表示第一个字符串小于第二个字符串；如果等于0，表示两者相等；如果大于0，表示第一个字符串大于第二个字符串。</span><br>s.<span class="hljs-keyword">match</span>(regexp)   <span class="hljs-comment">//用于确定原字符串是否匹配某个子字符串，返回一个数组，成员为匹配的第一个字符串。如果没有找到匹配，则返回null。</span><br>s.search<span class="hljs-literal">()</span>  <span class="hljs-comment">//返回值为匹配的第一个位置。如果没有找到匹配，则返回-1。</span><br>s.replace(oldValue,newValue)  <span class="hljs-comment">//用于替换匹配的子字符串，一般情况下只替换第一个匹配（除非使用带有g修饰符的正则表达式）。</span><br>s.split<span class="hljs-literal">()</span>  <span class="hljs-comment">//按照给定规则分割字符串，返回一个由分割出来的子字符串组成的数组。还可传入第二个参数，决定了返回数组的成员数。</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>3.5 Math对象</strong></p>
+<p><strong>（1）属性</strong></p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">Math</span>.E：常数e。  <br><span class="hljs-attribute">Math</span>.LN2：<span class="hljs-number">2</span>的自然对数。  <br><span class="hljs-attribute">Math</span>.LN10：<span class="hljs-number">10</span>的自然对数。  <br><span class="hljs-attribute">Math</span>.LOG2E：以<span class="hljs-number">2</span>为底的e的对数。  <br><span class="hljs-attribute">Math</span>.LOG10E：以<span class="hljs-number">10</span>为底的e的对数。  <br><span class="hljs-attribute">Math</span>.PI：常数Pi。  <br><span class="hljs-attribute">Math</span>.SQRT1_2：<span class="hljs-number">0</span>.<span class="hljs-number">5</span>的平方根。  <br><span class="hljs-attribute">Math</span>.SQRT2：<span class="hljs-number">2</span>的平方根。<br></code></pre></td></tr></table></figure>
+
+<p><strong>（2）数学方法</strong></p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs arcade">Math.<span class="hljs-built_in">abs</span>()：返回参数的绝对值  <br>Math.<span class="hljs-built_in">ceil</span>()：向上取整，接受一个参数，返回大于该参数的最小整数。 <br>Math.<span class="hljs-built_in">floor</span>()：向下取整  <br>Math.<span class="hljs-built_in">max</span>(n,n1,...)：可接受多个参数，返回最大值  <br>Math.<span class="hljs-built_in">min</span>(n,n1,..)：可接受多个参数，返回最小值  <br>Math.<span class="hljs-built_in">pow</span>(n,e)：指数运算, 返回以第一个参数为底数、第二个参数为幂的指数值。 <br>Math.<span class="hljs-built_in">sqrt</span>()：返回参数值的平方根。如果参数是一个负值，则返回<span class="hljs-literal">NaN</span>。  <br>Math.<span class="hljs-built_in">log</span>()：返回以e为底的自然对数值。<br>Math.<span class="hljs-built_in">exp</span>()：返回e的指数，也就是常数e的参数次方。<br>Math.<span class="hljs-built_in">round</span>()：四舍五入  <br>Math.<span class="hljs-built_in">random</span>()：返回<span class="hljs-number">0</span>到<span class="hljs-number">1</span>之间的一个伪随机数，可能等于<span class="hljs-number">0</span>，但是一定小于<span class="hljs-number">1</span>。<br></code></pre></td></tr></table></figure>
+
+<p><strong>（3）三角函数方法</strong></p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs 1c">Math.<span class="hljs-built_in">sin</span>()：返回参数的正弦  <br>Math.<span class="hljs-built_in">cos</span>()：返回参数的余弦  <br>Math.<span class="hljs-built_in">tan</span>()：返回参数的正切  <br>Math.<span class="hljs-built_in">asin</span>()：返回参数的反正弦（弧度值）  <br>Math.<span class="hljs-built_in">acos</span>()：返回参数的反余弦（弧度值）  <br>Math.<span class="hljs-built_in">atan</span>()：返回参数的反正切（弧度值）<br></code></pre></td></tr></table></figure>
+
+<p><strong>3.6 JSON对象</strong></p>
+<p><strong>（1）方法</strong></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs awk">JSON.stringify()   <br><span class="hljs-regexp">//</span>用于将一个值转为字符串。该字符串应该符合JSON格式，并且可以被JSON.parse方法还原。<br><span class="hljs-regexp">//</span>（JSON.stringify(obj, selectedProperties)）还可以接受一个数组，作为第二个参数，指定需要转成字符串的属性。<br><span class="hljs-regexp">//</span>还可以接受第三个参数，用于增加返回的JSON字符串的可读性。如果是数字，表示每个属性前面添加的空格（最多不超过<span class="hljs-number">10</span>个）；如果是字符串（不超过<span class="hljs-number">10</span>个字符），则该字符串会添加在每行前面。<br><br>JSON.parse()   <span class="hljs-regexp">//</span>用于将JSON字符串转化成对象。<br></code></pre></td></tr></table></figure>
+
+<p><strong>3.7 console对象</strong></p>
+<p><strong>（1）方法</strong></p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs scss">console<span class="hljs-selector-class">.log</span>(text,text2,...)   <span class="hljs-comment">//用于在console窗口输出信息。它可以接受多个参数，将它们的结果连接起来输出。如果第一个参数是格式字符串（使用了格式占位符），console.log方法将依次用后面的参数替换占位符，然后再进行输出。</span><br>console<span class="hljs-selector-class">.info</span>()   <span class="hljs-comment">//在console窗口输出信息，同时，会在输出信息的前面，加上一个蓝色图标。</span><br>console<span class="hljs-selector-class">.debug</span>()  <span class="hljs-comment">//在console窗口输出信息，同时，会在输出信息的前面，加上一个蓝色图标。</span><br>console<span class="hljs-selector-class">.warn</span>()  <span class="hljs-comment">//输出信息时，在最前面加一个黄色三角，表示警告；</span><br>console<span class="hljs-selector-class">.error</span>()  <span class="hljs-comment">//输出信息时，在最前面加一个红色的叉，表示出错，同时会显示错误发生的堆栈</span><br>console<span class="hljs-selector-class">.table</span>()  <span class="hljs-comment">//可以将复合类型的数据转为表格显示。</span><br>console<span class="hljs-selector-class">.count</span>()  <span class="hljs-comment">//用于计数，输出它被调用了多少次。</span><br>console<span class="hljs-selector-class">.dir</span>()    <span class="hljs-comment">//用来对一个对象进行检查（inspect），并以易于阅读和打印的格式显示。</span><br>console<span class="hljs-selector-class">.dirxml</span>()  <span class="hljs-comment">//用于以目录树的形式，显示DOM节点。</span><br>console<span class="hljs-selector-class">.assert</span>()  <span class="hljs-comment">//接受两个参数，第一个参数是表达式，第二个参数是字符串。只有当第一个参数为false，才会输出第二个参数，否则不会有任何结果。</span><br><br><span class="hljs-comment">//这两个方法用于计时，可以算出一个操作所花费的准确时间。</span><br>console<span class="hljs-selector-class">.time</span>()<br>console<span class="hljs-selector-class">.timeEnd</span>()<br><span class="hljs-comment">//time方法表示计时开始，timeEnd方法表示计时结束。它们的参数是计时器的名称。调用timeEnd方法之后，console窗口会显示“计时器名称: 所耗费的时间”。</span><br><br>console<span class="hljs-selector-class">.profile</span>()  <span class="hljs-comment">//用来新建一个性能测试器（profile），它的参数是性能测试器的名字。</span><br>console<span class="hljs-selector-class">.profileEnd</span>()  <span class="hljs-comment">//用来结束正在运行的性能测试器。</span><br><br>console<span class="hljs-selector-class">.group</span>()<br>console<span class="hljs-selector-class">.groupend</span>()<br><span class="hljs-comment">//上面这两个方法用于将显示的信息分组。它只在输出大量信息时有用，分在一组的信息，可以用鼠标折叠/展开。</span><br>console<span class="hljs-selector-class">.groupCollapsed</span>()  <span class="hljs-comment">//用于将显示的信息分组，该组的内容，在第一次显示时是收起的（collapsed），而不是展开的。</span><br><br>console<span class="hljs-selector-class">.trace</span>()  <span class="hljs-comment">//显示当前执行的代码在堆栈中的调用路径。</span><br>console<span class="hljs-selector-class">.clear</span>()  <span class="hljs-comment">//用于清除当前控制台的所有输出，将光标回置到第一行。</span><br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%89%8D%E7%AB%AF/" class="category-chain-item">前端</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/javascript/">#javascript</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>js-api</div>
+      <div>http://example.com/2018/01/05/html+css+js+ts/3-js常用api/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>January 5, 2018</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/01/09/html+css+js+ts/3-js%E5%B8%B8%E7%94%A8%E4%BB%A3%E7%A0%81%E6%93%8D%E4%BD%9C%E5%AE%9E%E4%BE%8B/" title="js-常用代码操作实例">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">js-常用代码操作实例</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/01/03/html+css+js+ts/3-js%E9%97%AD%E5%8C%85/" title="闭包">
+                        <span class="hidden-mobile">闭包</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

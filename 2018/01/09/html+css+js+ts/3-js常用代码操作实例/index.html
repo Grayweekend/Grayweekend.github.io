@@ -1,0 +1,888 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="转义特殊字符为html实体  123HtmlEncode: function(str)&amp;#123;	return str.replace(&#x2F;&amp;&#x2F;g, &amp;#x27;&amp;&amp;#x27;).replace(&#x2F;\&quot;&#x2F;g, &amp;#x27;&quot;&amp;#x27;).replace(&#x2F;&lt;&#x2F;g, &amp;#x27;&lt;&amp;#x27;).replace(&#x2F;&gt;&#x2F;g, &amp;#x27;&amp;gt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js-常用代码操作实例">
+<meta property="og:url" content="http://example.com/2018/01/09/html+css+js+ts/3-js%E5%B8%B8%E7%94%A8%E4%BB%A3%E7%A0%81%E6%93%8D%E4%BD%9C%E5%AE%9E%E4%BE%8B/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="转义特殊字符为html实体  123HtmlEncode: function(str)&amp;#123;	return str.replace(&#x2F;&amp;&#x2F;g, &amp;#x27;&amp;&amp;#x27;).replace(&#x2F;\&quot;&#x2F;g, &amp;#x27;&quot;&amp;#x27;).replace(&#x2F;&lt;&#x2F;g, &amp;#x27;&lt;&amp;#x27;).replace(&#x2F;&gt;&#x2F;g, &amp;#x27;&amp;gt">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-01-09T14:25:58.000Z">
+<meta property="article:modified_time" content="2022-06-04T07:19:00.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>js-常用代码操作实例 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="js-常用代码操作实例"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-01-09 22:25" pubdate>
+          January 9, 2018 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          25k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          208 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">js-常用代码操作实例</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <ul>
+<li>转义特殊字符为html实体</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">HtmlEncode: <span class="hljs-keyword">function</span>(str)&#123;<br>	return str.replace(<span class="hljs-regexp">/&amp;/g</span>, <span class="hljs-string">&#x27;&amp;&#x27;</span>).replace(<span class="hljs-regexp">/\&quot;/g</span>, <span class="hljs-string">&#x27;&quot;&#x27;</span>).replace(<span class="hljs-regexp">/&lt;/g</span>, <span class="hljs-string">&#x27;&lt;&#x27;</span>).replace(<span class="hljs-regexp">/&gt;/g</span>, <span class="hljs-string">&#x27;&gt;&#x27;</span>).replace(<span class="hljs-regexp">/&#x27;/g</span>, <span class="hljs-string">&#x27;&#x27;&#x27;);</span><br><span class="hljs-string">&#125;,</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>验证是否为有效的手机电话号码</li>
+</ul>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs arcade">IsMobile: <span class="hljs-keyword">function</span>(<span class="hljs-params">str</span>)&#123;<br>	<span class="hljs-keyword">var</span> rp = <span class="hljs-regexp">/^1[3|4|5|7|8][0-9]\d&#123;4,8&#125;$/</span>;<br>	<span class="hljs-keyword">return</span> rp.test(str);<br>&#125;,<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>验证是否为有效的座机电话号码</li>
+</ul>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs arcade">IsTel: <span class="hljs-keyword">function</span>(<span class="hljs-params">str</span>)&#123;<br>	<span class="hljs-keyword">var</span> rp = <span class="hljs-regexp">/^([0-9]&#123;3,4&#125;-)?[0-9]&#123;7,8&#125;$/</span>;<br>	<span class="hljs-keyword">return</span> rp.test(str);<br>&#125;,<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>判断是那种类型的浏览器</li>
+</ul>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs arcade">WhichBrowser: <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>	<span class="hljs-keyword">var</span> userAgent = navigator.userAgent;<br><br>	<span class="hljs-keyword">var</span> isOpera = userAgent.<span class="hljs-built_in">indexOf</span>(<span class="hljs-string">&quot;Opera&quot;</span>) &gt; <span class="hljs-number">-1</span>;<br>	<span class="hljs-keyword">var</span> isIE = userAgent.<span class="hljs-built_in">indexOf</span>(<span class="hljs-string">&quot;compatible&quot;</span>) &gt; <span class="hljs-number">-1</span> &amp;&amp; userAgent.<span class="hljs-built_in">indexOf</span>(<span class="hljs-string">&quot;MSIE&quot;</span>) &gt; <span class="hljs-number">-1</span> &amp;&amp; !isOpera;<br>	<span class="hljs-keyword">var</span> isFF = userAgent.<span class="hljs-built_in">indexOf</span>(<span class="hljs-string">&quot;Firefox&quot;</span>) &gt; <span class="hljs-number">-1</span>;<br>	<span class="hljs-keyword">var</span> isCH = userAgent.<span class="hljs-built_in">indexOf</span>(<span class="hljs-string">&quot;Chrome&quot;</span>) &gt; <span class="hljs-number">-1</span>;<br>	<span class="hljs-keyword">var</span> isSafari = userAgent.<span class="hljs-built_in">indexOf</span>(<span class="hljs-string">&quot;Safari&quot;</span>) &gt; <span class="hljs-number">-1</span>;<br><br>	<span class="hljs-keyword">if</span> (isIE)&#123;<br>		<span class="hljs-keyword">var</span> IE5 = IE55 = IE6 = IE7 = IE8 = <span class="hljs-literal">false</span>;<br>		<span class="hljs-keyword">var</span> reIE = <span class="hljs-keyword">new</span> RegExp(<span class="hljs-string">&quot;MSIE (\\d+\\.\\d+);&quot;</span>);<br>		reIE.test(userAgent);<br>		<span class="hljs-keyword">var</span> fIEVersion = parseFloat(RegExp[<span class="hljs-string">&quot;$1&quot;</span>]);<br>		IE55 = fIEVersion == <span class="hljs-number">5.5</span>;<br>		IE6 = fIEVersion == <span class="hljs-number">6.0</span>;<br>		IE7 = fIEVersion == <span class="hljs-number">7.0</span>;<br>		IE8 = fIEVersion == <span class="hljs-number">8.0</span>;<br>		<span class="hljs-keyword">if</span> (IE55) &#123;<br>			<span class="hljs-keyword">return</span> <span class="hljs-string">&quot;IE55&quot;</span>;<br>		&#125;<br>		<span class="hljs-keyword">if</span> (IE6) &#123;<br>			<span class="hljs-keyword">return</span> <span class="hljs-string">&quot;IE6&quot;</span>;<br>		&#125;<br>		<span class="hljs-keyword">if</span> (IE7) &#123;<br>			<span class="hljs-keyword">return</span> <span class="hljs-string">&quot;IE7&quot;</span>;<br>		&#125;<br>		<span class="hljs-keyword">if</span> (IE8) &#123;<br>			<span class="hljs-keyword">return</span> <span class="hljs-string">&quot;IE8&quot;</span>;<br>		&#125;<br>	&#125;<br><br>	<span class="hljs-keyword">if</span> (isFF) &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Firefox&quot;</span>;<br>	&#125;<br>	<span class="hljs-keyword">if</span> (isCH) &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Chrome&quot;</span>;<br>	&#125;<br>	<span class="hljs-keyword">if</span> (isOpera) &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Opera&quot;</span>;<br>	&#125;<br>	<span class="hljs-keyword">if</span> (isSafari) &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Safari&quot;</span>;<br>	&#125;<br>&#125;,<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>获取客户端浏览器cookie</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">GetCookie</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">c_name</span>)&#123;<br>	<span class="hljs-keyword">if</span>(<span class="hljs-variable language_">document</span>.<span class="hljs-property">cookie</span>.<span class="hljs-property">length</span>&gt;<span class="hljs-number">0</span>)&#123;<br>		c_start = <span class="hljs-variable language_">document</span>.<span class="hljs-property">cookie</span>.<span class="hljs-title function_">indexOf</span>(c_name + <span class="hljs-string">&#x27;=&#x27;</span>);<br>		<span class="hljs-keyword">if</span>(c_start != -<span class="hljs-number">1</span>)&#123;<br>			c_start = c_start + c_name.<span class="hljs-property">length</span> + <span class="hljs-number">1</span>;<br>			c_end = <span class="hljs-variable language_">document</span>.<span class="hljs-property">cookie</span>.<span class="hljs-title function_">indexOf</span>(<span class="hljs-string">&#x27;;&#x27;</span>,c_start);<br>			<span class="hljs-keyword">if</span> (c_end==-<span class="hljs-number">1</span>) c_end = <span class="hljs-variable language_">document</span>.<span class="hljs-property">cookie</span>.<span class="hljs-property">length</span>;<br>			<span class="hljs-keyword">return</span> <span class="hljs-built_in">unescape</span>(<span class="hljs-variable language_">document</span>.<span class="hljs-property">cookie</span>.<span class="hljs-title function_">substring</span>(c_start,c_end));<br>		&#125;<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;&#x27;</span>;<br>&#125;,<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>设置客户端浏览器cookie</li>
+</ul>
+<figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs vbscript">SetCookie: <span class="hljs-keyword">function</span>(c_name, value, expiredays)&#123;<br>	var exdate = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();<br>	exdate.<span class="hljs-keyword">set</span><span class="hljs-built_in">Date</span>(exdate.<span class="hljs-keyword">get</span><span class="hljs-built_in">Date</span>() + expiredays);<br>	document.cookie = c_name + <span class="hljs-string">&quot;=&quot;</span> + escape(value) + ((expiredays==<span class="hljs-literal">null</span>) ? <span class="hljs-string">&quot;&quot;</span> : <span class="hljs-string">&quot;;expires=&quot;</span>+exdate.toGMT<span class="hljs-built_in">String</span>());<br>&#125;,<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>字符串长度截取</li>
+</ul>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">function</span> <span class="hljs-title function_">cutstr</span>(<span class="hljs-params">str, len</span>) &#123;<br>    <span class="hljs-keyword">var</span> temp,<br>        icount = <span class="hljs-number">0</span>,<br>        patrn = <span class="hljs-regexp">/[^\x00-\xff]/</span>，<br>        strre = <span class="hljs-string">&quot;&quot;</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; str.<span class="hljs-built_in">length</span>; i++) &#123;<br>        <span class="hljs-keyword">if</span> (icount &lt; len - <span class="hljs-number">1</span>) &#123;<br>            temp = str.substr(i, <span class="hljs-number">1</span>);<br>                <span class="hljs-keyword">if</span> (patrn.exec(temp) == <span class="hljs-literal">null</span>) &#123;<br>                   icount = icount + <span class="hljs-number">1</span><br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                icount = icount + <span class="hljs-number">2</span><br>            &#125;<br>            strre += temp<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-keyword">break</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> strre + <span class="hljs-string">&quot;...&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>替换全部</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">String</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">replaceAll</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">s1, s2</span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">replace</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">RegExp</span>(s1, <span class="hljs-string">&quot;gm&quot;</span>), s2)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>清除空格</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">String</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">trim</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">var</span> reExtraSpace = <span class="hljs-regexp">/^\s*(.*?)\s+$/</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">replace</span>(reExtraSpace, <span class="hljs-string">&quot;$1&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>清除左空格&#x2F;右空格</li>
+</ul>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">function</span> <span class="hljs-title function_">ltrim</span>(<span class="hljs-params">s</span>)&#123; <span class="hljs-keyword">return</span> s.<span class="hljs-built_in">replace</span>( <span class="hljs-regexp">/^(\s*|　*)/</span>, <span class="hljs-string">&quot;&quot;</span>); &#125; <br><span class="hljs-keyword">function</span> <span class="hljs-title function_">rtrim</span>(<span class="hljs-params">s</span>)&#123; <span class="hljs-keyword">return</span> s.<span class="hljs-built_in">replace</span>( <span class="hljs-regexp">/(\s*|　*)$/</span>, <span class="hljs-string">&quot;&quot;</span>); &#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>判断是否以某个字符串开头</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">String</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">startWith</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">s</span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">indexOf</span>(s) == <span class="hljs-number">0</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>判断是否以某个字符串结束</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">String</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">endWith</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">s</span>) &#123;<br>    <span class="hljs-keyword">var</span> d = <span class="hljs-variable language_">this</span>.<span class="hljs-property">length</span> - s.<span class="hljs-property">length</span>;<br>    <span class="hljs-keyword">return</span> (d &gt;= <span class="hljs-number">0</span> &amp;&amp; <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">lastIndexOf</span>(s) == d)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>转义html标签</li>
+</ul>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">function</span> <span class="hljs-title function_">HtmlEncode</span>(<span class="hljs-params">text</span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">text</span>.<span class="hljs-built_in">replace</span>(<span class="hljs-regexp">/&amp;/g</span>, <span class="hljs-string">&#x27;&amp;&#x27;</span>).<span class="hljs-built_in">replace</span>(<span class="hljs-regexp">/\&quot;/g</span>, <span class="hljs-string">&#x27;&quot;&#x27;</span>).<span class="hljs-built_in">replace</span>(<span class="hljs-regexp">/&lt;/g</span>, <span class="hljs-string">&#x27;&lt;&#x27;</span>).<span class="hljs-built_in">replace</span>(<span class="hljs-regexp">/&gt;/g</span>, <span class="hljs-string">&#x27;&gt;&#x27;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>时间日期格式转换</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">Date.prototype.Format = function(formatStr) &#123;<br>    <span class="hljs-keyword">var</span> str = formatStr;<br>    <span class="hljs-keyword">var</span> Week = [<span class="hljs-string">&#x27;日&#x27;</span>, <span class="hljs-string">&#x27;一&#x27;</span>, <span class="hljs-string">&#x27;二&#x27;</span>, <span class="hljs-string">&#x27;三&#x27;</span>, <span class="hljs-string">&#x27;四&#x27;</span>, <span class="hljs-string">&#x27;五&#x27;</span>, <span class="hljs-string">&#x27;六&#x27;</span>];<br>    str = str.replace(/yyyy|YYYY/, <span class="hljs-keyword">this</span>.getFullYear());<br>    str = str.replace(/yy|YY/, (<span class="hljs-keyword">this</span>.getYear() % <span class="hljs-number">100</span>) &gt; <span class="hljs-number">9</span> ? (<span class="hljs-keyword">this</span>.getYear() % <span class="hljs-number">100</span>).toString() : <span class="hljs-string">&#x27;0&#x27;</span> + (<span class="hljs-keyword">this</span>.getYear() % <span class="hljs-number">100</span>));<br>    str = str.replace(/MM/, (<span class="hljs-keyword">this</span>.getMonth() + <span class="hljs-number">1</span>) &gt; <span class="hljs-number">9</span> ? (<span class="hljs-keyword">this</span>.getMonth() + <span class="hljs-number">1</span>).toString() : <span class="hljs-string">&#x27;0&#x27;</span> + (<span class="hljs-keyword">this</span>.getMonth() + <span class="hljs-number">1</span>));<br>    str = str.replace(/M/g, (<span class="hljs-keyword">this</span>.getMonth() + <span class="hljs-number">1</span>));<br>    str = str.replace(/w|W/g, Week[<span class="hljs-keyword">this</span>.getDay()]);<br>    str = str.replace(/dd|DD/, <span class="hljs-keyword">this</span>.getDate() &gt; <span class="hljs-number">9</span> ? <span class="hljs-keyword">this</span>.getDate().toString() : <span class="hljs-string">&#x27;0&#x27;</span> + <span class="hljs-keyword">this</span>.getDate());<br>    str = str.replace(/d|D/g, <span class="hljs-keyword">this</span>.getDate());<br>    str = str.replace(/hh|HH/, <span class="hljs-keyword">this</span>.getHours() &gt; <span class="hljs-number">9</span> ? <span class="hljs-keyword">this</span>.getHours().toString() : <span class="hljs-string">&#x27;0&#x27;</span> + <span class="hljs-keyword">this</span>.getHours());<br>    str = str.replace(/h|H/g, <span class="hljs-keyword">this</span>.getHours());<br>    str = str.replace(/mm/, <span class="hljs-keyword">this</span>.getMinutes() &gt; <span class="hljs-number">9</span> ? <span class="hljs-keyword">this</span>.getMinutes().toString() : <span class="hljs-string">&#x27;0&#x27;</span> + <span class="hljs-keyword">this</span>.getMinutes());<br>    str = str.replace(/m/g, <span class="hljs-keyword">this</span>.getMinutes());<br>    str = str.replace(/ss|SS/, <span class="hljs-keyword">this</span>.getSeconds() &gt; <span class="hljs-number">9</span> ? <span class="hljs-keyword">this</span>.getSeconds().toString() : <span class="hljs-string">&#x27;0&#x27;</span> + <span class="hljs-keyword">this</span>.getSeconds());<br>    str = str.replace(/s|S/g, <span class="hljs-keyword">this</span>.getSeconds());<br>    <span class="hljs-keyword">return</span> str<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>判断是否为数字类型</li>
+</ul>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">function</span> <span class="hljs-title function_">isDigit</span>(<span class="hljs-params">value</span>) &#123;<br>    <span class="hljs-keyword">var</span> patrn = <span class="hljs-regexp">/^[0-9]*$/</span>;<br>    <span class="hljs-keyword">if</span> (patrn.exec(value) == <span class="hljs-literal">null</span> || value == <span class="hljs-string">&quot;&quot;</span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>设置cookie值</li>
+</ul>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-keyword">function</span> set<span class="hljs-constructor">Cookie(<span class="hljs-params">name</span>, <span class="hljs-params">value</span>, Hours)</span> &#123;<br>    var d = <span class="hljs-keyword">new</span> <span class="hljs-constructor">Date()</span>;<br>    var offset = <span class="hljs-number">8</span>;<br>    var utc = d.get<span class="hljs-constructor">Time()</span> + (d.get<span class="hljs-constructor">TimezoneOffset()</span><span class="hljs-operator"> * </span><span class="hljs-number">60000</span>);<br>    var nd = utc + (<span class="hljs-number">3600000</span><span class="hljs-operator"> * </span>offset);<br>    var exp = <span class="hljs-keyword">new</span> <span class="hljs-constructor">Date(<span class="hljs-params">nd</span>)</span>;<br>    exp.set<span class="hljs-constructor">Time(<span class="hljs-params">exp</span>.<span class="hljs-params">getTime</span>()</span> + Hours<span class="hljs-operator"> * </span><span class="hljs-number">60</span><span class="hljs-operator"> * </span><span class="hljs-number">60</span><span class="hljs-operator"> * </span><span class="hljs-number">1000</span>);<br>    document.cookie = name + <span class="hljs-string">&quot;=&quot;</span> + escape(value) + <span class="hljs-string">&quot;;path=/;expires=&quot;</span> + exp.<span class="hljs-keyword">to</span><span class="hljs-constructor">GMTString()</span> + <span class="hljs-string">&quot;;domain=360doc.com;&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>获取cookie值</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">getCookie</span>(<span class="hljs-params">name</span>) &#123;<br>    <span class="hljs-keyword">var</span> arr = <span class="hljs-variable language_">document</span>.<span class="hljs-property">cookie</span>.<span class="hljs-title function_">match</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">RegExp</span>(<span class="hljs-string">&quot;(^| )&quot;</span> + name + <span class="hljs-string">&quot;=([^;]*)(;|$)&quot;</span>));<br>    <span class="hljs-keyword">if</span> (arr != <span class="hljs-literal">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-built_in">unescape</span>(arr[<span class="hljs-number">2</span>]);<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>加入收藏夹</li>
+</ul>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-keyword">function</span> <span class="hljs-constructor">AddFavorite(<span class="hljs-params">sURL</span>, <span class="hljs-params">sTitle</span>)</span> &#123;<br>    <span class="hljs-keyword">try</span> &#123;<br>        window.<span class="hljs-keyword">external</span>.add<span class="hljs-constructor">Favorite(<span class="hljs-params">sURL</span>, <span class="hljs-params">sTitle</span>)</span><br>    &#125; catch(e) &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            window.sidebar.add<span class="hljs-constructor">Panel(<span class="hljs-params">sTitle</span>, <span class="hljs-params">sURL</span>, <span class="hljs-string">&quot;&quot;</span>)</span><br>        &#125; catch(e) &#123;<br>            alert(<span class="hljs-string">&quot;加入收藏失败，请使用Ctrl+D进行添加&quot;</span>)<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>设为首页</li>
+</ul>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-keyword">function</span> set<span class="hljs-constructor">Homepage()</span> &#123;<br>    <span class="hljs-keyword">if</span> (document.all) &#123;<br>        document.body.style.behavior = &#x27;url(#default#homepage)&#x27;;<br>        document.body.set<span class="hljs-constructor">HomePage(&#x27;<span class="hljs-params">http</span>:<span class="hljs-operator">/</span><span class="hljs-operator">/</span><span class="hljs-params">w3cboy</span>.<span class="hljs-params">com</span>&#x27;)</span><br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (window.sidebar) &#123;<br>        <span class="hljs-keyword">if</span> (window.netscape) &#123;<br>            <span class="hljs-keyword">try</span> &#123;<br>                netscape.security.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">PrivilegeManager</span>.</span></span>enable<span class="hljs-constructor">Privilege(<span class="hljs-string">&quot;UniversalXPConnect&quot;</span>)</span><br>            &#125; catch(e) &#123;<br>                alert(<span class="hljs-string">&quot;该操作被浏览器拒绝，如果想启用该功能，请在地址栏内输入 about:config,然后将项 signed.applets.codebase_principal_support 值该为true&quot;</span>)<br>                &#125;<br>        &#125;<br>        var prefs = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Components</span>.</span></span>classes<span class="hljs-literal">[&#x27;@<span class="hljs-identifier">mozilla</span>.<span class="hljs-identifier">org</span><span class="hljs-operator">/</span><span class="hljs-identifier">preferences</span>-<span class="hljs-identifier">service</span>;<span class="hljs-number">1</span>&#x27;]</span>.get<span class="hljs-constructor">Service(Components.<span class="hljs-params">interfaces</span>.<span class="hljs-params">nsIPrefBranch</span>)</span>;<br>        prefs.set<span class="hljs-constructor">CharPref(&#x27;<span class="hljs-params">browser</span>.<span class="hljs-params">startup</span>.<span class="hljs-params">homepage</span>&#x27;, &#x27;<span class="hljs-params">http</span>:<span class="hljs-operator">/</span><span class="hljs-operator">/</span><span class="hljs-params">w3cboy</span>.<span class="hljs-params">com</span>&#x27;)</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>加载样式文件</li>
+</ul>
+<figure class="highlight qml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs qml"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">LoadStyle</span>(<span class="hljs-params">url</span>) </span>&#123;<br>    <span class="hljs-title">try</span> &#123;<br>        <span class="hljs-built_in">document</span>.createStyleSheet(<span class="hljs-built_in">url</span>)<br>    &#125; <span class="hljs-keyword">catch</span>(e) &#123;<br>        <span class="hljs-keyword">var</span> cssLink = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">&#x27;link&#x27;</span>);<br>        cssLink.rel = <span class="hljs-string">&#x27;stylesheet&#x27;</span>;<br>        cssLink.type = <span class="hljs-string">&#x27;text/css&#x27;</span>;<br>        cssLink.href = <span class="hljs-built_in">url</span>;<br>        <span class="hljs-keyword">var</span> head = <span class="hljs-built_in">document</span>.getElementsByTagName(<span class="hljs-string">&#x27;head&#x27;</span>)[<span class="hljs-number">0</span>];<br>        head.appendChild(cssLink)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>返回脚本内容</li>
+</ul>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">function</span> <span class="hljs-title function_">evalscript</span>(<span class="hljs-params">s</span>) &#123;<br>    <span class="hljs-keyword">if</span>(s.<span class="hljs-built_in">indexOf</span>(<span class="hljs-string">&#x27;&lt;script&#x27;</span>) == <span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> s;<br>    <span class="hljs-keyword">var</span> p = <span class="hljs-regexp">/&lt;script[^\&gt;]*?&gt;([^\x00]*?)&lt;\/script&gt;/ig</span>;<br>    <span class="hljs-keyword">var</span> arr = [];<br>    <span class="hljs-keyword">while</span>(arr = p.exec(s)) &#123;<br>        <span class="hljs-keyword">var</span> p1 = <span class="hljs-regexp">/&lt;script[^\&gt;]*?src=\&quot;([^\&gt;]*?)\&quot;[^\&gt;]*?(reload=\&quot;1\&quot;)?(?:charset=\&quot;([\w\-]+?)\&quot;)?&gt;&lt;\/script&gt;/i</span>;<br>        <span class="hljs-keyword">var</span> arr1 = [];<br>        arr1 = p1.exec(arr[<span class="hljs-number">0</span>]);<br>        <span class="hljs-keyword">if</span>(arr1) &#123;<br>            appendscript(arr1[<span class="hljs-number">1</span>], <span class="hljs-string">&#x27;&#x27;</span>, arr1[<span class="hljs-number">2</span>], arr1[<span class="hljs-number">3</span>]);<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            p1 = <span class="hljs-regexp">/&lt;script(.*?)&gt;([^\x00]+?)&lt;\/script&gt;/i</span>;<br>            arr1 = p1.exec(arr[<span class="hljs-number">0</span>]);<br>            appendscript(<span class="hljs-string">&#x27;&#x27;</span>, arr1[<span class="hljs-number">2</span>], arr1[<span class="hljs-number">1</span>].<span class="hljs-built_in">indexOf</span>(<span class="hljs-string">&#x27;reload=&#x27;</span>) != <span class="hljs-number">-1</span>);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> s;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>清除脚本内容</li>
+</ul>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">function</span> <span class="hljs-title function_">stripscript</span>(<span class="hljs-params">s</span>) &#123;<br>    <span class="hljs-keyword">return</span> s.<span class="hljs-built_in">replace</span>(<span class="hljs-regexp">/&lt;script.*?&gt;.*?&lt;\/script&gt;/ig</span>, <span class="hljs-string">&#x27;&#x27;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>动态加载脚本文件</li>
+</ul>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs xquery"><span class="hljs-keyword">function</span> appendscript(src, <span class="hljs-type">text</span>, reload, charset) &#123;<br>    var<span class="hljs-built_in"> id</span> = hash(src + <span class="hljs-type">text</span>);<br>    <span class="hljs-keyword">if</span>(!reload &amp;&amp; in_array<span class="hljs-built_in">(id</span>, evalscripts)) <span class="hljs-keyword">return</span>;<br>    <span class="hljs-keyword">if</span>(reload &amp;&amp; $<span class="hljs-built_in">(id</span>)) &#123;<br>        $<span class="hljs-built_in">(id</span>).parentNode.removeChild($<span class="hljs-built_in">(id</span>));<br>    &#125;<br> <br>    evalscripts.push<span class="hljs-built_in">(id</span>);<br>    var scriptNode =<span class="hljs-built_in"> document</span>.createElement(<span class="hljs-string">&quot;script&quot;</span>);<br>    scriptNode.type = <span class="hljs-string">&quot;text/javascript&quot;</span>;<br>    scriptNode<span class="hljs-built_in">.id</span> =<span class="hljs-built_in"> id</span>;<br>    scriptNode.charset = charset ? charset : (BROWSER.firefox ?<span class="hljs-built_in"> document</span>.characterSet :<span class="hljs-built_in"> document</span>.charset);<br>    <span class="hljs-keyword">try</span> &#123;<br>        <span class="hljs-keyword">if</span>(src) &#123;<br>            scriptNode.src = src;<br>            scriptNode.onloadDone =<span class="hljs-built_in"> false</span>;<br>            scriptNode.onload = <span class="hljs-keyword">function</span> () &#123;<br>                scriptNode.onloadDone =<span class="hljs-built_in"> true</span>;<br>                JSLOADED[src] = <span class="hljs-number">1</span>;<br>             &#125;;<br>             scriptNode.onreadystatechange = <span class="hljs-keyword">function</span> () &#123;<br>                 <span class="hljs-keyword">if</span>((scriptNode.readyState == <span class="hljs-string">&#x27;loaded&#x27;</span> || scriptNode.readyState == <span class="hljs-string">&#x27;complete&#x27;</span>) &amp;&amp; !scriptNode.onloadDone) &#123;<br>                    scriptNode.onloadDone =<span class="hljs-built_in"> true</span>;<br>                    JSLOADED[src] = <span class="hljs-number">1</span>;<br>                &#125;<br>             &#125;;<br>        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(<span class="hljs-type">text</span>)&#123;<br>            scriptNode.<span class="hljs-type">text</span> = <span class="hljs-type">text</span>;<br>        &#125;<br>       <span class="hljs-built_in"> document</span>.getElementsByTagName(<span class="hljs-string">&#x27;head&#x27;</span>)[<span class="hljs-number">0</span>].appendChild(scriptNode);<br>    &#125; <span class="hljs-keyword">catch</span>(e) &#123;&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>返回按ID检索的元素对象</li>
+</ul>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ada"><span class="hljs-keyword">function</span> <span class="hljs-title">$</span>(id) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-type">!id</span> ? null : <span class="hljs-type">document.getElementById</span>(id);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>跨浏览器绑定事件</li>
+</ul>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-keyword">function</span> add<span class="hljs-constructor">EventSamp(<span class="hljs-params">obj</span>,<span class="hljs-params">evt</span>,<span class="hljs-params">fn</span>)</span>&#123; <br>    <span class="hljs-keyword">if</span>(!oTarget)&#123;return;&#125;<br>    <span class="hljs-keyword">if</span> (obj.addEventListener) &#123; <br>        obj.add<span class="hljs-constructor">EventListener(<span class="hljs-params">evt</span>, <span class="hljs-params">fn</span>, <span class="hljs-params">false</span>)</span>; <br>    &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(obj.attachEvent)&#123; <br>        obj.attach<span class="hljs-constructor">Event(&#x27;<span class="hljs-params">on</span>&#x27;+<span class="hljs-params">evt</span>,<span class="hljs-params">fn</span>)</span>; <br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>        oTarget<span class="hljs-literal">[&quot;<span class="hljs-identifier">on</span>&quot; + <span class="hljs-identifier">sEvtType</span>]</span> = fn;<br>    &#125; <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>跨浏览器删除事件</li>
+</ul>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-keyword">function</span> del<span class="hljs-constructor">Evt(<span class="hljs-params">obj</span>,<span class="hljs-params">evt</span>,<span class="hljs-params">fn</span>)</span>&#123;<br>    <span class="hljs-keyword">if</span>(!obj)&#123;return;&#125;<br>    <span class="hljs-keyword">if</span>(obj.addEventListener)&#123;<br>        obj.add<span class="hljs-constructor">EventListener(<span class="hljs-params">evt</span>,<span class="hljs-params">fn</span>,<span class="hljs-params">false</span>)</span>;<br>    &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(oTarget.attachEvent)&#123;<br>        obj.attach<span class="hljs-constructor">Event(<span class="hljs-string">&quot;on&quot;</span> + <span class="hljs-params">evt</span>,<span class="hljs-params">fn</span>)</span>;<br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>        obj<span class="hljs-literal">[&quot;<span class="hljs-identifier">on</span>&quot; + <span class="hljs-identifier">evt</span>]</span> = fn;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>为元素添加on方法</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">Element</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">on</span> = <span class="hljs-title class_">Element</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">addEventListener</span>;<br> <br><span class="hljs-title class_">NodeList</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">on</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">event, fn</span>) &#123;、<br>    [][<span class="hljs-string">&#x27;forEach&#x27;</span>].<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">this</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">el</span>) &#123;<br>        el.<span class="hljs-title function_">on</span>(event, fn);<br>    &#125;);<br>    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>为元素添加trigger方法</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">Element.prototype.trigger = function (type, <span class="hljs-keyword">data</span>) &#123;<br>    <span class="hljs-keyword">var</span> event = document.createEvent(<span class="hljs-string">&#x27;HTMLEvents&#x27;</span>);<br>    event.initEvent(type, <span class="hljs-literal">true</span>, <span class="hljs-literal">true</span>);<br>    event.<span class="hljs-keyword">data</span> = <span class="hljs-keyword">data</span> || &#123;&#125;;<br>    event.eventName = type;<br>    event.target = <span class="hljs-keyword">this</span>;<br>    <span class="hljs-keyword">this</span>.dispatchEvent(event);<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;<br>&#125;;<br> <br>NodeList.prototype.trigger = function (event) &#123;<br>    [][<span class="hljs-string">&#x27;forEach&#x27;</span>].call(<span class="hljs-keyword">this</span>, function (el) &#123;<br>        el[<span class="hljs-string">&#x27;trigger&#x27;</span>](event);<br>    &#125;);<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>检验URL链接是否有效</li>
+</ul>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs actionscript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">getUrlState</span><span class="hljs-params">(URL)</span>&#123; <br>    <span class="hljs-keyword">var</span> xmlhttp = <span class="hljs-keyword">new</span> ActiveXObject(<span class="hljs-string">&quot;microsoft.xmlhttp&quot;</span>); <br>    xmlhttp.Open(<span class="hljs-string">&quot;GET&quot;</span>,URL, <span class="hljs-literal">false</span>);  <br>    <span class="hljs-keyword">try</span>&#123;  <br>            xmlhttp.Send(); <br>    &#125;<span class="hljs-keyword">catch</span>(e)&#123;<br>    &#125;<span class="hljs-keyword">finally</span>&#123; <br>        <span class="hljs-keyword">var</span> result = xmlhttp.responseText; <br>        <span class="hljs-keyword">if</span>(result)&#123;<br>            <span class="hljs-keyword">if</span>(xmlhttp.Status==<span class="hljs-number">200</span>)&#123; <br>                <span class="hljs-keyword">return</span>(<span class="hljs-literal">true</span>); <br>             &#125;<span class="hljs-keyword">else</span>&#123; <br>                   <span class="hljs-keyword">return</span>(<span class="hljs-literal">false</span>); <br>             &#125; <br>         &#125;<span class="hljs-keyword">else</span>&#123; <br>             <span class="hljs-keyword">return</span>(<span class="hljs-literal">false</span>); <br>         &#125; <br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>格式化CSS样式代码</li>
+</ul>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">function</span> <span class="hljs-title function_">formatCss</span>(<span class="hljs-params">s</span>)&#123;<span class="hljs-comment">//格式化代码</span><br>    s = s.<span class="hljs-built_in">replace</span>(<span class="hljs-regexp">/\s*([\&#123;\&#125;\:\;\,])\s*/g</span>, <span class="hljs-string">&quot;$1&quot;</span>);<br>    s = s.<span class="hljs-built_in">replace</span>(<span class="hljs-regexp">/;\s*;/g</span>, <span class="hljs-string">&quot;;&quot;</span>); <span class="hljs-comment">//清除连续分号</span><br>    s = s.<span class="hljs-built_in">replace</span>(<span class="hljs-regexp">/\,[\s\.\#\d]*&#123;/g</span>, <span class="hljs-string">&quot;&#123;&quot;</span>);<br>    s = s.<span class="hljs-built_in">replace</span>(<span class="hljs-regexp">/([^\s])\&#123;([^\s])/g</span>, <span class="hljs-string">&quot;$1 &#123;\n\t$2&quot;</span>);<br>    s = s.<span class="hljs-built_in">replace</span>(<span class="hljs-regexp">/([^\s])\&#125;([^\n]*)/g</span>, <span class="hljs-string">&quot;$1\n&#125;\n$2&quot;</span>);<br>    s = s.<span class="hljs-built_in">replace</span>(<span class="hljs-regexp">/([^\s]);([^\s\&#125;])/g</span>, <span class="hljs-string">&quot;$1;\n\t$2&quot;</span>);<br>    <span class="hljs-keyword">return</span> s;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>压缩CSS样式代码</li>
+</ul>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">function</span> <span class="hljs-title function_">compressCss</span> (<span class="hljs-params">s</span>) &#123;<span class="hljs-comment">//压缩代码</span><br>    s = s.<span class="hljs-built_in">replace</span>(<span class="hljs-regexp">/\/\*(.|\n)*?\*\//g</span>, <span class="hljs-string">&quot;&quot;</span>); <span class="hljs-comment">//删除注释</span><br>    s = s.<span class="hljs-built_in">replace</span>(<span class="hljs-regexp">/\s*([\&#123;\&#125;\:\;\,])\s*/g</span>, <span class="hljs-string">&quot;$1&quot;</span>);<br>    s = s.<span class="hljs-built_in">replace</span>(<span class="hljs-regexp">/\,[\s\.\#\d]*\&#123;/g</span>, <span class="hljs-string">&quot;&#123;&quot;</span>); <span class="hljs-comment">//容错处理</span><br>    s = s.<span class="hljs-built_in">replace</span>(<span class="hljs-regexp">/;\s*;/g</span>, <span class="hljs-string">&quot;;&quot;</span>); <span class="hljs-comment">//清除连续分号</span><br>    s = s.match(<span class="hljs-regexp">/^\s*(\S+(\s+\S+)*)\s*$/</span>); <span class="hljs-comment">//去掉首尾空白</span><br>    <span class="hljs-keyword">return</span> (s == <span class="hljs-literal">null</span>) ? <span class="hljs-string">&quot;&quot;</span> : s[<span class="hljs-number">1</span>];<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>获取当前路径</li>
+</ul>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs abnf">var currentPageUrl <span class="hljs-operator">=</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-comment">;</span><br>if (typeof this.href <span class="hljs-operator">=</span><span class="hljs-operator">=</span><span class="hljs-operator">=</span> <span class="hljs-string">&quot;undefined&quot;</span>) &#123;<br>    currentPageUrl <span class="hljs-operator">=</span> document.location.toString().toLowerCase()<span class="hljs-comment">;</span><br>&#125;else &#123;<br>    currentPageUrl <span class="hljs-operator">=</span> this.href.toString().toLowerCase()<span class="hljs-comment">;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>判断是否移动设备</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">function isMobile()&#123;<br>    <span class="hljs-keyword">if</span> (typeof <span class="hljs-keyword">this</span>._isMobile === <span class="hljs-string">&#x27;boolean&#x27;</span>)&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._isMobile;<br>    &#125;<br>    <span class="hljs-keyword">var</span> screenWidth = <span class="hljs-keyword">this</span>.getScreenWidth();<br>    <span class="hljs-keyword">var</span> fixViewPortsExperiment = rendererModel.runningExperiments.FixViewport ||rendererModel.runningExperiments.fixviewport;<br>    <span class="hljs-keyword">var</span> fixViewPortsExperimentRunning = fixViewPortsExperiment &amp;&amp; (fixViewPortsExperiment.toLowerCase() === <span class="hljs-string">&quot;new&quot;</span>);<br>    <span class="hljs-keyword">if</span>(!fixViewPortsExperiment)&#123;<br>        <span class="hljs-keyword">if</span>(!<span class="hljs-keyword">this</span>.isAppleMobileDevice())&#123;<br>            screenWidth = screenWidth/window.devicePixelRatio;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">var</span> isMobileScreenSize = screenWidth &lt; <span class="hljs-number">600</span>;<br>    <span class="hljs-keyword">var</span> isMobileUserAgent = <span class="hljs-literal">false</span>;<br>    <span class="hljs-keyword">this</span>._isMobile = isMobileScreenSize &amp;&amp; <span class="hljs-keyword">this</span>.isTouchScreen();<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._isMobile;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>判断是否移动设备访问</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">isMobileUserAgent</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">return</span> (<span class="hljs-regexp">/iphone|ipod|android.*mobile|windows.*phone|blackberry.*mobile/i</span>.<span class="hljs-title function_">test</span>(<span class="hljs-variable language_">window</span>.<span class="hljs-property">navigator</span>.<span class="hljs-property">userAgent</span>.<span class="hljs-title function_">toLowerCase</span>()));<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>判断是否苹果移动设备访问</li>
+</ul>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ada"><span class="hljs-keyword">function</span> <span class="hljs-title">isAppleMobileDevice</span>()&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-type">(/iphone|ipod|ipad|Macintosh/i.test(navigator.userAgent.toLowerCase()))</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>判断是否安卓移动设备访问</li>
+</ul>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ada"><span class="hljs-keyword">function</span> <span class="hljs-title">isAndroidMobileDevice</span>()&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-type">(/android/i.test(navigator.userAgent.toLowerCase()))</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>判断是否Touch屏幕</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">isTouchScreen</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">return</span> ((<span class="hljs-string">&#x27;ontouchstart&#x27;</span> <span class="hljs-keyword">in</span> <span class="hljs-variable language_">window</span>) || <span class="hljs-variable language_">window</span>.<span class="hljs-property">DocumentTouch</span> &amp;&amp; <span class="hljs-variable language_">document</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">DocumentTouch</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>判断是否打开视窗</li>
+</ul>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ada"><span class="hljs-keyword">function</span> <span class="hljs-title">isViewportOpen</span>() &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-type">!!document.getElementById(&#x27;wixMobileViewport&#x27;)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>获取移动设备初始化大小</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">function getInitZoom()&#123;<br>    <span class="hljs-keyword">if</span>(!<span class="hljs-keyword">this</span>._initZoom)&#123;<br>        <span class="hljs-keyword">var</span> screenWidth = Math.min(screen.height, screen.width);<br>        <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.isAndroidMobileDevice() &amp;&amp; !<span class="hljs-keyword">this</span>.isNewChromeOnAndroid())&#123;<br>            screenWidth = screenWidth/window.devicePixelRatio;<br>        &#125;<br>            <span class="hljs-keyword">this</span>._initZoom = screenWidth /document.body.offsetWidth;<br>        &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._initZoom;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>获取移动设备最大化大小</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">getZoom</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">var</span> screenWidth = (<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">abs</span>(<span class="hljs-variable language_">window</span>.<span class="hljs-property">orientation</span>) === <span class="hljs-number">90</span>) ? <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">max</span>(screen.<span class="hljs-property">height</span>, screen.<span class="hljs-property">width</span>) : <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">min</span>(screen.<span class="hljs-property">height</span>, screen.<span class="hljs-property">width</span>);<br>    <span class="hljs-keyword">if</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-title function_">isAndroidMobileDevice</span>() &amp;&amp; !<span class="hljs-variable language_">this</span>.<span class="hljs-title function_">isNewChromeOnAndroid</span>())&#123;<br>        screenWidth = screenWidth/<span class="hljs-variable language_">window</span>.<span class="hljs-property">devicePixelRatio</span>;<br>    &#125;<br>    <span class="hljs-keyword">var</span> <span class="hljs-title class_">FixViewPortsExperiment</span> = rendererModel.<span class="hljs-property">runningExperiments</span>.<span class="hljs-property">FixViewport</span> || rendererModel.<span class="hljs-property">runningExperiments</span>.<span class="hljs-property">fixviewport</span>;<br>    <span class="hljs-keyword">var</span> <span class="hljs-title class_">FixViewPortsExperimentRunning</span> = <span class="hljs-title class_">FixViewPortsExperiment</span> &amp;&amp; (<span class="hljs-title class_">FixViewPortsExperiment</span> === <span class="hljs-string">&quot;New&quot;</span> || <span class="hljs-title class_">FixViewPortsExperiment</span> === <span class="hljs-string">&quot;new&quot;</span>);<br>    <span class="hljs-keyword">if</span>(<span class="hljs-title class_">FixViewPortsExperimentRunning</span>)&#123;<br>        <span class="hljs-keyword">return</span> screenWidth / <span class="hljs-variable language_">window</span>.<span class="hljs-property">innerWidth</span>;<br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>        <span class="hljs-keyword">return</span> screenWidth / <span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-property">offsetWidth</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>获取移动设备屏幕宽度</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">getScreenWidth</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">var</span> smallerSide = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">min</span>(screen.<span class="hljs-property">width</span>, screen.<span class="hljs-property">height</span>);<br>    <span class="hljs-keyword">var</span> fixViewPortsExperiment = rendererModel.<span class="hljs-property">runningExperiments</span>.<span class="hljs-property">FixViewport</span> || rendererModel.<span class="hljs-property">runningExperiments</span>.<span class="hljs-property">fixviewport</span>;<br>    <span class="hljs-keyword">var</span> fixViewPortsExperimentRunning = fixViewPortsExperiment &amp;&amp; (fixViewPortsExperiment.<span class="hljs-title function_">toLowerCase</span>() === <span class="hljs-string">&quot;new&quot;</span>);<br>    <span class="hljs-keyword">if</span>(fixViewPortsExperiment)&#123;<br>        <span class="hljs-keyword">if</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-title function_">isAndroidMobileDevice</span>() &amp;&amp; !<span class="hljs-variable language_">this</span>.<span class="hljs-title function_">isNewChromeOnAndroid</span>())&#123;<br>            smallerSide = smallerSide/<span class="hljs-variable language_">window</span>.<span class="hljs-property">devicePixelRatio</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> smallerSide;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>完美判断是否为网址</li>
+</ul>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs elixir">function <span class="hljs-title class_">IsURL</span>(strUrl) &#123;<br>    var regular = /^\b(((https?|ftp)<span class="hljs-symbol">:</span>\/\/)?[-a-z0<span class="hljs-number">-9</span>]+(\.[-a-z0<span class="hljs-number">-9</span>]+)*\.(?<span class="hljs-symbol">:com|edu|gov|int|mil|net|org|biz|info|name|museum|asia|coop|aero|</span>[a-z][a-z]|((<span class="hljs-number">25</span>[<span class="hljs-number">0</span><span class="hljs-number">-5</span>])|(<span class="hljs-number">2</span>[<span class="hljs-number">0</span><span class="hljs-number">-4</span>]\d)|(<span class="hljs-number">1</span>\d\d)|([<span class="hljs-number">1</span><span class="hljs-number">-9</span>]\d)|\d))\b(\/[-a-z0<span class="hljs-number">-9_</span><span class="hljs-symbol">:</span>\@&amp;?=+,.!\/~%\<span class="hljs-variable">$]</span>*)?)<span class="hljs-variable">$/</span>i<br>    <span class="hljs-keyword">if</span> (regular.test(strUrl)) &#123;<br>        return <span class="hljs-literal">true</span>;<br>    &#125;<span class="hljs-keyword">else</span> &#123;<br>        return <span class="hljs-literal">false</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>获取页面高度</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">getPageHeight</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">var</span> g = <span class="hljs-variable language_">document</span>, a = g.<span class="hljs-property">body</span>, f = g.<span class="hljs-property">documentElement</span>, d = g.<span class="hljs-property">compatMode</span> == <span class="hljs-string">&quot;BackCompat&quot;</span><br>                    ? a<br>                    : g.<span class="hljs-property">documentElement</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">max</span>(f.<span class="hljs-property">scrollHeight</span>, a.<span class="hljs-property">scrollHeight</span>, d.<span class="hljs-property">clientHeight</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>获取页面scrollLeft</li>
+</ul>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ada"><span class="hljs-keyword">function</span> <span class="hljs-title">getPageScrollLeft</span>()&#123;<br>    var a = document;<br>    <span class="hljs-keyword">return</span> <span class="hljs-type">a.documentElement.scrollLeft</span> || a.<span class="hljs-keyword">body</span>.scrollLeft;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>获取页面可视宽度</li>
+</ul>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs ada"><span class="hljs-keyword">function</span> <span class="hljs-title">getPageViewWidth</span>()&#123;<br>    var d = document, a = d.compatMode == &quot;BackCompat&quot;<br>                    ? d.body<br>                    : <span class="hljs-type">d.documentElement</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-type">a.clientWidth</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>获取页面宽度</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">getPageWidth</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">var</span> g = <span class="hljs-variable language_">document</span>, a = g.<span class="hljs-property">body</span>, f = g.<span class="hljs-property">documentElement</span>, d = g.<span class="hljs-property">compatMode</span> == <span class="hljs-string">&quot;BackCompat&quot;</span><br>                    ? a<br>                    : g.<span class="hljs-property">documentElement</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">max</span>(f.<span class="hljs-property">scrollWidth</span>, a.<span class="hljs-property">scrollWidth</span>, d.<span class="hljs-property">clientWidth</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>获取页面scrollTop</li>
+</ul>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ada"><span class="hljs-keyword">function</span> <span class="hljs-title">getPageScrollTop</span>()&#123;<br>    var a = document;<br>    <span class="hljs-keyword">return</span> <span class="hljs-type">a.documentElement.scrollTop</span> || a.<span class="hljs-keyword">body</span>.scrollTop;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>获取页面可视高度</li>
+</ul>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs ada"><span class="hljs-keyword">function</span> <span class="hljs-title">getPageViewHeight</span>() &#123;<br>    var d = document, a = d.compatMode == &quot;BackCompat&quot;<br>                    ? d.body<br>                    : <span class="hljs-type">d.documentElement</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-type">a.clientHeight</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>去掉url前缀</li>
+</ul>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">function</span> <span class="hljs-title function_">removeUrlPrefix</span>(<span class="hljs-params">a</span>)&#123;<br>    a=a.<span class="hljs-built_in">replace</span>(<span class="hljs-regexp">/：/g</span>,<span class="hljs-string">&quot;:&quot;</span>).<span class="hljs-built_in">replace</span>(<span class="hljs-regexp">/．/g</span>,<span class="hljs-string">&quot;.&quot;</span>).<span class="hljs-built_in">replace</span>(<span class="hljs-regexp">/／/g</span>,<span class="hljs-string">&quot;/&quot;</span>);<br>    <span class="hljs-keyword">while</span>(<span class="hljs-built_in">trim</span>(a).toLowerCase().<span class="hljs-built_in">indexOf</span>(<span class="hljs-string">&quot;http://&quot;</span>)==<span class="hljs-number">0</span>)&#123;<br>        a=<span class="hljs-built_in">trim</span>(a.<span class="hljs-built_in">replace</span>(<span class="hljs-regexp">/http:\/\//i</span>,<span class="hljs-string">&quot;&quot;</span>));<br>    &#125;<br>    <span class="hljs-keyword">return</span> a;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>随机数时间戳</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">uniqueId</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">var</span> a=<span class="hljs-title class_">Math</span>.<span class="hljs-property">random</span>,b=<span class="hljs-built_in">parseInt</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-title class_">Number</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>()).<span class="hljs-title function_">toString</span>()+<span class="hljs-title function_">b</span>(<span class="hljs-number">10</span>*<span class="hljs-title function_">a</span>())+<span class="hljs-title function_">b</span>(<span class="hljs-number">10</span>*<span class="hljs-title function_">a</span>())+<span class="hljs-title function_">b</span>(<span class="hljs-number">10</span>*<span class="hljs-title function_">a</span>());<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>全角半角转换</li>
+</ul>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-comment">//iCase: 0全到半，1半到全，其他不转化</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">chgCase</span>(<span class="hljs-params">sStr,iCase</span>)&#123;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-built_in">typeof</span> sStr != <span class="hljs-string">&quot;string&quot;</span> || sStr.<span class="hljs-built_in">length</span> &lt;= <span class="hljs-number">0</span> || !(iCase === <span class="hljs-number">0</span> || iCase == <span class="hljs-number">1</span>))&#123;<br>        <span class="hljs-keyword">return</span> sStr;<br>    &#125;<br>    <span class="hljs-keyword">var</span> i,oRs=[],iCode;<br>    <span class="hljs-keyword">if</span>(iCase)&#123;<span class="hljs-comment">/*半-&gt;全*/</span><br>        <span class="hljs-keyword">for</span>(i=<span class="hljs-number">0</span>; i&lt;sStr.<span class="hljs-built_in">length</span>;i+=<span class="hljs-number">1</span>)&#123; <br>            iCode = sStr.charCodeAt(i);<br>            <span class="hljs-keyword">if</span>(iCode == <span class="hljs-number">32</span>)&#123;<br>                iCode = <span class="hljs-number">12288</span>;                                <br>            &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(iCode &lt; <span class="hljs-number">127</span>)&#123;<br>                iCode += <span class="hljs-number">65248</span>;<br>            &#125;<br>                oRs.<span class="hljs-built_in">push</span>(String.<span class="hljs-built_in">fromCharCode</span>(iCode)); <br>            &#125;                <br>    &#125;<span class="hljs-keyword">else</span>&#123;<span class="hljs-comment">/*全-&gt;半*/</span><br>        <span class="hljs-keyword">for</span>(i=<span class="hljs-number">0</span>; i&lt;sStr.<span class="hljs-built_in">length</span>;i+=<span class="hljs-number">1</span>)&#123; <br>            iCode = sStr.charCodeAt(i);<br>            <span class="hljs-keyword">if</span>(iCode == <span class="hljs-number">12288</span>)&#123;<br>                iCode = <span class="hljs-number">32</span>;<br>            &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(iCode &gt; <span class="hljs-number">65280</span> &amp;&amp; iCode &lt; <span class="hljs-number">65375</span>)&#123;<br>                iCode -= <span class="hljs-number">65248</span>;                                <br>            &#125;<br>                oRs.<span class="hljs-built_in">push</span>(String.<span class="hljs-built_in">fromCharCode</span>(iCode)); <br>         &#125;                <br>    &#125;                <br>    <span class="hljs-keyword">return</span> oRs.join(<span class="hljs-string">&quot;&quot;</span>);                <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>确认是否键盘有效输入值</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">function checkKey(iKey)&#123;<br>    <span class="hljs-keyword">if</span>(iKey == <span class="hljs-number">32</span> || iKey == <span class="hljs-number">229</span>)&#123;<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;&#125;<span class="hljs-comment">/*空格和异常*/</span><br>    <span class="hljs-keyword">if</span>(iKey&gt;<span class="hljs-number">47</span> &amp;&amp; iKey &lt; <span class="hljs-number">58</span>)&#123;<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;&#125;<span class="hljs-comment">/*数字*/</span><br>    <span class="hljs-keyword">if</span>(iKey&gt;<span class="hljs-number">64</span> &amp;&amp; iKey &lt; <span class="hljs-number">91</span>)&#123;<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;&#125;<span class="hljs-comment">/*字母*/</span><br>    <span class="hljs-keyword">if</span>(iKey&gt;<span class="hljs-number">95</span> &amp;&amp; iKey &lt; <span class="hljs-number">108</span>)&#123;<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;&#125;<span class="hljs-comment">/*数字键盘1*/</span><br>    <span class="hljs-keyword">if</span>(iKey&gt;<span class="hljs-number">108</span> &amp;&amp; iKey &lt; <span class="hljs-number">112</span>)&#123;<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;&#125;<span class="hljs-comment">/*数字键盘2*/</span><br>    <span class="hljs-keyword">if</span>(iKey&gt;<span class="hljs-number">185</span> &amp;&amp; iKey &lt; <span class="hljs-number">193</span>)&#123;<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;&#125;<span class="hljs-comment">/*符号1*/</span><br>    <span class="hljs-keyword">if</span>(iKey&gt;<span class="hljs-number">218</span> &amp;&amp; iKey &lt; <span class="hljs-number">223</span>)&#123;<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;&#125;<span class="hljs-comment">/*符号2*/</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>日期格式化函数+调用方法</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">Date</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">format</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">format</span>)&#123;<br>    <span class="hljs-keyword">var</span> o = &#123;<br>        <span class="hljs-string">&quot;M+&quot;</span> : <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getMonth</span>()+<span class="hljs-number">1</span>, <span class="hljs-comment">//month</span><br>        <span class="hljs-string">&quot;d+&quot;</span> : <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getDate</span>(),    <span class="hljs-comment">//day</span><br>        <span class="hljs-string">&quot;h+&quot;</span> : <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getHours</span>(),   <span class="hljs-comment">//hour</span><br>        <span class="hljs-string">&quot;m+&quot;</span> : <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getMinutes</span>(), <span class="hljs-comment">//minute</span><br>        <span class="hljs-string">&quot;s+&quot;</span> : <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getSeconds</span>(), <span class="hljs-comment">//second</span><br>        <span class="hljs-string">&quot;q+&quot;</span> : <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">floor</span>((<span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getMonth</span>()+<span class="hljs-number">3</span>)/<span class="hljs-number">3</span>),  <span class="hljs-comment">//quarter</span><br>        <span class="hljs-string">&quot;S&quot;</span> : <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getMilliseconds</span>() <span class="hljs-comment">//millisecond</span><br>    &#125;;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-regexp">/(y+)/</span>.<span class="hljs-title function_">test</span>(format)) format=format.<span class="hljs-title function_">replace</span>(<span class="hljs-title class_">RegExp</span>.<span class="hljs-property">$1</span>,<br>(<span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getFullYear</span>()+<span class="hljs-string">&quot;&quot;</span>).<span class="hljs-title function_">substr</span>(<span class="hljs-number">4</span> - <span class="hljs-title class_">RegExp</span>.<span class="hljs-property">$1</span>.<span class="hljs-property">length</span>));<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> k <span class="hljs-keyword">in</span> o)&#123;<br>        <span class="hljs-keyword">if</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">RegExp</span>(<span class="hljs-string">&quot;(&quot;</span>+ k +<span class="hljs-string">&quot;)&quot;</span>).<span class="hljs-title function_">test</span>(format))<br>            format = format.<span class="hljs-title function_">replace</span>(<span class="hljs-title class_">RegExp</span>.<span class="hljs-property">$1</span>,<span class="hljs-title class_">RegExp</span>.<span class="hljs-property">$1</span>.<span class="hljs-property">length</span>==<span class="hljs-number">1</span> ? o[k] :(<span class="hljs-string">&quot;00&quot;</span>+ o[k]).<span class="hljs-title function_">substr</span>((<span class="hljs-string">&quot;&quot;</span>+ o[k]).<span class="hljs-property">length</span>));<br>    &#125;<br>    <span class="hljs-keyword">return</span> format;<br>&#125;<br><span class="hljs-title function_">alert</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">format</span>(<span class="hljs-string">&quot;yyyy-MM-dd hh:mm:ss&quot;</span>));<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>常用的正则表达式</li>
+</ul>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><code class="hljs inform7">//正整数<br>/^<span class="hljs-comment">[0-9]</span>*<span class="hljs-comment">[1-9]</span><span class="hljs-comment">[0-9]</span>*$/;<br>//负整数<br>/^-<span class="hljs-comment">[0-9]</span>*<span class="hljs-comment">[1-9]</span><span class="hljs-comment">[0-9]</span>*$/;<br>//正浮点数<br>/^((<span class="hljs-comment">[0-9]</span>+\.<span class="hljs-comment">[0-9]</span>*<span class="hljs-comment">[1-9]</span><span class="hljs-comment">[0-9]</span>*)|(<span class="hljs-comment">[0-9]</span>*<span class="hljs-comment">[1-9]</span><span class="hljs-comment">[0-9]</span>*\.<span class="hljs-comment">[0-9]</span>+)|(<span class="hljs-comment">[0-9]</span>*<span class="hljs-comment">[1-9]</span><span class="hljs-comment">[0-9]</span>*))$/;   <br>//负浮点数<br>/^(-((<span class="hljs-comment">[0-9]</span>+\.<span class="hljs-comment">[0-9]</span>*<span class="hljs-comment">[1-9]</span><span class="hljs-comment">[0-9]</span>*)|(<span class="hljs-comment">[0-9]</span>*<span class="hljs-comment">[1-9]</span><span class="hljs-comment">[0-9]</span>*\.<span class="hljs-comment">[0-9]</span>+)|(<span class="hljs-comment">[0-9]</span>*<span class="hljs-comment">[1-9]</span><span class="hljs-comment">[0-9]</span>*)))$/;  <br>//浮点数<br>/^(-?\d+)(\.\d+)?$/;<br>//email地址<br>/^<span class="hljs-comment">[\w-]</span>+(\.<span class="hljs-comment">[\w-]</span>+)*@<span class="hljs-comment">[\w-]</span>+(\.<span class="hljs-comment">[\w-]</span>+)+$/;<br>//url地址<br>/^<span class="hljs-comment">[a-zA-z]</span>+://(\w+(-\w+)*)(\.(\w+(-\w+)*))*(\?\S*)?$/;<br>或：^http:\/\/<span class="hljs-comment">[A-Za-z0-9]</span>+\.<span class="hljs-comment">[A-Za-z0-9]</span>+<span class="hljs-comment">[\/=\?%\-&amp;_~`@<span class="hljs-comment">[\]</span>\&#x27;:+!]</span>*(<span class="hljs-comment">[^&lt;&gt;\&quot;\&quot;]</span>)*$ <br>//年/月/日（年-月-日、年.月.日）<br>/^(19|20)\d\d<span class="hljs-comment">[- /.]</span>(0<span class="hljs-comment">[1-9]</span>|1<span class="hljs-comment">[012]</span>)<span class="hljs-comment">[- /.]</span>(0<span class="hljs-comment">[1-9]</span>|<span class="hljs-comment">[12]</span><span class="hljs-comment">[0-9]</span>|3<span class="hljs-comment">[01]</span>)$/;<br>//匹配中文字符<br>/<span class="hljs-comment">[\u4e00-\u9fa5]</span>/;<br>//匹配帐号是否合法(字母开头，允许5-10字节，允许字母数字下划线)<br>/^<span class="hljs-comment">[a-zA-Z]</span><span class="hljs-comment">[a-zA-Z0-9_]</span>&#123;4,9&#125;$/;<br>//匹配空白行的正则表达式<br>/\n\s*\r/;<br>//匹配中国邮政编码<br>/<span class="hljs-comment">[1-9]</span>\d&#123;5&#125;(?!\d)/;<br>//匹配身份证<br>/\d&#123;15&#125;|\d&#123;18&#125;/;<br>//匹配国内电话号码<br>/(\d&#123;3&#125;-|\d&#123;4&#125;-)?(\d&#123;8&#125;|\d&#123;7&#125;)?/;<br>//匹配IP地址<br>/((2<span class="hljs-comment">[0-4]</span>\d|25<span class="hljs-comment">[0-5]</span>|<span class="hljs-comment">[01]</span>?\d\d?)\.)&#123;3&#125;(2<span class="hljs-comment">[0-4]</span>\d|25<span class="hljs-comment">[0-5]</span>|<span class="hljs-comment">[01]</span>?\d\d?)/;<br>//匹配首尾空白字符的正则表达式<br>/^\s*|\s*$/;<br>//匹配HTML标记的正则表达式<br>&lt; (\S*?)<span class="hljs-comment">[^&gt;]</span>*&gt;.*?|&lt; .*? /&gt;;<br>//sql 语句<br>^(select|drop|delete|create|update|insert).*$<br>//提取信息中的网络链接<br>(h|H)(r|R)(e|E)(f|F) *= *(&#x27;|<span class="hljs-string">&quot;)?(\w|\\|\/|\.)+(&#x27;|&quot;</span>| *|&gt;)? <br>//提取信息中的邮件地址<br>\w+(<span class="hljs-comment">[-+.]</span>\w+)*@\w+(<span class="hljs-comment">[-.]</span>\w+)*\.\w+(<span class="hljs-comment">[-.]</span>\w+)* <br>//提取信息中的图片链接<br>(s|S)(r|R)(c|C) *= *(&#x27;|<span class="hljs-string">&quot;)?(\w|\\|\/|\.)+(&#x27;|&quot;</span>| *|&gt;)? <br>//提取信息中的 IP 地址<br>(\d+)\.(\d+)\.(\d+)\.(\d+)<br>//取信息中的中国手机号码<br>(86)*0*13\d&#123;9&#125; <br>//提取信息中的中国邮政编码<br><span class="hljs-comment">[1-9]</span>&#123;1&#125;(\d+)&#123;5&#125; <br>//提取信息中的浮点数（即小数）<br>(-?\d*)\.?\d+ <br>//提取信息中的任何数字<br>(-?\d*)(\.\d+)?<br>//电话区号<br>^0\d&#123;2,3&#125;$<br>//腾讯 QQ 号<br>^<span class="hljs-comment">[1-9]</span>*<span class="hljs-comment">[1-9]</span><span class="hljs-comment">[0-9]</span>*$ <br>//帐号（字母开头，允许 5-16 字节，允许字母数字下划线）<br>^<span class="hljs-comment">[a-zA-Z]</span><span class="hljs-comment">[a-zA-Z0-9_]</span>&#123;4,15&#125;$ <br>//中文、英文、数字及下划线<br>^<span class="hljs-comment">[\u4e00-\u9fa5_a-zA-Z0-9]</span>+$<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>返回顶部的通用方法</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">backTop</span>(<span class="hljs-params">btnId</span>) &#123;<br>    <span class="hljs-keyword">var</span> btn = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(btnId);<br>    <span class="hljs-keyword">var</span> d = <span class="hljs-variable language_">document</span>.<span class="hljs-property">documentElement</span>;<br>    <span class="hljs-keyword">var</span> b = <span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>;<br>    <span class="hljs-variable language_">window</span>.<span class="hljs-property">onscroll</span> = set;<br>    btn.<span class="hljs-property">style</span>.<span class="hljs-property">display</span> = <span class="hljs-string">&quot;none&quot;</span>;<br>    btn.<span class="hljs-property">onclick</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>        btn.<span class="hljs-property">style</span>.<span class="hljs-property">display</span> = <span class="hljs-string">&quot;none&quot;</span>;<br>        <span class="hljs-variable language_">window</span>.<span class="hljs-property">onscroll</span> = <span class="hljs-literal">null</span>;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">timer</span> = <span class="hljs-built_in">setInterval</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>            d.<span class="hljs-property">scrollTop</span> -= <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">ceil</span>((d.<span class="hljs-property">scrollTop</span> + b.<span class="hljs-property">scrollTop</span>) * <span class="hljs-number">0.1</span>);<br>            b.<span class="hljs-property">scrollTop</span> -= <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">ceil</span>((d.<span class="hljs-property">scrollTop</span> + b.<span class="hljs-property">scrollTop</span>) * <span class="hljs-number">0.1</span>);<br>            <span class="hljs-keyword">if</span> ((d.<span class="hljs-property">scrollTop</span> + b.<span class="hljs-property">scrollTop</span>) == <span class="hljs-number">0</span>) <span class="hljs-built_in">clearInterval</span>(btn.<span class="hljs-property">timer</span>, <span class="hljs-variable language_">window</span>.<span class="hljs-property">onscroll</span> = set);<br>            &#125;, <span class="hljs-number">10</span>);<br>    &#125;;<br>    <span class="hljs-keyword">function</span> <span class="hljs-title function_">set</span>(<span class="hljs-params"></span>) &#123;<br>        btn.<span class="hljs-property">style</span>.<span class="hljs-property">display</span> = (d.<span class="hljs-property">scrollTop</span> + b.<span class="hljs-property">scrollTop</span> &gt; <span class="hljs-number">100</span>) ? <span class="hljs-string">&#x27;block&#x27;</span>: <span class="hljs-string">&quot;none&quot;</span><br>    &#125;<br>&#125;;<br><span class="hljs-title function_">backTop</span>(<span class="hljs-string">&#x27;goTop&#x27;</span>);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>获得URL中GET参数值</li>
+</ul>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs prolog">// 用法：如果地址是 test.htm?t1=<span class="hljs-number">1</span>&amp;t2=<span class="hljs-number">2</span>&amp;t3=<span class="hljs-number">3</span>, 那么能取得：<span class="hljs-symbol">GET</span>[<span class="hljs-string">&quot;t1&quot;</span>], <span class="hljs-symbol">GET</span>[<span class="hljs-string">&quot;t2&quot;</span>], <span class="hljs-symbol">GET</span>[<span class="hljs-string">&quot;t3&quot;</span>]<br>function get_get()&#123; <br>    querystr = window.location.href.split(<span class="hljs-string">&quot;?&quot;</span>)<br>    if(querystr[<span class="hljs-number">1</span>])&#123;<br>        <span class="hljs-symbol">GETs</span> = querystr[<span class="hljs-number">1</span>].split(<span class="hljs-string">&quot;&amp;&quot;</span>);<br>        <span class="hljs-symbol">GET</span> = [];<br>        for(i=<span class="hljs-number">0</span>;i&lt;<span class="hljs-symbol">GETs</span>.length;i++)&#123;<br>              tmp_arr = <span class="hljs-symbol">GETs</span>.split(<span class="hljs-string">&quot;=&quot;</span>)<br>              key=tmp_arr[<span class="hljs-number">0</span>]<br>              <span class="hljs-symbol">GET</span>[key] = tmp_arr[<span class="hljs-number">1</span>]<br>        &#125;<br>    &#125;<br>    return querystr[<span class="hljs-number">1</span>];<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>打开一个窗体通用方法</li>
+</ul>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs maxima">function openWindow(url,windowName,<span class="hljs-built_in">width</span>,<span class="hljs-built_in">height</span>)&#123;<br>    <span class="hljs-built_in">var</span> x = parseInt(screen.<span class="hljs-built_in">width</span> / <span class="hljs-number">2.0</span>) - (<span class="hljs-built_in">width</span> / <span class="hljs-number">2.0</span>); <br>    <span class="hljs-built_in">var</span> y = parseInt(screen.<span class="hljs-built_in">height</span> / <span class="hljs-number">2.0</span>) - (<span class="hljs-built_in">height</span> / <span class="hljs-number">2.0</span>);<br>    <span class="hljs-built_in">var</span> isMSIE= (navigator.appName == <span class="hljs-string">&quot;Microsoft Internet Explorer&quot;</span>);<br>    <span class="hljs-keyword">if</span> (isMSIE) &#123;<br>        <span class="hljs-built_in">var</span> p = <span class="hljs-string">&quot;resizable=1,location=no,scrollbars=no,width=&quot;</span>;<br>        p = p+<span class="hljs-built_in">width</span>;<br>           p = p+<span class="hljs-string">&quot;,height=&quot;</span>;<br>           p = p+<span class="hljs-built_in">height</span>;<br>        p = p+<span class="hljs-string">&quot;,left=&quot;</span>;<br>        p = p+x;<br>        p = p+<span class="hljs-string">&quot;,top=&quot;</span>;<br>        p = p+y;<br>        retval = window.open(url, windowName, p);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-built_in">var</span> win = window.open(url, <span class="hljs-string">&quot;ZyiisPopup&quot;</span>, <span class="hljs-string">&quot;top=&quot;</span> + y + <span class="hljs-string">&quot;,left=&quot;</span> + x + <span class="hljs-string">&quot;,scrollbars=&quot;</span> + scrollbars + <span class="hljs-string">&quot;,dialog=yes,modal=yes,width=&quot;</span> + <span class="hljs-built_in">width</span> + <span class="hljs-string">&quot;,height=&quot;</span> + <span class="hljs-built_in">height</span> + <span class="hljs-string">&quot;,resizable=no&quot;</span> );<br>        <span class="hljs-built_in">eval</span>(<span class="hljs-string">&quot;try &#123; win.resizeTo(width, height); &#125; catch(e) &#123; &#125;&quot;</span>);<br>        win.focus();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>提取页面代码中所有网址</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">var</span> aa <span class="hljs-operator">=</span> document.documentElement.outerHTML.match(<span class="hljs-operator">/</span>(url\(<span class="hljs-operator">|</span>src<span class="hljs-operator">=|</span>href<span class="hljs-operator">=</span>)[\<span class="hljs-string">&quot;<span class="hljs-subst">\&#x27;</span>]*([^<span class="hljs-subst">\&quot;</span><span class="hljs-subst">\&#x27;</span><span class="hljs-subst">\(\)</span>\&lt;\&gt;\[\] ]+)[<span class="hljs-subst">\&quot;</span><span class="hljs-subst">\&#x27;</span>\)]*|(http:\/\/[\w\-\.]+[^<span class="hljs-subst">\&quot;</span><span class="hljs-subst">\&#x27;</span><span class="hljs-subst">\(\)</span>\&lt;\&gt;\[\] ]+)/ig).join(&quot;</span>\r\n<span class="hljs-string">&quot;).replace(/^(src=|href=|url<span class="hljs-subst">\()</span>[<span class="hljs-subst">\&quot;</span><span class="hljs-subst">\&#x27;</span>]*|[<span class="hljs-subst">\&quot;</span><span class="hljs-subst">\&#x27;</span>\&gt;\) ]*$/igm,&quot;</span><span class="hljs-string">&quot;);</span><br><span class="hljs-string">alert(aa);</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>清除相同的数组</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">String</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">unique</span>=<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">var</span> x=<span class="hljs-variable language_">this</span>.<span class="hljs-title function_">split</span>(<span class="hljs-regexp">/[\r\n]+/</span>);<br>    <span class="hljs-keyword">var</span> y=<span class="hljs-string">&#x27;&#x27;</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>;i&lt;x.<span class="hljs-property">length</span>;i++)&#123;<br>        <span class="hljs-keyword">if</span>(!<span class="hljs-keyword">new</span> <span class="hljs-title class_">RegExp</span>(<span class="hljs-string">&quot;^&quot;</span>+x.<span class="hljs-title function_">replace</span>(<span class="hljs-regexp">/([^\w])/ig</span>,<span class="hljs-string">&quot;\\$1&quot;</span>)+<span class="hljs-string">&quot;$&quot;</span>,<span class="hljs-string">&quot;igm&quot;</span>).<span class="hljs-title function_">test</span>(y))&#123;<br>            y+=x+<span class="hljs-string">&quot;\r\n&quot;</span><br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> y<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>按字母排序，对每行进行数组排序</li>
+</ul>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">function</span> <span class="hljs-title function_">SetSort</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">var</span> <span class="hljs-built_in">text</span>=K1.value.<span class="hljs-built_in">split</span>(<span class="hljs-regexp">/[\r\n]/</span>).<span class="hljs-built_in">sort</span>().join(<span class="hljs-string">&quot;\r\n&quot;</span>);<span class="hljs-comment">//顺序</span><br>    <span class="hljs-keyword">var</span> test=K1.value.<span class="hljs-built_in">split</span>(<span class="hljs-regexp">/[\r\n]/</span>).<span class="hljs-built_in">sort</span>().<span class="hljs-built_in">reverse</span>().join(<span class="hljs-string">&quot;\r\n&quot;</span>);<span class="hljs-comment">//反序</span><br>    K1.value=K1.value!=<span class="hljs-built_in">text</span>?<span class="hljs-built_in">text</span>:test;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>清除html代码中的脚本</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-function">function <span class="hljs-title">clear_script</span>()</span>&#123;<br>    K1.<span class="hljs-keyword">value</span>=K1.<span class="hljs-keyword">value</span>.replace(/&lt;script.*?&gt;[\s\S]*?&lt;\/script&gt;|\s+<span class="hljs-keyword">on</span>[a-zA-Z]&#123;<span class="hljs-number">3</span>,<span class="hljs-number">16</span>&#125;\s?=\s?<span class="hljs-string">&quot;[\s\S]*?&quot;</span>|\s+<span class="hljs-keyword">on</span>[a-zA-Z]&#123;<span class="hljs-number">3</span>,<span class="hljs-number">16</span>&#125;\s?=\s?<span class="hljs-string">&#x27;[\s\S]*?&#x27;</span>|\s+<span class="hljs-keyword">on</span>[a-zA-Z]&#123;<span class="hljs-number">3</span>,<span class="hljs-number">16</span>&#125;\s?=[^ &gt;]+/ig,<span class="hljs-string">&quot;&quot;</span>);<br>&#125;<br>动态执行JavaScript脚本<br> <br><span class="hljs-function">function <span class="hljs-title">javascript</span>()</span>&#123;<br>    <span class="hljs-keyword">try</span>&#123;<br>      eval(K1.<span class="hljs-keyword">value</span>);<br>    &#125;<span class="hljs-keyword">catch</span>(e)&#123;<br>      alert(e.message);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>金额大写转换函数</li>
+</ul>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">function</span> <span class="hljs-title function_">transform</span>(<span class="hljs-params">tranvalue</span>) &#123;<br>    try &#123;<br>        <span class="hljs-keyword">var</span> i = <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">var</span> dw2 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(<span class="hljs-string">&quot;&quot;</span>, <span class="hljs-string">&quot;万&quot;</span>, <span class="hljs-string">&quot;亿&quot;</span>); <span class="hljs-comment">//大单位</span><br>        <span class="hljs-keyword">var</span> dw1 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(<span class="hljs-string">&quot;拾&quot;</span>, <span class="hljs-string">&quot;佰&quot;</span>, <span class="hljs-string">&quot;仟&quot;</span>); <span class="hljs-comment">//小单位</span><br>        <span class="hljs-keyword">var</span> dw = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(<span class="hljs-string">&quot;零&quot;</span>, <span class="hljs-string">&quot;壹&quot;</span>, <span class="hljs-string">&quot;贰&quot;</span>, <span class="hljs-string">&quot;叁&quot;</span>, <span class="hljs-string">&quot;肆&quot;</span>, <span class="hljs-string">&quot;伍&quot;</span>, <span class="hljs-string">&quot;陆&quot;</span>, <span class="hljs-string">&quot;柒&quot;</span>, <span class="hljs-string">&quot;捌&quot;</span>, <span class="hljs-string">&quot;玖&quot;</span>); <span class="hljs-comment">//整数部分用</span><br>        <span class="hljs-comment">//以下是小写转换成大写显示在合计大写的文本框中     </span><br>        <span class="hljs-comment">//分离整数与小数</span><br>        <span class="hljs-keyword">var</span> source = splits(tranvalue);<br>        <span class="hljs-keyword">var</span> num = source[<span class="hljs-number">0</span>];<br>        <span class="hljs-keyword">var</span> dig = source[<span class="hljs-number">1</span>];<br>        <span class="hljs-comment">//转换整数部分</span><br>        <span class="hljs-keyword">var</span> k1 = <span class="hljs-number">0</span>; <span class="hljs-comment">//计小单位</span><br>        <span class="hljs-keyword">var</span> k2 = <span class="hljs-number">0</span>; <span class="hljs-comment">//计大单位</span><br>        <span class="hljs-keyword">var</span> <span class="hljs-built_in">sum</span> = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">var</span> str = <span class="hljs-string">&quot;&quot;</span>;<br>        <span class="hljs-keyword">var</span> len = source[<span class="hljs-number">0</span>].<span class="hljs-built_in">length</span>; <span class="hljs-comment">//整数的长度</span><br>        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">1</span>; i &lt;= len; i++) &#123;<br>              <span class="hljs-keyword">var</span> n = source[<span class="hljs-number">0</span>].charAt(len - i); <span class="hljs-comment">//取得某个位数上的数字</span><br>              <span class="hljs-keyword">var</span> bn = <span class="hljs-number">0</span>;<br>              <span class="hljs-keyword">if</span> (len - i - <span class="hljs-number">1</span> &gt;= <span class="hljs-number">0</span>) &#123;<br>                bn = source[<span class="hljs-number">0</span>].charAt(len - i - <span class="hljs-number">1</span>); <span class="hljs-comment">//取得某个位数前一位上的数字</span><br>              &#125;<br>              <span class="hljs-built_in">sum</span> = <span class="hljs-built_in">sum</span> + <span class="hljs-built_in">Number</span>(n);<br>              <span class="hljs-keyword">if</span> (<span class="hljs-built_in">sum</span> != <span class="hljs-number">0</span>) &#123;<br>                str = dw[<span class="hljs-built_in">Number</span>(n)].concat(str); <span class="hljs-comment">//取得该数字对应的大写数字，并插入到str字符串的前面</span><br>                <span class="hljs-keyword">if</span> (n == <span class="hljs-string">&#x27;0&#x27;</span>) <span class="hljs-built_in">sum</span> = <span class="hljs-number">0</span>;<br>              &#125;<br>              <span class="hljs-keyword">if</span> (len - i - <span class="hljs-number">1</span> &gt;= <span class="hljs-number">0</span>) &#123; <span class="hljs-comment">//在数字范围内</span><br>                <span class="hljs-keyword">if</span> (k1 != <span class="hljs-number">3</span>) &#123; <span class="hljs-comment">//加小单位</span><br>                      <span class="hljs-keyword">if</span> (bn != <span class="hljs-number">0</span>) &#123;<br>                        str = dw1[k1].concat(str);<br>                      &#125;<br>                      k1++;<br>                &#125; <span class="hljs-keyword">else</span> &#123; <span class="hljs-comment">//不加小单位，加大单位</span><br>                      k1 = <span class="hljs-number">0</span>;<br>                      <span class="hljs-keyword">var</span> temp = str.charAt(<span class="hljs-number">0</span>);<br>                      <span class="hljs-keyword">if</span> (temp == <span class="hljs-string">&quot;万&quot;</span> || temp == <span class="hljs-string">&quot;亿&quot;</span>) <span class="hljs-comment">//若大单位前没有数字则舍去大单位</span><br>                      str = str.substr(<span class="hljs-number">1</span>, str.<span class="hljs-built_in">length</span> - <span class="hljs-number">1</span>);<br>                      str = dw2[k2].concat(str);<br>                      <span class="hljs-built_in">sum</span> = <span class="hljs-number">0</span>;<br>                &#125;<br>              &#125;<br>              <span class="hljs-keyword">if</span> (k1 == <span class="hljs-number">3</span>)&#123; <span class="hljs-comment">//小单位到千则大单位进一</span><br>                k2++;<br>              &#125;<br>        &#125;<br>        <span class="hljs-comment">//转换小数部分</span><br>        <span class="hljs-keyword">var</span> strdig = <span class="hljs-string">&quot;&quot;</span>;<br>        <span class="hljs-keyword">if</span> (dig != <span class="hljs-string">&quot;&quot;</span>) &#123;<br>              <span class="hljs-keyword">var</span> n = dig.charAt(<span class="hljs-number">0</span>);<br>              <span class="hljs-keyword">if</span> (n != <span class="hljs-number">0</span>) &#123;<br>                strdig += dw[<span class="hljs-built_in">Number</span>(n)] + <span class="hljs-string">&quot;角&quot;</span>; <span class="hljs-comment">//加数字</span><br>              &#125;<br>              <span class="hljs-keyword">var</span> n = dig.charAt(<span class="hljs-number">1</span>);<br>              <span class="hljs-keyword">if</span> (n != <span class="hljs-number">0</span>) &#123;<br>                strdig += dw[<span class="hljs-built_in">Number</span>(n)] + <span class="hljs-string">&quot;分&quot;</span>; <span class="hljs-comment">//加数字</span><br>              &#125;<br>        &#125;<br>        str += <span class="hljs-string">&quot;元&quot;</span> + strdig;<br>    &#125; catch(e) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;0元&quot;</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> str;<br>&#125;<br><span class="hljs-comment">//拆分整数与小数</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">splits</span>(<span class="hljs-params">tranvalue</span>) &#123;<br>    <span class="hljs-keyword">var</span> value = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(<span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>);<br>    temp = tranvalue.<span class="hljs-built_in">split</span>(<span class="hljs-string">&quot;.&quot;</span>);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; temp.<span class="hljs-built_in">length</span>; i++) &#123;<br>        value = temp;<br>    &#125;<br>    <span class="hljs-keyword">return</span> value;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>获取窗体可见范围的宽与高</li>
+</ul>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs stata">function getViewSize()&#123;<br>    <span class="hljs-keyword">var</span> <span class="hljs-keyword">de</span>=document.documentElement;<br>    <span class="hljs-keyword">var</span> <span class="hljs-keyword">db</span>=document.body;<br>    <span class="hljs-keyword">var</span> viewW=<span class="hljs-keyword">de</span>.clientWidth==0 ?  <span class="hljs-keyword">db</span>.clientWidth : <span class="hljs-keyword">de</span>.clientWidth;<br>    <span class="hljs-keyword">var</span> viewH=<span class="hljs-keyword">de</span>.clientHeight==0 ?  <span class="hljs-keyword">db</span>.clientHeight : <span class="hljs-keyword">de</span>.clientHeight;<br>    <span class="hljs-keyword">return</span> Array(viewW ,viewH);<br>&#125;<br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%89%8D%E7%AB%AF/" class="category-chain-item">前端</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/javascript/">#javascript</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>js-常用代码操作实例</div>
+      <div>http://example.com/2018/01/09/html+css+js+ts/3-js常用代码操作实例/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>January 9, 2018</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/01/10/html+css+js+ts/1-html-tag/" title="html-tag">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">html-tag</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/01/05/html+css+js+ts/3-js%E5%B8%B8%E7%94%A8api/" title="js-api">
+                        <span class="hidden-mobile">js-api</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

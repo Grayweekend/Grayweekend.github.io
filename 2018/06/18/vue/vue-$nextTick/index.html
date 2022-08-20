@@ -1,0 +1,636 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、NextTick是什么官方对其的定义  在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM  什么意思呢？ 我们可以理解成，Vue 在更新 DOM 时是异步执行的。当数据发生变化，Vue将开启一个异步更新队列，视图需要等队列中所有数据变化完成之后，再统一进行更新 举例一下 Html结构 1&lt;div id&#x3D;&quot;app&quot;&amp;gt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue-$nextTick">
+<meta property="og:url" content="http://example.com/2018/06/18/vue/vue-$nextTick/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、NextTick是什么官方对其的定义  在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM  什么意思呢？ 我们可以理解成，Vue 在更新 DOM 时是异步执行的。当数据发生变化，Vue将开启一个异步更新队列，视图需要等队列中所有数据变化完成之后，再统一进行更新 举例一下 Html结构 1&lt;div id&#x3D;&quot;app&quot;&amp;gt">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-06-18T12:42:42.000Z">
+<meta property="article:modified_time" content="2022-06-06T07:35:44.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="vue">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>vue-$nextTick - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="vue-$nextTick"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-06-18 20:42" pubdate>
+          June 18, 2018 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.8k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          32 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">vue-$nextTick</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="一、NextTick是什么"><a href="#一、NextTick是什么" class="headerlink" title="一、NextTick是什么"></a>一、NextTick是什么</h2><p>官方对其的定义</p>
+<blockquote>
+<p>在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM</p>
+</blockquote>
+<p>什么意思呢？</p>
+<p>我们可以理解成，<code>Vue</code> 在更新 <code>DOM</code> 时是异步执行的。当数据发生变化，<code>Vue</code>将开启一个异步更新队列，视图需要等队列中所有数据变化完成之后，再统一进行更新</p>
+<p>举例一下</p>
+<p><code>Html</code>结构</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;app&quot;</span>&gt;</span> &#123;&#123; message &#125;&#125; <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>构建一个<code>vue</code>实例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> vm = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Vue</span>(&#123;<br>  <span class="hljs-attr">el</span>: <span class="hljs-string">&#x27;#app&#x27;</span>,<br>  <span class="hljs-attr">data</span>: &#123;<br>    <span class="hljs-attr">message</span>: <span class="hljs-string">&#x27;原始值&#x27;</span><br>  &#125;<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>修改<code>message</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">this</span>.<span class="hljs-property">message</span> = <span class="hljs-string">&#x27;修改后的值1&#x27;</span><br><span class="hljs-variable language_">this</span>.<span class="hljs-property">message</span> = <span class="hljs-string">&#x27;修改后的值2&#x27;</span><br><span class="hljs-variable language_">this</span>.<span class="hljs-property">message</span> = <span class="hljs-string">&#x27;修改后的值3&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>这时候想获取页面最新的<code>DOM</code>节点，却发现获取到的是旧值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(vm.<span class="hljs-property">$el</span>.<span class="hljs-property">textContent</span>) <span class="hljs-comment">// 原始值</span><br></code></pre></td></tr></table></figure>
+
+<p>这是因为<code>message</code>数据在发现变化的时候，<code>vue</code>并不会立刻去更新<code>Dom</code>，而是将修改数据的操作放在了一个异步操作队列中</p>
+<p>如果我们一直修改相同数据，异步操作队列还会进行去重</p>
+<p>等待同一事件循环中的所有数据变化完成之后，会将队列中的事件拿来进行处理，进行<code>DOM</code>的更新</p>
+<h4 id="为什么要有nexttick"><a href="#为什么要有nexttick" class="headerlink" title="为什么要有nexttick"></a>为什么要有nexttick</h4><p>举个例子</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js">&#123;&#123;num&#125;&#125;<br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i=<span class="hljs-number">0</span>; i&lt;<span class="hljs-number">100000</span>; i++)&#123;<br>    num = i<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>如果没有 <code>nextTick</code> 更新机制，那么 <code>num</code> 每次更新值都会触发视图更新(上面这段代码也就是会更新10万次视图)，有了<code>nextTick</code>机制，只需要更新一次，所以<code>nextTick</code>本质是一种优化策略</p>
+<h2 id="二、使用场景"><a href="#二、使用场景" class="headerlink" title="二、使用场景"></a>二、使用场景</h2><p>如果想要在修改数据后立刻得到更新后的<code>DOM</code>结构，可以使用<code>Vue.nextTick()</code></p>
+<p>第一个参数为：回调函数（可以获取最近的<code>DOM</code>结构）</p>
+<p>第二个参数为：执行函数上下文</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 修改数据</span><br>vm.<span class="hljs-property">message</span> = <span class="hljs-string">&#x27;修改后的值&#x27;</span><br><span class="hljs-comment">// DOM 还没有更新</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(vm.<span class="hljs-property">$el</span>.<span class="hljs-property">textContent</span>) <span class="hljs-comment">// 原始的值</span><br><span class="hljs-title class_">Vue</span>.<span class="hljs-title function_">nextTick</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-comment">// DOM 更新了</span><br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(vm.<span class="hljs-property">$el</span>.<span class="hljs-property">textContent</span>) <span class="hljs-comment">// 修改后的值</span><br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>组件内使用 <code>vm.$nextTick()</code> 实例方法只需要通过<code>this.$nextTick()</code>，并且回调函数中的 <code>this</code> 将自动绑定到当前的 <code>Vue</code> 实例上</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">this</span>.<span class="hljs-property">message</span> = <span class="hljs-string">&#x27;修改后的值&#x27;</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">$el</span>.<span class="hljs-property">textContent</span>) <span class="hljs-comment">// =&gt; &#x27;原始的值&#x27;</span><br><span class="hljs-variable language_">this</span>.$nextTick(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">$el</span>.<span class="hljs-property">textContent</span>) <span class="hljs-comment">// =&gt; &#x27;修改后的值&#x27;</span><br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p><code>$nextTick()</code> 会返回一个 <code>Promise</code> 对象，可以是用<code>async/await</code>完成相同作用的事情</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">this</span>.<span class="hljs-property">message</span> = <span class="hljs-string">&#x27;修改后的值&#x27;</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">$el</span>.<span class="hljs-property">textContent</span>) <span class="hljs-comment">// =&gt; &#x27;原始的值&#x27;</span><br><span class="hljs-keyword">await</span> <span class="hljs-variable language_">this</span>.$nextTick()<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">$el</span>.<span class="hljs-property">textContent</span>) <span class="hljs-comment">// =&gt; &#x27;修改后的值&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="三、实现原理"><a href="#三、实现原理" class="headerlink" title="三、实现原理"></a>三、实现原理</h2><p>源码位置：<code>/src/core/util/next-tick.js</code></p>
+<p><code>callbacks</code>也就是异步操作队列</p>
+<p><code>callbacks</code>新增回调函数后又执行了<code>timerFunc</code>函数，<code>pending</code>是用来标识同一个时间只能执行一次</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">nextTick</span>(<span class="hljs-params">cb?: <span class="hljs-built_in">Function</span>, ctx?: <span class="hljs-built_in">Object</span></span>) &#123;<br>  <span class="hljs-keyword">let</span> _resolve;<br><br>  <span class="hljs-comment">// cb 回调函数会经统一处理压入 callbacks 数组</span><br>  callbacks.<span class="hljs-title function_">push</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>    <span class="hljs-keyword">if</span> (cb) &#123;<br>      <span class="hljs-comment">// 给 cb 回调函数执行加上了 try-catch 错误处理</span><br>      <span class="hljs-keyword">try</span> &#123;<br>        cb.<span class="hljs-title function_">call</span>(ctx);<br>      &#125; <span class="hljs-keyword">catch</span> (e) &#123;<br>        <span class="hljs-title function_">handleError</span>(e, ctx, <span class="hljs-string">&#x27;nextTick&#x27;</span>);<br>      &#125;<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (_resolve) &#123;<br>      <span class="hljs-title function_">_resolve</span>(ctx);<br>    &#125;<br>  &#125;);<br><br>  <span class="hljs-comment">// 执行异步延迟函数 timerFunc</span><br>  <span class="hljs-keyword">if</span> (!pending) &#123;<br>    pending = <span class="hljs-literal">true</span>;<br>    <span class="hljs-title function_">timerFunc</span>();<br>  &#125;<br><br>  <span class="hljs-comment">// 当 nextTick 没有传入函数参数的时候，返回一个 Promise 化的调用</span><br>  <span class="hljs-keyword">if</span> (!cb &amp;&amp; <span class="hljs-keyword">typeof</span> <span class="hljs-title class_">Promise</span> !== <span class="hljs-string">&#x27;undefined&#x27;</span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function"><span class="hljs-params">resolve</span> =&gt;</span> &#123;<br>      _resolve = resolve;<br>    &#125;);<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>timerFunc</code>函数定义，这里是根据当前环境支持什么方法则确定调用哪个，分别有：</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey">Promise.then`、`MutationObserver`、`setImmediate`、`setTimeout<br></code></pre></td></tr></table></figure>
+
+<p>通过上面任意一种方法，进行降级操作</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">let</span> isUsingMicroTask = <span class="hljs-literal">false</span><br><span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-title class_">Promise</span> !== <span class="hljs-string">&#x27;undefined&#x27;</span> &amp;&amp; <span class="hljs-title function_">isNative</span>(<span class="hljs-title class_">Promise</span>)) &#123;<br>  <span class="hljs-comment">//判断1：是否原生支持Promise</span><br>  <span class="hljs-keyword">const</span> p = <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>()<br>  timerFunc = <span class="hljs-function">() =&gt;</span> &#123;<br>    p.<span class="hljs-title function_">then</span>(flushCallbacks)<br>    <span class="hljs-keyword">if</span> (isIOS) <span class="hljs-built_in">setTimeout</span>(noop)<br>  &#125;<br>  isUsingMicroTask = <span class="hljs-literal">true</span><br>&#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!isIE &amp;&amp; <span class="hljs-keyword">typeof</span> <span class="hljs-title class_">MutationObserver</span> !== <span class="hljs-string">&#x27;undefined&#x27;</span> &amp;&amp; (<br>  <span class="hljs-title function_">isNative</span>(<span class="hljs-title class_">MutationObserver</span>) ||<br>  <span class="hljs-title class_">MutationObserver</span>.<span class="hljs-title function_">toString</span>() === <span class="hljs-string">&#x27;[object MutationObserverConstructor]&#x27;</span><br>)) &#123;<br>  <span class="hljs-comment">//判断2：是否原生支持MutationObserver</span><br>  <span class="hljs-keyword">let</span> counter = <span class="hljs-number">1</span><br>  <span class="hljs-keyword">const</span> observer = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MutationObserver</span>(flushCallbacks)<br>  <span class="hljs-keyword">const</span> textNode = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createTextNode</span>(<span class="hljs-title class_">String</span>(counter))<br>  observer.<span class="hljs-title function_">observe</span>(textNode, &#123;<br>    <span class="hljs-attr">characterData</span>: <span class="hljs-literal">true</span><br>  &#125;)<br>  timerFunc = <span class="hljs-function">() =&gt;</span> &#123;<br>    counter = (counter + <span class="hljs-number">1</span>) % <span class="hljs-number">2</span><br>    textNode.<span class="hljs-property">data</span> = <span class="hljs-title class_">String</span>(counter)<br>  &#125;<br>  isUsingMicroTask = <span class="hljs-literal">true</span><br>&#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> setImmediate !== <span class="hljs-string">&#x27;undefined&#x27;</span> &amp;&amp; <span class="hljs-title function_">isNative</span>(setImmediate)) &#123;<br>  <span class="hljs-comment">//判断3：是否原生支持setImmediate</span><br>  timerFunc = <span class="hljs-function">() =&gt;</span> &#123;<br>    <span class="hljs-title function_">setImmediate</span>(flushCallbacks)<br>  &#125;<br>&#125; <span class="hljs-keyword">else</span> &#123;<br>  <span class="hljs-comment">//判断4：上面都不行，直接用setTimeout</span><br>  timerFunc = <span class="hljs-function">() =&gt;</span> &#123;<br>    <span class="hljs-built_in">setTimeout</span>(flushCallbacks, <span class="hljs-number">0</span>)<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>无论是微任务还是宏任务，都会放到<code>flushCallbacks</code>使用</p>
+<p>这里将<code>callbacks</code>里面的函数复制一份，同时<code>callbacks</code>置空</p>
+<p>依次执行<code>callbacks</code>里面的函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">flushCallbacks</span> () &#123;<br>  pending = <span class="hljs-literal">false</span><br>  <span class="hljs-keyword">const</span> copies = callbacks.<span class="hljs-title function_">slice</span>(<span class="hljs-number">0</span>)<br>  callbacks.<span class="hljs-property">length</span> = <span class="hljs-number">0</span><br>  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; copies.<span class="hljs-property">length</span>; i++) &#123;<br>    copies[i]()<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p><strong>小结：</strong></p>
+<ol>
+<li>把回调函数放入callbacks等待执行</li>
+<li>将执行函数放到微任务或者宏任务中</li>
+<li>事件循环到了微任务或者宏任务，执行函数依次执行callbacks中的回调</li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%A1%86%E6%9E%B6/" class="category-chain-item">框架</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/vue/">#vue</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>vue-$nextTick</div>
+      <div>http://example.com/2018/06/18/vue/vue-$nextTick/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>June 18, 2018</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/06/20/vue/vue-class%E4%B8%8Estyle%E7%BB%91%E5%AE%9A/" title="vue-class与style绑定">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">vue-class与style绑定</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/06/15/vue/SPA%E9%A6%96%E5%B1%8F%E5%8A%A0%E8%BD%BD%E4%BC%98%E5%8C%96/" title="SPA首屏加载优化">
+                        <span class="hidden-mobile">SPA首屏加载优化</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,629 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、是什么react通过将组件编写的JSX映射到屏幕，以及组件中的状态发生了变化之后 React会将这些「变化」更新到屏幕上 JSX通过babel最终转化成React.createElement这种形式，例如： 1234&lt;div&gt;  &lt; img src&#x3D;&quot;avatar.png&quot; className&#x3D;&quot;profile&quot; &#x2F;&gt;  &lt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React-Jsx转换成真实DOM过程">
+<meta property="og:url" content="http://example.com/2020/02/03/React/React-Jsx%E8%BD%AC%E6%8D%A2%E6%88%90%E7%9C%9F%E5%AE%9EDOM%E8%BF%87%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、是什么react通过将组件编写的JSX映射到屏幕，以及组件中的状态发生了变化之后 React会将这些「变化」更新到屏幕上 JSX通过babel最终转化成React.createElement这种形式，例如： 1234&lt;div&gt;  &lt; img src&#x3D;&quot;avatar.png&quot; className&#x3D;&quot;profile&quot; &#x2F;&gt;  &lt;">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://static.vue-js.com/28824fa0-f00a-11eb-ab90-d9ae814b240d.png">
+<meta property="article:published_time" content="2020-02-03T02:26:13.000Z">
+<meta property="article:modified_time" content="2022-06-06T13:57:54.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://static.vue-js.com/28824fa0-f00a-11eb-ab90-d9ae814b240d.png">
+  
+  
+  
+  <title>React-Jsx转换成真实DOM过程 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="React-Jsx转换成真实DOM过程"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-02-03 10:26" pubdate>
+          February 3, 2020 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.6k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          39 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">React-Jsx转换成真实DOM过程</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="一、是什么"><a href="#一、是什么" class="headerlink" title="一、是什么"></a>一、是什么</h2><p><code>react</code>通过将组件编写的<code>JSX</code>映射到屏幕，以及组件中的状态发生了变化之后 <code>React</code>会将这些「变化」更新到屏幕上</p>
+<p><code>JSX</code>通过<code>babel</code>最终转化成<code>React.createElement</code>这种形式，例如：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs jsx">&lt;div&gt;<br>  &lt; img src=<span class="hljs-string">&quot;avatar.png&quot;</span> className=<span class="hljs-string">&quot;profile&quot;</span> /&gt;<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Hello</span> /&gt;</span></span><br>&lt;/div&gt;<br></code></pre></td></tr></table></figure>
+
+<p>会被<code>bebel</code>转化成如下：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-title class_">React</span>.<span class="hljs-title function_">createElement</span>(<br>  <span class="hljs-string">&quot;div&quot;</span>,<br>  <span class="hljs-literal">null</span>,<br>  <span class="hljs-title class_">React</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&quot;img&quot;</span>, &#123;<br>    <span class="hljs-attr">src</span>: <span class="hljs-string">&quot;avatar.png&quot;</span>,<br>    <span class="hljs-attr">className</span>: <span class="hljs-string">&quot;profile&quot;</span><br>  &#125;),<br>  <span class="hljs-title class_">React</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-title class_">Hello</span>, <span class="hljs-literal">null</span>)<br>);<br></code></pre></td></tr></table></figure>
+
+<p>在转化过程中，<code>babel</code>在编译时会判断 JSX 中组件的首字母：</p>
+<ul>
+<li>当首字母为小写时，其被认定为原生 <code>DOM</code> 标签，<code>createElement</code> 的第一个变量被编译为字符串</li>
+<li>当首字母为大写时，其被认定为自定义组件，createElement 的第一个变量被编译为对象</li>
+</ul>
+<p>最终都会通过<code>RenderDOM.render(...)</code>方法进行挂载，如下：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-title class_">ReactDOM</span>.<span class="hljs-title function_">render</span>(<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">App</span> /&gt;</span></span>,  <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;root&quot;</span>));<br></code></pre></td></tr></table></figure>
+
+<h2 id="二、过程"><a href="#二、过程" class="headerlink" title="二、过程"></a>二、过程</h2><p>在<code>react</code>中，节点大致可以分成四个类别：</p>
+<ul>
+<li>原生标签节点</li>
+<li>文本节点</li>
+<li>函数组件</li>
+<li>类组件</li>
+</ul>
+<p>如下所示：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">class</span> <span class="hljs-title class_">ClassComponent</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Component</span> &#123;<br>  <span class="hljs-keyword">static</span> defaultProps = &#123;<br>    <span class="hljs-attr">color</span>: <span class="hljs-string">&quot;pink&quot;</span><br>  &#125;;<br>  <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> (<br>      &lt;div className=&quot;border&quot;&gt;<br>        &lt;h3&gt;ClassComponent&lt;/h3&gt;<br>        &lt;p className=&#123;this.props.color&#125;&gt;&#123;this.props.name&#125;&lt;/p &gt;<br>      &lt;/div&gt;<br>    );<br>  &#125;<br>&#125;<br><br>function FunctionComponent(props) &#123;<br>  return (<br>    &lt;div className=&quot;border&quot;&gt;<br>      FunctionComponent<br>      &lt;p&gt;&#123;props.name&#125;&lt;/p &gt;<br>    &lt;/div&gt;<br>  );<br>&#125;<br><br>const jsx = (<br>  &lt;div className=&quot;border&quot;&gt;<br>    &lt;p&gt;xx&lt;/p &gt;<br>    &lt; a href=&quot; &quot;&gt;xxx&lt;/ a&gt;<br>    &lt;FunctionComponent name=&quot;函数组件&quot; /&gt;<br>    &lt;ClassComponent name=&quot;类组件&quot; color=&quot;red&quot; /&gt;<br>  &lt;/div&gt;<br>);<br></code></pre></td></tr></table></figure>
+
+<p>这些类别最终都会被转化成<code>React.createElement</code>这种形式</p>
+<p><code>React.createElement</code>其被调用时会传⼊标签类型<code>type</code>，标签属性<code>props</code>及若干子元素<code>children</code>，作用是生成一个虚拟<code>Dom</code>对象，如下所示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">createElement</span>(<span class="hljs-params">type, config, ...children</span>) &#123;<br>    <span class="hljs-keyword">if</span> (config) &#123;<br>        <span class="hljs-keyword">delete</span> config.<span class="hljs-property">__self</span>;<br>        <span class="hljs-keyword">delete</span> config.<span class="hljs-property">__source</span>;<br>    &#125;<br>    <span class="hljs-comment">// ! 源码中做了详细处理，⽐如过滤掉key、ref等</span><br>    <span class="hljs-keyword">const</span> props = &#123;<br>        ...config,<br>        <span class="hljs-attr">children</span>: children.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">child</span> =&gt;</span><br>   <span class="hljs-keyword">typeof</span> child === <span class="hljs-string">&quot;object&quot;</span> ? child : <span class="hljs-title function_">createTextNode</span>(child)<br>  )<br>    &#125;;<br>    <span class="hljs-keyword">return</span> &#123;<br>        type,<br>        props<br>    &#125;;<br>&#125;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">createTextNode</span>(<span class="hljs-params">text</span>) &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>        <span class="hljs-attr">type</span>: <span class="hljs-variable constant_">TEXT</span>,<br>        <span class="hljs-attr">props</span>: &#123;<br>            <span class="hljs-attr">children</span>: [],<br>            <span class="hljs-attr">nodeValue</span>: text<br>        &#125;<br>    &#125;;<br>&#125;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>    createElement<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p><code>createElement</code>会根据传入的节点信息进行一个判断：</p>
+<ul>
+<li>如果是原生标签节点， type 是字符串，如div、span</li>
+<li>如果是文本节点， type就没有，这里是 TEXT</li>
+<li>如果是函数组件，type 是函数名</li>
+<li>如果是类组件，type 是类名</li>
+</ul>
+<p>虚拟<code>DOM</code>会通过<code>ReactDOM.render</code>进行渲染成真实<code>DOM</code>，使用方法如下：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-title class_">ReactDOM</span>.<span class="hljs-title function_">render</span>(element, container[, callback])<br></code></pre></td></tr></table></figure>
+
+<p>当首次调用时，容器节点里的所有 <code>DOM</code> 元素都会被替换，后续的调用则会使用 <code>React</code> 的 <code>diff</code>算法进行高效的更新</p>
+<p>如果提供了可选的回调函数<code>callback</code>，该回调将在组件被渲染或更新之后被执行</p>
+<p><code>render</code>大致实现方法如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">render</span>(<span class="hljs-params">vnode, container</span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;vnode&quot;</span>, vnode); <span class="hljs-comment">// 虚拟DOM对象</span><br>    <span class="hljs-comment">// vnode _&gt; node</span><br>    <span class="hljs-keyword">const</span> node = <span class="hljs-title function_">createNode</span>(vnode, container);<br>    container.<span class="hljs-title function_">appendChild</span>(node);<br>&#125;<br><br><span class="hljs-comment">// 创建真实DOM节点</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">createNode</span>(<span class="hljs-params">vnode, parentNode</span>) &#123;<br>    <span class="hljs-keyword">let</span> node = <span class="hljs-literal">null</span>;<br>    <span class="hljs-keyword">const</span> &#123;type, props&#125; = vnode;<br>    <span class="hljs-keyword">if</span> (type === <span class="hljs-variable constant_">TEXT</span>) &#123;<br>        node = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createTextNode</span>(<span class="hljs-string">&quot;&quot;</span>);<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> type === <span class="hljs-string">&quot;string&quot;</span>) &#123;<br>        node = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(type);<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> type === <span class="hljs-string">&quot;function&quot;</span>) &#123;<br>        node = type.<span class="hljs-property">isReactComponent</span><br>            ? <span class="hljs-title function_">updateClassComponent</span>(vnode, parentNode)<br>        : <span class="hljs-title function_">updateFunctionComponent</span>(vnode, parentNode);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        node = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createDocumentFragment</span>();<br>    &#125;<br>    <span class="hljs-title function_">reconcileChildren</span>(props.<span class="hljs-property">children</span>, node);<br>    <span class="hljs-title function_">updateNode</span>(node, props);<br>    <span class="hljs-keyword">return</span> node;<br>&#125;<br><br><span class="hljs-comment">// 遍历下子vnode，然后把子vnode-&gt;真实DOM节点，再插入父node中</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">reconcileChildren</span>(<span class="hljs-params">children, node</span>) &#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; children.<span class="hljs-property">length</span>; i++) &#123;<br>        <span class="hljs-keyword">let</span> child = children[i];<br>        <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Array</span>.<span class="hljs-title function_">isArray</span>(child)) &#123;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> j = <span class="hljs-number">0</span>; j &lt; child.<span class="hljs-property">length</span>; j++) &#123;<br>                <span class="hljs-title function_">render</span>(child[j], node);<br>            &#125;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-title function_">render</span>(child, node);<br>        &#125;<br>    &#125;<br>&#125;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">updateNode</span>(<span class="hljs-params">node, nextVal</span>) &#123;<br>    <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(nextVal)<br>        .<span class="hljs-title function_">filter</span>(<span class="hljs-function"><span class="hljs-params">k</span> =&gt;</span> k !== <span class="hljs-string">&quot;children&quot;</span>)<br>        .<span class="hljs-title function_">forEach</span>(<span class="hljs-function"><span class="hljs-params">k</span> =&gt;</span> &#123;<br>        <span class="hljs-keyword">if</span> (k.<span class="hljs-title function_">slice</span>(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>) === <span class="hljs-string">&quot;on&quot;</span>) &#123;<br>            <span class="hljs-keyword">let</span> eventName = k.<span class="hljs-title function_">slice</span>(<span class="hljs-number">2</span>).<span class="hljs-title function_">toLocaleLowerCase</span>();<br>            node.<span class="hljs-title function_">addEventListener</span>(eventName, nextVal[k]);<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            node[k] = nextVal[k];<br>        &#125;<br>    &#125;);<br>&#125;<br><br><span class="hljs-comment">// 返回真实dom节点</span><br><span class="hljs-comment">// 执行函数</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">updateFunctionComponent</span>(<span class="hljs-params">vnode, parentNode</span>) &#123;<br>    <span class="hljs-keyword">const</span> &#123;type, props&#125; = vnode;<br>    <span class="hljs-keyword">let</span> vvnode = <span class="hljs-title function_">type</span>(props);<br>    <span class="hljs-keyword">const</span> node = <span class="hljs-title function_">createNode</span>(vvnode, parentNode);<br>    <span class="hljs-keyword">return</span> node;<br>&#125;<br><br><span class="hljs-comment">// 返回真实dom节点</span><br><span class="hljs-comment">// 先实例化，再执行render函数</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">updateClassComponent</span>(<span class="hljs-params">vnode, parentNode</span>) &#123;<br>    <span class="hljs-keyword">const</span> &#123;type, props&#125; = vnode;<br>    <span class="hljs-keyword">let</span> cmp = <span class="hljs-keyword">new</span> <span class="hljs-title function_">type</span>(props);<br>    <span class="hljs-keyword">const</span> vvnode = cmp.<span class="hljs-title function_">render</span>();<br>    <span class="hljs-keyword">const</span> node = <span class="hljs-title function_">createNode</span>(vvnode, parentNode);<br>    <span class="hljs-keyword">return</span> node;<br>&#125;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>    render<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h2 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a>三、总结</h2><p>在<code>react</code>源码中，虚拟<code>Dom</code>转化成真实<code>Dom</code>整体流程如下图所示：</p>
+<p><img src="https://static.vue-js.com/28824fa0-f00a-11eb-ab90-d9ae814b240d.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>其渲染流程如下所示：</p>
+<ul>
+<li>使用React.createElement或JSX编写React组件，实际上所有的 JSX 代码最后都会转换成React.createElement(…) ，Babel帮助我们完成了这个转换的过程。</li>
+<li>createElement函数对key和ref等特殊的props进行处理，并获取defaultProps对默认props进行赋值，并且对传入的孩子节点进行处理，最终构造成一个虚拟DOM对象</li>
+<li>ReactDOM.render将生成好的虚拟DOM渲染到指定容器上，其中采用了批处理、事务等机制并且对特定浏览器进行了性能优化，最终转换为真实DOM</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/React/" class="category-chain-item">React</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/React/">#React</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>React-Jsx转换成真实DOM过程</div>
+      <div>http://example.com/2020/02/03/React/React-Jsx转换成真实DOM过程/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>February 3, 2020</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/02/06/React/React-Real%20DOM%20%E5%92%8C%20Virtual%20DOM%20%E7%9A%84%E5%8C%BA%E5%88%AB/" title="Real DOM 和 Virtual DOM 的区别">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Real DOM 和 Virtual DOM 的区别</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/01/21/React/React-immutable/" title="React-immutable DOM 和 Virtual DOM 的区别">
+                        <span class="hidden-mobile">React-immutable DOM 和 Virtual DOM 的区别</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

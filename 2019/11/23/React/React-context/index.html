@@ -1,0 +1,621 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="简介 React 组件之间的通信是基于 props 的单向数据流，即父组件通过 props 向子组件传值，亦或是子组件执行传入的函数来更新父组件的state，这都满足了我们大部分的使用场景 一般地，对于兄弟组件之间的通信，是通过它们共同的祖先组件进行的，即 Lifting State Up，官方文档也有介绍。组件一通过事件将状态变更通知它们共同的祖先组件，祖先组再将状态同步到组件二 但是，如果组件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React context">
+<meta property="og:url" content="http://example.com/2019/11/23/React/React-context/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="简介 React 组件之间的通信是基于 props 的单向数据流，即父组件通过 props 向子组件传值，亦或是子组件执行传入的函数来更新父组件的state，这都满足了我们大部分的使用场景 一般地，对于兄弟组件之间的通信，是通过它们共同的祖先组件进行的，即 Lifting State Up，官方文档也有介绍。组件一通过事件将状态变更通知它们共同的祖先组件，祖先组再将状态同步到组件二 但是，如果组件">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-11-23T10:35:16.000Z">
+<meta property="article:modified_time" content="2022-06-06T13:49:10.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>React context - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="React context"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-11-23 18:35" pubdate>
+          November 23, 2019 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.4k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          37 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">React context</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
+<li><code>React</code> 组件之间的通信是基于 <code>props</code> 的单向数据流，即父组件通过 <code>props</code> 向子组件传值，亦或是子组件执行传入的函数来更新父组件的<code>state</code>，这都满足了我们大部分的使用场景</li>
+<li>一般地，对于兄弟组件之间的通信，是通过它们共同的祖先组件进行的，即 Lifting State Up，官方文档也有介绍。组件一通过事件将状态变更通知它们共同的祖先组件，祖先组再将状态同步到组件二</li>
+<li>但是，如果组件之间嵌套的比较深，即使提升状态到共同父组件，再同步状态到相应的组件还是需要一层一层的传递下去，可能会比较繁琐</li>
+<li>在对应的场景中，<code>context</code> 就可以缩短父组件到子组件的属性传递路径</li>
+</ul>
+<h2 id="例1"><a href="#例1" class="headerlink" title="例1"></a>例1</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">Parent</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./Parent&#x27;</span><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">ChildOne</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../components/ChildOne&#x27;</span><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">ChildTwo</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../components/ChildTwo&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Container</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">React.Component</span> &#123;<br>    <span class="hljs-title function_">constructor</span>(<span class="hljs-params">props</span>) &#123;<br>        <span class="hljs-variable language_">super</span>(props);<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">state</span> = &#123; <span class="hljs-attr">value</span>: <span class="hljs-string">&#x27;&#x27;</span> &#125;<br>    &#125;<br><br>    changeValue = <span class="hljs-function"><span class="hljs-params">value</span> =&gt;</span> &#123;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">setState</span>(&#123; value &#125;)<br>    &#125;<br><br>    <span class="hljs-title function_">getChildContext</span>(<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-keyword">return</span> &#123;<br>            <span class="hljs-attr">value</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-property">state</span>.<span class="hljs-property">value</span>,<br>            <span class="hljs-attr">changeValue</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-property">changeValue</span><br>        &#125;<br>    &#125;<br><br>    <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-keyword">return</span> (<br>            <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">                <span class="hljs-tag">&lt;<span class="hljs-name">Parent</span>&gt;</span></span><br><span class="language-xml">                    <span class="hljs-tag">&lt;<span class="hljs-name">ChildOne</span> /&gt;</span></span><br><span class="language-xml">                <span class="hljs-tag">&lt;/<span class="hljs-name">Parent</span>&gt;</span></span><br><span class="language-xml">                <span class="hljs-tag">&lt;<span class="hljs-name">Parent</span>&gt;</span></span><br><span class="language-xml">                    <span class="hljs-tag">&lt;<span class="hljs-name">ChildTwo</span> /&gt;</span></span><br><span class="language-xml">                <span class="hljs-tag">&lt;/<span class="hljs-name">Parent</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>        )<br>    &#125;<br>&#125;<br><br><span class="hljs-title class_">Container</span>.<span class="hljs-property">childContextTypes</span> = &#123;<br>    <span class="hljs-attr">value</span>: <span class="hljs-title class_">PropTypes</span>.<span class="hljs-property">string</span>,<br>    <span class="hljs-attr">changeValue</span>: <span class="hljs-title class_">PropTypes</span>.<span class="hljs-property">func</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Parent.jsx</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs coffeescript"><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react&quot;</span><br><br>const Parent = <span class="hljs-function"><span class="hljs-params">(props)</span> =&gt;</span> (<br>    &lt;div &#123;...props&#125; /&gt;<br>)<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Parent<br></code></pre></td></tr></table></figure>
+
+<p>ChildOne.jsx</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs scala"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ChildOne</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>&#123;<br><br>    handleChange = (e) =&gt; &#123;<br>        const &#123; changeValue &#125; = <span class="hljs-keyword">this</span>.context<br>        changeValue(e.target.value)<br>    &#125;<br><br>    render() &#123;<br>        <span class="hljs-keyword">return</span> (<br>            &lt;div&gt;<br>                子组件一<br>                &lt;input onChange=&#123;<span class="hljs-keyword">this</span>.handleChange&#125; /&gt;<br>            &lt;/div&gt;<br>        )<br>    &#125;<br>&#125;<br><br><span class="hljs-type">ChildOne</span>.contextTypes = &#123;<br>    changeValue: <span class="hljs-type">PropTypes</span>.func<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>ChildTwo.jsx</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs scala"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ChildTwo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>&#123;<br>    render() &#123;<br>        <span class="hljs-keyword">return</span> (<br>            &lt;div&gt;<br>                子组件二<br>                &lt;p&gt;&#123;<span class="hljs-keyword">this</span>.context.value&#125;&lt;/p&gt;<br>            &lt;/div&gt;<br>        )<br>    &#125;<br>&#125;<br><br><span class="hljs-type">ChildTwo</span>.contextTypes = &#123;<br>    value: <span class="hljs-type">PropTypes</span>.string<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>在 <code>Container.childContextTypes</code> 中进行接口的声明，通过 <code>getChildContext</code> 返回更新后的<code>state</code>，在 <code>Child.contextTypes</code> 中声明要获取的接口，这样在子组件内部就能通过 <code>this.context</code> 获取到。通过 <code>Context</code> 这样一个中间对象，<code>ChildOne</code> 和 <code>ChildTwo</code> 就可以相互通信了</p>
+</blockquote>
+<h2 id="例2"><a href="#例2" class="headerlink" title="例2"></a>例2</h2><blockquote>
+<p>组件嵌套传递属性，在导航里面引用<code>Page</code>中的变量</p>
+</blockquote>
+<ul>
+<li>使用<code>context</code>来传递</li>
+<li>使用props层级传递</li>
+</ul>
+<blockquote>
+<p>使用<code>context</code>组件需要定义<code>propTypes</code>,需要严格校验、声明类型、字段</p>
+</blockquote>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs scala"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Page</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>&#123;<br>    static childContextTypes = &#123;<br>       user:<span class="hljs-type">PropTypes</span>.string<br>    &#125;<br>    constructor(props)&#123;<br>        <span class="hljs-keyword">super</span>(props)<br>        <span class="hljs-keyword">this</span>.state = &#123;user:&#x27;poetries&#x27;&#125;<br>    &#125;<br>    getChildContext()&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.state<br>    &#125;<br>    render()&#123;<br>        <span class="hljs-keyword">return</span> (<br>          &lt;div&gt;<br>            &lt;p&gt;我是&#123;<span class="hljs-keyword">this</span>.state.user&#125;&lt;/p&gt;<br>            &lt;<span class="hljs-type">Siderbar</span> /&gt;<br>          &lt;/div&gt;<br>        )<br>    &#125;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Siderbar</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>&#123;<br>    static childContextTypes = &#123;<br>       user:<span class="hljs-type">PropTypes</span>.string<br>    &#125;<br>    render()&#123;<br>        <span class="hljs-keyword">return</span> (<br>          &lt;div&gt;<br>            &lt;p&gt;侧边栏&lt;/p&gt;<br>            &lt;<span class="hljs-type">Navbar</span> /&gt;<br>          &lt;/div&gt;<br>        )<br>    &#125;<br>&#125;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Navbar</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>&#123;<br>    static childContextTypes = &#123;<br>       user:<span class="hljs-type">PropTypes</span>.string<br>    &#125;<br>    render()&#123;<br>        <span class="hljs-keyword">return</span> (<br>          &lt;div&gt;<br>            &lt;p&gt;我是&#123;<span class="hljs-keyword">this</span>.context.user&#125;的导航栏&lt;/p&gt;<br>            &lt;<span class="hljs-type">Siderbar</span> /&gt;<br>          &lt;/div&gt;<br>        )<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="context在Provider种应用"><a href="#context在Provider种应用" class="headerlink" title="context在Provider种应用"></a>context在Provider种应用</h2><blockquote>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey">provider`组件就是使用`context`，把`store`放到`context`里，所有的子元素可以直接取到`store<br></code></pre></td></tr></table></figure>
+</blockquote>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs scala"><span class="hljs-keyword">import</span> <span class="hljs-type">PropTypes</span> from &#x27;prop-types&#x27;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Provider</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>&#123;<br>    static childContextTypes = &#123;<br>        store:<span class="hljs-type">Protypes</span>.<span class="hljs-keyword">object</span><br>    &#125;<br>    constructor(props,context)&#123;<br>        <span class="hljs-keyword">super</span>(props,context)<br>        <span class="hljs-keyword">this</span>.store = props.store<br>    &#125;<br>    getChildContext()&#123;<br>        <span class="hljs-comment">//把传进来的store放进全局</span><br>        <span class="hljs-keyword">return</span> &#123;store:<span class="hljs-keyword">this</span>.store&#125;<br>    &#125;<br>    render()&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.props.children<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>connect</code> 负责连接组件，给到<code>redux</code>里的数据放到组件的属性里</p>
+</blockquote>
+<ul>
+<li>负责接收一个组件，把<code>state</code>里的一些数据放进去，返回一个组件</li>
+<li>数据变化的时候，能够通知组件</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">//高阶组件写法</span><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">connect</span> = (<span class="hljs-params">mapStateToProps=state=&gt;state,mapDispatchToProps=&#123;&#125;</span>)=&gt;<span class="hljs-function">(<span class="hljs-params">wrapperComponent</span>)=&gt;</span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ConnectComponent</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">React.Component</span> &#123;<br>        <span class="hljs-comment">//负责接收组件</span><br>        <span class="hljs-keyword">static</span> contextTypes = &#123;<br>            <span class="hljs-attr">store</span>:<span class="hljs-title class_">PropTypes</span>.<span class="hljs-property">obejct</span><br>        &#125;<br>        <span class="hljs-title function_">constructor</span>(<span class="hljs-params">props</span>)&#123;<br>            <span class="hljs-title function_">super</span>(<span class="hljs-params">props, context</span>)&#123;<br>                <span class="hljs-variable language_">this</span>.<span class="hljs-property">state</span> = &#123;<br>                    <span class="hljs-attr">props</span>:&#123;&#125;<br>                &#125;<br>            &#125;<br>        &#125;<br>        <span class="hljs-title function_">componentDidMount</span>(<span class="hljs-params"></span>)&#123;<br>            <span class="hljs-keyword">const</span> &#123;store&#125; = <span class="hljs-variable language_">this</span>.<span class="hljs-property">context</span><br>            store.<span class="hljs-title function_">subscribe</span>(<span class="hljs-function">()=&gt;</span><span class="hljs-variable language_">this</span>.<span class="hljs-title function_">update</span>())<br>            <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">update</span>()<br>        &#125;<br>        <span class="hljs-title function_">update</span>(<span class="hljs-params"></span>)&#123;<br>            <span class="hljs-comment">//  获取mapStateToProps、mapDispatchToProps 放入this.props里</span><br>            <br>            <span class="hljs-keyword">const</span> &#123;store&#125;=<span class="hljs-variable language_">this</span>.<span class="hljs-property">context</span><br>            <span class="hljs-keyword">const</span> stateProps = <span class="hljs-title function_">mapStateToProps</span>(store.<span class="hljs-title function_">getState</span>())<br>            <span class="hljs-keyword">const</span> dispatchProps = <span class="hljs-title function_">bindActionCreators</span>(mapDispatchProps,store.<span class="hljs-property">dispatch</span>)<br>            <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">setState</span>(&#123;<br>                <span class="hljs-attr">props</span>:&#123;<br>                    ...<span class="hljs-variable language_">this</span>.<span class="hljs-property">state</span>.<span class="hljs-property">props</span>,<br>                    ...stateProps,<br>                    ...dispatchProps<br>                 &#125;<br>            &#125;)<br>        &#125;<br>        <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>)&#123;<br>            <span class="hljs-comment">// 把数据放入</span><br>            <span class="hljs-keyword">return</span> <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">wrapperComponent</span> &#123;<span class="hljs-attr">...this.state.props</span>&#125;/&gt;</span></span><br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%A1%86%E6%9E%B6/" class="category-chain-item">框架</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/React/">#React</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>React context</div>
+      <div>http://example.com/2019/11/23/React/React-context/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>November 23, 2019</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/11/28/React/React-05-%E7%BB%84%E4%BB%B6%E5%8D%8F%E5%90%8C(%E4%B8%8D)%E5%8F%AF%E6%8E%A7%E7%BB%84%E4%BB%B6/" title="React 组件协议(不)可控组件">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">React 组件协议(不)可控组件</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/11/17/React/React-04-%E4%BA%8B%E4%BB%B6/" title="React 事件">
+                        <span class="hidden-mobile">React 事件</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

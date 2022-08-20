@@ -1,0 +1,764 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、Next.js是什么 Next.js是一个基于React的一个服务端渲染简约框架。它使用React语法，可以很好的实现代码的模块化，有利于代码的开发和维护  1.1 Next.js带来了很多好的特性 默认服务端渲染模式，以文件系统为基础的客户端路由 代码自动分隔使页面加载更快 以页面为基础的简洁的客户端路由 以webpack的热替换为基础的开发环境 使用React的JSX和ES6的module">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React-SSR优化Next构建2">
+<meta property="og:url" content="http://example.com/2020/03/15/React/React-SSR%E4%BC%98%E5%8C%96Next%E6%9E%84%E5%BB%BA2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、Next.js是什么 Next.js是一个基于React的一个服务端渲染简约框架。它使用React语法，可以很好的实现代码的模块化，有利于代码的开发和维护  1.1 Next.js带来了很多好的特性 默认服务端渲染模式，以文件系统为基础的客户端路由 代码自动分隔使页面加载更快 以页面为基础的简洁的客户端路由 以webpack的热替换为基础的开发环境 使用React的JSX和ES6的module">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-15T14:13:18.000Z">
+<meta property="article:modified_time" content="2022-06-06T14:13:00.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>React-SSR优化Next构建2 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="React-SSR优化Next构建2"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-03-15 22:13" pubdate>
+          March 15, 2020 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          16k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          135 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">React-SSR优化Next构建2</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="一、Next-js是什么"><a href="#一、Next-js是什么" class="headerlink" title="一、Next.js是什么"></a>一、Next.js是什么</h2><blockquote>
+<p><code>Next.js</code>是一个基于<code>React</code>的一个服务端渲染简约框架。它使用<code>React</code>语法，可以很好的实现代码的模块化，有利于代码的开发和维护</p>
+</blockquote>
+<h3 id="1-1-Next-js带来了很多好的特性"><a href="#1-1-Next-js带来了很多好的特性" class="headerlink" title="1.1 Next.js带来了很多好的特性"></a>1.1 Next.js带来了很多好的特性</h3><ul>
+<li>默认服务端渲染模式，以文件系统为基础的客户端路由</li>
+<li>代码自动分隔使页面加载更快</li>
+<li>以页面为基础的简洁的客户端路由</li>
+<li>以<code>webpack</code>的热替换为基础的开发环境</li>
+<li>使用<code>React</code>的<code>JSX</code>和<code>ES6</code>的<code>module</code>，模块化和维护更方便</li>
+<li>可以运行在<code>Express</code>和其他<code>Node.js</code>的<code>HTTP</code> 服务器上</li>
+<li>可以定制化专属的<code>babel</code>和<code>webpack</code>配置</li>
+</ul>
+<h2 id="二、构建一个基本的Next项目"><a href="#二、构建一个基本的Next项目" class="headerlink" title="二、构建一个基本的Next项目"></a>二、构建一个基本的Next项目</h2><h3 id="2-1-创建项目"><a href="#2-1-创建项目" class="headerlink" title="2.1 创建项目"></a>2.1 创建项目</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> 在本地创建一个项目跟目录<br>$ mkdir hello-<span class="hljs-keyword">next</span> <br><br><span class="hljs-regexp">//</span> 切换到项目根目录<br>$ cd hello-<span class="hljs-keyword">next</span><br><br><span class="hljs-regexp">//</span> 用npm初始化项目<br>$ npm init -y<br><br><span class="hljs-regexp">//</span> 将react和<span class="hljs-keyword">next</span>安装到本地依赖<br>$ npm install --save react react-dom <span class="hljs-keyword">next</span><br><br><span class="hljs-regexp">//</span> 创建文件夹 pages<br>$ mkdir pages<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>创建完文件夹之后，打开<code>hello-next</code>文件下的<code>package.json</code>文件，在 <code>scripts</code>下添加一个<code>script</code>，如下</p>
+</blockquote>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs routeros">&#123;<br>  <span class="hljs-string">&quot;scripts&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;dev&quot;</span>: <span class="hljs-string">&quot;next&quot;</span><br>  &#125;<br>&#125;<br>$ npm <span class="hljs-built_in">run</span> dev<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-2-创建页面"><a href="#2-2-创建页面" class="headerlink" title="2.2 创建页面"></a>2.2 创建页面</h3><blockquote>
+<p><code>Next.js</code>是从服务器生成页面，再返回给前端展示。<code>Next.js</code>默认从 <code>pages</code> 目录下取页面进行渲染返回给前端展示，并默认取 <code>pages/index.js</code> 作为系统的首页进行展示。注意，<code>pages</code> 是默认存放页面的目录，路由的根路径也是<code>pages</code>目录</p>
+</blockquote>
+<ul>
+<li>在 <code>pages/index.js</code> 中创建一个<code>React</code>函数式组件</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> <span class="hljs-title function_">Index</span> = (<span class="hljs-params"></span>) =&gt; (<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Hello Next.js<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>)<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">Index</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>Next.js</code>默认使用<code>Webpack</code>构建项目，<code>webpack</code>的热部署功能一样能提升开发效率。创建完 <code>pages/index.js</code> 后，再访问 <code>http://localhost:3000</code> 即可看到设置好的页面</p>
+</blockquote>
+<ul>
+<li>在 <code>pages</code> 目录下创建文件 <code>pages/about.js</code></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> () =&gt; (<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>This is the about page<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>创建完之后，可以通过 <code>http://localhost:3000/about</code> 访问该页面。至此，所有的页面的路由都是通过后端服务器来控制的，要想实现客户端路由，需要借助<code>Next.js</code>的<code>Link API</code>。</p>
+</blockquote>
+<p><strong>Link API</strong></p>
+<blockquote>
+<p>从 <code>next/link</code>中可以引用到 <code>Link</code> 组件。在<code>pages/index.js</code>文件中引用<code>Link</code>，修改如</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// This is the Link API</span><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">Link</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;next/link&#x27;</span><br><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">Index</span> = (<span class="hljs-params"></span>) =&gt; (<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">Link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/about&quot;</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">a</span>&gt;</span>About Page<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">Link</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Hello Next.js<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>)<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">Index</span><br></code></pre></td></tr></table></figure>
+
+<ol>
+<li><code>Link</code>组件是通过<code>location.history</code>的浏览器API保存历史路由，所以，你可以通过浏览器左上角的前进和后退按钮来切换历史路由。而在开发过程中，你不需要再单独写客户端路由的配置</li>
+<li><code>Link</code>组件是<code>React</code>的高阶组件的实现，不能对它进行样式的设置，它只是起到路由的跳转功能，但是它的复用性强，只要包含一个能触发<code>onClick</code>事件的组件即可</li>
+</ol>
+<h3 id="2-3-组件复用"><a href="#2-3-组件复用" class="headerlink" title="2.3 组件复用"></a>2.3 组件复用</h3><blockquote>
+<p><code>Next.js</code>是以多页面为中心，只要将页面文件放在<code>pages</code>目录下，就可以在浏览器上以文件名为路由名来访问到</p>
+</blockquote>
+<ul>
+<li>组件的设置跟React一样，通过<code>export</code>导出，通过<code>import</code>导入。一般，只要不想让用户通过页面直接访问的组件，都不放在<code>pages</code>目录下。对除了<code>pages</code>目录，组件放在哪个目录下没有要求，开发者可以自定义设置</li>
+</ul>
+<blockquote>
+<p>下面再 <code>components</code> 目录下，创建一个公用组件 <code>Header</code>，用于各个文件的头部导航，通过导航可以在页面见切换</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">Link</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;next/link&#x27;</span><br><br><span class="hljs-keyword">const</span> linkStyle = &#123;<br>  <span class="hljs-attr">marginRight</span>: <span class="hljs-number">15</span><br>&#125;<br><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">Header</span> = (<span class="hljs-params"></span>) =&gt; (<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">Link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/&quot;</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&#123;linkStyle&#125;</span>&gt;</span>Home<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">Link</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">Link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/about&quot;</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&#123;linkStyle&#125;</span>&gt;</span>About<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">Link</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>)<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">Header</span><br></code></pre></td></tr></table></figure>
+
+<p>在 <code>pages/index.js</code> 中引入<code>Header</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">Header</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../components/Header&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> () =&gt; (<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">Header</span> /&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Hello Next.js<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>进一步封装<code>Header</code>组件，创建一个自动包含<code>Header</code>和<code>Content</code>的组件 <code>components/MyLayout.js</code></p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">Header</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./Header&#x27;</span><br><br><span class="hljs-keyword">const</span> layoutStyle = &#123;<br>  <span class="hljs-attr">margin</span>: <span class="hljs-number">20</span>,<br>  <span class="hljs-attr">padding</span>: <span class="hljs-number">20</span>,<br>  <span class="hljs-attr">border</span>: <span class="hljs-string">&#x27;1px solid #DDD&#x27;</span><br>&#125;<br><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">Layout</span> = (<span class="hljs-params">props</span>) =&gt; (<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&#123;layoutStyle&#125;</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">Header</span> /&gt;</span></span><br><span class="language-xml">    &#123;props.children&#125;</span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>)<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">Layout</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="2-4-创建动态页面"><a href="#2-4-创建动态页面" class="headerlink" title="2.4 创建动态页面"></a>2.4 创建动态页面</h3><blockquote>
+<p>使用<code>Next.js</code>创建动态页面，与使用<code>React</code>或<code>Vue</code>创建一个<code>SPA</code>页面大体相同，唯一的区别就是页面的渲染主体不同，前者是<code>Nodejs</code>服务器获取到后端数据渲染完页面后再返回给前端展示，后者是前端先获取页面主体架构，再通过<code>ajax</code>的方式请求后端的数据，在前端渲染展示</p>
+</blockquote>
+<p>以一个简易的博客页面为例，创建博客列表页，修改 <code>pages/index.js</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">Layout</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../components/MyLayout.js&#x27;</span><br><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">Link</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;next/link&#x27;</span><br><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">PostLink</span> = (<span class="hljs-params">props</span>) =&gt; (<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">Link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&#123;</span>`/<span class="hljs-attr">post</span>?<span class="hljs-attr">title</span>=<span class="hljs-string">$&#123;props.title&#125;</span>`&#125;&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">a</span>&gt;</span>&#123;props.title&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">Link</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br>)<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> () =&gt; (<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Layout</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>My Blog<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">PostLink</span> <span class="hljs-attr">title</span>=<span class="hljs-string">&quot;Hello Next.js&quot;</span>/&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">PostLink</span> <span class="hljs-attr">title</span>=<span class="hljs-string">&quot;Learn Next.js is awesome&quot;</span>/&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">PostLink</span> <span class="hljs-attr">title</span>=<span class="hljs-string">&quot;Deploy apps with Zeit&quot;</span>/&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">Layout</span>&gt;</span></span><br>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>有了列表页，需要再写一个博客的详情页，从上面的代码中也可看到，我们需要创建一个 <code>pages/post.js</code>文件</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">Layout</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../components/MyLayout.js&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> (props) =&gt; (<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Layout</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>&#123;props.url.query.title&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>This is the blog post content.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">Layout</span>&gt;</span></span><br>)<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-5-用路由遮盖（Route-Masking）的干净的URL"><a href="#2-5-用路由遮盖（Route-Masking）的干净的URL" class="headerlink" title="2.5 用路由遮盖（Route Masking）的干净的URL"></a>2.5 用路由遮盖（Route Masking）的干净的URL</h3><blockquote>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs perl">Next.js<span class="hljs-string">`上提供了一个独特的特性：路由遮盖（Route Masking）。它可以使得在浏览器上显示的是路由`</span>A<span class="hljs-string">`，而`</span>App<span class="hljs-string">`内部真正的路由是`</span>B<span class="hljs-string">`。这个特性可以让我们来设置一些比较简洁的路由显示在页面，而系统背后是使用一个带参数的路由。比如上面的例子中，地址栏中显示的是 `</span>http:<span class="hljs-regexp">//l</span>ocalhost:<span class="hljs-number">3000</span>/post?title=Hello%20Next.js<span class="hljs-string">` ，这个地址含有一个`</span>title<span class="hljs-string">`参数，看着很不整洁。下面我们就用`</span>Next.js<span class="hljs-string">`来改造路由，使用路由遮盖来创建一个更加简洁的路由地址。比如我们将该地址改造成 `</span>http:<span class="hljs-regexp">//l</span>ocalhost:<span class="hljs-number">3000</span>/p/hello-nextjs<br></code></pre></td></tr></table></figure>
+</blockquote>
+<p>首先我们要修改 <code>pages/index.js</code> 下的<code>PostLink</code>组件，会使用到 <code>next/link</code> 组件的 <code>as</code> 属性，并给组件添加一个属性 <code>id</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">Layout</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../components/MyLayout.js&#x27;</span><br><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">Link</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;next/link&#x27;</span><br><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">PostLink</span> = (<span class="hljs-params">props</span>) =&gt; (<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">Link</span> <span class="hljs-attr">as</span>=<span class="hljs-string">&#123;</span>`/<span class="hljs-attr">p</span>/$&#123;<span class="hljs-attr">props.id</span>&#125;`&#125; </span></span><br><span class="hljs-tag"><span class="language-xml">      <span class="hljs-attr">href</span>=<span class="hljs-string">&#123;</span>`/<span class="hljs-attr">post</span>?<span class="hljs-attr">title</span>=<span class="hljs-string">$&#123;props.title&#125;</span>`&#125;&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">a</span>&gt;</span>&#123;props.title&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">Link</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br>)<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> () =&gt; (<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Layout</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>My Blog<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">PostLink</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;hello-nextjs&quot;</span> </span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">title</span>=<span class="hljs-string">&quot;Hello Next.js&quot;</span>/&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">PostLink</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;learn-nextjs&quot;</span> </span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">title</span>=<span class="hljs-string">&quot;Learn Next.js is awesome&quot;</span>/&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">PostLink</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;deploy-nextjs&quot;</span> </span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">title</span>=<span class="hljs-string">&quot;Deploy apps with Zeit&quot;</span>/&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">Layout</span>&gt;</span></span><br>)<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>当在 <code>Link</code> 组件上使用 <code>as</code> 属性时，浏览器上显示的是 <code>as</code> 属性的值，走的是客户端路由，而服务器真正映射的是 <code>href</code> 属性的值，走的是服务端路由</li>
+<li>这样就会有一个问题，如果在前端路由间切换不会有问题，可以正常显示，但是在页面 <code>http://localhost:3000/p/hello-nextjs</code> 时刷新页面，会显示 <code>404</code>页面。这是因为路由遮盖默认只在客户端路由中有效，要想在服务端也支持路由遮盖，需要在服务端单独设置路由解析的方法</li>
+</ol>
+<h3 id="2-6-服务端支持路由遮盖"><a href="#2-6-服务端支持路由遮盖" class="headerlink" title="2.6 服务端支持路由遮盖"></a>2.6 服务端支持路由遮盖</h3><blockquote>
+<p>上面说到，服务器默认不支持路由遮盖，要让服务器支持它，需要单独对路由进行设置。下面以 <code>Express</code>（你也可以使用Koa等其他Nodejs的Web服务器框架）创建后端服务器讲解如何设置服务器来支持路由遮盖</p>
+</blockquote>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs maxima">$ npm install --<span class="hljs-built_in">save</span> <span class="hljs-built_in">express</span><br></code></pre></td></tr></table></figure>
+
+<p>在项目目录下创建 <code>server.js</code> ，添加内容如下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;express&#x27;</span>)<br><span class="hljs-keyword">const</span> next = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;next&#x27;</span>)<br><span class="hljs-keyword">const</span> dev = process.<span class="hljs-property">env</span>.<span class="hljs-property">NODE_ENV</span> !== <span class="hljs-string">&#x27;production&#x27;</span><br><span class="hljs-keyword">const</span> app = <span class="hljs-title function_">next</span>(&#123; dev &#125;)<br><span class="hljs-keyword">const</span> handle = app.<span class="hljs-title function_">getRequestHandler</span>()<br><br>app.<span class="hljs-title function_">prepare</span>().<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-keyword">const</span> server = <span class="hljs-title function_">express</span>()<br><br>  server.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/p/:id&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">const</span> actualPage = <span class="hljs-string">&#x27;/post&#x27;</span><br>    <span class="hljs-keyword">const</span> queryParams = &#123; <br>        <span class="hljs-attr">title</span>: req.<span class="hljs-property">params</span>.<span class="hljs-property">id</span> <br>    &#125; <br>    app.<span class="hljs-title function_">render</span>(req, res, actualPage, queryParams)<br>  &#125;)<br><br>  server.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;*&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-title function_">handle</span>(req, res)<br>  &#125;)<br><br>  server.<span class="hljs-title function_">listen</span>(<span class="hljs-number">3000</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;&gt; Ready on http://localhost:3000&#x27;</span>)<br>  &#125;)<br>&#125;).<span class="hljs-title function_">catch</span>(<span class="hljs-function">(<span class="hljs-params">ex</span>) =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(ex.<span class="hljs-property">stack</span>)<br>  process.<span class="hljs-title function_">exit</span>(<span class="hljs-number">1</span>)<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>并更新 <code>package.json</code> 文件中的 <code>scripts</code>：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;scripts&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;dev&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;node server.js&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这时候，服务器已经可以支持路由遮盖了，在显示遮盖路由的页面，刷新页面也可以正常显示内容。具体的实现是在服务器中对 <code>/p/*</code> 开头的路由进行重写，然后重定向到 <code>/post</code> 开头的路由上，最后将内容返回给前端。具体代码是这一段：</p>
+</blockquote>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs csharp">server.<span class="hljs-keyword">get</span>(<span class="hljs-string">&#x27;/p/:id&#x27;</span>, (req, res) =&gt; &#123;<br>  <span class="hljs-keyword">const</span> actualPage = <span class="hljs-string">&#x27;/post&#x27;</span><br>  <span class="hljs-keyword">const</span> queryParams = &#123; <br>      title: req.<span class="hljs-keyword">params</span>.id <br>  &#125; <br>  app.render(req, res, actualPage, queryParams)<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-7-请求接口，获取数据"><a href="#2-7-请求接口，获取数据" class="headerlink" title="2.7 请求接口，获取数据"></a>2.7 请求接口，获取数据</h3><blockquote>
+<p><code>Next.js</code> 在 <code>React</code>的基础上为组件添加了一个新的特性： <code>getInitialProps</code>（有点像是<code>getInitialState</code>），它用于获取并处理组件的属性，返回组件的默认属性。我们可以在改方法中请求数据，获取页面需要的数据并渲染返回给前端页面</p>
+</blockquote>
+<p>引入一个支持在客户端和服务器端发送 <code>fetch</code> 请求的插件 <code>isomorphic-unfetch</code>，当然你也可以使用 <code>axios</code> 等其他工具</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">$ npm install <span class="hljs-comment">--save isomorphic-unfetch</span><br></code></pre></td></tr></table></figure>
+
+<p>然后修改 <code>pages/index.js</code> 里的内容，换成下面这样：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">Layout</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../components/MyLayout.js&#x27;</span><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">Link</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;next/link&#x27;</span><br><span class="hljs-keyword">import</span> fetch <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;isomorphic-unfetch&#x27;</span><br><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">Index</span> = (<span class="hljs-params">props</span>) =&gt; (<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Layout</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Batman TV Shows<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span><br><span class="language-xml">      &#123;props.shows.map((&#123;show&#125;) =&gt; (</span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&#123;show.id&#125;</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">Link</span> <span class="hljs-attr">as</span>=<span class="hljs-string">&#123;</span>`/<span class="hljs-attr">p</span>/$&#123;<span class="hljs-attr">show.id</span>&#125;`&#125; </span></span><br><span class="hljs-tag"><span class="language-xml">            <span class="hljs-attr">href</span>=<span class="hljs-string">&#123;</span>`/<span class="hljs-attr">post</span>?<span class="hljs-attr">id</span>=<span class="hljs-string">$&#123;show.id&#125;</span>`&#125;&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">a</span>&gt;</span>&#123;show.name&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;/<span class="hljs-name">Link</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="language-xml">      ))&#125;</span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">Layout</span>&gt;</span></span><br>)<br><br><span class="hljs-title class_">Index</span>.<span class="hljs-property">getInitialProps</span> = <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> res = <span class="hljs-keyword">await</span> <span class="hljs-title function_">fetch</span>(<span class="hljs-string">&#x27;https://api.tvmaze.com/search/shows?q=batman&#x27;</span>)<br>  <span class="hljs-keyword">const</span> data = <span class="hljs-keyword">await</span> res.<span class="hljs-title function_">json</span>()<br><br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Show data fetched. Count: <span class="hljs-subst">$&#123;data.length&#125;</span>`</span>)<br><br>  <span class="hljs-keyword">return</span> &#123;<br>    <span class="hljs-attr">shows</span>: data<br>  &#125;<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">Index</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>上述代码中，在 <code>getInitialProps</code> 中使用了 <code>async</code> 和 <code>await</code> 来处理异步请求，并将取到的数据当做一个属性赋给页面，页面拿到这个属性的值后会用于页面的初始化渲染</p>
+</blockquote>
+<h3 id="2-8-样式化组件"><a href="#2-8-样式化组件" class="headerlink" title="2.8 样式化组件"></a>2.8 样式化组件</h3><blockquote>
+<p><code>Next.js</code> 提供了一个 <code>css-in-js</code> 的特性，它允许你在组件内部写一些样式，你只需要在组件内使用 &#96;&#96; 标签来写 <code>css</code> 即可。举个例子，比如我们在 <code>pages/index.js</code>里添加样式</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">Layout</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../components/MyLayout.js&#x27;</span><br><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">Link</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;next/link&#x27;</span><br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">getPosts</span> () &#123;<br>  <span class="hljs-keyword">return</span> [<br>    &#123; <br>      <span class="hljs-attr">id</span>: <span class="hljs-string">&#x27;hello-nextjs&#x27;</span>, <br>      <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;Hello Next.js&#x27;</span><br>    &#125;,<br>    &#123; <br>      <span class="hljs-attr">id</span>: <span class="hljs-string">&#x27;learn-nextjs&#x27;</span>, <br>      <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;Learn Next.js is awesome&#x27;</span><br>    &#125;,<br>    &#123; <br>      <span class="hljs-attr">id</span>: <span class="hljs-string">&#x27;deploy-nextjs&#x27;</span>, <br>      <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;Deploy apps with ZEIT&#x27;</span><br>    &#125;<br>  ]<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> () =&gt; (<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Layout</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>My Blog<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span><br><span class="language-xml">      &#123;getPosts().map((post) =&gt; (</span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&#123;post.id&#125;</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">Link</span> <span class="hljs-attr">as</span>=<span class="hljs-string">&#123;</span>`/<span class="hljs-attr">p</span>/$&#123;<span class="hljs-attr">post.id</span>&#125;`&#125; </span></span><br><span class="hljs-tag"><span class="language-xml">            <span class="hljs-attr">href</span>=<span class="hljs-string">&#123;</span>`/<span class="hljs-attr">post</span>?<span class="hljs-attr">title</span>=<span class="hljs-string">$&#123;post.title&#125;</span>`&#125;&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">a</span>&gt;</span>&#123;post.title&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;/<span class="hljs-name">Link</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="language-xml">      ))&#125;</span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">jsx</span>&gt;</span><span class="language-css">&#123;`</span></span><br><span class="language-css"><span class="language-xml">      <span class="hljs-selector-tag">h1</span>, <span class="hljs-selector-tag">a</span> &#123;</span></span><br><span class="language-css"><span class="language-xml">        <span class="hljs-attribute">font-family</span>: <span class="hljs-string">&quot;Arial&quot;</span>;</span></span><br><span class="language-css"><span class="language-xml">      &#125;</span></span><br><span class="language-css"><span class="language-xml">      <span class="hljs-selector-tag">ul</span> &#123;</span></span><br><span class="language-css"><span class="language-xml">        <span class="hljs-attribute">padding</span>: <span class="hljs-number">0</span>;</span></span><br><span class="language-css"><span class="language-xml">      &#125;</span></span><br><span class="language-css"><span class="language-xml">      <span class="hljs-selector-tag">li</span> &#123;</span></span><br><span class="language-css"><span class="language-xml">        <span class="hljs-attribute">list-style</span>: none;</span></span><br><span class="language-css"><span class="language-xml">        <span class="hljs-attribute">margin</span>: <span class="hljs-number">5px</span> <span class="hljs-number">0</span>;</span></span><br><span class="language-css"><span class="language-xml">      &#125;</span></span><br><span class="language-css"><span class="language-xml">      <span class="hljs-selector-tag">a</span> &#123;</span></span><br><span class="language-css"><span class="language-xml">        <span class="hljs-attribute">text-decoration</span>: none;</span></span><br><span class="language-css"><span class="language-xml">        <span class="hljs-attribute">color</span>: blue;</span></span><br><span class="language-css"><span class="language-xml">      &#125;</span></span><br><span class="language-css"><span class="language-xml">      <span class="hljs-selector-tag">a</span><span class="hljs-selector-pseudo">:hover</span> &#123;</span></span><br><span class="language-css"><span class="language-xml">        <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0.6</span>;</span></span><br><span class="language-css"><span class="language-xml">      &#125;</span></span><br><span class="language-css"><span class="language-xml">    `&#125;</span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">Layout</span>&gt;</span></span><br>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>在上述代码中，我们没有直接使用<code> 标签来书写样式代码，而是写在一个模板字符串`（&#123;</code>}）<code>里面。</code>Next.js<code>使用</code>babel<code>插件来解析</code>styled-jsx&#96; ，它支持样式命名空间，未来还将支持变量赋值。</p>
+</blockquote>
+<p><strong>需要注意的是</strong>：<code>styled-jsx</code> 的样式不会应用到子组件，如果想要该样式适用于子组件，可以在<code>styled-jsx</code> 标签添加属性 <code>global：。</code></p>
+<h3 id="2-9-怎么部署一个next-js项目"><a href="#2-9-怎么部署一个next-js项目" class="headerlink" title="2.9 怎么部署一个next.js项目"></a>2.9 怎么部署一个next.js项目</h3><blockquote>
+<p><code>Next.js</code> 项目的部署，需要一个 <code>Node.js</code>的服务器，可以选择 <code>Express</code>, <code>Koa</code>或其他 <code>Nodejs</code> 的Web服务器。本文中以 <code>Express</code> 为例来部署 <code>Next</code> 项目。</p>
+</blockquote>
+<p>服务器的入口文件就使用上文中提到的 <code>server.js</code>，在 <code>server.js</code> 里添加了针对部署环境的选择，代码如下</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">const dev = process<span class="hljs-selector-class">.env</span><span class="hljs-selector-class">.NODE_ENV</span> !== <span class="hljs-string">&#x27;production&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>为了区分部署环境，我们需要在 <code>package.json</code> 中修改 <code>script</code> 属性如下</p>
+</blockquote>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs n1ql">&quot;scripts&quot;: &#123;<br>  &quot;<span class="hljs-keyword">build</span><span class="hljs-string">&quot;: &quot;</span>next <span class="hljs-keyword">build</span><span class="hljs-string">&quot;,</span><br><span class="hljs-string">  &quot;</span><span class="hljs-keyword">start</span><span class="hljs-string">&quot;: &quot;</span>NODE_ENV=production node server.js -<span class="hljs-string">&quot;,</span><br><span class="hljs-string">  &quot;</span>dev<span class="hljs-string">&quot;: &quot;</span>NODE_ENV=dev node server.js<span class="hljs-string">&quot;</span><br><span class="hljs-string">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>其中，<code>build</code> 命令是用于打包项目，<code>start</code> 命令是用于生产环境部署，dev 命令是用于本地开发。</p>
+</blockquote>
+<p>执行如下命令即可将<code>Next</code>项目 部署到服务器</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs routeros">$ npm <span class="hljs-built_in">run</span> build<br>$ npm <span class="hljs-built_in">run</span> start<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-10-完整代码示例"><a href="#2-10-完整代码示例" class="headerlink" title="2.10 完整代码示例"></a>2.10 完整代码示例</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/poetries/react-next">https://github.com/poetries/react-next</a></p>
+</blockquote>
+<h2 id="三、更多须知"><a href="#三、更多须知" class="headerlink" title="三、更多须知"></a>三、更多须知</h2><h3 id="3-1-创建-static-文件夹，存放静态资源"><a href="#3-1-创建-static-文件夹，存放静态资源" class="headerlink" title="3.1 创建 /static 文件夹，存放静态资源"></a>3.1 创建 <code>/static</code> 文件夹，存放静态资源</h3><blockquote>
+<p>静态资源文件夹文件会映射到 <code>/static/</code> 路由下，直接通过 <code>http://localhost:3000/static/test.png</code> 访问</p>
+</blockquote>
+<h3 id="3-2-使用内置组件-96-96-定制每个页面的-head-部分"><a href="#3-2-使用内置组件-96-96-定制每个页面的-head-部分" class="headerlink" title="3.2 使用内置组件 &#96;&#96; 定制每个页面的 head 部分"></a>3.2 使用内置组件 &#96;&#96; 定制每个页面的 <code>head</code> 部分</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">Head</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;next/head&#x27;</span>; <span class="hljs-comment">// 引入内置组件</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> () =&gt; (<br>   <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Head</span>&gt;</span></span><br><span class="language-xml">         <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>index page<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span></span><br><span class="language-xml">         <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;initial-scale=1.0, width=device-width&quot;</span>/&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">Head</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>this is index page<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">   <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>);<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-3-使用内置组件-96-96-进行路由跳转"><a href="#3-3-使用内置组件-96-96-进行路由跳转" class="headerlink" title="3.3 使用内置组件 &#96;&#96; 进行路由跳转"></a>3.3 使用内置组件 &#96;&#96; 进行路由跳转</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">Link</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;next/link&#x27;</span>;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> () =&gt; (<br>   <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>this is home index page<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/about&quot;</span>&gt;</span></span><br><span class="language-xml">         <span class="hljs-tag">&lt;<span class="hljs-name">a</span>&gt;</span> to about page<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">Link</span>&gt;</span></span><br><span class="language-xml">   <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>);<br></code></pre></td></tr></table></figure>
+
+<p><strong>更多 Link 使用方式</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span>, &#123;<span class="hljs-title class_">Component</span>&#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-title class_">Link</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;next/link&#x27;</span>;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">About</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Component</span> &#123;<br>   <span class="hljs-title function_">constructor</span>(<span class="hljs-params">props</span>) &#123;<br>      <span class="hljs-variable language_">super</span>(props);<br>   &#125;<br>   <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-comment">// href 值可以是一个对象</span><br>      <span class="hljs-keyword">const</span> href = &#123;<br>         <span class="hljs-attr">pathname</span>: <span class="hljs-string">&#x27;/home&#x27;</span>,<br>         <span class="hljs-attr">query</span>: &#123;<span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;test&#x27;</span>&#125;<br>      &#125;;<br><br>      <span class="hljs-keyword">return</span> (<br>        <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">           <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>this is about page <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml">           <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;/static/test.png&quot;</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">&quot;test&quot;</span>/&gt;</span></span><br><span class="language-xml">           &#123;/* replace 覆盖历史跳转 */&#125;</span><br><span class="language-xml">           <span class="hljs-tag">&lt;<span class="hljs-name">Link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&#123;href&#125;</span> <span class="hljs-attr">replace</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">a</span>&gt;</span>click to home index page<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br><span class="language-xml">           <span class="hljs-tag">&lt;/<span class="hljs-name">Link</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span> <br>      );<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-4-使用内置-router-方法，手动触发路由跳转"><a href="#3-4-使用内置-router-方法，手动触发路由跳转" class="headerlink" title="3.4 使用内置 router 方法，手动触发路由跳转"></a>3.4 使用内置 <code>router</code> 方法，手动触发路由跳转</h3><blockquote>
+<p><code>next/router</code> 提供一套方法和属性，帮助确认当前页面路由参数，和手动触发路由跳转</p>
+</blockquote>
+<figure class="highlight sml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs sml">import router from <span class="hljs-symbol">&#x27;next</span>/router&#x27;;<br>/*<br>    router.pathname  ==&gt; /home<br>    router.query ==&gt; &#123;&#125;<br>    router.route - 当前路由<br>    asPath - 显示在浏览器地址栏的实际的路由<br>    push(url, <span class="hljs-keyword">as</span>=url) - 跳转页面的方法<br>    replace(url, <span class="hljs-keyword">as</span>=url) - 跳转页面<br>*/<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>更好的方式使用路由 – <code>router</code> 的 <code>withRouter</code> 方法</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">Link</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;next/link&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123;withRouter&#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;next/router&#x27;</span>;<br><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">Home</span> = (<span class="hljs-params">props</span>) =&gt; &#123;<br>    <span class="hljs-comment">// 这里的 props 会得到 &#123;router, url&#125; 两个属性</span><br>    <span class="hljs-comment">// router: &#123;push: ƒ, replace: ƒ, reload: ƒ, back: ƒ, prefetch: ƒ, …&#125;</span><br>    <span class="hljs-comment">// url: &#123;query: &#123;…&#125;, pathname: &quot;/home&quot;, asPath: &quot;/home?name=test&quot;, back: ƒ, push: ƒ, …&#125;</span><br>   <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(props);<br>   <span class="hljs-keyword">return</span> (<br>      <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">         <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>this is home index page <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml">         &#123;/* <span class="hljs-tag">&lt;<span class="hljs-name">Link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/about&quot;</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">a</span>&gt;</span> to about page<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br><span class="language-xml">         <span class="hljs-tag">&lt;/<span class="hljs-name">Link</span>&gt;</span> */&#125;</span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>   );<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title function_">withRouter</span>(<span class="hljs-title class_">Home</span>);<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-5-使用-next-redux-wrapper-插件辅助实现-redux"><a href="#3-5-使用-next-redux-wrapper-插件辅助实现-redux" class="headerlink" title="3.5 使用 next-redux-wrapper 插件辅助实现 redux"></a>3.5 使用 <code>next-redux-wrapper</code> 插件辅助实现 <code>redux</code></h3><p><strong>1. 安装依赖</strong></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">sudo yarn <span class="hljs-keyword">add</span> next-redux-<span class="hljs-keyword">wrapper</span> redux react-redux redux-devtools-<span class="hljs-keyword">extension</span> redux-thunk<br></code></pre></td></tr></table></figure>
+
+<p><strong>2. 创建 initializeStore.js 一个可以返回 store 实例的函数</strong></p>
+<blockquote>
+<p>在这个文件中会完成装载中间件、绑定<code>reducer</code>、链接浏览器的<code>redux</code>调试工具等操作</p>
+</blockquote>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs livescript"><span class="hljs-keyword">import</span> &#123; createStore, applyMiddleware &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;redux&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; composeWithDevTools &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;redux-devtools-extension&#x27;</span>; <br><span class="hljs-keyword">import</span> thunk <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;redux-thunk&#x27;</span>;<br><span class="hljs-keyword">import</span> reducer <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../modules/reducers&#x27;</span>;<br><br><span class="hljs-keyword">const</span> middleware = [thunk];<br><span class="hljs-keyword">const</span> initializeStore = initialState =&gt; &#123;<br>   <span class="hljs-keyword">return</span> createStore(<br>         reducer, <br>         initialState, <br>         composeWithDevTools(applyMiddleware(...middleware))<br>      );<br>&#125;;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> initializeStore;<br></code></pre></td></tr></table></figure>
+
+<p><strong>3. 创建 reducer , action</strong></p>
+<blockquote>
+<p>与普通 <code>react-redux</code> 项目创建 <code>reducer</code>, <code>action</code> 的方法一致，我把这部分代码都提取到一个名为 <code>modules</code>的文件夹中</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// /modules/reducers.js</span><br><span class="hljs-keyword">import</span> &#123; combineReducers &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;redux&#x27;</span>;<br><span class="hljs-keyword">import</span> about <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./about/reducer&#x27;</span>;<br><br><span class="hljs-comment">// 合并到主reducer</span><br><span class="hljs-keyword">const</span> reducers = &#123;<br>   about<br>&#125;;<br><br><span class="hljs-comment">// combineReducers() 函数用于将分离的 reducer 合并为一个 reducer </span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title function_">combineReducers</span>(reducers);<br><span class="hljs-comment">// /modules/about/reudcer.js </span><br><span class="hljs-comment">// /about 页面的 reducer</span><br><span class="hljs-keyword">import</span> &#123;<br>   <span class="hljs-variable constant_">CHANGE_COUNT</span><br>&#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../types-constant&#x27;</span>;<br><br><span class="hljs-keyword">const</span> initialState = &#123;<br>   <span class="hljs-attr">count</span>: <span class="hljs-number">0</span><br>&#125;;<br><br><span class="hljs-keyword">const</span> typesCommands = &#123;<br>   [<span class="hljs-variable constant_">CHANGE_COUNT</span>](state, action) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">assign</span>(&#123;&#125;, state, &#123; <span class="hljs-attr">count</span>: action.<span class="hljs-property">msg</span> &#125;);<br>   &#125;,<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">home</span>(<span class="hljs-params">state = initialState, action</span>) &#123;<br>   <span class="hljs-keyword">const</span> actionResponse = typesCommands[action.<span class="hljs-property">type</span>];<br><br>   <span class="hljs-keyword">return</span> actionResponse ? <span class="hljs-title function_">actionResponse</span>(state, action) : state;<br>&#125;<br><span class="hljs-comment">// /modules/about/actions.js</span><br><span class="hljs-comment">// /about 页面的 action</span><br><span class="hljs-keyword">import</span> &#123;<br>   <span class="hljs-variable constant_">CHANGE_COUNT</span><br>&#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../types-constant&#x27;</span>;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">changeCount</span>(<span class="hljs-params">newCount</span>) &#123;<br>   <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">type</span>: <span class="hljs-variable constant_">CHANGE_COUNT</span>,<br>      <span class="hljs-attr">msg</span>: newCount<br>   &#125;;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>4. 页面中使用</strong></p>
+<blockquote>
+<p>需要用到 <code>next-redux-wrapper</code> 提供的 <code>withRedux</code> 高阶函数，以及 <code>react-redux</code> 提供的 <code>connect</code> 高阶函数</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span>, &#123; <span class="hljs-title class_">Component</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;<br><span class="hljs-keyword">import</span> withRedux <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;next-redux-wrapper&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; connect &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react-redux&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; bindActionCreators &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;redux&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-title class_">AboutCom</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../components/About/index&#x27;</span>;<br><span class="hljs-keyword">import</span> initializeStore <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../store/initializeStore&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; changeCount &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../modules/about/actions&#x27;</span>;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">About</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Component</span> &#123;<br>   <span class="hljs-title function_">constructor</span>(<span class="hljs-params">props</span>) &#123;<br>      <span class="hljs-variable language_">super</span>(props);<br>   &#125;<br>   <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-keyword">const</span> &#123; <span class="hljs-attr">about</span>: &#123; count &#125;, changeCount &#125; = <span class="hljs-variable language_">this</span>.<span class="hljs-property">props</span>;<br>      <span class="hljs-keyword">return</span> <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">AboutCom</span> <span class="hljs-attr">count</span>=<span class="hljs-string">&#123;count&#125;</span> <span class="hljs-attr">changeCount</span>=<span class="hljs-string">&#123;changeCount&#125;</span> /&gt;</span></span>;<br>   &#125;<br>&#125;<br><br><span class="hljs-keyword">const</span> connectedPage = <span class="hljs-title function_">connect</span>(<br>   <span class="hljs-function"><span class="hljs-params">state</span> =&gt;</span> (&#123; <span class="hljs-attr">about</span>: state.<span class="hljs-property">about</span> &#125;),<br>   <span class="hljs-function"><span class="hljs-params">dispatch</span> =&gt;</span> (&#123;<br>      <span class="hljs-attr">changeCount</span>: <span class="hljs-title function_">bindActionCreators</span>(changeCount, dispatch)<br>   &#125;)<br>)(<span class="hljs-title class_">About</span>);<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title function_">withRedux</span>(initializeStore)(connectedPage);<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-6-处理styled-components样式"><a href="#3-6-处理styled-components样式" class="headerlink" title="3.6 处理styled-components样式"></a>3.6 处理styled-components样式</h3><blockquote>
+<p>在<code>pages/_document.js</code>中处理</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">Document</span>, &#123; <span class="hljs-title class_">Head</span>, <span class="hljs-title class_">Main</span>, <span class="hljs-title class_">NextScript</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;next/document&#x27;</span><br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">ServerStyleSheet</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;styled-components&#x27;</span><br><br><span class="hljs-keyword">const</span> pro = process.<span class="hljs-property">env</span>.<span class="hljs-property">NODE_ENV</span> === <span class="hljs-string">&#x27;production&#x27;</span><br><span class="hljs-keyword">const</span> path = pro ? <span class="hljs-string">&#x27;https://cdn.yesdat.com&#x27;</span> : <span class="hljs-string">&#x27;&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MyDocument</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Document</span> &#123;<br>  <span class="hljs-keyword">static</span> <span class="hljs-title function_">getInitialProps</span>(<span class="hljs-params">&#123; renderPage &#125;</span>) &#123;<br>    <span class="hljs-comment">// 新建一个样式表</span><br>    <span class="hljs-keyword">const</span> sheet = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ServerStyleSheet</span>() <br>    <br>    <span class="hljs-comment">// 收集样式</span><br>    <span class="hljs-keyword">const</span> page = <span class="hljs-title function_">renderPage</span>(<span class="hljs-function"><span class="hljs-params">App</span> =&gt;</span> <span class="hljs-function"><span class="hljs-params">props</span> =&gt;</span> sheet.<span class="hljs-title function_">collectStyles</span>(<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">App</span> &#123;<span class="hljs-attr">...props</span>&#125; /&gt;</span></span>))<br>    <span class="hljs-keyword">const</span> styleTags = sheet.<span class="hljs-title function_">getStyleElement</span>()<br><br>    <span class="hljs-keyword">const</span> &#123;<br>      html, head, errorHtml, chunks,<br>    &#125; = <span class="hljs-title function_">renderPage</span>()<br><br>    <span class="hljs-keyword">return</span> &#123;<br>      html, head, errorHtml, chunks,...page, styleTags<br>    &#125;<br>  &#125;<br>  <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> (<br>      <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Head</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charSet</span>=<span class="hljs-string">&quot;utf-8&quot;</span> /&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no&quot;</span> /&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;theme-color&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;#000000&quot;</span> /&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;apple-mobile-web-app-capable&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;yes&quot;</span> /&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;apple-touch-fullscreen&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;yes&quot;</span> /&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&#123;</span>`$&#123;<span class="hljs-attr">path</span>&#125;/<span class="hljs-attr">static</span>/<span class="hljs-attr">styles</span>/<span class="hljs-attr">antd_mobile_min.css</span>`&#125; /&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&#123;</span>`$&#123;<span class="hljs-attr">path</span>&#125;/<span class="hljs-attr">static</span>/<span class="hljs-attr">styles</span>/<span class="hljs-attr">app_min.css</span>?<span class="hljs-attr">8</span>`&#125; /&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&#123;</span>`$&#123;<span class="hljs-attr">path</span>&#125;/<span class="hljs-attr">static</span>/<span class="hljs-attr">styles</span>/<span class="hljs-attr">nprogress.css</span>`&#125; /&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&#123;</span>`$&#123;<span class="hljs-attr">path</span>&#125;/<span class="hljs-attr">static</span>/<span class="hljs-attr">styles</span>/<span class="hljs-attr">index.css</span>`&#125; /&gt;</span></span><br><span class="language-xml">          &#123;/* styled-components样式*/&#125;</span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span>&#123;this.props.styleTags&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">Head</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span></span><br><span class="language-xml">          &#123;this.props.customValue&#125;</span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">Main</span> /&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">NextScript</span> /&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span><br>    )<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%A1%86%E6%9E%B6/" class="category-chain-item">框架</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/React/">#React</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>React-SSR优化Next构建2</div>
+      <div>http://example.com/2020/03/15/React/React-SSR优化Next构建2/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>March 15, 2020</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/03/19/React/React-state%20%E5%92%8C%20props%20%E7%9A%84%E5%8C%BA%E5%88%AB/" title="React-state 和 props 的区别">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">React-state 和 props 的区别</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/03/13/React/React-SSR%E4%BC%98%E5%8C%96Next%E6%9E%84%E5%BB%BA1/" title="React-SSR优化Next构建1">
+                        <span class="hidden-mobile">React-SSR优化Next构建1</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,793 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Set 和 Map 主要的应用场景在于 数据重组 和 数据储存 Set 是一种叫做集合的数据结构，Map 是一种叫做字典的数据结构  1. 集合（Set） ES6 新增的一种新的数据结构，类似于数组，但成员是唯一且无序的，没有重复的值。  Set 本身是一种构造函数，用来生成 Set 数据结构。 1new Set([iterable])  举个例子： 12345678910const s &#x3D; n">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES6 Set-Map">
+<meta property="og:url" content="http://example.com/2018/04/10/html+css+js+ts/4-set+map/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Set 和 Map 主要的应用场景在于 数据重组 和 数据储存 Set 是一种叫做集合的数据结构，Map 是一种叫做字典的数据结构  1. 集合（Set） ES6 新增的一种新的数据结构，类似于数组，但成员是唯一且无序的，没有重复的值。  Set 本身是一种构造函数，用来生成 Set 数据结构。 1new Set([iterable])  举个例子： 12345678910const s &#x3D; n">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://user-images.githubusercontent.com/19721451/54000905-3d36c980-4184-11e9-9ccf-0f13bc6dd414.png">
+<meta property="article:published_time" content="2018-04-10T03:21:26.000Z">
+<meta property="article:modified_time" content="2022-06-06T05:09:24.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="es6">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/19721451/54000905-3d36c980-4184-11e9-9ccf-0f13bc6dd414.png">
+  
+  
+  
+  <title>ES6 Set-Map - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="ES6 Set-Map"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-04-10 11:21" pubdate>
+          April 10, 2018 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.5k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          72 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">ES6 Set-Map</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <ul>
+<li><code>Set</code> 和 <code>Map</code> 主要的应用场景在于 <strong>数据重组</strong> 和 <strong>数据储存</strong></li>
+<li><code>Set</code> 是一种叫做<strong>集合</strong>的数据结构，Map 是一种叫做<strong>字典</strong>的数据结构</li>
+</ul>
+<h3 id="1-集合（Set）"><a href="#1-集合（Set）" class="headerlink" title="1. 集合（Set）"></a>1. 集合（Set）</h3><blockquote>
+<p><code>ES6</code> 新增的一种新的数据结构，类似于数组，但成员是唯一且无序的，没有重复的值。</p>
+</blockquote>
+<p><strong>Set 本身是一种构造函数，用来生成 Set 数据结构。</strong></p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-keyword">new</span> <span class="hljs-constructor">Set([<span class="hljs-params">iterable</span>])</span><br></code></pre></td></tr></table></figure>
+
+<p>举个例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> s = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>()<br>[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>].<span class="hljs-title function_">forEach</span>(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> s.<span class="hljs-title function_">add</span>(x))<br><br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i <span class="hljs-keyword">of</span> s) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(i)	<span class="hljs-comment">// 1 2 3 4</span><br>&#125;<br><br><span class="hljs-comment">// 去重数组的重复对象</span><br><span class="hljs-keyword">let</span> arr = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>]<br>[... <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>(arr)]	<span class="hljs-comment">// [1, 2, 3]</span><br></code></pre></td></tr></table></figure>
+
+<p>Set 对象允许你储存任何类型的唯一值，无论是原始值或者是对象引用。</p>
+<p>向 Set 加入值的时候，不会发生类型转换，所以<code>5</code>和<code>&quot;5&quot;</code>是两个不同的值。Set 内部判断两个值是否不同，使用的算法叫做“Same-value-zero equality”，它类似于<strong>精确相等</strong>运算符（<code>===</code>），主要的区别是 <strong>Set 认为<code>NaN</code>等于自身，而精确相等运算符认为<code>NaN</code>不等于自身。</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">let</span> <span class="hljs-keyword">set</span> = <span class="hljs-keyword">new</span> Set();<br><span class="hljs-keyword">let</span> a = NaN;<br><span class="hljs-keyword">let</span> b = NaN;<br><span class="hljs-keyword">set</span>.<span class="hljs-keyword">add</span>(a);<br><span class="hljs-keyword">set</span>.<span class="hljs-keyword">add</span>(b);<br><span class="hljs-keyword">set</span> <span class="hljs-comment">// Set &#123;NaN&#125;</span><br><br><span class="hljs-keyword">let</span> set1 = <span class="hljs-keyword">new</span> Set()<br>set1.<span class="hljs-keyword">add</span>(<span class="hljs-number">5</span>)<br>set1.<span class="hljs-keyword">add</span>(<span class="hljs-string">&#x27;5&#x27;</span>)<br>console.log([...set1])	<span class="hljs-comment">// [5, &quot;5&quot;]</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>Set 实例属性</p>
+<ul>
+<li><p>constructor： 构造函数</p>
+</li>
+<li><p>size：元素数量</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs arduino">let set = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>])<br><br>console.<span class="hljs-built_in">log</span>(set.length)	<span class="hljs-comment">// undefined</span><br>console.<span class="hljs-built_in">log</span>(set.size)	<span class="hljs-comment">// 3</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>Set 实例方法</p>
+<ul>
+<li><p>操作方法</p>
+<ul>
+<li><p>add(value)：新增，相当于 array里的push</p>
+</li>
+<li><p>delete(value)：存在即删除集合中value</p>
+</li>
+<li><p>has(value)：判断集合中是否存在 value</p>
+</li>
+<li><p>clear()：清空集合</p>
+<hr>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">let <span class="hljs-keyword">set</span> = <span class="hljs-built_in">new</span> <span class="hljs-keyword">Set</span>()<br><span class="hljs-keyword">set</span>.<span class="hljs-keyword">add</span>(<span class="hljs-number">1</span>).<span class="hljs-keyword">add</span>(<span class="hljs-number">2</span>).<span class="hljs-keyword">add</span>(<span class="hljs-number">1</span>)<br><br><span class="hljs-keyword">set</span>.has(<span class="hljs-number">1</span>)	// <span class="hljs-keyword">true</span><br><span class="hljs-keyword">set</span>.has(<span class="hljs-number">3</span>)	// <span class="hljs-keyword">false</span><br><span class="hljs-keyword">set</span>.<span class="hljs-keyword">delete</span>(<span class="hljs-number">1</span>)	<br><span class="hljs-keyword">set</span>.has(<span class="hljs-number">1</span>)	// <span class="hljs-keyword">false</span><br></code></pre></td></tr></table></figure>
+
+<p><code>Array.from</code> 方法可以将 Set 结构转为数组</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs arcade">const items = <span class="hljs-keyword">new</span> Set([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">2</span>])<br>const <span class="hljs-built_in">array</span> = <span class="hljs-built_in">Array</span>.from(items)<br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-built_in">array</span>)	<span class="hljs-comment">// [1, 2, 3]</span><br><span class="hljs-comment">// 或</span><br>const arr = [...items]<br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(arr)	<span class="hljs-comment">// [1, 2, 3]</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>遍历方法（遍历顺序为插入顺序）</p>
+<ul>
+<li><p>keys()：返回一个包含集合中所有键的迭代器</p>
+</li>
+<li><p>values()：返回一个包含集合中所有值得迭代器</p>
+</li>
+<li><p>entries()：返回一个包含Set对象中所有元素得键值对迭代器</p>
+</li>
+<li><p>forEach(callbackFn, thisArg)：用于对集合成员执行callbackFn操作，如果提供了 thisArg 参数，回调中的this会是这个参数，<strong>没有返回值</strong></p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs arcade">let set = <span class="hljs-keyword">new</span> Set([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>])<br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(set.keys())	<span class="hljs-comment">// SetIterator &#123;1, 2, 3&#125;</span><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(set.values())	<span class="hljs-comment">// SetIterator &#123;1, 2, 3&#125;</span><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(set.entries())	<span class="hljs-comment">// SetIterator &#123;1, 2, 3&#125;</span><br><br><span class="hljs-keyword">for</span> (let item of set.keys()) &#123;<br>  <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(item);<br>&#125;	<span class="hljs-comment">// 1	2	 3</span><br><span class="hljs-keyword">for</span> (let item of set.entries()) &#123;<br>  <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(item);<br>&#125;	<span class="hljs-comment">// [1, 1]	[2, 2]	[3, 3]</span><br><br>set.forEach(<span class="hljs-function">(<span class="hljs-params">value, key</span>) =&gt;</span>  &#123;<br>    <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(key + <span class="hljs-string">&#x27; : &#x27;</span> + value)<br>&#125;)	<span class="hljs-comment">// 1 : 1	2 : 2		3 : 3</span><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>([...set])	<span class="hljs-comment">// [1, 2, 3]</span><br></code></pre></td></tr></table></figure>
+
+<p>Set 可默认遍历，默认迭代器生成函数是 values() 方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">Set</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>[<span class="hljs-title class_">Symbol</span>.<span class="hljs-property">iterator</span>] === <span class="hljs-title class_">Set</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">values</span>	<span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure>
+
+<p>所以， Set可以使用 map、filter 方法</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver">let <span class="hljs-built_in">set</span> = <span class="hljs-built_in">new</span> Set([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>])<br><span class="hljs-built_in">set</span> = <span class="hljs-built_in">new</span> Set([...<span class="hljs-built_in">set</span>].map(<span class="hljs-keyword">item</span> =&gt; <span class="hljs-keyword">item</span> * <span class="hljs-number">2</span>))<br>console.<span class="hljs-built_in">log</span>([...<span class="hljs-built_in">set</span>])<span class="hljs-comment">	// [2, 4, 6]</span><br><br><span class="hljs-built_in">set</span> = <span class="hljs-built_in">new</span> Set([...<span class="hljs-built_in">set</span>].<span class="hljs-built_in">filter</span>(<span class="hljs-keyword">item</span> =&gt; (<span class="hljs-keyword">item</span> &gt;= <span class="hljs-number">4</span>)))<br>console.<span class="hljs-built_in">log</span>([...<span class="hljs-built_in">set</span>])<span class="hljs-comment">	//[4, 6]</span><br></code></pre></td></tr></table></figure>
+
+<p>因此，Set 很容易实现交集（Intersect）、并集（Union）、差集（Difference）</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-keyword">let</span> set1 = <span class="hljs-keyword">new</span> <span class="hljs-constructor">Set([1, 2, 3])</span><br><span class="hljs-keyword">let</span> set2 = <span class="hljs-keyword">new</span> <span class="hljs-constructor">Set([4, 3, 2])</span><br><br><span class="hljs-keyword">let</span> intersect = <span class="hljs-keyword">new</span> <span class="hljs-constructor">Set([<span class="hljs-operator">...</span><span class="hljs-params">set1</span>].<span class="hljs-params">filter</span>(<span class="hljs-params">value</span> =&gt; <span class="hljs-params">set2</span>.<span class="hljs-params">has</span>(<span class="hljs-params">value</span>)</span>))<br><span class="hljs-keyword">let</span> union = <span class="hljs-keyword">new</span> <span class="hljs-constructor">Set([<span class="hljs-operator">...</span><span class="hljs-params">set1</span>, <span class="hljs-operator">...</span><span class="hljs-params">set2</span>])</span><br><span class="hljs-keyword">let</span> difference = <span class="hljs-keyword">new</span> <span class="hljs-constructor">Set([<span class="hljs-operator">...</span><span class="hljs-params">set1</span>].<span class="hljs-params">filter</span>(<span class="hljs-params">value</span> =&gt; !<span class="hljs-params">set2</span>.<span class="hljs-params">has</span>(<span class="hljs-params">value</span>)</span>))<br><br>console.log(intersect)	<span class="hljs-comment">// Set &#123;2, 3&#125;</span><br>console.log(union)		<span class="hljs-comment">// Set &#123;1, 2, 3, 4&#125;</span><br>console.log(difference)	<span class="hljs-comment">// Set &#123;1&#125;</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-WeakSet"><a href="#2-WeakSet" class="headerlink" title="2. WeakSet"></a>2. WeakSet</h3><p>WeakSet 对象允许你将<strong>弱引用对象</strong>储存在一个集合中</p>
+<p>WeakSet 与 Set 的区别：</p>
+<ul>
+<li>WeakSet 只能储存对象引用，不能存放值，而 Set 对象都可以</li>
+<li>WeakSet 对象中储存的对象值都是被弱引用的，即垃圾回收机制不考虑 WeakSet 对该对象的应用，如果没有其他的变量或属性引用这个对象值，则这个对象将会被垃圾回收掉（不考虑该对象还存在于 WeakSet 中），所以，WeakSet 对象里有多少个成员元素，取决于垃圾回收机制有没有运行，运行前后成员个数可能不一致，遍历结束之后，有的成员可能取不到了（被垃圾回收了），WeakSet 对象是无法被遍历的（ES6 规定 WeakSet 不可遍历），也没有办法拿到它包含的所有元素</li>
+</ul>
+<p>属性：</p>
+<ul>
+<li><p>constructor：构造函数，任何一个具有 Iterable 接口的对象，都可以作参数</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs lua">const arr = <span class="hljs-string">[[1, 2], [3, 4]]</span><br>const weakset = new WeakSet(arr)<br>console.<span class="hljs-built_in">log</span>(weakset)<br></code></pre></td></tr></table></figure></li>
+</ul>
+<p><img src="https://user-images.githubusercontent.com/19721451/54000905-3d36c980-4184-11e9-9ccf-0f13bc6dd414.png" srcset="/img/loading.gif" lazyload alt="2019-03-08 9 24 34"></p>
+<p>方法：</p>
+<ul>
+<li>add(value)：在WeakSet 对象中添加一个元素value</li>
+<li>has(value)：判断 WeakSet 对象中是否包含value</li>
+<li>delete(value)：删除元素 value</li>
+<li>clear()：清空所有元素，<strong>注意该方法已废弃</strong></li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-selector-tag">var</span> ws = new <span class="hljs-built_in">WeakSet</span>()<br><span class="hljs-selector-tag">var</span> obj = &#123;&#125;<br><span class="hljs-selector-tag">var</span> foo = &#123;&#125;<br><br>ws<span class="hljs-selector-class">.add</span>(window)<br>ws<span class="hljs-selector-class">.add</span>(obj)<br><br>ws<span class="hljs-selector-class">.has</span>(window)	<span class="hljs-comment">// true</span><br>ws<span class="hljs-selector-class">.has</span>(foo)	<span class="hljs-comment">// false</span><br><br>ws<span class="hljs-selector-class">.delete</span>(window)	<span class="hljs-comment">// true</span><br>ws<span class="hljs-selector-class">.has</span>(window)	<span class="hljs-comment">// false</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="3-字典（Map）"><a href="#3-字典（Map）" class="headerlink" title="3. 字典（Map）"></a>3. 字典（Map）</h3><p>集合 与 字典 的区别：</p>
+<ul>
+<li>共同点：集合、字典 可以储存不重复的值</li>
+<li>不同点：集合 是以 [value, value]的形式储存元素，字典 是以 [key, value] 的形式储存</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs stylus">const m = new <span class="hljs-built_in">Map</span>()<br>const o = &#123;<span class="hljs-selector-tag">p</span>: <span class="hljs-string">&#x27;haha&#x27;</span>&#125;<br>m<span class="hljs-selector-class">.set</span>(o, <span class="hljs-string">&#x27;content&#x27;</span>)<br>m<span class="hljs-selector-class">.get</span>(o)	<span class="hljs-comment">// content</span><br><br>m<span class="hljs-selector-class">.has</span>(o)	<span class="hljs-comment">// true</span><br>m<span class="hljs-selector-class">.delete</span>(o)	<span class="hljs-comment">// true</span><br>m<span class="hljs-selector-class">.has</span>(o)	<span class="hljs-comment">// false</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>任何具有 Iterator 接口、且每个成员都是一个双元素的数组的数据结构</strong>都可以当作<code>Map</code>构造函数的参数，例如：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">const</span> <span class="hljs-keyword">set</span> = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>([<br>  [<span class="hljs-string">&#x27;foo&#x27;</span>, <span class="hljs-number">1</span>],<br>  [<span class="hljs-string">&#x27;bar&#x27;</span>, <span class="hljs-number">2</span>]<br>]);<br><span class="hljs-keyword">const</span> m1 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>(<span class="hljs-keyword">set</span>);<br>m1.<span class="hljs-keyword">get</span>(<span class="hljs-string">&#x27;foo&#x27;</span>) <span class="hljs-comment">// 1</span><br><br><span class="hljs-keyword">const</span> m2 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>([[<span class="hljs-string">&#x27;baz&#x27;</span>, <span class="hljs-number">3</span>]]);<br><span class="hljs-keyword">const</span> m3 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>(m2);<br>m3.<span class="hljs-keyword">get</span>(<span class="hljs-string">&#x27;baz&#x27;</span>) <span class="hljs-comment">// 3</span><br></code></pre></td></tr></table></figure>
+
+<p>如果读取一个未知的键，则返回<code>undefined</code>。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>().<span class="hljs-keyword">get</span>(<span class="hljs-string">&#x27;asfddfsasadf&#x27;</span>)<br><span class="hljs-comment">// undefined</span><br></code></pre></td></tr></table></figure>
+
+<p>注意，只有对同一个对象的引用，Map 结构才将其视为同一个键。这一点要非常小心。</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs arcade">const <span class="hljs-built_in">map</span> = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>();<br><br><span class="hljs-built_in">map</span>.set([<span class="hljs-string">&#x27;a&#x27;</span>], <span class="hljs-number">555</span>);<br><span class="hljs-built_in">map</span>.get([<span class="hljs-string">&#x27;a&#x27;</span>]) <span class="hljs-comment">// undefined</span><br></code></pre></td></tr></table></figure>
+
+<p>上面代码的<code>set</code>和<code>get</code>方法，表面是针对同一个键，但实际上这是两个值，内存地址是不一样的，因此<code>get</code>方法无法读取该键，返回<code>undefined</code>。</p>
+<p>由上可知，Map 的键实际上是跟内存地址绑定的，只要内存地址不一样，就视为两个键。这就解决了同名属性碰撞（clash）的问题，我们扩展别人的库的时候，如果使用对象作为键名，就不用担心自己的属性与原作者的属性同名。</p>
+<p>如果 Map 的键是一个简单类型的值（数字、字符串、布尔值），则只要两个值严格相等，Map 将其视为一个键，比如<code>0</code>和<code>-0</code>就是一个键，布尔值<code>true</code>和字符串<code>true</code>则是两个不同的键。另外，<code>undefined</code>和<code>null</code>也是两个不同的键。虽然<code>NaN</code>不严格相等于自身，但 Map 将其视为同一个键。</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs lasso"><span class="hljs-keyword">let</span> <span class="hljs-built_in">map</span> = <span class="hljs-literal">new</span> <span class="hljs-built_in">Map</span>();<br><br><span class="hljs-built_in">map</span>.<span class="hljs-built_in">set</span>(<span class="hljs-number">-0</span>, <span class="hljs-number">123</span>);<br><span class="hljs-built_in">map</span>.get(+<span class="hljs-number">0</span>) <span class="hljs-comment">// 123</span><br><br><span class="hljs-built_in">map</span>.<span class="hljs-built_in">set</span>(<span class="hljs-literal">true</span>, <span class="hljs-number">1</span>);<br><span class="hljs-built_in">map</span>.<span class="hljs-built_in">set</span>(<span class="hljs-string">&#x27;true&#x27;</span>, <span class="hljs-number">2</span>);<br><span class="hljs-built_in">map</span>.get(<span class="hljs-literal">true</span>) <span class="hljs-comment">// 1</span><br><br><span class="hljs-built_in">map</span>.<span class="hljs-built_in">set</span>(undefined, <span class="hljs-number">3</span>);<br><span class="hljs-built_in">map</span>.<span class="hljs-built_in">set</span>(<span class="hljs-built_in">null</span>, <span class="hljs-number">4</span>);<br><span class="hljs-built_in">map</span>.get(undefined) <span class="hljs-comment">// 3</span><br><br><span class="hljs-built_in">map</span>.<span class="hljs-built_in">set</span>(<span class="hljs-number">NaN</span>, <span class="hljs-number">123</span>);<br><span class="hljs-built_in">map</span>.get(<span class="hljs-number">NaN</span>) <span class="hljs-comment">// 123</span><br></code></pre></td></tr></table></figure>
+
+<p>Map 的属性及方法</p>
+<p>属性：</p>
+<ul>
+<li><p>constructor：构造函数</p>
+</li>
+<li><p>size：返回字典中所包含的元素个数</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs arcade">const <span class="hljs-built_in">map</span> = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>([<br>  [<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;An&#x27;</span>],<br>  [<span class="hljs-string">&#x27;des&#x27;</span>, <span class="hljs-string">&#x27;JS&#x27;</span>]<br>]);<br><br><span class="hljs-built_in">map</span>.size <span class="hljs-comment">// 2</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<p>操作方法：</p>
+<ul>
+<li>set(key, value)：向字典中添加新元素</li>
+<li>get(key)：通过键查找特定的数值并返回</li>
+<li>has(key)：判断字典中是否存在键key</li>
+<li>delete(key)：通过键 key 从字典中移除对应的数据</li>
+<li>clear()：将这个字典中的所有元素删除</li>
+</ul>
+<p>遍历方法</p>
+<ul>
+<li>Keys()：将字典中包含的所有键名以迭代器形式返回</li>
+<li>values()：将字典中包含的所有数值以迭代器形式返回</li>
+<li>entries()：返回所有成员的迭代器</li>
+<li>forEach()：遍历字典的所有成员</li>
+</ul>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs arcade">const <span class="hljs-built_in">map</span> = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>([<br>            [<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;An&#x27;</span>],<br>            [<span class="hljs-string">&#x27;des&#x27;</span>, <span class="hljs-string">&#x27;JS&#x27;</span>]<br>        ]);<br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-built_in">map</span>.entries())	<span class="hljs-comment">// MapIterator &#123;&quot;name&quot; =&gt; &quot;An&quot;, &quot;des&quot; =&gt; &quot;JS&quot;&#125;</span><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-built_in">map</span>.keys()) <span class="hljs-comment">// MapIterator &#123;&quot;name&quot;, &quot;des&quot;&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>Map 结构的默认遍历器接口（<code>Symbol.iterator</code>属性），就是<code>entries</code>方法。</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs abnf">map[Symbol.iterator] <span class="hljs-operator">=</span><span class="hljs-operator">=</span><span class="hljs-operator">=</span> map.entries<br>// true<br></code></pre></td></tr></table></figure>
+
+<p>Map 结构转为数组结构，比较快速的方法是使用扩展运算符（<code>...</code>）。</p>
+<p>对于 forEach ，看一个例子</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs arcade">const reporter = &#123;<br>  <span class="hljs-attr">report</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">key, value</span>) &#123;<br>    <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&quot;Key: %s, Value: %s&quot;</span>, key, value);<br>  &#125;<br>&#125;;<br><br>let <span class="hljs-built_in">map</span> = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>([<br>    [<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;An&#x27;</span>],<br>    [<span class="hljs-string">&#x27;des&#x27;</span>, <span class="hljs-string">&#x27;JS&#x27;</span>]<br>])<br><span class="hljs-built_in">map</span>.forEach(<span class="hljs-keyword">function</span>(<span class="hljs-params">value, key, map</span>) &#123;<br>  this.report(key, value);<br>&#125;, reporter);<br><span class="hljs-comment">// Key: name, Value: An</span><br><span class="hljs-comment">// Key: des, Value: JS</span><br></code></pre></td></tr></table></figure>
+
+<p>在这个例子中， forEach 方法的回调函数的 this，就指向 reporter</p>
+<p><strong>与其他数据结构的相互转换</strong></p>
+<ol>
+<li><p>Map 转 Array</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs lua">const map = new Map(<span class="hljs-string">[[1, 1], [2, 2], [3, 3]]</span>)<br>console.<span class="hljs-built_in">log</span>([...map])	// <span class="hljs-string">[[1, 1], [2, 2], [3, 3]]</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>Array 转 Map</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs arcade">const <span class="hljs-built_in">map</span> = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>([[<span class="hljs-number">1</span>, <span class="hljs-number">1</span>], [<span class="hljs-number">2</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">3</span>, <span class="hljs-number">3</span>]])<br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-built_in">map</span>)	<span class="hljs-comment">// Map &#123;1 =&gt; 1, 2 =&gt; 2, 3 =&gt; 3&#125;</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>Map 转 Object</p>
+<p>因为 Object 的键名都为字符串，而Map 的键名为对象，所以转换的时候会把非字符串键名转换为字符串键名。</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs livescript"><span class="hljs-keyword">function</span> mapToObj(<span class="hljs-keyword">map</span>) &#123;<br>    <span class="hljs-keyword">let</span> obj = <span class="hljs-built_in">Object</span>.create(<span class="hljs-literal">null</span>)<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> [key, value] <span class="hljs-keyword">of</span> <span class="hljs-keyword">map</span>) &#123;<br>        obj[key] = value<br>    &#125;<br>    <span class="hljs-keyword">return</span> obj<br>&#125;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">map</span> = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>().set(<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;An&#x27;</span>).set(<span class="hljs-string">&#x27;des&#x27;</span>, <span class="hljs-string">&#x27;JS&#x27;</span>)<br>mapToObj(<span class="hljs-keyword">map</span>) <span class="hljs-regexp">// &#123;name: &quot;An&quot;, des: &quot;JS&quot;&#125;</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>Object 转 Map</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">function</span> <span class="hljs-title">objToMap</span><span class="hljs-params">(obj)</span> &#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">map</span> = <span class="hljs-keyword">new</span> Map()<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> key of Object.<span class="hljs-built_in">keys</span>(obj)) &#123;<br>        <span class="hljs-keyword">map</span>.<span class="hljs-keyword">set</span>(key, obj[key])<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">map</span><br>&#125;<br><br>objToMap(&#123;<span class="hljs-string">&#x27;name&#x27;</span>: <span class="hljs-string">&#x27;An&#x27;</span>, <span class="hljs-string">&#x27;des&#x27;</span>: <span class="hljs-string">&#x27;JS&#x27;</span>&#125;) // Map &#123;<span class="hljs-string">&quot;name&quot;</span> =&gt; <span class="hljs-string">&quot;An&quot;</span>, <span class="hljs-string">&quot;des&quot;</span> =&gt; <span class="hljs-string">&quot;JS&quot;</span>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>Map 转 JSON</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">function</span> <span class="hljs-title">mapToJson</span><span class="hljs-params">(map)</span> &#123;<br>    <span class="hljs-keyword">return</span> JSON.stringify([...<span class="hljs-keyword">map</span>])<br>&#125;<br><br><span class="hljs-keyword">let</span> <span class="hljs-keyword">map</span> = <span class="hljs-keyword">new</span> Map().<span class="hljs-keyword">set</span>(<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;An&#x27;</span>).<span class="hljs-keyword">set</span>(<span class="hljs-string">&#x27;des&#x27;</span>, <span class="hljs-string">&#x27;JS&#x27;</span>)<br>mapToJson(<span class="hljs-keyword">map</span>)	// [[<span class="hljs-string">&quot;name&quot;</span>,<span class="hljs-string">&quot;An&quot;</span>],[<span class="hljs-string">&quot;des&quot;</span>,<span class="hljs-string">&quot;JS&quot;</span>]]<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>JSON 转 Map</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs ada"><span class="hljs-keyword">function</span> <span class="hljs-title">jsonToStrMap</span>(jsonStr) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-type">objToMap(JSON.parse(jsonStr))</span>;<br>&#125;<br><br>jsonToStrMap(&#x27;&#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;An&quot;</span>, <span class="hljs-string">&quot;des&quot;</span>: <span class="hljs-string">&quot;JS&quot;</span>&#125;&#x27;) // Map &#123;<span class="hljs-string">&quot;name&quot;</span> =&gt; <span class="hljs-string">&quot;An&quot;</span>, <span class="hljs-string">&quot;des&quot;</span> =&gt; <span class="hljs-string">&quot;JS&quot;</span>&#125;<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="4-WeakMap"><a href="#4-WeakMap" class="headerlink" title="4. WeakMap"></a>4. WeakMap</h3><p>WeakMap 对象是一组键值对的集合，其中的<strong>键是弱引用对象，而值可以是任意</strong>。</p>
+<p><strong>注意，WeakMap 弱引用的只是键名，而不是键值。键值依然是正常引用。</strong></p>
+<p>WeakMap 中，每个键对自己所引用对象的引用都是弱引用，在没有其他引用和该键引用同一对象，这个对象将会被垃圾回收（相应的key则变成无效的），所以，WeakMap 的 key 是不可枚举的。</p>
+<p>属性：</p>
+<ul>
+<li>constructor：构造函数</li>
+</ul>
+<p>方法：</p>
+<ul>
+<li>has(key)：判断是否有 key 关联对象</li>
+<li>get(key)：返回key关联对象（没有则则返回 undefined）</li>
+<li>set(key)：设置一组key关联对象</li>
+<li>delete(key)：移除 key 的关联对象</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> myElement = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;logo&#x27;</span>);<br><span class="hljs-keyword">let</span> myWeakmap = <span class="hljs-keyword">new</span> <span class="hljs-title class_">WeakMap</span>();<br><br>myWeakmap.<span class="hljs-title function_">set</span>(myElement, &#123;<span class="hljs-attr">timesClicked</span>: <span class="hljs-number">0</span>&#125;);<br><br>myElement.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;click&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">let</span> logoData = myWeakmap.<span class="hljs-title function_">get</span>(myElement);<br>  logoData.<span class="hljs-property">timesClicked</span>++;<br>&#125;, <span class="hljs-literal">false</span>);<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h3><ul>
+<li>Set<ul>
+<li>成员唯一、无序且不重复</li>
+<li>[value, value]，键值与键名是一致的（或者说只有键值，没有键名）</li>
+<li>可以遍历，方法有：add、delete、has</li>
+</ul>
+</li>
+<li>WeakSet<ul>
+<li>成员都是对象</li>
+<li>成员都是弱引用，可以被垃圾回收机制回收，可以用来保存DOM节点，不容易造成内存泄漏</li>
+<li>不能遍历，方法有add、delete、has</li>
+</ul>
+</li>
+<li>Map<ul>
+<li>本质上是键值对的集合，类似集合</li>
+<li>可以遍历，方法很多可以跟各种数据格式转换</li>
+</ul>
+</li>
+<li>WeakMap<ul>
+<li>只接受对象作为键名（null除外），不接受其他类型的值作为键名</li>
+<li>键名是弱引用，键值可以是任意的，键名所指向的对象可以被垃圾回收，此时键名是无效的</li>
+<li>不能遍历，方法有get、set、has、delete</li>
+</ul>
+</li>
+</ul>
+<h3 id="6-扩展：Object与Set、Map"><a href="#6-扩展：Object与Set、Map" class="headerlink" title="6. 扩展：Object与Set、Map"></a>6. 扩展：Object与Set、Map</h3><ol>
+<li><p>Object 与 Set</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">// <span class="hljs-keyword">Object</span><br>const properties1 = &#123;<br>    <span class="hljs-string">&#x27;width&#x27;</span>: <span class="hljs-number">1</span>,<br>    <span class="hljs-string">&#x27;height&#x27;</span>: <span class="hljs-number">1</span><br>&#125;<br>console.log(properties1[<span class="hljs-string">&#x27;width&#x27;</span>]? <span class="hljs-keyword">true</span>: <span class="hljs-keyword">false</span>) // <span class="hljs-keyword">true</span><br><br>// <span class="hljs-keyword">Set</span><br>const properties2 = <span class="hljs-built_in">new</span> <span class="hljs-keyword">Set</span>()<br>properties2.<span class="hljs-keyword">add</span>(<span class="hljs-string">&#x27;width&#x27;</span>)<br>properties2.<span class="hljs-keyword">add</span>(<span class="hljs-string">&#x27;height&#x27;</span>)<br>console.log(properties2.has(<span class="hljs-string">&#x27;width&#x27;</span>)) // <span class="hljs-keyword">true</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>Object 与 Map</p>
+</li>
+</ol>
+<p>JS 中的对象（Object），本质上是键值对的集合（hash 结构）</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">const</span> <span class="hljs-keyword">data</span> = &#123;&#125;;<br><span class="hljs-keyword">const</span> element = document.getElementsByClassName(<span class="hljs-string">&#x27;App&#x27;</span>);<br><br><span class="hljs-keyword">data</span>[element] = <span class="hljs-string">&#x27;metadata&#x27;</span>;<br>console.log(<span class="hljs-keyword">data</span>[<span class="hljs-string">&#x27;[object HTMLCollection]&#x27;</span>]) <span class="hljs-comment">// &quot;metadata&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>但当以一个DOM节点作为对象 data 的键，对象会被自动转化为字符串[Object HTMLCollection]，所以说，Object 结构提供了 <strong>字符串-值</strong> 对应，Map则提供了 <strong>值-值</strong> 的对应</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%89%8D%E7%AB%AF/" class="category-chain-item">前端</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/es6/">#es6</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>ES6 Set-Map</div>
+      <div>http://example.com/2018/04/10/html+css+js+ts/4-set+map/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>April 10, 2018</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/04/12/html+css+js+ts/4-Symbol/" title="ES6 Symbol">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">ES6 Symbol</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/04/07/html+css+js+ts/4-Reflect/" title="ES6 Reflect">
+                        <span class="hidden-mobile">ES6 Reflect</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

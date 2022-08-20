@@ -1,0 +1,755 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、简介1.1 正则表达式的web常见场合 邮箱验证 用户名验证 替换字符串某一部分 信息采集 用来分析有效的代码段  1.2 字符串应用正则 string.match(reg)正则查找字符串 string.search(reg) 正则查找位置 string.replace(reg,&#39;newstr&#39;)正则替换 string.split（reg）正则拆分  1.3 正则表达式3句话1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="正则表达式">
+<meta property="og:url" content="http://example.com/2019/01/18/%E5%B7%A5%E5%85%B7/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、简介1.1 正则表达式的web常见场合 邮箱验证 用户名验证 替换字符串某一部分 信息采集 用来分析有效的代码段  1.2 字符串应用正则 string.match(reg)正则查找字符串 string.search(reg) 正则查找位置 string.replace(reg,&#39;newstr&#39;)正则替换 string.split（reg）正则拆分  1.3 正则表达式3句话1">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-01-18T10:36:48.000Z">
+<meta property="article:modified_time" content="2022-06-06T11:49:22.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="正则表达式">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>正则表达式 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="正则表达式"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-01-18 18:36" pubdate>
+          January 18, 2019 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          17k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          145 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">正则表达式</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h2><h3 id="1-1-正则表达式的web常见场合"><a href="#1-1-正则表达式的web常见场合" class="headerlink" title="1.1 正则表达式的web常见场合"></a>1.1 正则表达式的web常见场合</h3><ul>
+<li>邮箱验证</li>
+<li>用户名验证</li>
+<li>替换字符串某一部分</li>
+<li>信息采集 用来分析有效的代码段</li>
+</ul>
+<h3 id="1-2-字符串应用正则"><a href="#1-2-字符串应用正则" class="headerlink" title="1.2 字符串应用正则"></a>1.2 字符串应用正则</h3><ul>
+<li><code>string.match(reg)</code>正则查找字符串</li>
+<li><code>string.search(reg)</code> 正则查找位置</li>
+<li><code>string.replace(reg,&#39;newstr&#39;)</code>正则替换</li>
+<li><code>string.split（reg）</code>正则拆分</li>
+</ul>
+<h3 id="1-3-正则表达式3句话"><a href="#1-3-正则表达式3句话" class="headerlink" title="1.3 正则表达式3句话"></a>1.3 正则表达式3句话</h3><h4 id="1-3-1-要找什么字符？（5中方法）"><a href="#1-3-1-要找什么字符？（5中方法）" class="headerlink" title="1.3.1 要找什么字符？（5中方法）"></a>1.3.1 要找什么字符？（5中方法）</h4><ul>
+<li>字面值 比如：<code>hi</code>就是找<code>hi</code></li>
+<li>字符的集合<code>[abcd]</code>匹配<code>abdc</code>任意一个</li>
+<li>用范围来表示字符<code>[0-9] [a-z][A-Z]</code></li>
+<li>字符簇 就是系统为常用的字符集合创建的一个简写<ul>
+<li>例如：<code>\d</code> 表示<code>[0-9]</code> <code>\w</code>代表<code>[0-9a-zA-Z_]</code> <code>\s</code>代表<code>[\t\v\f\r\n]</code>（空白符）</li>
+</ul>
+</li>
+<li>补集的形式来表示字符集合<ul>
+<li>例如：<code>[0-9]</code> 补集 <code>[^0-9]</code></li>
+<li>对于字符簇只需把字母大写即可表示补集 <code>\d</code> –&gt;<code>\D</code>（非数字） <code>\w</code>–&gt;<code>\W</code> （代表<code>a-z0-9A-Z</code>之外的东西） <code>\s</code> –&gt;<code>\S</code>(代表非空白字符)</li>
+</ul>
+</li>
+<li>点代表 任意字符 (不包括换行符)</li>
+</ul>
+<h4 id="1-3-2-从哪里找-找到哪？"><a href="#1-3-2-从哪里找-找到哪？" class="headerlink" title="1.3.2 从哪里找,找到哪？"></a>1.3.2 从哪里找,找到哪？</h4><ul>
+<li><code>\b</code>单词边界 <code>\bhi</code>从单词边界开始匹配<code>hi</code></li>
+<li><code>\B</code> 单词的非边界 把单词的中间某一部分取出来 把中间含有hi的单词取出来 即<code>hi</code>不能再两端</li>
+<li><code>^</code> 从字符串的起始位置开始匹配</li>
+<li><code>$</code>匹配到字符串的额结束位置</li>
+</ul>
+<h4 id="1-3-3-找多少"><a href="#1-3-3-找多少" class="headerlink" title="1.3.3 找多少"></a>1.3.3 找多少</h4><ul>
+<li><code>*</code>表示匹配<code>0-</code>无穷<code>==</code>等价<code>(0,)</code></li>
+<li><code>+</code>表示匹配<code>1-</code>无穷 <code>==</code>等价<code>(1,)</code></li>
+<li><code>?</code>表示<code>[0,1] ==</code> 等价<code>(0,1)</code></li>
+<li><code>a(n)</code>: 字符a准确出<code>现n</code>次</li>
+<li><code>a(n,)</code>:字符<code>a</code>至少出现<code>n</code>次</li>
+<li><code>a(n,m):n</code>到<code>m</code>次</li>
+</ul>
+<h3 id="1-3-贪婪模式"><a href="#1-3-贪婪模式" class="headerlink" title="1.3 贪婪模式"></a>1.3 贪婪模式</h3><ul>
+<li>个数修饰符默认是贪婪模式 尽量多找</li>
+<li>是指在上面的个数修饰符后面加<code>?</code>，则为非贪婪模式，尽量少的找</li>
+</ul>
+<p><strong>模式</strong>：</p>
+<ul>
+<li>以匹配为例默认情况 match找到一次就结束 能否告诉匹配过程 一直找 在全文范围内一直找</li>
+<li><code>g</code> 表示全局模式 global 找所有的 而不是就找一行就结束</li>
+<li><code>i</code> ignore 忽略大小写</li>
+<li><code>s</code> 单行模式（把整篇文章看成一行）js不支持单行模式</li>
+<li><code>m</code> 多行模式</li>
+</ul>
+<h2 id="二、语法"><a href="#二、语法" class="headerlink" title="二、语法"></a>二、语法</h2><h3 id="2-1-基本元字符"><a href="#2-1-基本元字符" class="headerlink" title="2.1 基本元字符"></a>2.1 基本元字符</h3><ul>
+<li><code>.</code> ： 匹配除了换行符之外的任何单个字符</li>
+<li><code>\</code> ： 在非特殊字符之前的反斜杠表示下一个字符是特殊的</li>
+<li><code>|</code>： 逻辑或操作符</li>
+<li><code>[]</code> ：定义一个字符集合，匹配字符集合中的一个字符，在字符集合里面像 <code>.</code>，\这些字符都表示其本身</li>
+<li><code>[^]</code>：对上面一个集合取非</li>
+<li><code>-</code>：定义一个区间，例如<code>[A-Z]</code>，其首尾字符在 <code>ASCII</code> 字符集里面</li>
+</ul>
+<h3 id="2-2-数量元字符"><a href="#2-2-数量元字符" class="headerlink" title="2.2 数量元字符"></a>2.2 数量元字符</h3><ul>
+<li><code>&#123;m,n&#125;</code> ：匹配前面一个字符至少 <code>m</code> 次至多 <code>n</code> 次重复，还有<code>&#123;m&#125;</code>表示匹配 <code>m</code> 次，<code>&#123;m,&#125;</code>表示至少 <code>m</code> 次</li>
+<li><code>+</code> ： 匹配前面一个表达式一次或者多次，相当于<code>&#123;1,&#125;</code>，记忆方式追加<code>(+)</code>，起码得有一次</li>
+<li><code>*</code> ： 匹配前面一个表达式零次或者多次，相当于<code>&#123;0,&#125;</code>，记忆方式乘法<code>(*)</code>，可以一次都没有</li>
+<li><code>?</code> ： 单独使用匹配前面一个表达式零次或者一次，相当于 <code>&#123;0,1&#125;</code></li>
+</ul>
+<h3 id="2-3-位置元字符"><a href="#2-3-位置元字符" class="headerlink" title="2.3 位置元字符"></a>2.3 位置元字符</h3><ul>
+<li><code>^</code> ： 单独使用匹配表达式的开始</li>
+<li><code>\$</code>： 匹配表达式的结束</li>
+<li><code>\b</code>：匹配单词边界</li>
+<li><code>\B</code>：匹配非单词边界</li>
+<li><code>(?=p)</code>：匹配 <code>p</code> 前面的位置</li>
+<li><code>(?!p)</code>：匹配不是 <code>p</code> 前面的位置</li>
+</ul>
+<h3 id="2-4-特殊元字符"><a href="#2-4-特殊元字符" class="headerlink" title="2.4 特殊元字符"></a>2.4 特殊元字符</h3><ul>
+<li><code>\d</code>：<code>[0-9]</code>，表示一位数字，记忆方式 digit</li>
+<li><code>\D</code>：<code>[^0-9]</code>，表示一位非数字</li>
+<li><code>\s</code>：<code>[\t\v\n\r\f]</code>，表示空白符，包括空格，水平制表符（\t），垂直制表符（\v），换行符（\n），回车符（\r），换页符（\f），记忆方式 space character</li>
+<li><code>\S</code>：<code>[^\t\v\n\r\f]</code>，表示非空白符</li>
+<li><code>\w</code>：<code>[0-9a-zA-Z]</code>，表示数字大小写字母和下划线，记忆方式 word</li>
+<li><code>\W</code>：<code>[^0-9a-zA-Z]</code>，表示非单词字符</li>
+</ul>
+<h3 id="2-5-标志字符"><a href="#2-5-标志字符" class="headerlink" title="2.5 标志字符"></a>2.5 标志字符</h3><ul>
+<li><code>g</code> : 全局搜索 记忆方式global</li>
+<li><code>i</code> ：不区分大小写 记忆方式 ignore</li>
+<li><code>m</code> ：多行搜索</li>
+</ul>
+<h2 id="三、match，test，exec，search的返回值"><a href="#三、match，test，exec，search的返回值" class="headerlink" title="三、match，test，exec，search的返回值"></a>三、match，test，exec，search的返回值</h2><h3 id="3-1-match的用法"><a href="#3-1-match的用法" class="headerlink" title="3.1 match的用法"></a>3.1 match的用法</h3><p><strong>在不加全局“g”的情况下</strong></p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">var</span> str=<span class="hljs-string">&quot;wo shi zhong guo ren&quot;</span>;<br><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(str.match(<span class="hljs-regexp">/o/</span>));<br><br><span class="hljs-comment">// 返回的结果是：[&quot;o&quot;, index: 1, input: &quot;wo shi zhong guo ren&quot;]；</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>在加全局“g”的情况下</strong></p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">var</span> str=<span class="hljs-string">&quot;wo shi zhong guo ren&quot;</span>;<br><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(str.match(<span class="hljs-regexp">/o/g</span>));<br><br>返回的结果是：[<span class="hljs-string">&quot;o&quot;</span>, <span class="hljs-string">&quot;o&quot;</span>, <span class="hljs-string">&quot;o&quot;</span>]；<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-2-exec的用法"><a href="#3-2-exec的用法" class="headerlink" title="3.2 exec的用法"></a>3.2 exec的用法</h3><figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">var</span> str=<span class="hljs-string">&quot;wo shi zhong guo ren&quot;</span>;<br><br><span class="hljs-keyword">var</span> re=<span class="hljs-regexp">/o/</span>;<br><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(re.exec(str));<br><br><span class="hljs-comment">// 返回的结果是：[&quot;o&quot;, index: 1, input: &quot;wo shi zhong guo ren&quot;]；</span><br><span class="hljs-comment">// exec返回的和match不加全局“g”’一样</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="3-3-test的用法"><a href="#3-3-test的用法" class="headerlink" title="3.3 test的用法"></a>3.3 test的用法</h3><figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">var</span> str=<span class="hljs-string">&quot;wo shi zhong guo ren&quot;</span>;<br><br><span class="hljs-keyword">var</span> re=<span class="hljs-regexp">/o/</span>;<br><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(re.test(str));<br><br><span class="hljs-comment">// 返回的结果是：true（如果找不到返回的则是false）</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="3-4-search的用法"><a href="#3-4-search的用法" class="headerlink" title="3.4 search的用法"></a>3.4 search的用法</h3><ul>
+<li>关于search用法其实很简单，它和indexOf是一样的，就是找到index，而且是从前往后数的。</li>
+</ul>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">var</span> str=<span class="hljs-string">&quot;wo shi zhong guo ren&quot;</span>;<br><span class="hljs-keyword">var</span> re=<span class="hljs-regexp">/o/</span>;<br><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(str.search(re));<br><br>返回的结果是：<span class="hljs-number">1</span>；<br></code></pre></td></tr></table></figure>
+
+<h2 id="四、应用"><a href="#四、应用" class="headerlink" title="四、应用"></a>四、应用</h2><h3 id="4-1-例1"><a href="#4-1-例1" class="headerlink" title="4.1 例1"></a>4.1 例1</h3><blockquote>
+<p>在线演示 <a target="_blank" rel="noopener" href="https://codepen.io/poetries/pen/xWMRxR">https://codepen.io/poetries/pen/xWMRxR</a></p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>正则-例子1<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/css&quot;</span>&gt;</span><span class="language-css"></span><br><span class="language-css">		<span class="hljs-selector-tag">textarea</span>&#123;</span><br><span class="language-css">			<span class="hljs-attribute">width</span>: <span class="hljs-number">400px</span>;</span><br><span class="language-css">			<span class="hljs-attribute">height</span>: <span class="hljs-number">200px</span>; </span><br><span class="language-css">		&#125;</span><br><span class="language-css">	</span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">textarea</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&#x27;cont&#x27;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">textarea</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;匹配hi&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t1();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;正匹配单词hi&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t2();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;匹配hi开头的单词但不是hi&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t3();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<br>	<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t1</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/hi/</span>;<span class="hljs-comment">//仅仅是看字符串中有没有hi</span></span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(reg.<span class="hljs-title function_">test</span>(cv));<span class="hljs-comment">//满足 返回true  不满足 返回false</span></span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t2</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/\bhi\b/</span>;<span class="hljs-comment">//正则测试单词hi</span></span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(reg.<span class="hljs-title function_">test</span>(cv));<span class="hljs-comment">//满足 返回true  不满足 返回false</span></span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t3</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/\bhi\b/</span>;<span class="hljs-comment">//正则测试hi开头的单词但不是hi</span></span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(reg.<span class="hljs-title function_">test</span>(cv));<span class="hljs-comment">//满足 返回true  不满足 返回false</span></span><br><span class="language-javascript">            &#125; </span><br><span class="language-javascript">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="4-2-例2-要找什么字符串"><a href="#4-2-例2-要找什么字符串" class="headerlink" title="4.2 例2-要找什么字符串"></a>4.2 例2-要找什么字符串</h3><blockquote>
+<p>在线演示 <a target="_blank" rel="noopener" href="https://codepen.io/poetries/pen/oqmYNw">https://codepen.io/poetries/pen/oqmYNw</a></p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>要找什么字符<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/css&quot;</span>&gt;</span><span class="language-css"></span><br><span class="language-css">    	<span class="hljs-selector-tag">textarea</span>&#123;</span><br><span class="language-css">    	<span class="hljs-attribute">width</span>: <span class="hljs-number">400px</span>;</span><br><span class="language-css">    	<span class="hljs-attribute">height</span>: <span class="hljs-number">200px</span>; </span><br><span class="language-css">    	&#125;</span><br><span class="language-css">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">textarea</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&#x27;cont&#x27;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">textarea</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;找不好的数字&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t1();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;有没有数字&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t2();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;有没有大写字母&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t3();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;是否全为数字&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t4();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<br>	<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t1</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/[347]/</span>;<span class="hljs-comment">// 匹配347任意一个字符的集合[abcd] 匹配abdc任意一个</span></span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(reg.<span class="hljs-title function_">test</span>(cv));</span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t2</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-comment">//var reg = /[0123456789]/;</span></span><br><span class="language-javascript">            	<span class="hljs-comment">//var reg = /[0-9]/;// 匹配有没有数字</span></span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/\d/</span>;<span class="hljs-comment">// \d 表示[0-9]</span></span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(reg.<span class="hljs-title function_">test</span>(cv));</span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t3</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/[A-Z]/</span>;<span class="hljs-comment">// 匹配有没有数字</span></span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(reg.<span class="hljs-title function_">test</span>(cv));</span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t4</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/[^0-9]/</span>;<span class="hljs-comment">// 匹配非数字 0-9之外的字符  对于网上发布手机号之类的很有用 比如1300 把00换成OO 就没法认出</span></span><br><span class="language-javascript">            	<span class="hljs-keyword">if</span>(reg.<span class="hljs-title function_">test</span>(cv))&#123;</span><br><span class="language-javascript">            		<span class="hljs-title function_">alert</span>(<span class="hljs-string">&#x27;有非数字存在&#x27;</span>);</span><br><span class="language-javascript">            	&#125;<span class="hljs-keyword">else</span>&#123;</span><br><span class="language-javascript">            		<span class="hljs-title function_">alert</span>(<span class="hljs-string">&#x27;全是数字&#x27;</span>);</span><br><span class="language-javascript">            	&#125;</span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">	</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="4-3-例3-从哪里开始匹配"><a href="#4-3-例3-从哪里开始匹配" class="headerlink" title="4.3 例3-从哪里开始匹配"></a>4.3 例3-从哪里开始匹配</h3><blockquote>
+<p>在线演示 <a target="_blank" rel="noopener" href="https://codepen.io/poetries/pen/jzdVOo">https://codepen.io/poetries/pen/jzdVOo</a></p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>74-从哪里开始匹配<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/css&quot;</span>&gt;</span><span class="language-css"></span><br><span class="language-css">		<span class="hljs-selector-tag">textarea</span>&#123;</span><br><span class="language-css">			<span class="hljs-attribute">width</span>: <span class="hljs-number">400px</span>;</span><br><span class="language-css">			<span class="hljs-attribute">height</span>: <span class="hljs-number">200px</span>;</span><br><span class="language-css">			</span><br><span class="language-css">		&#125;</span><br><span class="language-css">	</span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">textarea</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&#x27;cont&#x27;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">textarea</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;匹配hi&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t1();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;匹配hi开头及hi开头的单词&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t2();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;匹配hi开头的单词但不是hi&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t3();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;匹配进行时的单词&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t4();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;匹配un前缀的反义词&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t5();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;匹配单词中间的hi部分&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t6();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;匹配输入的名字是不是lisi&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t7();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<br>	<br>	<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t1</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/hi/</span>;<span class="hljs-comment">//仅仅是看字符串中有没有hi</span></span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(reg.<span class="hljs-title function_">test</span>(cv));<span class="hljs-comment">//满足 返回true  不满足 返回false</span></span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t2</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-comment">//var reg = /\bhi.+/;// 错误1 匹配hi开头的单词</span></span><br><span class="language-javascript">            	<span class="hljs-comment">////var reg = /\bhi\w+/;// 错误2</span></span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/\bhi\w*/</span>; </span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(reg.<span class="hljs-title function_">exec</span>(cv));<span class="hljs-comment">//exec返回一个对象  没找到返回none</span></span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t3</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/\bhi/</span>;<span class="hljs-comment">//正则测试hi开头的单词但不是hi</span></span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(reg.<span class="hljs-title function_">exec</span>(cv));<span class="hljs-comment">//exec返回一个对象  没找到返回none</span></span><br><span class="language-javascript">            &#125; </span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t4</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/\b[\w]+ing\b/</span>;<span class="hljs-comment">//*表示匹配0-无穷  +表示匹配1-无穷</span></span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(reg.<span class="hljs-title function_">exec</span>(cv));</span><br><span class="language-javascript">            &#125; </span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t5</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/\bun[\w]+\b/</span>;<span class="hljs-comment">//匹配un前缀的反义词</span></span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(reg.<span class="hljs-title function_">exec</span>(cv));</span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t6</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/\Bhi\B/</span>;<span class="hljs-comment">//匹配单词中间的hi部分</span></span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(reg.<span class="hljs-title function_">exec</span>(cv));</span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t7</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/^lisi$/</span>;<span class="hljs-comment">//匹配输入的名字是不是lisi</span></span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(reg.<span class="hljs-title function_">exec</span>(cv));</span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">	</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="4-4-例4-正则应用字符串"><a href="#4-4-例4-正则应用字符串" class="headerlink" title="4.4 例4 正则应用字符串"></a>4.4 例4 正则应用字符串</h3><blockquote>
+<p>在线演示 <a target="_blank" rel="noopener" href="https://codepen.io/poetries/pen/dmaOPz">https://codepen.io/poetries/pen/dmaOPz</a></p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>正则应用字符串<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/css&quot;</span>&gt;</span><span class="language-css"></span><br><span class="language-css">		<span class="hljs-selector-tag">textarea</span>&#123;</span><br><span class="language-css">			<span class="hljs-attribute">width</span>: <span class="hljs-number">400px</span>;</span><br><span class="language-css">			<span class="hljs-attribute">height</span>: <span class="hljs-number">200px</span>; </span><br><span class="language-css">		&#125;</span><br><span class="language-css">	</span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">textarea</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&#x27;cont&#x27;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">textarea</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;查找中间含有hi的单词&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t1();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;查找所有中间含有hi的单词&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t2();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;查找所有中间含有hi的单词，不区分大小写&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t3();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;替换JavaScript标签&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t4();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;把连接换成空连接&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t5();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;把每一行的结尾的数字换成#&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t6();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;替换goods中多余的O&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t7();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t1</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/\Bhi\B/</span>;<span class="hljs-comment">//查找中间含有hi的单词</span></span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(cv.<span class="hljs-title function_">match</span>(reg));</span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t2</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/\Bhi\B/g</span>;<span class="hljs-comment">//查找所有中间含有hi的单词</span></span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(cv.<span class="hljs-title function_">match</span>(reg));</span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t3</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/\Bhi\B/gi</span>;<span class="hljs-comment">//查找所有中间含有hi的单词  g是全局 i ignore 忽略大小写</span></span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(cv.<span class="hljs-title function_">match</span>(reg));</span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t4</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span>  reg = <span class="hljs-regexp">/&lt;script.*&lt;\/script&gt;/</span>;<span class="hljs-comment">//替换JavaScript标签</span></span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(cv.<span class="hljs-title function_">replace</span>(reg,<span class="hljs-string">&#x27;哈哈哈&#x27;</span>));</span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t5</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	  <span class="hljs-comment">/*</span></span><br><span class="hljs-comment"><span class="language-javascript">                        . 代表任意,但不包括换行</span></span><br><span class="hljs-comment"><span class="language-javascript">                        可以用一对反义词来匹配所有. \d\D等</span></span><br><span class="hljs-comment"><span class="language-javascript">                        不能跨行（贪婪模式）</span></span><br><span class="hljs-comment"><span class="language-javascript">                  */</span></span><br><span class="language-javascript">                 </span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/&lt;a[\s]+[\d\D]*&lt;\/a&gt;/</span>; <span class="hljs-comment">//正则替换链接</span></span><br><span class="language-javascript">                    <span class="hljs-title function_">alert</span>(cv.<span class="hljs-title function_">replace</span>(reg,<span class="hljs-string">&#x27;&lt;a href=&quot;#&quot;&gt;文字&lt;/a&gt;&#x27;</span>)); </span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t6</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span>  reg = <span class="hljs-regexp">/\d+$/gm</span>;<span class="hljs-comment">//把每一行的结尾的数字换成#   m 多行模式</span></span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(cv.<span class="hljs-title function_">replace</span>(reg,<span class="hljs-string">&#x27;#&#x27;</span>));</span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t7</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span>  reg = <span class="hljs-regexp">/go&#123;3,&#125;?ds/</span>;<span class="hljs-comment">//替换goods中多余的O</span></span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(cv.<span class="hljs-title function_">replace</span>(reg,<span class="hljs-string">&#x27;goods&#x27;</span>));</span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">	</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="4-5-例5-预查"><a href="#4-5-例5-预查" class="headerlink" title="4.5 例5-预查"></a>4.5 例5-预查</h3><blockquote>
+<p>在线演示 <a target="_blank" rel="noopener" href="https://codepen.io/poetries/pen/MVLbwW">https://codepen.io/poetries/pen/MVLbwW</a></p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>预查<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br><br>	<span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/css&quot;</span>&gt;</span><span class="language-css"></span><br><span class="language-css">		<span class="hljs-selector-tag">textarea</span>&#123;</span><br><span class="language-css">			<span class="hljs-attribute">width</span>: <span class="hljs-number">400px</span>;</span><br><span class="language-css">			<span class="hljs-attribute">height</span>: <span class="hljs-number">200px</span>; </span><br><span class="language-css">		&#125;</span><br><span class="language-css">	</span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">textarea</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&#x27;cont&#x27;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">textarea</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;匹配进行时的单词&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t1();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;匹配进行时的单词的词根部分,正向预查&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t2();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;查找winxp,负向预查&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t3();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;找出un*系列单词的词根&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t4();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><br>	<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t1</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/\b[\w]+ing\b/</span>;</span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(cv.<span class="hljs-title function_">match</span>(reg));</span><br><span class="language-javascript">            &#125; </span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t2</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/\b[\w]+(?=ing)/g</span>;<span class="hljs-comment">//匹配进行时的单词的词根部分  不要ing结尾  预查不消耗字符</span></span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(cv.<span class="hljs-title function_">match</span>(reg));</span><br><span class="language-javascript">            &#125; </span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t3</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/\bwin(?!95)/g</span>;<span class="hljs-comment">//win98 win97 win95 win32 winxp win2003要求把win95过滤</span></span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(cv.<span class="hljs-title function_">match</span>(reg));</span><br><span class="language-javascript">            &#125; </span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t4</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-comment">//var reg = /\w+(?&lt;=un)/g;//找出un*系列单词的词根  js不支持向前正向预查</span></span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(cv.<span class="hljs-title function_">match</span>(reg));</span><br><span class="language-javascript">            &#125; </span><br><span class="language-javascript"> </span><br><span class="language-javascript">	</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="4-6-例6-反向引用"><a href="#4-6-例6-反向引用" class="headerlink" title="4.6 例6-反向引用"></a>4.6 例6-反向引用</h3><blockquote>
+<p>在线演示 <a target="_blank" rel="noopener" href="https://codepen.io/poetries/pen/LdqbVL">https://codepen.io/poetries/pen/LdqbVL</a></p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>反向引用<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br><br>	<span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/css&quot;</span>&gt;</span><span class="language-css"></span><br><span class="language-css">		<span class="hljs-selector-tag">textarea</span>&#123;</span><br><span class="language-css">			<span class="hljs-attribute">width</span>: <span class="hljs-number">400px</span>;</span><br><span class="language-css">			<span class="hljs-attribute">height</span>: <span class="hljs-number">200px</span>; </span><br><span class="language-css">		&#125;</span><br><span class="language-css">	</span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">textarea</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&#x27;cont&#x27;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">textarea</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;把连接换成空连接，保留文字&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t1();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><br>	<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t1</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/&lt;a[\s]+[^&gt;]+&gt;([^&lt;&gt;]+)&lt;\/a&gt;/</span>; <span class="hljs-comment">//链接表达式  这个一部分是子表达式 ([^&lt;&gt;]+)</span></span><br><span class="language-javascript">                    <span class="hljs-comment">// alert(reg.exec(cv)); </span></span><br><span class="language-javascript">                    </span><br><span class="language-javascript">                <span class="hljs-title function_">alert</span>(cv.<span class="hljs-title function_">replace</span>(reg,<span class="hljs-string">&#x27;&lt;a href=&quot;#&quot;&quot;&gt;$1&lt;/a&gt;&#x27;</span>));</span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">	</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="4-7-例7-正则练习"><a href="#4-7-例7-正则练习" class="headerlink" title="4.7 例7-正则练习"></a>4.7 例7-正则练习</h3><blockquote>
+<p>在线演示 <a target="_blank" rel="noopener" href="https://codepen.io/poetries/pen/dmaOYV">https://codepen.io/poetries/pen/dmaOYV</a></p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>正则练习<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/css&quot;</span>&gt;</span><span class="language-css"></span><br><span class="language-css">		<span class="hljs-selector-tag">textarea</span>&#123;</span><br><span class="language-css">			<span class="hljs-attribute">width</span>: <span class="hljs-number">400px</span>;</span><br><span class="language-css">			<span class="hljs-attribute">height</span>: <span class="hljs-number">200px</span>; </span><br><span class="language-css">		&#125;</span><br><span class="language-css">	</span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">textarea</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&#x27;cont&#x27;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">textarea</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;1-找首尾相同的单词&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t1();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;2-手机号第4位到第七位换成*&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t2();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;3-统一空格&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t3();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;4-把名字中的,去掉&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t4();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;5-把aaabb换成ab&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t5();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><br>        <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">           <span class="hljs-keyword">function</span> <span class="hljs-title function_">t1</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/\b([\w])[\w]*\1\b/g</span>;<span class="hljs-comment">// \1注意引用方式 [\w]任意一个 [\w]*任意多个 找首尾相同的单词</span></span><br><span class="language-javascript">            	<span class="hljs-comment">/**</span></span><br><span class="hljs-comment"><span class="language-javascript">            	 *  *如何引用子表达式所匹配的结果？</span></span><br><span class="hljs-comment"><span class="language-javascript">             *</span></span><br><span class="hljs-comment"><span class="language-javascript">             * 答： 在表达式内部 反向引用时 \n来匹配第N个子表达式的结果 子表达式当成变量来传递时，$N来匹配第N个子表达式的匹配结果</span></span><br><span class="hljs-comment"><span class="language-javascript">             * </span></span><br><span class="hljs-comment"><span class="language-javascript">            	 */</span></span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(cv.<span class="hljs-title function_">match</span>(reg));</span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t2</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/(1(3|5|8|)\d)\d&#123;4&#125;(\d&#123;4&#125;)/</span>;<span class="hljs-comment">//字表达式(3|5|8|)  (\d&#123;4&#125;)  &#123;4&#125;代表任意4个  </span></span><br><span class="language-javascript">            	<span class="hljs-comment">// alert(cv.match(reg));//打印结果18878553070，188，3070</span></span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(cv.<span class="hljs-title function_">replace</span>(reg,<span class="hljs-string">&#x27;$1****$3&#x27;</span>));<span class="hljs-comment">//188****4070</span></span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t3</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/[ \t\u3000]+/g</span>;<span class="hljs-comment">//找空白符  第一个是半角的空格  \s包含所有空白符  \u3000表示 全角空格的16进制Unicode编码</span></span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(cv.<span class="hljs-title function_">replace</span>(reg,<span class="hljs-string">&#x27;,&#x27;</span>));<span class="hljs-comment">//</span></span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t4</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            <span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/([\u4E00-\u9FA0]),([\u4E00-\u9FA0])/g</span>;  <span class="hljs-comment">// 找中文用Unicode编码表的中文范围</span></span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(cv.<span class="hljs-title function_">replace</span>(reg,<span class="hljs-string">&#x27;,&#x27;</span>));</span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t5</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            <span class="hljs-keyword">var</span> reg = <span class="hljs-comment">//;  </span></span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(cv.<span class="hljs-title function_">replace</span>(reg,<span class="hljs-string">&#x27;,&#x27;</span>));</span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">	</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="4-8-例8-常用正则"><a href="#4-8-例8-常用正则" class="headerlink" title="4.8 例8-常用正则"></a>4.8 例8-常用正则</h3><blockquote>
+<p>在线演示 <a target="_blank" rel="noopener" href="https://codepen.io/poetries/pen/GxzNoG">https://codepen.io/poetries/pen/GxzNoG</a></p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>常用正则解答<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t1</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/(\w)\1+/g</span>; <span class="hljs-comment">//查找连续多个字符  把aaabbccdd换成abcd这个格式</span></span><br><span class="language-javascript">            						<span class="hljs-comment">/**\1 后向引用，表示表达式中，从左往右数，第一个左括号对应的括号内的内容。</span></span><br><span class="hljs-comment"><span class="language-javascript">            以此类推，\2表示第二个，\0表示整个表达式**/</span></span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(cv.<span class="hljs-title function_">replace</span>(reg,<span class="hljs-string">&#x27;$1&#x27;</span>));</span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t2</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-comment">//手机号正则：</span></span><br><span class="language-javascript">            	<span class="hljs-comment">//1开头</span></span><br><span class="language-javascript">            	<span class="hljs-comment">//358第二位</span></span><br><span class="language-javascript">            	<span class="hljs-comment">//后九位</span></span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/1[358]\d&#123;9&#125;/g</span>; <span class="hljs-comment">// 这种情况适合在一段文本中分析出手机号</span></span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(cv.<span class="hljs-title function_">match</span>(reg));<span class="hljs-comment">//分析手机号</span></span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t3</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/^1[358]\d&#123;9&#125;$/g</span>;</span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(reg.<span class="hljs-title function_">test</span>(cv));<span class="hljs-comment">// test 验证手机号</span></span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t4</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/^\s+|\s+$/g</span>; <span class="hljs-comment">// | 并列 或者 去除两端空格</span></span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(<span class="hljs-string">&#x27;--&#x27;</span>+cv.<span class="hljs-title function_">replace</span>(reg,<span class="hljs-string">&#x27;&#x27;</span>)+<span class="hljs-string">&#x27;--&#x27;</span>);</span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">            <span class="hljs-comment">//借助正则限制在一个有限范围内 防止sql注入</span></span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t5</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/^[\w\u4E00-\u9FA0]&#123;4,16&#125;$/</span>; <span class="hljs-comment">// \u4E00-\u9FA0 中文对应的Unicode编码 验证由字母数字下划线中文组合的4-16位用户名 </span></span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(reg.<span class="hljs-title function_">test</span>(cv));</span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t6</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/^[0-9a-zA-Z]\w*(\.[\w]+)*@[0-9a-zA-Z\-]+(\.[\w]+)+$/</span>;</span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(reg.<span class="hljs-title function_">test</span>(cv));</span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">            <span class="hljs-keyword">function</span> <span class="hljs-title function_">t7</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cont = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;cont&#x27;</span>);</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> cv = cont.<span class="hljs-property">value</span>;</span><br><span class="language-javascript">            	<span class="hljs-keyword">var</span> reg = <span class="hljs-comment">//;</span></span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(cv.<span class="hljs-title function_">replace</span>(reg,<span class="hljs-string">&#x27;&#x27;</span>));</span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">	</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">textarea</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&#x27;cont&#x27;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">textarea</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;1-替换相同字符串&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t1();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;2-分析出手机号&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t2();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;3-验证手机号&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t3();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;4-去除两端空格&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t4();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;5-验证由字母数字下划线中文组合的4-16位用户名&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t5();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;6-验证邮箱&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t6();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;7-清空script代码&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;t7();&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="category-chain-item">正则表达式</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">#正则表达式</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>正则表达式</div>
+      <div>http://example.com/2019/01/18/工具/正则表达式/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>January 18, 2019</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/01/21/%E5%B7%A5%E5%85%B7/vs%20code%20%E7%9A%84%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/" title="vs code 的常用快捷键">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">vs code 的常用快捷键</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/01/13/%E5%B7%A5%E5%85%B7/Svn%E4%B8%8EGit%E7%9A%84%E5%8C%BA%E5%88%AB/" title="Svn与Git的区别">
+                        <span class="hidden-mobile">Svn与Git的区别</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

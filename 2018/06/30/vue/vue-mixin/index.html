@@ -1,0 +1,663 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="vue-router一、mixin是什么Mixin是面向对象程序设计语言中的类，提供了方法的实现。其他类可以访问mixin类的方法而不必成为其子类 Mixin类通常作为功能模块使用，在需要该功能时“混入”，有利于代码复用又避免了多继承的复杂 Vue中的mixin先来看一下官方定义  mixin（混入），提供了一种非常灵活的方式，来分发 Vue 组件中的可复用功能。  本质其实就是一个js对象，它可">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue-mixin">
+<meta property="og:url" content="http://example.com/2018/06/30/vue/vue-mixin/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="vue-router一、mixin是什么Mixin是面向对象程序设计语言中的类，提供了方法的实现。其他类可以访问mixin类的方法而不必成为其子类 Mixin类通常作为功能模块使用，在需要该功能时“混入”，有利于代码复用又避免了多继承的复杂 Vue中的mixin先来看一下官方定义  mixin（混入），提供了一种非常灵活的方式，来分发 Vue 组件中的可复用功能。  本质其实就是一个js对象，它可">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-06-30T13:18:43.000Z">
+<meta property="article:modified_time" content="2022-06-06T10:34:52.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="vue">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>vue-mixin - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="vue-mixin"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-06-30 21:18" pubdate>
+          June 30, 2018 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.3k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          53 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">vue-mixin</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="vue-router"><a href="#vue-router" class="headerlink" title="vue-router"></a>vue-router</h2><h2 id="一、mixin是什么"><a href="#一、mixin是什么" class="headerlink" title="一、mixin是什么"></a>一、mixin是什么</h2><p><code>Mixin</code>是面向对象程序设计语言中的类，提供了方法的实现。其他类可以访问<code>mixin</code>类的方法而不必成为其子类</p>
+<p><code>Mixin</code>类通常作为功能模块使用，在需要该功能时“混入”，有利于代码复用又避免了多继承的复杂</p>
+<h3 id="Vue中的mixin"><a href="#Vue中的mixin" class="headerlink" title="Vue中的mixin"></a>Vue中的mixin</h3><p>先来看一下官方定义</p>
+<blockquote>
+<p><code>mixin</code>（混入），提供了一种非常灵活的方式，来分发 <code>Vue</code> 组件中的可复用功能。</p>
+</blockquote>
+<p>本质其实就是一个<code>js</code>对象，它可以包含我们组件中任意功能选项，如<code>data</code>、<code>components</code>、<code>methods</code>、<code>created</code>、<code>computed</code>等等</p>
+<p>我们只要将共用的功能以对象的方式传入 <code>mixins</code>选项中，当组件使用 <code>mixins</code>对象时所有<code>mixins</code>对象的选项都将被混入该组件本身的选项中来</p>
+<p>在<code>Vue</code>中我们可以<strong>局部混入</strong>跟<strong>全局混入</strong></p>
+<h3 id="局部混入"><a href="#局部混入" class="headerlink" title="局部混入"></a>局部混入</h3><p>定义一个<code>mixin</code>对象，有组件<code>options</code>的<code>data</code>、<code>methods</code>属性</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> myMixin = &#123;<br>  <span class="hljs-attr">created</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">hello</span>()<br>  &#125;,<br>  <span class="hljs-attr">methods</span>: &#123;<br>    <span class="hljs-attr">hello</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;hello from mixin!&#x27;</span>)<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>组件通过<code>mixins</code>属性调用<code>mixin</code>对象</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">Vue</span>.<span class="hljs-title function_">component</span>(<span class="hljs-string">&#x27;componentA&#x27;</span>,&#123;<br>  <span class="hljs-attr">mixins</span>: [myMixin]<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>该组件在使用的时候，混合了<code>mixin</code>里面的方法，在自动执行<code>create</code>生命钩子，执行<code>hello</code>方法</p>
+<h3 id="全局混入"><a href="#全局混入" class="headerlink" title="全局混入"></a>全局混入</h3><p>通过<code>Vue.mixin()</code>进行全局的混入</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">Vue</span>.<span class="hljs-title function_">mixin</span>(&#123;<br>  <span class="hljs-attr">created</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;全局混入&quot;</span>)<br>    &#125;<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>使用全局混入需要特别注意，因为它会影响到每一个组件实例（包括第三方组件）</p>
+<p>PS：全局混入常用于插件的编写</p>
+<h3 id="注意事项："><a href="#注意事项：" class="headerlink" title="注意事项："></a>注意事项：</h3><p>当组件存在与<code>mixin</code>对象相同的选项的时候，进行递归合并的时候组件的选项会覆盖<code>mixin</code>的选项</p>
+<p>但是如果相同选项为生命周期钩子的时候，会合并成一个数组，先执行<code>mixin</code>的钩子，再执行组件的钩子</p>
+<h2 id="二、使用场景"><a href="#二、使用场景" class="headerlink" title="二、使用场景"></a>二、使用场景</h2><p>在日常的开发中，我们经常会遇到在不同的组件中经常会需要用到一些相同或者相似的代码，这些代码的功能相对独立</p>
+<p>这时，可以通过<code>Vue</code>的<code>mixin</code>功能将相同或者相似的代码提出来</p>
+<p>举个例子</p>
+<p>定义一个<code>modal</code>弹窗组件，内部通过<code>isShowing</code>来控制显示</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> <span class="hljs-title class_">Modal</span> = &#123;<br>  <span class="hljs-attr">template</span>: <span class="hljs-string">&#x27;#modal&#x27;</span>,<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">isShowing</span>: <span class="hljs-literal">false</span><br>    &#125;<br>  &#125;,<br>  <span class="hljs-attr">methods</span>: &#123;<br>    <span class="hljs-title function_">toggleShow</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">isShowing</span> = !<span class="hljs-variable language_">this</span>.<span class="hljs-property">isShowing</span>;<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>定义一个<code>tooltip</code>提示框，内部通过<code>isShowing</code>来控制显示</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> <span class="hljs-title class_">Tooltip</span> = &#123;<br>  <span class="hljs-attr">template</span>: <span class="hljs-string">&#x27;#tooltip&#x27;</span>,<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">isShowing</span>: <span class="hljs-literal">false</span><br>    &#125;<br>  &#125;,<br>  <span class="hljs-attr">methods</span>: &#123;<br>    <span class="hljs-title function_">toggleShow</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">isShowing</span> = !<span class="hljs-variable language_">this</span>.<span class="hljs-property">isShowing</span>;<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>通过观察上面两个组件，发现两者的逻辑是相同，代码控制显示也是相同的，这时候<code>mixin</code>就派上用场了</p>
+<p>首先抽出共同代码，编写一个<code>mixin</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> toggle = &#123;<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">isShowing</span>: <span class="hljs-literal">false</span><br>    &#125;<br>  &#125;,<br>  <span class="hljs-attr">methods</span>: &#123;<br>    <span class="hljs-title function_">toggleShow</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">isShowing</span> = !<span class="hljs-variable language_">this</span>.<span class="hljs-property">isShowing</span>;<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>两个组件在使用上，只需要引入<code>mixin</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> <span class="hljs-title class_">Modal</span> = &#123;<br>  <span class="hljs-attr">template</span>: <span class="hljs-string">&#x27;#modal&#x27;</span>,<br>  <span class="hljs-attr">mixins</span>: [toggle]<br>&#125;;<br> <br><span class="hljs-keyword">const</span> <span class="hljs-title class_">Tooltip</span> = &#123;<br>  <span class="hljs-attr">template</span>: <span class="hljs-string">&#x27;#tooltip&#x27;</span>,<br>  <span class="hljs-attr">mixins</span>: [toggle]<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>通过上面小小的例子，让我们知道了<code>Mixin</code>对于封装一些可复用的功能如此有趣、方便、实用</p>
+<h2 id="三、源码分析"><a href="#三、源码分析" class="headerlink" title="三、源码分析"></a>三、源码分析</h2><p>首先从<code>Vue.mixin</code>入手</p>
+<p>源码位置：&#x2F;src&#x2F;core&#x2F;global-api&#x2F;mixin.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">initMixin</span> (<span class="hljs-title class_">Vue</span>: <span class="hljs-title class_">GlobalAPI</span>) &#123;<br>  <span class="hljs-title class_">Vue</span>.<span class="hljs-property">mixin</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">mixin: <span class="hljs-built_in">Object</span></span>) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">options</span> = <span class="hljs-title function_">mergeOptions</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">options</span>, mixin)<br>    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>主要是调用<code>merOptions</code>方法</p>
+<p>源码位置：&#x2F;src&#x2F;core&#x2F;util&#x2F;options.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">mergeOptions</span> (<br>  <span class="hljs-attr">parent</span>: <span class="hljs-title class_">Object</span>,<br>  <span class="hljs-attr">child</span>: <span class="hljs-title class_">Object</span>,<br>  vm?: <span class="hljs-title class_">Component</span><br>): <span class="hljs-title class_">Object</span> &#123;<br><br><span class="hljs-keyword">if</span> (child.<span class="hljs-property">mixins</span>) &#123; <span class="hljs-comment">// 判断有没有mixin 也就是mixin里面挂mixin的情况 有的话递归进行合并</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>, l = child.<span class="hljs-property">mixins</span>.<span class="hljs-property">length</span>; i &lt; l; i++) &#123;<br>    parent = <span class="hljs-title function_">mergeOptions</span>(parent, child.<span class="hljs-property">mixins</span>[i], vm)<br>    &#125;<br>&#125;<br><br>  <span class="hljs-keyword">const</span> options = &#123;&#125; <br>  <span class="hljs-keyword">let</span> key<br>  <span class="hljs-keyword">for</span> (key <span class="hljs-keyword">in</span> parent) &#123;<br>    <span class="hljs-title function_">mergeField</span>(key) <span class="hljs-comment">// 先遍历parent的key 调对应的strats[XXX]方法进行合并</span><br>  &#125;<br>  <span class="hljs-keyword">for</span> (key <span class="hljs-keyword">in</span> child) &#123;<br>    <span class="hljs-keyword">if</span> (!<span class="hljs-title function_">hasOwn</span>(parent, key)) &#123; <span class="hljs-comment">// 如果parent已经处理过某个key 就不处理了</span><br>      <span class="hljs-title function_">mergeField</span>(key) <span class="hljs-comment">// 处理child中的key 也就parent中没有处理过的key</span><br>    &#125;<br>  &#125;<br>  <span class="hljs-keyword">function</span> <span class="hljs-title function_">mergeField</span> (key) &#123;<br>    <span class="hljs-keyword">const</span> strat = strats[key] || defaultStrat<br>    options[key] = <span class="hljs-title function_">strat</span>(parent[key], child[key], vm, key) <span class="hljs-comment">// 根据不同类型的options调用strats中不同的方法进行合并</span><br>  &#125;<br>  <span class="hljs-keyword">return</span> options<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>从上面的源码，我们得到以下几点：</p>
+<ul>
+<li>优先递归处理 <code>mixins</code></li>
+<li>先遍历合并<code>parent</code> 中的<code>key</code>，调用<code>mergeField</code>方法进行合并，然后保存在变量<code>options</code></li>
+<li>再遍历 <code>child</code>，合并补上 <code>parent</code> 中没有的<code>key</code>，调用<code>mergeField</code>方法进行合并，保存在变量<code>options</code></li>
+<li>通过 <code>mergeField</code> 函数进行了合并</li>
+</ul>
+<p>下面是关于<code>Vue</code>的几种类型的合并策略</p>
+<ul>
+<li>替换型</li>
+<li>合并型</li>
+<li>队列型</li>
+<li>叠加型</li>
+</ul>
+<h3 id="替换型"><a href="#替换型" class="headerlink" title="替换型"></a>替换型</h3><p>替换型合并有<code>props</code>、<code>methods</code>、<code>inject</code>、<code>computed</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs js">strats.<span class="hljs-property">props</span> =<br>strats.<span class="hljs-property">methods</span> =<br>strats.<span class="hljs-property">inject</span> =<br>strats.<span class="hljs-property">computed</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span><br><span class="hljs-params">  parentVal: ?<span class="hljs-built_in">Object</span>,</span><br><span class="hljs-params">  childVal: ?<span class="hljs-built_in">Object</span>,</span><br><span class="hljs-params">  vm?: Component,</span><br><span class="hljs-params">  key: string</span><br><span class="hljs-params"></span>): ?<span class="hljs-title class_">Object</span> &#123;<br>  <span class="hljs-keyword">if</span> (!parentVal) <span class="hljs-keyword">return</span> childVal <span class="hljs-comment">// 如果parentVal没有值，直接返回childVal</span><br>  <span class="hljs-keyword">const</span> ret = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">create</span>(<span class="hljs-literal">null</span>) <span class="hljs-comment">// 创建一个第三方对象 ret</span><br>  <span class="hljs-title function_">extend</span>(ret, parentVal) <span class="hljs-comment">// extend方法实际是把parentVal的属性复制到ret中</span><br>  <span class="hljs-keyword">if</span> (childVal) <span class="hljs-title function_">extend</span>(ret, childVal) <span class="hljs-comment">// 把childVal的属性复制到ret中</span><br>  <span class="hljs-keyword">return</span> ret<br>&#125;<br>strats.<span class="hljs-property">provide</span> = mergeDataOrFn<br></code></pre></td></tr></table></figure>
+
+<p>同名的<code>props</code>、<code>methods</code>、<code>inject</code>、<code>computed</code>会被后来者代替</p>
+<h3 id="合并型"><a href="#合并型" class="headerlink" title="合并型"></a>合并型</h3><p>和并型合并有：<code>data</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs js">strats.<span class="hljs-property">data</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">parentVal, childVal, vm</span>) &#123;    <br>    <span class="hljs-keyword">return</span> <span class="hljs-title function_">mergeDataOrFn</span>(<br>        parentVal, childVal, vm<br>    )<br>&#125;;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">mergeDataOrFn</span>(<span class="hljs-params">parentVal, childVal, vm</span>) &#123;    <br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">mergedInstanceDataFn</span>(<span class="hljs-params"></span>) &#123;        <br>        <span class="hljs-keyword">var</span> childData = childVal.<span class="hljs-title function_">call</span>(vm, vm) <span class="hljs-comment">// 执行data挂的函数得到对象</span><br>        <span class="hljs-keyword">var</span> parentData = parentVal.<span class="hljs-title function_">call</span>(vm, vm)        <br>        <span class="hljs-keyword">if</span> (childData) &#123;            <br>            <span class="hljs-keyword">return</span> <span class="hljs-title function_">mergeData</span>(childData, parentData) <span class="hljs-comment">// 将2个对象进行合并                                 </span><br>        &#125; <span class="hljs-keyword">else</span> &#123;            <br>            <span class="hljs-keyword">return</span> parentData <span class="hljs-comment">// 如果没有childData 直接返回parentData</span><br>        &#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">mergeData</span>(<span class="hljs-params">to, <span class="hljs-keyword">from</span></span>) &#123;    <br>    <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">from</span>) <span class="hljs-keyword">return</span> to    <br>    <span class="hljs-keyword">var</span> key, toVal, fromVal;    <br>    <span class="hljs-keyword">var</span> keys = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(<span class="hljs-keyword">from</span>);   <br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; keys.<span class="hljs-property">length</span>; i++) &#123;<br>        key = keys[i];<br>        toVal = to[key];<br>        fromVal = <span class="hljs-keyword">from</span>[key];    <br>        <span class="hljs-comment">// 如果不存在这个属性，就重新设置</span><br>        <span class="hljs-keyword">if</span> (!to.<span class="hljs-title function_">hasOwnProperty</span>(key)) &#123;<br>            <span class="hljs-title function_">set</span>(to, key, fromVal);<br>        &#125;      <br>        <span class="hljs-comment">// 存在相同属性，合并对象</span><br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> toVal ==<span class="hljs-string">&quot;object&quot;</span> &amp;&amp; <span class="hljs-keyword">typeof</span> fromVal ==<span class="hljs-string">&quot;object&quot;</span>) &#123;<br>            <span class="hljs-title function_">mergeData</span>(toVal, fromVal);<br>        &#125;<br>    &#125;    <br>    <span class="hljs-keyword">return</span> to<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>mergeData</code>函数遍历了要合并的 data 的所有属性，然后根据不同情况进行合并：</p>
+<ul>
+<li>当目标 data 对象不包含当前属性时，调用 <code>set</code> 方法进行合并（set方法其实就是一些合并重新赋值的方法）</li>
+<li>当目标 data 对象包含当前属性并且当前值为纯对象时，递归合并当前对象值，这样做是为了防止对象存在新增属性</li>
+</ul>
+<h3 id="队列性"><a href="#队列性" class="headerlink" title="队列性"></a>队列性</h3><p>队列性合并有：全部生命周期和<code>watch</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">mergeHook</span> (<br>  <span class="hljs-attr">parentVal</span>: ?<span class="hljs-title class_">Array</span>&lt;<span class="hljs-title class_">Function</span>&gt;,<br>  <span class="hljs-attr">childVal</span>: ?<span class="hljs-title class_">Function</span> | ?<span class="hljs-title class_">Array</span>&lt;<span class="hljs-title class_">Function</span>&gt;<br>): ?<span class="hljs-title class_">Array</span>&lt;<span class="hljs-title class_">Function</span>&gt; &#123;<br>  <span class="hljs-keyword">return</span> childVal<br>    ? parentVal<br>      ? parentVal.<span class="hljs-title function_">concat</span>(childVal)<br>      : <span class="hljs-title class_">Array</span>.<span class="hljs-title function_">isArray</span>(childVal)<br>        ? childVal<br>        : [childVal]<br>    : parentVal<br>&#125;<br><br><span class="hljs-variable constant_">LIFECYCLE_HOOKS</span>.<span class="hljs-title function_">forEach</span>(<span class="hljs-function"><span class="hljs-params">hook</span> =&gt;</span> &#123;<br>  strats[hook] = mergeHook<br>&#125;)<br><br><span class="hljs-comment">// watch</span><br>strats.<span class="hljs-property">watch</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span><br><span class="hljs-params">  parentVal,</span><br><span class="hljs-params">  childVal,</span><br><span class="hljs-params">  vm,</span><br><span class="hljs-params">  key</span><br><span class="hljs-params"></span>) &#123;<br>  <span class="hljs-comment">// work around Firefox&#x27;s Object.prototype.watch...</span><br>  <span class="hljs-keyword">if</span> (parentVal === nativeWatch) &#123; parentVal = <span class="hljs-literal">undefined</span>; &#125;<br>  <span class="hljs-keyword">if</span> (childVal === nativeWatch) &#123; childVal = <span class="hljs-literal">undefined</span>; &#125;<br>  <span class="hljs-comment">/* istanbul ignore if */</span><br>  <span class="hljs-keyword">if</span> (!childVal) &#123; <span class="hljs-keyword">return</span> <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">create</span>(parentVal || <span class="hljs-literal">null</span>) &#125;<br>  &#123;<br>    <span class="hljs-title function_">assertObjectType</span>(key, childVal, vm);<br>  &#125;<br>  <span class="hljs-keyword">if</span> (!parentVal) &#123; <span class="hljs-keyword">return</span> childVal &#125;<br>  <span class="hljs-keyword">var</span> ret = &#123;&#125;;<br>  <span class="hljs-title function_">extend</span>(ret, parentVal);<br>  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> key$<span class="hljs-number">1</span> <span class="hljs-keyword">in</span> childVal) &#123;<br>    <span class="hljs-keyword">var</span> parent = ret[key$<span class="hljs-number">1</span>];<br>    <span class="hljs-keyword">var</span> child = childVal[key$<span class="hljs-number">1</span>];<br>    <span class="hljs-keyword">if</span> (parent &amp;&amp; !<span class="hljs-title class_">Array</span>.<span class="hljs-title function_">isArray</span>(parent)) &#123;<br>      parent = [parent];<br>    &#125;<br>    ret[key$<span class="hljs-number">1</span>] = parent<br>      ? parent.<span class="hljs-title function_">concat</span>(child)<br>      : <span class="hljs-title class_">Array</span>.<span class="hljs-title function_">isArray</span>(child) ? child : [child];<br>  &#125;<br>  <span class="hljs-keyword">return</span> ret<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>生命周期钩子和<code>watch</code>被合并为一个数组，然后正序遍历一次执行</p>
+<h3 id="叠加型"><a href="#叠加型" class="headerlink" title="叠加型"></a>叠加型</h3><p>叠加型合并有：<code>component</code>、<code>directives</code>、<code>filters</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs js">strats.<span class="hljs-property">components</span>=<br>strats.<span class="hljs-property">directives</span>=<br><br>strats.<span class="hljs-property">filters</span> = <span class="hljs-keyword">function</span> <span class="hljs-title function_">mergeAssets</span>(<span class="hljs-params"></span><br><span class="hljs-params">    parentVal, childVal, vm, key</span><br><span class="hljs-params"></span>) &#123;    <br>    <span class="hljs-keyword">var</span> res = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">create</span>(parentVal || <span class="hljs-literal">null</span>);    <br>    <span class="hljs-keyword">if</span> (childVal) &#123; <br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> key <span class="hljs-keyword">in</span> childVal) &#123;<br>            res[key] = childVal[key];<br>        &#125;   <br>    &#125; <br>    <span class="hljs-keyword">return</span> res<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>叠加型主要是通过原型链进行层层的叠加</p>
+<h3 id="小结："><a href="#小结：" class="headerlink" title="小结："></a>小结：</h3><ul>
+<li>替换型策略有<code>props</code>、<code>methods</code>、<code>inject</code>、<code>computed</code>，就是将新的同名参数替代旧的参数</li>
+<li>合并型策略是<code>data</code>, 通过<code>set</code>方法进行合并和重新赋值</li>
+<li>队列型策略有生命周期函数和<code>watch</code>，原理是将函数存入一个数组，然后正序遍历依次执行</li>
+<li>叠加型有<code>component</code>、<code>directives</code>、<code>filters</code>，通过原型链进行层层的叠加</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%A1%86%E6%9E%B6/" class="category-chain-item">框架</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/vue/">#vue</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>vue-mixin</div>
+      <div>http://example.com/2018/06/30/vue/vue-mixin/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>June 30, 2018</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/07/02/vue/vue-router+vuex%E5%8E%9F%E7%90%86/" title="vue-router+vuex原理">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">vue-router+vuex原理</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/06/27/vue/vue-key%E5%80%BC%E4%BD%9C%E7%94%A8/" title="vue-key值作用">
+                        <span class="hidden-mobile">vue-key值作用</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

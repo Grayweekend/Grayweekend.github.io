@@ -1,0 +1,820 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第二部分 结合React实践一、环境配置1.1 初始化项目 生成一个目录ts_react_demo，输入npm init -y初始化项目 然后在项目里我们需要一个.gitignore来忽略指定目录不传到git上 进入.gitignore输入我们需要忽略的目录，一般是node_modules  12&#x2F;&#x2F; .gitignorenode_modules  1.2 安装依赖 接下来我们准备下载相应的依赖包">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React-Redux总结-配置Ts">
+<meta property="og:url" content="http://example.com/2020/02/14/React/React-Redux-%E9%85%8D%E7%BD%AETs/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="第二部分 结合React实践一、环境配置1.1 初始化项目 生成一个目录ts_react_demo，输入npm init -y初始化项目 然后在项目里我们需要一个.gitignore来忽略指定目录不传到git上 进入.gitignore输入我们需要忽略的目录，一般是node_modules  12&#x2F;&#x2F; .gitignorenode_modules  1.2 安装依赖 接下来我们准备下载相应的依赖包">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1480597-86ad083c5149a72e.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1480597-32fc82d43dadb063.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/548.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/549.png">
+<meta property="article:published_time" content="2020-02-14T10:41:28.000Z">
+<meta property="article:modified_time" content="2022-06-06T13:59:48.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/1480597-86ad083c5149a72e.png">
+  
+  
+  
+  <title>React-Redux总结-配置Ts - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="React-Redux总结-配置Ts"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-02-14 18:41" pubdate>
+          February 14, 2020 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          21k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          171 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">React-Redux总结-配置Ts</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="第二部分-结合React实践"><a href="#第二部分-结合React实践" class="headerlink" title="第二部分 结合React实践"></a>第二部分 结合React实践</h1><h2 id="一、环境配置"><a href="#一、环境配置" class="headerlink" title="一、环境配置"></a>一、环境配置</h2><h3 id="1-1-初始化项目"><a href="#1-1-初始化项目" class="headerlink" title="1.1 初始化项目"></a>1.1 初始化项目</h3><ul>
+<li>生成一个目录<code>ts_react_demo</code>，输入<code>npm init -y</code>初始化项目</li>
+<li>然后在项目里我们需要一个<code>.gitignore</code>来忽略指定目录不传到<code>git</code>上</li>
+<li>进入<code>.gitignore</code>输入我们需要忽略的目录，一般是<code>node_modules</code></li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> .gitignore<br>node_modules<br></code></pre></td></tr></table></figure>
+
+<h3 id="1-2-安装依赖"><a href="#1-2-安装依赖" class="headerlink" title="1.2 安装依赖"></a>1.2 安装依赖</h3><blockquote>
+<p>接下来我们准备下载相应的依赖包，这里需要了解一个概念，就是类型定义文件</p>
+</blockquote>
+<h4 id="1-2-1-类型定义文件"><a href="#1-2-1-类型定义文件" class="headerlink" title="1.2.1 类型定义文件"></a>1.2.1 类型定义文件</h4><blockquote>
+<p>因为目前主流的第三方库都是以<code>javascript</code>编写的，如果用<code>typescript</code>开发，会导致在编译的时候会出现很多找不到类型的提示，那么如果让这些库也能在<code>ts</code>中使用呢？</p>
+</blockquote>
+<ul>
+<li>类型定义文件(<code>*.d.ts</code>)就是能够让编辑器或者插件来检测到第三方库中<code>js</code>的静态类型，这个文件是以<code>.d.ts</code>结尾- 比如说<code>react</code>的类型定义文件：<a target="_blank" rel="noopener" href="https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react">https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react</a></li>
+<li>在<code>typescript2.0</code>中，是使用<code>@type</code>来进行类型定义，当我们使用<code>@type</code>进行类型定义，<code>typescript</code>会默认查看<code>./node_modules/@types</code>文件夹，可以通过这样来安装这个库的定义库<code>npm install @types/react --save</code></li>
+</ul>
+<h4 id="1-2-2-相关依赖包"><a href="#1-2-2-相关依赖包" class="headerlink" title="1.2.2 相关依赖包"></a>1.2.2 相关依赖包</h4><p><strong>React相关</strong></p>
+<figure class="highlight d"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs d">- react <span class="hljs-comment">// react的核心文件</span><br>- <span class="hljs-keyword">@types</span>/react <span class="hljs-comment">// 声明文件</span><br>- react-dom <span class="hljs-comment">// react dom的操作包</span><br>- <span class="hljs-keyword">@types</span>/react-dom <br>- react-router-dom <span class="hljs-comment">// react路由包</span><br>- <span class="hljs-keyword">@types</span>/react-router-dom<br>- react-redux<br>- <span class="hljs-keyword">@types</span>/react-redux<br>- redux-thunk  <span class="hljs-comment">// 中间件</span><br>- <span class="hljs-keyword">@types</span>/redux-logger<br>- redux-logger <span class="hljs-comment">// 中间件</span><br>- connected-react-router<br>## 执行安装依赖包<br><br>npm i react react-dom <span class="hljs-keyword">@types</span>/react <span class="hljs-keyword">@types</span>/react-dom react-router-dom <span class="hljs-keyword">@types</span>/react-router-dom react-redux <span class="hljs-keyword">@types</span>/react-redux redux-thunk redux-logger <span class="hljs-keyword">@types</span>/redux-logger connected-react-router -S<br></code></pre></td></tr></table></figure>
+
+<p><strong>webpack相关</strong></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs awk">- webpack <span class="hljs-regexp">//</span> webpack的核心包<br>- webpack-cli <span class="hljs-regexp">//</span> webapck的工具包<br>- webpack-dev-server <span class="hljs-regexp">//</span> webpack的开发服务<br>- html-webpack-plugin <span class="hljs-regexp">//</span> webpack的插件，可以生成index.html文件<br>npm i webpack webpack-cli webpack-dev-server html-webpack-plugin -D<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这里的<code>-D</code>相当于<code>--save-dev</code>的缩写，下载开发环境的依赖包</p>
+</blockquote>
+<p><strong>typescript相关</strong></p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs vim">- typescript // <span class="hljs-keyword">ts</span>的核心包<br>- <span class="hljs-keyword">ts</span>-loader // 把<span class="hljs-keyword">ts</span>编译成指定语法比如es5 es6等的工具，有了它，基本不需要babel了，因为它会把我们的代码编译成es5<br>- <span class="hljs-keyword">source</span>-<span class="hljs-keyword">map</span>-loader // 用于开发环境中调试<span class="hljs-keyword">ts</span>代码<br>npm i typescript <span class="hljs-keyword">ts</span>-loader <span class="hljs-keyword">source</span>-<span class="hljs-keyword">map</span>-loader -D<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>从上面可以看出，基本都是模块和声明文件都是一对对出现的，有一些不是一对对出现，就是因为都集成到一起去了</li>
+<li>声明文件可以在<code>node_modules/@types/xx/xx</code>中找到</li>
+</ul>
+<h3 id="1-3-Typescript-config配置"><a href="#1-3-Typescript-config配置" class="headerlink" title="1.3 Typescript config配置"></a>1.3 Typescript config配置</h3><blockquote>
+<p>首先我们要生成一个<code>tsconfig.json</code>来告诉<code>ts-loader</code>怎样去编译这个<code>ts</code>代码</p>
+</blockquote>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">tsc <span class="hljs-comment">--init</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>会在项目中生成了一个<code>tsconfig.json</code>文件，接下来进入这个文件，来修改相关配置</p>
+</blockquote>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> tsconfig.json<br>&#123;<br>  <span class="hljs-regexp">//</span> 编译选项<br>  <span class="hljs-string">&quot;compilerOptions&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;target&quot;</span>: <span class="hljs-string">&quot;es5&quot;</span>, <span class="hljs-regexp">//</span> 编译成es5语法<br>    <span class="hljs-string">&quot;module&quot;</span>: <span class="hljs-string">&quot;commonjs&quot;</span>, <span class="hljs-regexp">//</span> 模块的类型<br>    <span class="hljs-string">&quot;outDir&quot;</span>: <span class="hljs-string">&quot;./dist&quot;</span>, <span class="hljs-regexp">//</span> 编译后的文件目录<br>    <span class="hljs-string">&quot;sourceMap&quot;</span>: true, <span class="hljs-regexp">//</span> 生成sourceMap方便我们在开发过程中调试<br>    <span class="hljs-string">&quot;noImplicitAny&quot;</span>: true, <span class="hljs-regexp">//</span> 每个变量都要标明类型<br>    <span class="hljs-string">&quot;jsx&quot;</span>: <span class="hljs-string">&quot;react&quot;</span>, <span class="hljs-regexp">//</span> jsx的版本,使用这个就不需要额外使用babel了，会编译成React.createElement<br>  &#125;,<br>  <span class="hljs-regexp">//</span> 为了加快整个编译过程，我们指定相应的路径<br>  <span class="hljs-string">&quot;include&quot;</span>: [<br>    <span class="hljs-string">&quot;./src/**/*&quot;</span><br>  ]<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="1-4-webpack配置"><a href="#1-4-webpack配置" class="headerlink" title="1.4 webpack配置"></a>1.4 webpack配置</h3><blockquote>
+<p>在<code>./src/</code>下创建一个<code>index.html</code>文件，并且添加&#96;&#96;标签</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">&quot;X-UA-Compatible&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;ie=edge&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Document<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&#x27;app&#x27;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>在<code>./</code>下创建一个<code>webpack</code>配置文件<code>webpack.config.js</code></p>
+</blockquote>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> ./webpack.config.js<br><span class="hljs-regexp">//</span> 引入webpack<br>const webpack = require(<span class="hljs-string">&quot;webpack&quot;</span>);<br><span class="hljs-regexp">//</span> 引入webpack插件 生成index.html文件<br>const HtmlWebpackPlugin = require(<span class="hljs-string">&quot;html-webpack-plugin&quot;</span>);<br>const path = require(<span class="hljs-string">&quot;path&quot;</span>)<br><br><span class="hljs-regexp">//</span> 把模块导出<br>module.exports = &#123;<br>  <span class="hljs-regexp">//</span> 以前是jsx，因为我们用typescript写，所以这里后缀是tsx<br>  entry:<span class="hljs-string">&quot;./src/index.tsx&quot;</span>,<br>  <span class="hljs-regexp">//</span> 指定模式为开发模式<br>  mode:<span class="hljs-string">&quot;development&quot;</span>,<br>  <span class="hljs-regexp">//</span> 输出配置<br>  output:&#123;<br>    <span class="hljs-regexp">//</span> 输出目录为当前目录下的dist目录<br>    path:path.resolve(__dirname,<span class="hljs-string">&#x27;dist&#x27;</span>),<br>    <span class="hljs-regexp">//</span> 输出文件名<br>    filename:<span class="hljs-string">&quot;index.js&quot;</span><br>  &#125;,<br>  <span class="hljs-regexp">//</span> 为了方便调试，还要配置一下调试工具<br>  devtool:<span class="hljs-string">&quot;source-map&quot;</span>,<br>  <span class="hljs-regexp">//</span> 解析路径，查找模块的时候使用<br>  resolve:&#123;<br>    <span class="hljs-regexp">//</span> 一般写模块不会写后缀，在这里配置好相应的后缀，那么当我们不写后缀时，会按照这个后缀优先查找<br>    extensions:[<span class="hljs-string">&quot;.ts&quot;</span>,<span class="hljs-string">&#x27;.tsx&#x27;</span>,<span class="hljs-string">&#x27;.js&#x27;</span>,<span class="hljs-string">&#x27;.json&#x27;</span>]<br>  &#125;,<br>  <span class="hljs-regexp">//</span> 解析处理模块的转化<br>  module:&#123;<br>    <span class="hljs-regexp">//</span> 遵循的规则<br>    rules:[<br>      &#123;<br>        <span class="hljs-regexp">//</span> 如果这个模块是.ts或者.tsx，则会使用ts-loader把代码转成es5<br>        test:<span class="hljs-regexp">/\.tsx?$/</span>,<br>        loader:<span class="hljs-string">&quot;ts-loader&quot;</span><br>      &#125;,<br>      &#123;<br>        <span class="hljs-regexp">//</span> 使用sourcemap调试<br>        <span class="hljs-regexp">//</span> enforce:pre表示这个loader要在别的loader执行前执行<br>        enforce:<span class="hljs-string">&quot;pre&quot;</span>,<br>        test:<span class="hljs-regexp">/\.js$/</span>,<br>        loader:<span class="hljs-string">&quot;source-map-loader&quot;</span><br>      &#125;<br>    ]<br>  &#125;,<br>  <span class="hljs-regexp">//</span> 插件的配置<br>  plugins:[<br>    <span class="hljs-regexp">//</span> 这个插件是生成index.html<br>    new HtmlWebpackPlugin(&#123;<br>      <span class="hljs-regexp">//</span> 以哪个文件为模板，模板路径<br>      template:<span class="hljs-string">&quot;./src/index.html&quot;</span>,<br>      <span class="hljs-regexp">//</span> 编译后的文件名<br>      filename:<span class="hljs-string">&quot;index.html&quot;</span><br>    &#125;),<br>    new webpack.HotModuleReplacementPlugin()<br>  ],<br>  <span class="hljs-regexp">//</span> 开发环境服务配置<br>  devServer:&#123;<br>    <span class="hljs-regexp">//</span> 启动热更新,当模块、组件有变化，不会刷新整个页面，而是局部刷新<br>    <span class="hljs-regexp">//</span> 需要和插件webpack.HotModuleReplacementPlugin配合使用<br>    hot:true, <br>    <span class="hljs-regexp">//</span> 静态资源目录<br>    contentBase:path.resolve(__dirname,<span class="hljs-string">&#x27;dist&#x27;</span>)<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>那么我们怎么运行这个<code>webpack.config.js</code>呢？这就需要我们在<code>package.json</code>配置一下脚本</p>
+</blockquote>
+<ul>
+<li>在<code>package.json</code>里的<code>script</code>，添加<code>build</code>和<code>dev</code>的配置</li>
+</ul>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs perl">&#123;<br>  <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;ts_react_demo&quot;</span>,<br>  <span class="hljs-string">&quot;version&quot;</span>: <span class="hljs-string">&quot;1.0.0&quot;</span>,<br>  <span class="hljs-string">&quot;description&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,<br>  <span class="hljs-string">&quot;main&quot;</span>: <span class="hljs-string">&quot;index.js&quot;</span>,<br>  <span class="hljs-string">&quot;scripts&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;build&quot;</span>: <span class="hljs-string">&quot;webpack&quot;</span>,<br>    <span class="hljs-string">&quot;dev&quot;</span>:<span class="hljs-string">&quot;webpack-dev-server&quot;</span><br>  &#125;,<br>  <span class="hljs-string">&quot;keywords&quot;</span>: [],<br>  <span class="hljs-string">&quot;author&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,<br>  <span class="hljs-string">&quot;license&quot;</span>: <span class="hljs-string">&quot;ISC&quot;</span>,<br>  <span class="hljs-string">&quot;dependencies&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;@types/react&quot;</span>: <span class="hljs-string">&quot;^16.7.13&quot;</span>,<br>    <span class="hljs-string">&quot;@types/react-dom&quot;</span>: <span class="hljs-string">&quot;^16.0.11&quot;</span>,<br>    <span class="hljs-string">&quot;@types/react-redux&quot;</span>: <span class="hljs-string">&quot;^6.0.10&quot;</span>,<br>    <span class="hljs-string">&quot;@types/react-router-dom&quot;</span>: <span class="hljs-string">&quot;^4.3.1&quot;</span>,<br>    <span class="hljs-string">&quot;connected-react-router&quot;</span>: <span class="hljs-string">&quot;^5.0.1&quot;</span>,<br>    <span class="hljs-string">&quot;react&quot;</span>: <span class="hljs-string">&quot;^16.6.3&quot;</span>,<br>    <span class="hljs-string">&quot;react-dom&quot;</span>: <span class="hljs-string">&quot;^16.6.3&quot;</span>,<br>    <span class="hljs-string">&quot;react-redux&quot;</span>: <span class="hljs-string">&quot;^6.0.0&quot;</span>,<br>    <span class="hljs-string">&quot;react-router-dom&quot;</span>: <span class="hljs-string">&quot;^4.3.1&quot;</span>,<br>    <span class="hljs-string">&quot;redux-logger&quot;</span>: <span class="hljs-string">&quot;^3.0.6&quot;</span>,<br>    <span class="hljs-string">&quot;redux-thunk&quot;</span>: <span class="hljs-string">&quot;^2.3.0&quot;</span><br>  &#125;,<br>  <span class="hljs-string">&quot;devDependencies&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;html-webpack-plugin&quot;</span>: <span class="hljs-string">&quot;^3.2.0&quot;</span>,<br>    <span class="hljs-string">&quot;source-map-loader&quot;</span>: <span class="hljs-string">&quot;^0.2.4&quot;</span>,<br>    <span class="hljs-string">&quot;ts-loader&quot;</span>: <span class="hljs-string">&quot;^5.3.1&quot;</span>,<br>    <span class="hljs-string">&quot;typescript&quot;</span>: <span class="hljs-string">&quot;^3.2.1&quot;</span>,<br>    <span class="hljs-string">&quot;webpack&quot;</span>: <span class="hljs-string">&quot;^4.27.1&quot;</span>,<br>    <span class="hljs-string">&quot;webpack-cli&quot;</span>: <span class="hljs-string">&quot;^3.1.2&quot;</span>,<br>    <span class="hljs-string">&quot;webpack-dev-server&quot;</span>: <span class="hljs-string">&quot;^3.1.10&quot;</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>因为入口文件是<code>index.tsx</code>，那么我们在<code>./src/</code>下创建一个<code>index.tsx</code>，并且在里面写入一段代码，看看<code>webpack</code>是否能够正常编译</li>
+<li>因为我们在<code>webpack.config.js</code>中<code>entry</code>设置的入口文件是<code>index.tsx</code>，并且在<code>module</code>中的<code>rules</code>会识别到<code>.tsx</code>格式的文件，然后执行相应的<code>ts-loader</code></li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> .<span class="hljs-regexp">/src/i</span>ndex.tsx<br>console.log(<span class="hljs-string">&quot;hello poetries&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>接下来我们<code>npm run build</code>一下，看看能不能正常编译</li>
+<li>编译成功，我们可以看看<code>./dist/</code>下生成了<code>index.html index.js index.js.map</code>三个文件</li>
+<li>那么我们在开发过程中，不会每次都<code>npm run build</code>来看修改的结果，那么我们平时开发过程中可以使用<code>npm run dev</code>。这样就启动成功了一个<code>http://localhost:8080/</code>的服务了。</li>
+<li>接下来我们看看热更新是否配置正常，在<code>./src/index.tsx</code>中新增一个<code>console.log(&#39;hello poetries&#39;)</code>，我们发现浏览器的控制台会自动打印出这一个输出，说明配置正常了</li>
+</ul>
+<h2 id="二、React组件"><a href="#二、React组件" class="headerlink" title="二、React组件"></a>二、React组件</h2><h3 id="2-1-写一个计数器组件"><a href="#2-1-写一个计数器组件" class="headerlink" title="2.1 写一个计数器组件"></a>2.1 写一个计数器组件</h3><blockquote>
+<p>首先我们在<code>./src/</code>下创建一个文件夹<code>components</code>，然后在<code>./src/components/</code>下创建文件<code>Counter.tsx</code></p>
+</blockquote>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs pf">// ./src/components/Counter.tsx<br>// import React <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react&quot;</span>; // 之前的写法<br>// 在ts中引入的写法<br>import * as React <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react&quot;</span>;<br><br>export <span class="hljs-keyword">default</span> class CounterComponent extends React.Component&#123;<br>  // 状态<span class="hljs-keyword">state</span><br>  <span class="hljs-keyword">state</span> = &#123;<br>    number:<span class="hljs-number">0</span><br>  &#125;<br>  render()&#123;<br>    return(<br>      <span class="hljs-variable">&lt;div&gt;</span><br>        <span class="hljs-variable">&lt;p&gt;</span>&#123;this.<span class="hljs-keyword">state</span>.number&#125;&lt;/p&gt;<br>        <span class="hljs-variable">&lt;button onClick=&#123;()=&gt;</span>this.<span class="hljs-built_in">set</span>State(&#123;number:this.<span class="hljs-keyword">state</span>.number + <span class="hljs-number">1</span>&#125;)&#125;&gt;+&lt;/button&gt;<br>      &lt;/div&gt;<br>    )<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>我们发现，其实除了引入<code>import * as React from &quot;react&quot;</code>以外，其余的和之前的写法没什么不同。</p>
+</blockquote>
+<ul>
+<li>接下来我们到<code>./src/index.tsx</code>中把这个组件导进来</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// ./src/index.tsx</span><br><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> <span class="hljs-title class_">React</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react&quot;</span>;<br><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> <span class="hljs-title class_">ReactDom</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react-dom&quot;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-title class_">CounterComponent</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./components/Counter&quot;</span>;<br><span class="hljs-comment">// 把我们的CounterComponent组件渲染到id为app的标签内</span><br><span class="hljs-title class_">ReactDom</span>.<span class="hljs-title function_">render</span>(<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">CounterComponent</span> /&gt;</span></span>,<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;app&quot;</span>))<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这样我们就把这个组件引进来了，接下来我们看下是否能够成功跑起来</p>
+</blockquote>
+<p><img src="https://upload-images.jianshu.io/upload_images/1480597-86ad083c5149a72e.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<blockquote>
+<p>到目前为止，感觉用<code>ts</code>写<code>react</code>还是跟以前差不多，没什么区别，要记住，<code>ts</code>最大的特点就是类型检查，可以检验属性的状态类型</p>
+</blockquote>
+<p>假设我们需要在<code>./src/index.tsx</code>中给&#96;&#96;传一个属性<code>name</code>，而<code>CounterComponent</code>组件需要对这个传入的<code>name</code>进行类型校验，比如说只允许传字符串</p>
+<ul>
+<li><code>./src/index.tsx</code>中修改一下</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">ReactDom</span>.<span class="hljs-title function_">render</span>(<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">CounterComponent</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;poetries&quot;</span> /&gt;</span></span>,<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;app&quot;</span>))<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>然后需要在<code>./src/components/Counter.tsx</code>中写一个接口来对这个<code>name</code>进行类型校验</p>
+</blockquote>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs pf">// import React <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react&quot;</span>; // 之前的写法<br>// 在ts中引入的写法<br>import * as React <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react&quot;</span>;<br><br>// 写一个接口对name进行类型校验<br>// 如果我们不写校验的话，在外部传name进来会报错的<br>interface IProps&#123;<br>    name:string,<br>&#125;<br><br>// 我们还可以用接口约束<span class="hljs-keyword">state</span>的状态<br>interface IState&#123;<br>    number: number<br>&#125;<br><br>// 把接口约束的规则写在这里<br>// 如果传入的name不符合类型会报错<br>// 如果<span class="hljs-keyword">state</span>的number属性不符合类型也会报错<br>export <span class="hljs-keyword">default</span> class CounterComponent extends React.Component<span class="hljs-variable">&lt;IProps,IState&gt;</span>&#123;<br>  // 状态<span class="hljs-keyword">state</span><br>  <span class="hljs-keyword">state</span> = &#123;<br>    number:<span class="hljs-number">0</span><br>  &#125;<br>  render()&#123;<br>    return(<br>        <span class="hljs-variable">&lt;div&gt;</span><br>        <span class="hljs-variable">&lt;p&gt;</span>&#123;this.<span class="hljs-keyword">state</span>.number&#125;&lt;/p&gt;<br>        <span class="hljs-variable">&lt;p&gt;</span>&#123;this.props.name&#125;&lt;/p&gt;<br>        <span class="hljs-variable">&lt;button onClick=&#123;()=&gt;</span>this.<span class="hljs-built_in">set</span>State(&#123;number:this.<span class="hljs-keyword">state</span>.number + <span class="hljs-number">1</span>&#125;)&#125;&gt;+&lt;/button&gt;<br>      &lt;/div&gt;<br>    )<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-2-结合Redux使用"><a href="#2-2-结合Redux使用" class="headerlink" title="2.2 结合Redux使用"></a>2.2 结合Redux使用</h3><h4 id="2-2-1-基础使用"><a href="#2-2-1-基础使用" class="headerlink" title="2.2.1 基础使用"></a>2.2.1 基础使用</h4><ul>
+<li>上面<code>state</code>中的<code>number</code>就不放在组件里了，我们放到<code>redux</code>中，接下来我们使用<code>redux</code></li>
+<li>首先在<code>./src/</code>创建<code>store</code>目录，然后在<code>./src/store/</code>创建一个文件<code>index.tsx</code></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// .src/store/index.tsx</span><br><span class="hljs-keyword">import</span> &#123; createStore &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;redux&quot;</span>;<br><br><span class="hljs-comment">// 引入reducers</span><br><span class="hljs-keyword">import</span> reducers <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./reducers&quot;</span>;<br><br><span class="hljs-comment">// 接着创建仓库</span><br><span class="hljs-keyword">let</span> store = <span class="hljs-title function_">createStore</span>(reducers);<br><br><span class="hljs-comment">// 导出store仓库</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> store;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>然后我们需要创建一个<code>reducers</code>，在<code>./src/store/</code>创建一个目录<code>reducers</code>，该目录下再创建一个文件<code>index.tsx</code>。</li>
+<li>但是我们还需要对<code>reducers</code>中的函数参数进行类型校验，而且这个类型校验很多地方需要复用，那么我们需要把这个类型校验单独抽离出一个文件。</li>
+<li>那么我们需要在<code>./src/</code>下创建一个<code>types</code>目录，该目录下创建一个文件<code>index.tsx</code></li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> .<span class="hljs-regexp">/src/</span>types/index.tsx<br><span class="hljs-regexp">//</span> 导出一个接口<br>export interface Store&#123;<br>  <span class="hljs-regexp">//</span> 我们需要约束的属性和类型<br>  number:number<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>回到<code>./src/store/reducers/index.tsx</code></p>
+</blockquote>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs pf">// 导入类型校验的接口<br>// 用来约束<span class="hljs-keyword">state</span>的<br>import &#123; Store &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;../../types/index&quot;</span><br>// 我们需要给number赋予默认值<br>let initState:Store = &#123; number:<span class="hljs-number">0</span> &#125;<br>// 把接口写在<span class="hljs-keyword">state</span>:Store<br>export <span class="hljs-keyword">default</span> function (<span class="hljs-keyword">state</span>:Store=initState,action) &#123;<br>  // 拿到老的状态<span class="hljs-keyword">state</span>和新的状态action<br>  // action是一个动作行为，而这个动作行为，在计数器中是具备 加 或 减 两个功能<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>上面这段代码暂时先这样，因为需要用到<code>action</code>，我们现在去配置一下<code>action</code>相关的，首先我们在<code>./src/store</code>下创建一个<code>actions</code>目录，并且在该目录下创建文件<code>counter.tsx</code></li>
+<li>因为配置<code>./src/store/actions/counter.tsx</code>会用到动作类型，而这个动作类型是属于常量，为了更加规范我们的代码，我们在<code>./src/store/</code>下创建一个<code>action-types.tsx</code>，里面写相应常量</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// ./src/store/action-types.tsx</span><br><span class="hljs-keyword">export</span> <span class="hljs-type">const</span> ADD = <span class="hljs-string">&quot;ADD&quot;</span>;<br><span class="hljs-keyword">export</span> <span class="hljs-type">const</span> SUBTRACT = <span class="hljs-string">&quot;SUBTRACT&quot;</span>;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>回到<code>./src/store/actions/counter.tsx</code></p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// ./src/store/actions/counter.tsx</span><br><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> types <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;../action-types&quot;</span>;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-title function_">add</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-comment">// 需要返回一个action对象</span><br>    <span class="hljs-comment">// type为动作的类型</span><br>    <span class="hljs-keyword">return</span> &#123; <span class="hljs-attr">type</span>: types.<span class="hljs-property">ADD</span>&#125;<br>  &#125;,<br>  <span class="hljs-title function_">subtract</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-comment">// 需要返回一个action对象</span><br>    <span class="hljs-comment">// type为动作的类型</span><br>    <span class="hljs-keyword">return</span> &#123; <span class="hljs-attr">type</span>: types.<span class="hljs-property">SUBTRACT</span>&#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>我们可以想一下，上面<code>return &#123; type:types.ADD &#125;</code>实际上是返回一个<code>action</code>对象，将来使用的时候，是会传到<code>./src/store/reducers/index.tsx</code>的<code>action</code>中，那么我们怎么定义这个<code>action</code>的结构呢？</p>
+</blockquote>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> .<span class="hljs-regexp">/src/</span>store<span class="hljs-regexp">/actions/</span>counter.tsx<br>import * as types from <span class="hljs-string">&quot;../action-types&quot;</span>;<br><br><span class="hljs-regexp">//</span> 定义两个接口，分别约束add和subtract的type类型<br>export interface Add&#123;<br>  type:typeof types.ADD<br>&#125;<br>export interface Subtract&#123;<br>  type:typeof types.SUBTRACT<br>&#125;<br><br><span class="hljs-regexp">//</span> 再导出一个type<br><span class="hljs-regexp">//</span> type是用来给类型起别名的<br><span class="hljs-regexp">//</span> 这个actions里是一个对象，会有很多函数，每个函数都会返回一个action<br><span class="hljs-regexp">//</span> 而 .<span class="hljs-regexp">/store/</span>reducers/index.tsx中的action会是下面某一个函数的返回值<br><br>export type Action = Add | Subtract<br><br><span class="hljs-regexp">//</span> 把上面定义好的接口作用于下面<br><span class="hljs-regexp">//</span> 约束返回值的类型<br>export default &#123;<br>  add():Add&#123;<br>    <span class="hljs-regexp">//</span> 需要返回一个action对象<br>    <span class="hljs-regexp">//</span> type为动作的类型<br>    return &#123; type: types.ADD&#125;<br>  &#125;,<br>  subtract():Subtract&#123;<br>    <span class="hljs-regexp">//</span> 需要返回一个action对象<br>    <span class="hljs-regexp">//</span> type为动作的类型<br>    return &#123; type: types.SUBTRACT&#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>接着我们回到<code>./store/reducers/index.tsx</code></p>
+</blockquote>
+<p>经过上面一系列的配置，我们可以给<code>action</code>使用相应的接口约束了并且根据不同的<code>action</code>动作行为来进行不同的处理</p>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs pf">// ./store/reducers/index.tsx<br>// 导入类型校验的接口<br>// 用来约束<span class="hljs-keyword">state</span>的<br>import &#123; Store &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;../../types/index&quot;</span><br><br>// 导入约束action的接口<br>import &#123; Action &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;../actions/counter&quot;</span><br><br>// 引入action动作行为的常量<br>import * as types <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;../action-types&quot;</span><br><br>// 我们需要给number赋予默认值<br>let initState:Store = &#123; number:<span class="hljs-number">0</span> &#125;<br><br>// 把接口写在<span class="hljs-keyword">state</span>:Store<br>export <span class="hljs-keyword">default</span> function (<span class="hljs-keyword">state</span>:Store=initState,action:Action) &#123;<br>  // 拿到老的状态<span class="hljs-keyword">state</span>和新的状态action<br>  // action是一个动作行为，而这个动作行为，在计数器中是具备 加 或 减 两个功能<br>  // 判断action的行为类型<br>  switch (action.type) &#123;<br>    case types.ADD:<br>        // 当action动作行为是ADD的时候，给number加<span class="hljs-number">1</span><br>        return &#123; number:<span class="hljs-keyword">state</span>.number + <span class="hljs-number">1</span> &#125;<br>      break;<br>    case types.SUBTRACT:<br>        // 当action动作行为是SUBTRACT的时候，给number减<span class="hljs-number">1</span><br>        return &#123; number:<span class="hljs-keyword">state</span>.number - <span class="hljs-number">1</span> &#125;<br>      break;<br>    <span class="hljs-keyword">default</span>:<br>        // 当没有匹配到则返回原本的<span class="hljs-keyword">state</span><br>        return <span class="hljs-keyword">state</span><br>      break;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>接下来，我们怎么样把组件和仓库建立起关系呢</p>
+</blockquote>
+<p>首先进入<code>./src/index.tsx</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// ./src/index.tsx</span><br><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> <span class="hljs-title class_">React</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react&quot;</span>;<br><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> <span class="hljs-title class_">ReactDom</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react-dom&quot;</span>;<br><br><span class="hljs-comment">// 引入redux这个库的Provider组件</span><br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">Provider</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react-redux&quot;</span>;<br><br><span class="hljs-comment">// 引入仓库</span><br><span class="hljs-keyword">import</span> store <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./store&#x27;</span><br><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">CounterComponent</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./components/Counter&quot;</span>;<br><br><span class="hljs-comment">// 用Provider包裹CounterComponent组件</span><br><span class="hljs-comment">// 并且把store传给Provider</span><br><span class="hljs-comment">// 这样Provider可以向它的子组件提供store</span><br><span class="hljs-title class_">ReactDom</span>.<span class="hljs-title function_">render</span>((<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Provider</span> <span class="hljs-attr">store</span>=<span class="hljs-string">&#123;store&#125;</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">CounterComponent</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;poetries&quot;</span>/&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">Provider</span>&gt;</span></span><br>),<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;app&quot;</span>))<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>我们到组件内部建立连接，<code>./src/components/Counter.tsx</code></p>
+</blockquote>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-comment">// import React from &quot;react&quot;; // 之前的写法</span><br><span class="hljs-comment">// 在ts中引入的写法</span><br><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> <span class="hljs-title class_">React</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react&quot;</span>;<br><br><span class="hljs-comment">// 引入connect，让组件和仓库建立连接</span><br><span class="hljs-keyword">import</span> &#123; connect &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react-redux&quot;</span>;<br><br><span class="hljs-comment">// 引入actions，用于传给connect</span><br><span class="hljs-keyword">import</span> actions <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;../store/actions/counter&quot;</span>;<br><br><span class="hljs-comment">// 引入接口约束</span><br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">Store</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;../types&quot;</span>;<br><br><span class="hljs-comment">// 接口约束</span><br><span class="hljs-keyword">interface</span> <span class="hljs-title class_">IProps</span>&#123;<br>  <span class="hljs-attr">number</span>:<span class="hljs-built_in">number</span>,<br><br>  <span class="hljs-attr">name</span>:<span class="hljs-built_in">string</span>, <span class="hljs-comment">//如果我们不写校验的话，在外部传name进来会报错的</span><br><br>  <span class="hljs-comment">// add是一个函数</span><br>  <span class="hljs-attr">add</span>:<span class="hljs-built_in">any</span>,<br><br>  <span class="hljs-comment">// subtract是一个函数</span><br>  <span class="hljs-attr">subtract</span>:<span class="hljs-built_in">any</span><br>&#125;<br><br><span class="hljs-comment">// 我们还可以用接口约束state的状态</span><br><span class="hljs-keyword">interface</span> <span class="hljs-title class_">IState</span>&#123;<br>    <span class="hljs-attr">number</span>: <span class="hljs-built_in">number</span><br>&#125;<br><br><span class="hljs-comment">// 把接口约束的规则写在这里</span><br><span class="hljs-comment">// 如果传入的name不符合类型会报错</span><br><span class="hljs-comment">// 如果state的number属性不符合类型也会报错</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">CounterComponent</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">React.Component</span>&lt;<span class="hljs-title class_">IProps</span>,<span class="hljs-title class_">IState</span>&gt;&#123;<br>  <span class="hljs-comment">// 状态state</span><br>  state = &#123;<br>    <span class="hljs-attr">number</span>:<span class="hljs-number">0</span><br>  &#125;<br>  <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-comment">// 利用解构赋值取出</span><br>    <span class="hljs-comment">// 这里比如和IProps保持一致，不对应则会报错，因为接口约束了必须这样</span><br>    <span class="hljs-keyword">let</span> &#123; <span class="hljs-built_in">number</span>,add,subtract &#125; = <span class="hljs-variable language_">this</span>.<span class="hljs-property">props</span><br><br>    <span class="hljs-keyword">return</span>(<br>        <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>&#123;this.props.name&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;add&#125;</span>&gt;</span>+<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;subtract&#125;</span>&gt;</span>-<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>  </span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>&#123;number&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>    )<br>  &#125;<br>&#125;<br><br><span class="hljs-comment">// 这个connect需要执行两次，第二次需要我们把这个组件CounterComponent传进去</span><br><span class="hljs-comment">// connect第一次执行，需要两个参数，</span><br><br><span class="hljs-comment">// 需要传给connect的函数</span><br><span class="hljs-keyword">let</span> mapStateToProps = <span class="hljs-keyword">function</span> (<span class="hljs-params">state:Store</span>) &#123;<br>    <span class="hljs-keyword">return</span> state<br>&#125;<br>  <br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title function_">connect</span>(<br>    mapStateToProps,<br>    actions<br>)(<span class="hljs-title class_">CounterComponent</span>);<br></code></pre></td></tr></table></figure>
+
+<p>这时候看到成功执行了</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1480597-32fc82d43dadb063.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<ul>
+<li>其实搞来搞去，跟原来的写法差不多，主要就是<code>ts</code>会进行类型检查。</li>
+<li>如果对<code>number</code>进行异步修改，该怎么处理？这就需要我们用到<code>redux-thunk</code></li>
+</ul>
+<blockquote>
+<p>接着我们回到<code>./src/store/index.tsx</code></p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 需要使用到thunk，所以引入中间件applyMiddleware</span><br><span class="hljs-keyword">import</span> &#123; createStore, applyMiddleware &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;redux&quot;</span>;<br><br><span class="hljs-comment">// 引入reducers</span><br><span class="hljs-keyword">import</span> reducers <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./reducers&quot;</span>;<br><br><span class="hljs-comment">// 引入redux-thunk，处理异步</span><br><span class="hljs-comment">// 现在主流处理异步的是saga和thunk</span><br><span class="hljs-keyword">import</span> thunk <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;redux-thunk&quot;</span>;<br><br><span class="hljs-comment">// 引入日志</span><br><span class="hljs-keyword">import</span> logger <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;redux-logger&quot;</span>;<br><br><span class="hljs-comment">// 接着创建仓库和中间件</span><br><span class="hljs-keyword">let</span> store = <span class="hljs-title function_">createStore</span>(reducers, <span class="hljs-title function_">applyMiddleware</span>(thunk,logger));<br><br><span class="hljs-comment">// 导出store仓库</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> store;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>接着我们回来<code>./src/store/actions</code>，新增一个异步的动作行为</p>
+</blockquote>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> .<span class="hljs-regexp">/src/</span>store<span class="hljs-regexp">/actions/</span>counter.tsx<br>import * as types from <span class="hljs-string">&quot;../action-types&quot;</span>;<br><br><span class="hljs-regexp">//</span> 定义两个接口，分别约束add和subtract的type类型<br>export interface Add&#123;<br>  type:typeof types.ADD<br>&#125;<br><br>export interface Subtract&#123;<br>  type:typeof types.SUBTRACT<br>&#125;<br><span class="hljs-regexp">//</span> 再导出一个type<br><span class="hljs-regexp">//</span> type是用来给类型起别名的<br><span class="hljs-regexp">//</span> 这个actions里是一个对象，会有很多函数，每个函数都会返回一个action<br><span class="hljs-regexp">//</span> 而 .<span class="hljs-regexp">/store/</span>reducers/index.tsx中的action会是下面某一个函数的返回值<br><br>export type Action = Add | Subtract<br><br><span class="hljs-regexp">//</span> 把上面定义好的接口作用于下面<br><span class="hljs-regexp">//</span> 约束返回值的类型<br>export default &#123;<br>  add():Add&#123;<br>    <span class="hljs-regexp">//</span> 需要返回一个action对象<br>    <span class="hljs-regexp">//</span> type为动作的类型<br>    return &#123; type: types.ADD&#125;<br>  &#125;,<br>  subtract():Subtract&#123;<br>    <span class="hljs-regexp">//</span> 需要返回一个action对象<br>    <span class="hljs-regexp">//</span> type为动作的类型<br>    return &#123; type: types.SUBTRACT&#125;<br>  &#125;,<br>  <span class="hljs-regexp">//</span> 一秒后才执行这个行为<br>  <span class="hljs-regexp">//</span> ++<br>  addAsync():any&#123;<br>    return <span class="hljs-keyword">function</span> (dispatch:any,getState:any) &#123;<br>      setTimeout(<span class="hljs-keyword">function</span>()&#123;<br>        <span class="hljs-regexp">//</span> 当<span class="hljs-number">1</span>秒过后，会执行dispatch，派发出去，然后改变仓库的状态<br>        dispatch(&#123;type:types.ADD&#125;)<br>      &#125;, <span class="hljs-number">1000</span>);<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>到<code>./src/components/Counter.tsx</code>组件内，使用这个异步</p>
+</blockquote>
+<h4 id="2-2-2-合并reducers"><a href="#2-2-2-合并reducers" class="headerlink" title="2.2.2 合并reducers"></a>2.2.2 合并reducers</h4><blockquote>
+<p>假如我们的项目里面，有两个计数器，而且它俩是完全没有关系的，状态也是完全独立的，这个时候就需要用到合并<code>reducers</code>了</p>
+</blockquote>
+<ul>
+<li>首先我们新增<code>action</code>的动作行为类型，在<code>./src/store/action-types.tsx</code></li>
+<li>然后修改接口文件，<code>./src/types/index.tsx</code></li>
+<li>然后把<code>./src/store/actions/counter.tsx</code>文件拷贝在当前目录并且修改名称为<code>counter2.tsx</code></li>
+<li>然后把<code>./src/store/reduces/index.tsx</code>拷贝并且改名为<code>counter.tsx</code>和<code>counter2.tsx</code></li>
+</ul>
+<blockquote>
+<p>我们多个<code>reducer</code>是通过<code>combineReducers</code>方法，进行合并的，因为我们一个项目当中肯定是存在非常多个<code>reducer</code>，所以统一在这里处理。</p>
+</blockquote>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> .<span class="hljs-regexp">/src/</span>store<span class="hljs-regexp">/reducers/i</span>ndex.tsc<br><br><span class="hljs-regexp">//</span> 引入合并方法<br>import &#123; combineReducers &#125; from <span class="hljs-string">&quot;redux&quot;</span>;<br><br><span class="hljs-regexp">//</span> 引入需要合并的reducer<br>import counter from <span class="hljs-string">&quot;./counter&quot;</span>;<br><br><span class="hljs-regexp">//</span> 引入需要合并的reducer<br>import counter2 from <span class="hljs-string">&quot;./counter2&quot;</span>;<br><br><span class="hljs-regexp">//</span> 合并<br>let reducers = combineReducers(&#123;<br>  counter,<br>  counter2,<br>&#125;);<br>export default reducers;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>最后修改组件，进入<code>./src/components/</code>,其中</p>
+</blockquote>
+<p>到目前为止，我们完成了<code>reducers</code>的合并了，那么我们看看效果如何，首先我们给<code>./src/index.tsc</code>添加<code>Counter2</code>组件，这样的目的是与<code>Counter</code>组件完全独立，互不影响，但是又能够最终合并到<code>readucers</code></p>
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/548.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="2-3-路由"><a href="#2-3-路由" class="headerlink" title="2.3 路由"></a>2.3 路由</h3><h4 id="2-3-1-基本用法"><a href="#2-3-1-基本用法" class="headerlink" title="2.3.1 基本用法"></a>2.3.1 基本用法</h4><blockquote>
+<p>首先进入<code>./src/index.tsx</code>导入我们的路由所需要的依赖包</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// ./src/index.tsx</span><br><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> <span class="hljs-title class_">React</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react&quot;</span>;<br><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> <span class="hljs-title class_">ReactDom</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react-dom&quot;</span>;<br><br><span class="hljs-comment">// 引入redux这个库的Provider组件</span><br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">Provider</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react-redux&quot;</span>;<br><br><span class="hljs-comment">// 引入路由</span><br><span class="hljs-comment">// 路由的容器:HashRouter as Router</span><br><span class="hljs-comment">// 路由的规格:Route</span><br><span class="hljs-comment">// Link组件</span><br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">BrowserRouter</span> <span class="hljs-keyword">as</span> <span class="hljs-title class_">Router</span>,<span class="hljs-title class_">Route</span>,<span class="hljs-title class_">Link</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react-router-dom&quot;</span><br><br><span class="hljs-comment">// 引入仓库</span><br><span class="hljs-keyword">import</span> store <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./store&#x27;</span><br><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">CounterComponent</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./components/Counter&quot;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-title class_">CounterComponent2</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./components/Counter2&quot;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-title class_">Counter</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./components/Counter&quot;</span>;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">Home</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>home<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>&#125;<br><br><span class="hljs-comment">// 用Provider包裹CounterComponent组件</span><br><span class="hljs-comment">// 并且把store传给Provider</span><br><span class="hljs-comment">// 这样Provider可以向它的子组件提供store</span><br><span class="hljs-title class_">ReactDom</span>.<span class="hljs-title function_">render</span>((<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Provider</span> <span class="hljs-attr">store</span>=<span class="hljs-string">&#123;store&#125;</span>&gt;</span></span><br><span class="language-xml">    &#123;/* 路由组件 */&#125;</span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">Router</span>&gt;</span></span><br><span class="language-xml">      &#123;/*  放两个路由规则需要在外层套个React.Fragment */&#125;</span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">React.Fragment</span>&gt;</span></span><br><span class="language-xml">            &#123;/* 增加导航 */&#125;</span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">Link</span> <span class="hljs-attr">to</span>=<span class="hljs-string">&quot;/&quot;</span>&gt;</span>Home<span class="hljs-tag">&lt;/<span class="hljs-name">Link</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">Link</span> <span class="hljs-attr">to</span>=<span class="hljs-string">&quot;/counter&quot;</span>&gt;</span>Counter<span class="hljs-tag">&lt;/<span class="hljs-name">Link</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">Link</span> <span class="hljs-attr">to</span>=<span class="hljs-string">&quot;/counter2&quot;</span>&gt;</span>Counter2<span class="hljs-tag">&lt;/<span class="hljs-name">Link</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br><span class="language-xml">            &#123;/* 当路径为 / 时是home组件 */&#125;</span><br><span class="language-xml">            &#123;/* 为了避免home组件一直渲染，我们可以添加属性exact */&#125;</span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">Route</span> <span class="hljs-attr">exact</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/&quot;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">&#123;Home&#125;/</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">Route</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/counter&quot;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">&#123;CounterComponent&#125;/</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">Route</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/counter2&quot;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">&#123;CounterComponent2&#125;</span> /&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">React.Fragment</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">Router</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">Provider</span>&gt;</span></span><br>),<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;app&quot;</span>))<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/549.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<blockquote>
+<p>但是有个很大的问题，就是我们直接访问<code>http://localhost:8080/counter</code>会找不到路由</p>
+</blockquote>
+<ul>
+<li>因为我们的是单页面应用，不管路由怎么变更，实际上都是访问<code>index.html</code>这个文件，所以当我们访问根路径的时候，能够正常访问，因为<code>index.html</code>文件就放在这个目录下，但是当我们通过非根路径的路由访问，则出错了，是因为我们在相应的路径没有这个文件，所以出错了</li>
+<li>从这一点也可以衍生出一个实战经验，我们平时项目部署上线的时候，会出现这个问题，一般我们都是用<code>nginx</code>来把访问的路径都是指向<code>index.html</code>文件，这样就能够正常访问了。</li>
+<li>那么针对目前我们这个情况，我们可以通过修改<code>webpack</code>配置，让路由不管怎么访问，都是指向我们制定的<code>index.html</code>文件。</li>
+</ul>
+<blockquote>
+<p>进入<code>./webpack.config.js</code>，在<code>devServer</code>的配置对象下新增一些配置</p>
+</blockquote>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> ./webpack.config.js<br>...<br><br>  <span class="hljs-regexp">//</span> 开发环境服务配置<br>  devServer:&#123;<br>    <span class="hljs-regexp">//</span> 启动热更新,当模块、组件有变化，不会刷新整个页面，而是局部刷新<br>    <span class="hljs-regexp">//</span> 需要和插件webpack.HotModuleReplacementPlugin配合使用<br>    hot:true, <br>    <span class="hljs-regexp">//</span> 静态资源目录<br>    contentBase:path.resolve(__dirname,<span class="hljs-string">&#x27;dist&#x27;</span>),<br>    <span class="hljs-regexp">//</span> 不管访问什么路径，都重定向到index.html<br>    historyApiFallback:&#123;<br>      index:<span class="hljs-string">&quot;./index.html&quot;</span><br>    &#125;<br>  &#125;<br><br>...<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>修改<code>webpack</code>配置需要重启服务，然后重启服务，看看浏览器能否正常访问<code>http://localhost:8080/counter</code></p>
+</blockquote>
+<h4 id="2-3-2-同步路由到redux"><a href="#2-3-2-同步路由到redux" class="headerlink" title="2.3.2 同步路由到redux"></a>2.3.2 同步路由到redux</h4><blockquote>
+<p>路由的路径，如何同步到仓库当中。以前是用一个叫<code>react-router-redux</code>的库，把路由和<code>redux</code>结合到一起的，<code>react-router-redux</code>挺好用的，但是这个库不再维护了，被废弃了，所以现在推荐使用<code>connected-react-router</code>这个库，可以把路由状态映射到仓库当中</p>
+</blockquote>
+<blockquote>
+<p>首先我们在<code>./src</code>下创建文件<code>history.tsx</code></p>
+</blockquote>
+<p>假设我有一个需求，就是我不通过<code>Link</code>跳转页面，而是通过编程式导航，触发一个动作，然后这个动作会派发出去，而且把路由信息放到<code>redux</code>中，供我以后查看。</p>
+<blockquote>
+<p>我们进入<code>./src/store/reducers/index.tsx</code></p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 引入合并方法</span><br><span class="hljs-keyword">import</span> &#123; combineReducers &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;redux&quot;</span>;<br><br><span class="hljs-comment">// 引入需要合并的reducer</span><br><span class="hljs-keyword">import</span> counter <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./counter&quot;</span>;<br><br><span class="hljs-comment">// 引入需要合并的reducer</span><br><span class="hljs-keyword">import</span> counter2 <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./counter2&quot;</span>;<br><br><span class="hljs-comment">// 引入connectRouter</span><br><span class="hljs-keyword">import</span> &#123; connectRouter &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;connected-react-router&quot;</span>;<br><span class="hljs-keyword">import</span> history <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;../../history&quot;</span>;<br><br><span class="hljs-comment">// 合并</span><br><span class="hljs-keyword">let</span> reducers = <span class="hljs-title function_">combineReducers</span>(&#123;<br>  counter,<br>  counter2,<br>  <span class="hljs-comment">// 把history传到connectRouter函数中</span><br>  <span class="hljs-attr">router</span>: <span class="hljs-title function_">connectRouter</span>(history)<br>&#125;);<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> reducers;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>我们进入<code>./src/store/index.tsx</code>来添加中间件</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 需要使用到thunk，所以引入中间件applyMiddleware</span><br><span class="hljs-keyword">import</span> &#123; createStore, applyMiddleware &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;redux&quot;</span>;<br><br><span class="hljs-comment">// 引入reducers</span><br><span class="hljs-keyword">import</span> reducers <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./reducers&quot;</span>;<br><br><span class="hljs-comment">// 引入redux-thunk，处理异步</span><br><span class="hljs-comment">// 现在主流处理异步的是saga和thunk</span><br><span class="hljs-keyword">import</span> thunk <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;redux-thunk&quot;</span>;<br><br><span class="hljs-comment">// 引入日志</span><br><span class="hljs-keyword">import</span> logger <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;redux-logger&quot;</span>;<br><br><span class="hljs-comment">// 引入中间件</span><br><span class="hljs-keyword">import</span> &#123; routerMiddleware &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;connected-react-router&quot;</span>;<br><span class="hljs-keyword">import</span> history <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;../history&quot;</span>;<br><br><span class="hljs-comment">// 接着创建仓库和中间件</span><br><span class="hljs-keyword">let</span> store = <span class="hljs-title function_">createStore</span>(reducers, <span class="hljs-title function_">applyMiddleware</span>(<span class="hljs-title function_">routerMiddleware</span>(history),thunk,logger));<br><br><span class="hljs-comment">// 导出store仓库</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> store;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>我们进入<code>./src/store/actions/counter.tsx</code>加个<code>goto</code>方法用来跳转</p>
+</blockquote>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-comment">// ./src/store/actions/counter.tsx</span><br><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> types <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;../action-types&quot;</span>;<br><br><span class="hljs-comment">// 引入push方法</span><br><span class="hljs-keyword">import</span> &#123; push &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;connected-react-router&quot;</span>;<br><br><span class="hljs-comment">// 定义两个接口，分别约束add和subtract的type类型</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Add</span>&#123;<br>  <span class="hljs-attr">type</span>:<span class="hljs-keyword">typeof</span> types.<span class="hljs-property">ADD</span><br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Subtract</span>&#123;<br>  <span class="hljs-attr">type</span>:<span class="hljs-keyword">typeof</span> types.<span class="hljs-property">SUBTRACT</span><br>&#125;<br><span class="hljs-comment">// 再导出一个type</span><br><span class="hljs-comment">// type是用来给类型起别名的</span><br><span class="hljs-comment">// 这个actions里是一个对象，会有很多函数，每个函数都会返回一个action</span><br><span class="hljs-comment">// 而 ./store/reducers/index.tsx中的action会是下面某一个函数的返回值</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">Action</span> = <span class="hljs-title class_">Add</span> | <span class="hljs-title class_">Subtract</span><br><br><span class="hljs-comment">// 把上面定义好的接口作用于下面</span><br><span class="hljs-comment">// 约束返回值的类型</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-title function_">add</span>():<span class="hljs-title class_">Add</span>&#123;<br>    <span class="hljs-comment">// 需要返回一个action对象</span><br>    <span class="hljs-comment">// type为动作的类型</span><br>    <span class="hljs-keyword">return</span> &#123; <span class="hljs-attr">type</span>: types.<span class="hljs-property">ADD</span>&#125;<br>  &#125;,<br>  <span class="hljs-title function_">subtract</span>():<span class="hljs-title class_">Subtract</span>&#123;<br>    <span class="hljs-comment">// 需要返回一个action对象</span><br>    <span class="hljs-comment">// type为动作的类型</span><br>    <span class="hljs-keyword">return</span> &#123; <span class="hljs-attr">type</span>: types.<span class="hljs-property">SUBTRACT</span>&#125;<br>  &#125;,<br>  <span class="hljs-comment">// 一秒后才执行这个行为</span><br>  <span class="hljs-title function_">addAsync</span>():<span class="hljs-built_in">any</span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span> (<span class="hljs-params">dispatch:<span class="hljs-built_in">any</span>,getState:<span class="hljs-built_in">any</span></span>) &#123;<br>      <span class="hljs-built_in">setTimeout</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>        <span class="hljs-comment">// 当1秒过后，会执行dispatch，派发出去，然后改变仓库的状态</span><br>        <span class="hljs-title function_">dispatch</span>(&#123;<span class="hljs-attr">type</span>:types.<span class="hljs-property">ADD</span>&#125;)<br>      &#125;, <span class="hljs-number">1000</span>);<br>    &#125;<br>  &#125;,<br>  <span class="hljs-title function_">goto</span>(<span class="hljs-params">path:<span class="hljs-built_in">string</span></span>)&#123;<br>    <span class="hljs-comment">// 派发一个动作</span><br>    <span class="hljs-comment">// 这个push是connected-react-router里的一个方法</span><br>    <span class="hljs-comment">// 返回一个跳转路径的action</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-title function_">push</span>(path)<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>我们进入<code>./src/components/Counter.tsx</code>中加个按钮，当我点击按钮的时候，会向仓库派发<code>action</code>，仓库的<code>action</code>里有中间件，会把我们这个请求拦截到，然后跳转</p>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%A1%86%E6%9E%B6/" class="category-chain-item">框架</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/React/">#React</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>React-Redux总结-配置Ts</div>
+      <div>http://example.com/2020/02/14/React/React-Redux-配置Ts/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>February 14, 2020</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/02/17/React/React-%E4%BA%8B%E4%BB%B6%E6%9C%BA%E5%88%B6/" title="React-事件机制">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">React-事件机制</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/02/13/%E5%B0%8F%E7%A8%8B%E5%BA%8F+uniapp/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" title="小程序实现原理">
+                        <span class="hidden-mobile">小程序实现原理</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,808 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第一部分 JavaScript中的宽高属性 一、与window相关的宽高属性 1.1 window.location和document.location  window对象的location属性引用的是location对象，表示该窗口中当前显示文档的URL  document的对象的location属性也是引用location对象  所以 1window.location &#x3D;&#x3D;&#x3D; document">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js宽高属性">
+<meta property="og:url" content="http://example.com/2018/01/24/html+css+js+ts/3-js%E5%AE%BD%E9%AB%98%E5%B1%9E%E6%80%A7/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="第一部分 JavaScript中的宽高属性 一、与window相关的宽高属性 1.1 window.location和document.location  window对象的location属性引用的是location对象，表示该窗口中当前显示文档的URL  document的对象的location属性也是引用location对象  所以 1window.location &#x3D;&#x3D;&#x3D; document">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-01-24T03:35:46.000Z">
+<meta property="article:modified_time" content="2022-06-05T11:48:26.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>js宽高属性 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="js宽高属性"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-01-24 11:35" pubdate>
+          January 24, 2018 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          16k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          135 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">js宽高属性</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="第一部分-JavaScript中的宽高属性"><a href="#第一部分-JavaScript中的宽高属性" class="headerlink" title="第一部分 JavaScript中的宽高属性"></a>第一部分 JavaScript中的宽高属性</h2><hr>
+<h3 id="一、与window相关的宽高属性"><a href="#一、与window相关的宽高属性" class="headerlink" title="一、与window相关的宽高属性"></a>一、与window相关的宽高属性</h3><hr>
+<h4 id="1-1-window-location和document-location"><a href="#1-1-window-location和document-location" class="headerlink" title="1.1 window.location和document.location"></a>1.1 window.location和document.location</h4><hr>
+<ul>
+<li><p><code>window</code>对象的<code>location</code>属性引用的是<code>location</code>对象，表示该窗口中当前显示文档的<code>URL</code></p>
+</li>
+<li><p><code>document</code>的对象的<code>location</code>属性也是引用<code>location</code>对象</p>
+</li>
+<li><p>所以</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">window.location <span class="hljs-operator">=</span><span class="hljs-operator">=</span><span class="hljs-operator">=</span> document.location<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span>true<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="1-2-window-screen"><a href="#1-2-window-screen" class="headerlink" title="1.2 window.screen"></a>1.2 window.screen</h4></li>
+</ul>
+<hr>
+<ul>
+<li>&#96;&#96;&#96;<br>window.screen<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><br>  包含有关用户屏幕的信息。它包括：<br><br><span class="hljs-bullet">  -</span> <span class="hljs-code">`window.screen.width`</span><br><span class="hljs-bullet">  -</span> <span class="hljs-code">`window.screen.height`</span><br><span class="hljs-bullet">  -</span> <span class="hljs-code">`window.screen.availHeight`</span><br><span class="hljs-bullet">  -</span> <span class="hljs-code">`window.screen.availWidth`</span><br><span class="hljs-bullet">  -</span> <span class="hljs-code">`window.screenTop`</span><br><span class="hljs-bullet">  -</span> <span class="hljs-code">`window.screenLeft`</span><br><br>![<span class="hljs-string">window.screen</span>](<span class="hljs-link">http://upload-images.jianshu.io/upload_images/1480597-d7979b36ca991d9c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240</span>)<br><br><span class="hljs-strong">**1.3 与window相关的宽高**</span><br><br><span class="hljs-bullet">-</span> <span class="hljs-code">`window.innerWidth`</span> 内部的宽度<br><span class="hljs-bullet">-</span> <span class="hljs-code">`window.innerHeight`</span> 内部的高度<br><span class="hljs-bullet">-</span> <span class="hljs-code">`window.outWidth`</span> 外部的宽度<br><span class="hljs-bullet">-</span> <span class="hljs-code">`window.outHeight`</span> 外部的高度<br><br>![<span class="hljs-string">与window相关的宽高</span>](<span class="hljs-link">http://upload-images.jianshu.io/upload_images/1480597-7c90cc88a3355d8e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240</span>)<br><br><span class="hljs-section">### 二、与document相关的宽高属性</span><br><br>------<br><br><span class="hljs-section">#### 2.1与client相关的宽高</span><br><br>------<br><br><span class="hljs-bullet">-</span> <span class="hljs-code">`document.body.clientWidth`</span> 元素宽度（可视内容区+内边距）<br><span class="hljs-bullet">-</span> <span class="hljs-code">`document.body.clientHeight`</span>元素高度（可视内容区+内边距）<br><br>该属性指的是元素的可视部分宽度和高度，即<span class="hljs-code">`padding+content`</span><br>如果没有滚动条，即为元素设定的宽度和高度<br>如果出现滚动条，滚动条会遮盖元素的宽高，那么该属性就是其本来宽高减去滚动条的宽高<br><br>example1：<br><br></code></pre></td></tr></table></figure>
+body{<br>  border: 20px solid #000;<br>  margin: 10px;<br>  padding: 40px;<br>  background: #eee;<br>  height: 350px;<br>  width: 500px;<br>  overflow: scroll;<br>}<br>console.log(document.body.clientWidth);  &#x2F;&#x2F; 350+padding(80) &#x3D; 430<br>console.log(document.body.clientHeight);  &#x2F;&#x2F; 500 + padding(80) &#x3D; 580<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs applescript"><br>example2: 在<span class="hljs-keyword">div</span>中添加文字， 指导出现滚动条<br><br></code></pre></td></tr></table></figure></li>
+</ul>
+<p>#exp2 {<br>    width:200px;<br>    height:200px;<br>    background:red;<br>    border:1px solid #000;<br>    overflow:auto;<br>}</p>
+<p>var test &#x3D; document.getElementById(“exp2”);</p>
+<p>console,log(test.clientHeight); &#x2F;&#x2F; 200<br>console.log(test.clientWidth); &#x2F;&#x2F;</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br><span class="hljs-title">![img](https:</span>//poetries1.gitee.io/img-repo/<span class="hljs-number">2019</span>/<span class="hljs-number">10</span>/<span class="hljs-number">322</span>.png)<br><br>- **小结clientWidth和clientHeight**<br>  - 无`padding`无滚动 ： `clientWidth` = 盒子的`width`<br>  - 有`padding`无滚动 ： `clientWidth` = 盒子的`width` + 盒子的`padding * <span class="hljs-number">2</span>`<br>  - 有`padding`有滚动 ： `clientWidth` = 盒子和`width` + 盒子的`padding * <span class="hljs-number">2</span>`- 滚动轴宽度<br><br>- `document.body.clientLeft`<br>- `document.body.clientTop`<br><br>这两个返回的是元素周围边框的厚度，如果不指定一个边框或者不定位该元素，它的值就是<span class="hljs-number">0</span><br><br>例：<br><br></code></pre></td></tr></table></figure>
+<p>body{<br>    border: 20px solid #000;<br>    margin: 10px;<br>    padding: 40px;<br>    background: #eee;<br>    height: 350px;<br>    width: 500px;<br>    overflow: scroll;<br>}<br>console.log(document.body.clientLeft);  &#x2F;&#x2F; 20<br>console.log(document.body.clientTop);  &#x2F;&#x2F; 20</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><br><span class="hljs-strong">**小结clientLeft和clientTop**</span><br><br><span class="hljs-bullet">- </span>这一对属性是用来读取元素的<br><br></code></pre></td></tr></table></figure>
+<p>  border<br>  <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><br>  的宽度和高度的<br><br><span class="hljs-bullet">  -</span> <span class="hljs-code">`clientTop = border-top`</span><br><span class="hljs-bullet">  -</span> <span class="hljs-code">`clientLeft = border-left`</span><br><br><span class="hljs-section">#### 2.2 与offset相关的宽高</span><br><br>------<br><br><span class="hljs-bullet">-</span> <span class="hljs-strong">**document.body.offsetWidth（元素的border+padding+content的宽度）**</span><br><span class="hljs-bullet">-</span> <span class="hljs-strong">**document.body.offsetHeight（元素的border+padding+content的高度）**</span><br><br>该属性和其内部的内容是否超出元素大小无关，只和本来设定的border以及width和height有关<br><br>例：<br><br></code></pre></td></tr></table></figure><br>body{<br>    border: 20px solid #000;<br>    margin: 10px;<br>    padding: 40px;<br>    background: #eee;<br>    height: 350px;<br>    width: 500px;<br>    overflow: scroll;<br>}<br>console.log(document.body.offsetWidth);  &#x2F;&#x2F; 470 &#x3D; padding<em>2 + 350 + border</em>2<br>console.log(document.body.offsetHeight);  &#x2F;&#x2F; 620 &#x3D; padding<em>2 + 500 + border</em>2</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><br><span class="hljs-strong">**小结offsetWidth和offsetHeight**</span><br><br><span class="hljs-bullet">-</span> 无padding<br><br>  无滚动无border<br>  <br><span class="hljs-bullet">  -</span> offsetWidth = clientWidth = 盒子的宽度<br><br><span class="hljs-bullet">-</span> 有padding<br><br>  无滚动有border<br>  <br><span class="hljs-bullet">  -</span> offsetWidth = 盒子的宽度 + 盒子padding<span class="hljs-emphasis">*2 + 盒子边框*</span>2 = clientWidth + 边框宽度<span class="hljs-emphasis">*2</span><br><span class="hljs-emphasis"></span><br><span class="hljs-emphasis">- 有padding</span><br><span class="hljs-emphasis"></span><br><span class="hljs-emphasis">  有滚动，且滚动是显示的，有border</span><br><span class="hljs-emphasis">  </span><br><span class="hljs-emphasis">  - offsetWidth = 盒子宽度 + 盒子padding*</span>2 + 盒子边框<span class="hljs-emphasis">*2 = clientWidth + 滚动轴宽度 + 边框宽度*</span>2<br><br>------<br><br><span class="hljs-bullet">-</span> <span class="hljs-strong">**document.offsetLeft**</span><br><span class="hljs-bullet">-</span> <span class="hljs-strong">**document.offsetTop**</span><br><br>了解这两个属性我们必须先了解它，什么是<span class="hljs-code">`offsetParent`</span><br><br><span class="hljs-bullet">-</span> 如果当前元素的父级元素没有进行<span class="hljs-code">`CSS`</span>定位（<span class="hljs-code">`position`</span>为<span class="hljs-code">`absolute`</span>或<span class="hljs-code">`relative`</span>）,<span class="hljs-code">`offsetParent`</span>为<span class="hljs-code">`body.`</span><br><span class="hljs-bullet">-</span> 假如当前元素的父级元素中有<span class="hljs-code">`CSS`</span>定位，<span class="hljs-code">`offsetParent`</span>取最近的那个父级元素<br><br><span class="hljs-strong">**offsetLeft的兼容性问题：**</span><br><br><span class="hljs-bullet">-</span> 在<span class="hljs-code">`IE6/7`</span>中<br><span class="hljs-bullet">  -</span> <span class="hljs-code">`offsetLeft`</span> = offsetParent的padding-left + 当前元素的margin-left<br><span class="hljs-bullet">-</span> 在<span class="hljs-code">`IE8/9/10`</span>以及<span class="hljs-code">`chrome`</span>中<br><span class="hljs-bullet">  -</span> <span class="hljs-code">`offsetLeft`</span> = offsetParent的margin-left + offsetParent的border宽度 + offsetParent的padding-left + 当前元素的margin-left<br><span class="hljs-bullet">-</span> 在<span class="hljs-code">`FireFox`</span>中<br><span class="hljs-bullet">  -</span> <span class="hljs-code">`offsetLeft`</span> = offsetParent的margin-left + 当前元素的margin-left + offsetParent的padding-left<br><br>例：<br><br></code></pre></td></tr></table></figure>
+<p>body{<br>    border: 20px solid #000;<br>    margin: 10px;<br>    padding: 40px;<br>    background: #eee;<br>    height: 350px;<br>    width: 500px;<br>    overflow: scroll;<br>} </p>
+<p>#exp {<br>   width:400px;<br>   height:200px;<br>   padding:20px;<br>   margin:10px;<br>   background:red;<br>   border:20px solid #000;<br>   overflow:auto;<br>}<br>var div &#x3D; document.getElementById(“exp”);</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><br><span class="hljs-bullet">-</span> 在IE8/9/10以及chrome中：<br><span class="hljs-bullet">  -</span> div.offsetLeft = 本身的margin10 + 父级元素的padding40 + margin10 + border20 = 80<br><span class="hljs-bullet">  -</span> div.offsetTop = 本身的margin10 + 父级元素的padding40 + margin10 + border20 = 80<br><span class="hljs-bullet">-</span> 在FireFox：（相比chrome中少了border）<br><span class="hljs-bullet">  -</span> div.offsetLeft = 本身的margin10 + 父级元素的padding40 + margin10 = 60<br><span class="hljs-bullet">  -</span> div.offsetTop = 本身的margin10 + 父级元素的padding40 + margin10 = 60<br><span class="hljs-bullet">-</span> 在IE6/7中：（相比在FireFox，不但少了border还少了父级元素的margin）<br><span class="hljs-bullet">  -</span> <span class="hljs-code">`div.offsetLeft`</span> = 本身的<span class="hljs-code">`margin10`</span> + 父级元素的<span class="hljs-code">`padding40`</span> = 50<br><span class="hljs-bullet">  -</span> <span class="hljs-code">`div.offsetTop`</span> = 本身的<span class="hljs-code">`margin10`</span> + 父级元素的<span class="hljs-code">`padding40`</span> = 50<br><br><span class="hljs-section">#### 2.3与scroll相关的宽高 (实际项目中用的最多)</span><br><br>------<br><br><span class="hljs-bullet">-</span> <span class="hljs-strong">**document.body.scrollWidth**</span><br><span class="hljs-bullet">-</span> <span class="hljs-strong">**document.body.scrollHeight**</span><br><br>document.body的scrollWidth和scrollHeight与div的scrollWidth和scrollHeight是有区别的<br><br>例：<br><br></code></pre></td></tr></table></figure>
+<p>body{<br>    border: 20px solid #000;<br>    margin: 10px;<br>    padding: 40px;<br>    background: #eee;<br>    height: 350px;<br>    width: 500px;<br>    overflow: scroll;<br>}</p>
+<p>document.body.scrollHeight; &#x2F;&#x2F;<br>document.body.scrollWidth; &#x2F;&#x2F;</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><br><span class="hljs-bullet">-</span> 当给定宽高小于浏览器窗口的宽高<br><span class="hljs-bullet">  -</span> scrollWidth = 通常是浏览器窗口的宽度<br><span class="hljs-bullet">  -</span> scrollHeight = 通常是浏览器窗口的高度<br><span class="hljs-bullet">-</span> 当给定宽高大于浏览器窗口的宽高，且内容小于给定宽高的时候<br><span class="hljs-bullet">  -</span> scrollWidth = 给定宽度 + 其所有的padding + margin + border<br><span class="hljs-bullet">  -</span> scrollHeight = 给定高度 + 其所有的padding + margin + border<br><span class="hljs-bullet">-</span> 当给定宽高大于浏览器窗口宽高，且内容大于给定宽高<br><span class="hljs-bullet">  -</span> scrollWidth = 内容宽度 + 其所有的padding + margin + border<br><span class="hljs-bullet">  -</span> scrollHeight = 内容高度 + 其所有的padding + margin + border<br><br><span class="hljs-strong">**在某div中的scrollWidth和scrollHeight**</span><br><br><span class="hljs-bullet">-</span> 无滚动轴时：<br><span class="hljs-bullet">  -</span> scrollWidth = clientWidth = 盒子宽度 + 盒子padding<span class="hljs-emphasis">*2</span><br><span class="hljs-emphasis"></span><br><span class="hljs-emphasis">![<span class="hljs-string">img</span>](<span class="hljs-link">https://poetries1.gitee.io/img-repo/2019/10/323.png</span>)</span><br><span class="hljs-emphasis"></span><br><span class="hljs-emphasis">- 有滚动轴时：</span><br><span class="hljs-emphasis">  - scrollWidth = 实际内容的宽度 + padding*</span>2<br><span class="hljs-bullet">  -</span> scrollHeight = 实际内容的高度 + padding<span class="hljs-emphasis">*2</span><br><span class="hljs-emphasis"></span><br><span class="hljs-emphasis">![<span class="hljs-string">img</span>](<span class="hljs-link">https://poetries1.gitee.io/img-repo/2019/10/324.png</span>)</span><br><span class="hljs-emphasis"></span><br><span class="hljs-emphasis">- <span class="hljs-strong">**document.body.scrollLeft**</span></span><br><span class="hljs-emphasis">- <span class="hljs-strong">**document.body.scrollTop**</span></span><br><span class="hljs-emphasis"></span><br><span class="hljs-emphasis">与前面不同的是，这对属性是可读写的，指的是当元素其中的超出其宽高的时候，元素被卷起来的高度和宽度</span><br><span class="hljs-emphasis"></span><br></code></pre></td></tr></table></figure>
+<p>#exp {<br>   width:400px;<br>   height:200px;<br>   padding:20px;<br>   margin:10px;<br>   background:red;<br>   border:20px solid #000;<br>   overflow-y:scroll;<br>}</p>
+<p>var mydiv &#x3D; document.getElementById(“exp”);</p>
+<p>mydiv.scrollTop ;  &#x2F;&#x2F;默认情况下是0<br>mydiv.scrollLeft ; &#x2F;&#x2F;默认情况下是0 </p>
+<p>&#x2F;&#x2F;可以改写它</p>
+<p>mydiv.scrollTop &#x3D; 20;<br>console.log(mydiv.scrollTop)</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br><span class="hljs-title">![img](https:</span>//poetries1.gitee.io/img-repo/<span class="hljs-number">2019</span>/<span class="hljs-number">10</span>/<span class="hljs-number">325</span>.png)<br><br>**obj.style.width和obj.style.height**<br><br>对于一个`DOM`元素，它的`style`属性返回的是一个对象，这个对象的任意一个属性是可读写的，`style.width`等于`css`属性中的宽度。`style.height`等于`css`属性中的高度<br><br>#### <span class="hljs-number">2.4</span> documentElement和body的关系<br><br>------<br><br>是父子级的关系<br><br></code></pre></td></tr></table></figure>
+<p>body{<br>    border: 20px solid #000;<br>    margin: 10px;<br>    padding: 40px;<br>    background: #eee;<br>    height: 350px;<br>    width: 500px;<br>    overflow: scroll;<br>}</p>
+<p>#exp {<br>   width:400px;<br>   height:200px;<br>   padding:20px;<br>   margin:10px;<br>   background:red;<br>   border:20px solid #000;<br>   overflow-y:scroll;<br>}</p>
+<p>console.log(document); &#x2F;&#x2F;document<br>console.log(document.documentElement); &#x2F;&#x2F;html<br>console.log(document.body); &#x2F;&#x2F;body</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs awk"><br>![img](https:<span class="hljs-regexp">//</span>poetries1.gitee.io<span class="hljs-regexp">/img-repo/</span><span class="hljs-number">2019</span><span class="hljs-regexp">/10/</span><span class="hljs-number">326</span>.png)<br><br>- 兼容问题推荐使用 获取浏览器窗口可视区域大小<br><br></code></pre></td></tr></table></figure>
+<p>document.body.clientWidth || document.documentElement.clientWidth;<br>document.body.clientHeight || document.documentElement.clientHeight;</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs awk"><br><span class="hljs-comment">### 三、Event对象的5种坐标</span><br><br>------<br><br>![img](https:<span class="hljs-regexp">//</span>poetries1.gitee.io<span class="hljs-regexp">/img-repo/</span><span class="hljs-number">2019</span><span class="hljs-regexp">/10/</span><span class="hljs-number">327</span>.png)<br><br>例：<br><br></code></pre></td></tr></table></figure>
+<div id="example" 
+style="width: 200px;height: 200px;background: red;margin: 100px auto;"></div>
+var example = document.getElementById("example");
+example.onclick = function(e){
+    console.log("clientX "+e.clientX + " : " + " clientY "+e.clientY);
+    console.log("screenX "+e.screenX + " : " + " screenY "+e.screenY);
+    console.log("offsetX "+e.offsetX + " : " + " offsetY "+e.offsetY);
+    console.log("pageX "+e.pageX + " : " + " pageY "+e.pageY);
+    console.log("x "+e.x + " : " + " y "+e.y);
+}
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs awk"><br>![img](https:<span class="hljs-regexp">//</span>poetries1.gitee.io<span class="hljs-regexp">/img-repo/</span><span class="hljs-number">2019</span><span class="hljs-regexp">/10/</span><span class="hljs-number">328</span>.png)<br><br><span class="hljs-comment">### 四、 js各种宽高的应用</span><br><br>------<br><br>- **example1：可视区域加载**<br><br>![img](https:<span class="hljs-regexp">//</span>poetries1.gitee.io<span class="hljs-regexp">/img-repo/</span><span class="hljs-number">2019</span><span class="hljs-regexp">/10/</span><span class="hljs-number">329</span>.png)<br><br></code></pre></td></tr></table></figure>
+<div id="example1" ></div>
+#example1 {
+            width: 500px;
+            height: 350px;
+            background: red;
+            margin: 1000px auto 0 auto;
+        }
+        @-webkit-keyframes fadeInLeft{
+            0%{
+                opacity: 0;
+                transform: translate3d(-100%,0,0);
+            }
+            100%{
+                opacity: 1;
+                transform: none;
+                
+<pre><code class="hljs">        &#125;
+    &#125;
+        .fadeInLeft &#123;
+            animation-name: fadeInLeft;
+            animation-duration: 2s;
+        &#125;
+</code></pre>
+<p>function showDiv(){<br>            var example &#x3D; document.getElementById(“example”);<br>            var clients &#x3D; window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;&#x2F;&#x2F;可视区域的高度<br>            var divTop &#x3D; example.getBoundingClientRect().top;<br>            if(divTop &lt;&#x3D; clients){<br>                example.classList.add(“fadeInLeft”);<br>                              &#x2F;&#x2F;  这里可以通过setAttribute设置图片的src按需加载<br>            }<br>            document.title &#x3D; clients+”—“+divTop;<br>        }</p>
+<p>window.onscroll &#x3D; showDiv;</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs awk"><br>[在线演示](http:<span class="hljs-regexp">//</span>codepen.io<span class="hljs-regexp">/poetries/</span>pen/RoeJgG)<br><br>- **example2：网页滚动到顶部或者底部**<br><br></code></pre></td></tr></table></figure>
+<div id="example2" ></div>
+#example2 {
+            width: 500px;
+            height: 350px;
+            background: red;
+            margin: 1000px auto 0 auto;
+}
+function scrollTopOrBottom(){
+            var example2 = document.getElementById("example");
+            var clients = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;//可视区域的高度，兼容性写法
+            var scrollTop = document.body.scrollTop;
+            var wholeHeight = document.body.scrollHeight;
+            if(clients + scrollTop >= wholeHeight){
+                alert("我已经到了底部!");
+                              // 这里可以调用Ajax分页加载到页面中，实现多页加载功能
+            }else if(scrollTop == 0){
+                alert("我已经到了顶部了!");
+                      
+<pre><code class="hljs">        &#125;
+        document.title = (clients + scrollTop)+&quot;---&quot;+wholeHeight+&quot;--&quot;+scrollTop;
+    &#125;
+    
+</code></pre>
+<p>window.onscroll &#x3D; scrollTopOrBottom;</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs awk"><br>[在线演示](http:<span class="hljs-regexp">//</span>codepen.io<span class="hljs-regexp">/poetries/</span>pen/WoayJy)<br><br>- **example3：DIV滚动到底部加载**<br><br></code></pre></td></tr></table></figure>
+<div id="example3" >
+            DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载
+            DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载
+            DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载
+            DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载
+            DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载
+            DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载DIV滚动到底部加载
+</div>
+#example3 {
+            width: 500px;
+            height: 400px;
+            background: red;
+            margin: 10px auto;
+            padding: 10px;
+            overflow-y: scroll;
+}
+var div = document.getElementById("example3");
+        function divScroll(){
+            
+<pre><code class="hljs">        var wholeHeight = div.scrollHeight;//滚动区域高度
+        var divScrollTop = div.scrollTop;//卷上去的那部分高度
+        var divHeight = div.clientHeight; //div的可视区域的高度
+        
+        
+        if(divScrollTop + divHeight &gt;= wholeHeight)&#123;
+            alert(&quot;我已经到了底部!&quot;);
+           // 这里可以在div中通过滚动加载分页按需显示
+        &#125;else if(divScrollTop == 0)&#123;
+            alert(&quot;我已经到了顶部了!&quot;);
+        &#125;
+        document.title = (divScrollTop + divHeight)+&quot;---&quot;+wholeHeight+&quot;--&quot;+divScrollTop;
+</code></pre>
+<p>}</p>
+<p>div.onscroll &#x3D; divScroll;</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs awk"><br>[在线演示](http:<span class="hljs-regexp">//</span>codepen.io<span class="hljs-regexp">/poetries/</span>pen/vyVrvm)<br><br>- **example4：计算滚动轴的宽度**<br><br></code></pre></td></tr></table></figure>
+<p>&#x2F;&#x2F;获取滚动轴的宽度<br>    function getScrollBar(){<br>        var el &#x3D; document.createElement(“p”);<br>        var styles &#x3D; {<br>            width:”100px”,<br>            height:”100px”,<br>            overflowY:”scroll”<br>        };<br>        for (var prop in styles){<br>            el.style[prop] &#x3D; styles[prop];&#x2F;&#x2F;把 styles上的属性全部遍历拷贝到el.style上</p>
+<pre><code class="hljs">    &#125;
+    document.body.appendChild(el);
+    var scrollBarWidth = el.offsetWidth - el.clientWidth;
+    el.remove();
+    return scrollBarWidth;
+&#125;
+alert(getScrollBar());//17
+</code></pre>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><code class="hljs awk"><br>[在线演示](http:<span class="hljs-regexp">//</span>codepen.io<span class="hljs-regexp">/poetries/</span>pen/RoeBbL)<br><br><span class="hljs-comment">### 五、js中的宽高属性总结</span><br><br>![img](https:<span class="hljs-regexp">//</span>poetries1.gitee.io<span class="hljs-regexp">/img-repo/</span><span class="hljs-number">2019</span><span class="hljs-regexp">/10/</span><span class="hljs-number">330</span>.png)<br><br>![img](https:<span class="hljs-regexp">//</span>camo.githubusercontent.com<span class="hljs-regexp">/3318530334bbc8f5e7ce267866c43ba72fa01f32/</span><span class="hljs-number">687474703</span>a2f2f6f61376436647871742e626b742e636c6f7564646e2e636f6d2f626c6f672f696d616765732f3038313734323039323736363338392e6a7067)<br><br>![img](https:<span class="hljs-regexp">//</span>poetries1.gitee.io<span class="hljs-regexp">/img-repo/</span><span class="hljs-number">2019</span><span class="hljs-regexp">/10/</span><span class="hljs-number">331</span>.png)<br>![img](https:<span class="hljs-regexp">//</span>poetries1.gitee.io<span class="hljs-regexp">/img-repo/</span><span class="hljs-number">2019</span><span class="hljs-regexp">/10/</span><span class="hljs-number">332</span>.png)<br><br><span class="hljs-comment">## 第二部分 jQuery中的宽高属性</span><br><br>------<br><br><span class="hljs-comment">### 一、jquery相关宽高介绍</span><br><br>------<br><br>- <span class="hljs-number">1.1</span> width()<br>  - 特殊元素`window.document`只可以读，普通元素可以读写，`width()`返回结果无单位，`css(<span class="hljs-string">&quot;width&quot;</span>)`的结果有单位<br><br>![img](https:<span class="hljs-regexp">//</span>poetries1.gitee.io<span class="hljs-regexp">/img-repo/</span><span class="hljs-number">2019</span><span class="hljs-regexp">/10/</span><span class="hljs-number">333</span>.png)<br>![img](https:<span class="hljs-regexp">//</span>poetries1.gitee.io<span class="hljs-regexp">/img-repo/</span><span class="hljs-number">2019</span><span class="hljs-regexp">/10/</span><span class="hljs-number">334</span>.png)<br><br>- <span class="hljs-number">1.2</span> innerWidth()<br>  - 包含padding（不推荐window,document调用）<br>- **<span class="hljs-number">1.3</span> innerHeight()**<br><br>![img](https:<span class="hljs-regexp">//</span>poetries1.gitee.io<span class="hljs-regexp">/img-repo/</span><span class="hljs-number">2019</span><span class="hljs-regexp">/10/</span><span class="hljs-number">335</span>.png)<br>![img](https:<span class="hljs-regexp">//</span>poetries1.gitee.io<span class="hljs-regexp">/img-repo/</span><span class="hljs-number">2019</span><span class="hljs-regexp">/10/</span><span class="hljs-number">336</span>.png)<br><br>- <span class="hljs-number">1.4</span> outerWidth()<br>  - 包含padding和border，当传true时包含marging，不传时不包含marging（不推荐window,document调用）<br>- **<span class="hljs-number">1.5</span> outerHeight()**<br><br>![img](https:<span class="hljs-regexp">//</span>poetries1.gitee.io<span class="hljs-regexp">/img-repo/</span><span class="hljs-number">2019</span><span class="hljs-regexp">/10/</span><span class="hljs-number">337</span>.png)<br>![img](https:<span class="hljs-regexp">//</span>poetries1.gitee.io<span class="hljs-regexp">/img-repo/</span><span class="hljs-number">2019</span><span class="hljs-regexp">/10/</span><span class="hljs-number">338</span>.png)<br><br>- <span class="hljs-number">1.6</span> scrollLeft():<br>  - 相对于水平滚动条左边的距离，如果滚动条非常左、或者元素不能被滚动，这个值为<span class="hljs-number">0</span>；<br>- **<span class="hljs-number">1.7</span> scrollTop():**<br>  - 相对于垂直滚动条上边的距离，如果滚动条非常上、或者元素不能被滚动，这个值为<span class="hljs-number">0</span>；<br>- **<span class="hljs-number">1.8</span> .offset():**<br>  - 相对于document的当前坐标值(相对于body左上角的left,top的值)；<br>- <span class="hljs-number">1.9</span> .position():<br>  - 相对于offset parent的当前坐标值(相对于offset parent元素的左上角的left、top的值)<br><br>![img](https:<span class="hljs-regexp">//</span>poetries1.gitee.io<span class="hljs-regexp">/img-repo/</span><span class="hljs-number">2019</span><span class="hljs-regexp">/10/</span><span class="hljs-number">339</span>.png)<br><br><span class="hljs-comment">### 二、jquery相关宽高举例</span><br><br>------<br><br>**<span class="hljs-number">2.1</span> exmaple1**<br><br>![img](https:<span class="hljs-regexp">//</span>poetries1.gitee.io<span class="hljs-regexp">/img-repo/</span><span class="hljs-number">2019</span><span class="hljs-regexp">/10/</span><span class="hljs-number">340</span>.png)<br><br></code></pre></td></tr></table></figure>
+<div class="parentDiv">
+    <div class="childrenDiv"></div>
+</div>
+html,body {
+    margin:10px;
+    border:5px solid red;
+    padding:20px;
+}
+.parentDiv {
+    width:800px;
+    height:500px;
+    margin:5px auto;
+    background:#FF6600;
+    border:5px dashed green;padding:30px;position:relative;
+
+<p>}<br>.childrenDiv {<br>    width:300px;<br>    height:500px;<br>    margin:5px auto;<br>    background:yellow;<br>    border:5px solid black;<br>    padding:5px;<br>    box-sizing:border-box;&#x2F;<em>包括padding和border的值</em>&#x2F;<br>}<br>&#x2F;&#x2F;特殊元素的高度<br>&#x2F;&#x2F;window  document<br>console.log(“$(window).height()”+$(window).height());<br>console.log(“$(document).height()”+$(document).height());</p>
+<p>&#x2F;&#x2F;innerHeight<br>console.log(“$(window).innerHeight()”+$(window).innerHeight());<br>console.log(“$(document).innerHeight()”+$(document).innerHeight());</p>
+<p>&#x2F;&#x2F;普通child元素的高度</p>
+<p>&#x2F;&#x2F;480 &#x3D; 500 - border<em>2 - padding</em>2 (因为设置了box-sizing，box-sizing把border和padding的值计算了进去)<br>console.log(‘$(“.childrenDiv”).height()’+ $(“.childrenDiv”).height());</p>
+<p>&#x2F;&#x2F;490 &#x3D; 500 - border<em>2 - padding</em>2（innerHeight不包括padding）<br>console.log(‘$(“.childrenDiv”).innerHeight()’+ $(“.childrenDiv”).innerHeight());</p>
+<p>&#x2F;&#x2F;500 &#x3D; 500  不包括margin<br>console.log(‘$(“.childrenDiv”).outerHeight()’+ $(“.childrenDiv”).outerHeight());</p>
+<p>&#x2F;&#x2F;510 &#x3D; 500 + margin true包括margin<br>console.log(‘$(“.childrenDiv”).outerHeight()’+ $(“.childrenDiv”).outerHeight(true));</p>
+<p>&#x2F;&#x2F;scrollTop</p>
+<p>$(window).scroll(function(){<br>    document.title &#x3D; “scrollTop  “+$(this).scrollTop();<br>});</p>
+<p>&#x2F;&#x2F; jquery宽高演示之offset和position</p>
+<p>console.log(‘$(“.childrenDiv”).offset().top ‘+$(“.childrenDiv”).offset().top);<br>console.log(‘$(“.childrenDiv”).offset().left ‘+$(“.childrenDiv”).offset().left);<br>console.log(‘$(“.childrenDiv”).position().top ‘+$(“.childrenDiv”).position().top);<br>console.log(‘$(“.childrenDiv”).position().top ‘+$(“.childrenDiv”).position().left);</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs awk"><br>![img](https:<span class="hljs-regexp">//</span>poetries1.gitee.io<span class="hljs-regexp">/img-repo/</span><span class="hljs-number">2019</span><span class="hljs-regexp">/10/</span><span class="hljs-number">341</span>.png)<br>![img](https:<span class="hljs-regexp">//</span>poetries1.gitee.io<span class="hljs-regexp">/img-repo/</span><span class="hljs-number">2019</span><span class="hljs-regexp">/10/</span><span class="hljs-number">342</span>.png)<br><br>[在线演示](http:<span class="hljs-regexp">//</span>codepen.io<span class="hljs-regexp">/poetries/</span>pen/yVRqZO)<br><br><span class="hljs-comment">### 三、jquery各种宽高应用</span><br><br>------<br><br>**<span class="hljs-number">3.1</span> jquery可视区域加载**<br><br></code></pre></td></tr></table></figure>
+<div id="example" ></div>
+#example {
+            width: 500px;
+            height: 350px;
+            background: red;
+            margin: 1000px auto 0 auto;
+        }
+        @-webkit-keyframes fadeInLeft{
+            0%{
+                opacity: 0;
+                transform: translate3d(-100%,0,0);
+            }
+            100%{
+                opacity: 1;
+                transform: none;
+                
+<pre><code class="hljs">        &#125;
+    &#125;
+        .fadeInLeft &#123;
+            animation-name: fadeInLeft;
+            animation-duration: 2s;
+        &#125;
+</code></pre>
+<p>$(window).scroll(function(){<br>    var ks_area &#x3D; $(window).height();&#x2F;&#x2F;可视区域高度<br>    var scrollHeight &#x3D; $(window).scrollTop();&#x2F;&#x2F;被卷上去的那部分<br>    var divTop &#x3D; $(“#example”).offset().top;&#x2F;&#x2F;盒子距离浏览器顶部的距离</p>
+<pre><code class="hljs">if(ks_area + scrollHeight &gt;= divTop)&#123;
+    $(&quot;#example&quot;).addClass(&quot;fadeInLeft&quot;);
+&#125;
+document.title = ks_area+&#39;-&#39;+scrollHeight+&#39;-&#39;+divTop;
+</code></pre>
+<p>});</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs awk"><br>[在线演示](http:<span class="hljs-regexp">//</span>codepen.io<span class="hljs-regexp">/poetries/</span>pen/MbPqVE)<br><br>**<span class="hljs-number">3.2</span> jquery滚动到底部和顶部加载**<br><br></code></pre></td></tr></table></figure>
+<div id="example" ></div>
+<script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+#example {
+            width: 500px;
+            height: 350px;
+            background: red;
+            margin: 1000px auto 0 auto;
+}
+$(window).scroll(function(){
+    var ks_area = $(window).height();
+    var scrollTop = $(window).scrollTop();
+    var wholeHeight = $(document).height();
+    
+<pre><code class="hljs">if(ks_area + scrollTop &gt;=wholeHeight )&#123;
+    alert(&quot;已经到底部了&quot;);
+&#125;else if(scrollTop == 0)&#123;
+    alert(&quot;已经到头部了&quot;);
+&#125;
+</code></pre>
+<p>})<br>&#96;&#96;&#96;</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/javascript/" class="category-chain-item">javascript</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/javascript/">#javascript</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>js宽高属性</div>
+      <div>http://example.com/2018/01/24/html+css+js+ts/3-js宽高属性/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>January 24, 2018</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/01/26/html+css+js+ts/1-h5-api/" title="html-api">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">html-api</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/01/22/html+css+js+ts/3-js-%E7%BB%A7%E6%89%BF/" title="js 继承">
+                        <span class="hidden-mobile">js 继承</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

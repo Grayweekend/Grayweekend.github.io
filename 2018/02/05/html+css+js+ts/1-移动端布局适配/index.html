@@ -1,0 +1,743 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、为什么要做适配 为了适应各种移动端设备，完美呈现应有的布局效果 各个移动端设备，分辨率大小不一致，网页想铺满整个屏幕，并在各种分辨下等比缩放  二、适配方案 固定高度，宽度百分比适配-布局非常均匀，适合百分比布局 固定宽度，改变缩放比例适配-什么情况都可以 Rem适配 像素比适配  三、单位 em根据元素自身的字体大小计算,元素自身 16px 1em&#x3D;16px Rem R -&gt; root">
+<meta property="og:type" content="article">
+<meta property="og:title" content="移动端适配">
+<meta property="og:url" content="http://example.com/2018/02/05/html+css+js+ts/1-%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%B8%83%E5%B1%80%E9%80%82%E9%85%8D/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、为什么要做适配 为了适应各种移动端设备，完美呈现应有的布局效果 各个移动端设备，分辨率大小不一致，网页想铺满整个屏幕，并在各种分辨下等比缩放  二、适配方案 固定高度，宽度百分比适配-布局非常均匀，适合百分比布局 固定宽度，改变缩放比例适配-什么情况都可以 Rem适配 像素比适配  三、单位 em根据元素自身的字体大小计算,元素自身 16px 1em&#x3D;16px Rem R -&gt; root">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://github.com/poetries/cssrem/raw/master/cssrem.gif">
+<meta property="article:published_time" content="2018-02-05T07:11:47.000Z">
+<meta property="article:modified_time" content="2022-06-04T06:08:14.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="html">
+<meta property="article:tag" content="移动端">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://github.com/poetries/cssrem/raw/master/cssrem.gif">
+  
+  
+  
+  <title>移动端适配 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="移动端适配"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-02-05 15:11" pubdate>
+          February 5, 2018 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          34 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">移动端适配</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="一、为什么要做适配"><a href="#一、为什么要做适配" class="headerlink" title="一、为什么要做适配"></a>一、为什么要做适配</h2><ul>
+<li>为了适应各种移动端设备，完美呈现应有的布局效果</li>
+<li>各个移动端设备，分辨率大小不一致，网页想铺满整个屏幕，并在各种分辨下等比缩放</li>
+</ul>
+<h2 id="二、适配方案"><a href="#二、适配方案" class="headerlink" title="二、适配方案"></a>二、适配方案</h2><ul>
+<li>固定高度，宽度百分比适配-布局非常均匀，适合百分比布局</li>
+<li>固定宽度，改变缩放比例适配-什么情况都可以</li>
+<li><code>Rem</code>适配</li>
+<li>像素比适配</li>
+</ul>
+<h2 id="三、单位"><a href="#三、单位" class="headerlink" title="三、单位"></a>三、单位</h2><ul>
+<li><code>em</code>根据元素自身的字体大小计算,元素自身 <code>16px</code> <code>1em=16px</code></li>
+<li><code>Rem</code> <code>R -&gt; root</code> 根节点( <code>html</code> ) 根据<code>html</code>的字体大小计算其他元素尺寸</li>
+</ul>
+<h2 id="四、百分比适配-常用"><a href="#四、百分比适配-常用" class="headerlink" title="四、百分比适配(常用)"></a>四、百分比适配(常用)</h2><blockquote>
+<p>固定高度，宽度百分比适配</p>
+</blockquote>
+<ul>
+<li>根据设置的大小去设置高度，单位可以用<code>px</code> 百分比 <code>auto</code></li>
+<li>常用<code>Flex</code>布局</li>
+<li>百分比宽度</li>
+</ul>
+<blockquote>
+<p>以<code>640</code>设计稿为例，在外层容器上设置最大以及最小的宽</p>
+</blockquote>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-meta">#wrapper &#123;</span><br>    max-width: <span class="hljs-number">640</span>px; <span class="hljs-comment">/*设置设计稿的宽度*/</span><br>    min-width: <span class="hljs-number">300</span>px;<br>    margin: <span class="hljs-number">0</span> <span class="hljs-keyword">auto</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>后面的区块布局都用百分比，具体元素大小用<code>px</code>计算</p>
+</blockquote>
+<ul>
+<li>也就是宽度用百分比，高度用<code>px</code></li>
+<li>高度以及图片不要定死，让它自动撑开</li>
+</ul>
+<h2 id="五、Rem适配-常用"><a href="#五、Rem适配-常用" class="headerlink" title="五、Rem适配(常用)"></a>五、Rem适配(常用)</h2><ul>
+<li>根据屏幕的分辨率动态设置<code>html</code>的文字大小，达到等比缩放的功能</li>
+<li>保证<code>html</code>最终算出来的字体大小，不能小于<code>12px</code></li>
+<li>在不同的移动端显示不同的元素比例效果</li>
+<li>如果<code>html</code>的<code>font-size:20px</code>的时候，那么此时的<code>1rem = 20px</code></li>
+<li>把设计图的宽度分成多少分之一，根据实际情况</li>
+<li><code>rem</code>做盒子的宽度，<code>viewport</code>缩放</li>
+</ul>
+<blockquote>
+<p><code>head</code>加入常见的<code>meta</code>属性</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;format-detection&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;telephone=no&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;apple-mobile-web-app-capable&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;yes&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;apple-mobile-web-app-status-bar-style&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;black&quot;</span>&gt;</span><br><span class="hljs-comment">&lt;!--这个是关键--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0，minimum-scale=1.0&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>把这段代码加入<code>head</code>中的<code>script</code>预先加载</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// rem适配用这段代码动态计算html的font-size大小</span><br>(<span class="hljs-keyword">function</span>(<span class="hljs-params">win</span>) &#123;<br>    <span class="hljs-keyword">var</span> docEl = win.<span class="hljs-property">document</span>.<span class="hljs-property">documentElement</span>;<br>    <span class="hljs-keyword">var</span> timer = <span class="hljs-string">&#x27;&#x27;</span>;<br><br>    <span class="hljs-keyword">function</span> <span class="hljs-title function_">changeRem</span>(<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-keyword">var</span> width = docEl.<span class="hljs-title function_">getBoundingClientRect</span>().<span class="hljs-property">width</span>;<br>        <span class="hljs-keyword">if</span> (width &gt; <span class="hljs-number">750</span>) &#123; <span class="hljs-comment">// 750是设计稿大小</span><br>            width = <span class="hljs-number">750</span>;<br>        &#125;<br>        <span class="hljs-keyword">var</span> fontS = width / <span class="hljs-number">10</span>; <span class="hljs-comment">// 把设备宽度十等分 1rem=10px</span><br>        docEl.<span class="hljs-property">style</span>.<span class="hljs-property">fontSize</span> = fontS + <span class="hljs-string">&quot;px&quot;</span>;<br>    &#125;<br>    win.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&quot;resize&quot;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-built_in">clearTimeout</span>(timer);<br>        timer = <span class="hljs-built_in">setTimeout</span>(changeRem, <span class="hljs-number">30</span>);<br>    &#125;, <span class="hljs-literal">false</span>);<br>    win.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&quot;pageshow&quot;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) &#123;<br>        <span class="hljs-keyword">if</span> (e.<span class="hljs-property">persisted</span>) &#123; <span class="hljs-comment">//清除缓存</span><br>            <span class="hljs-built_in">clearTimeout</span>(timer);<br>            timer = <span class="hljs-built_in">setTimeout</span>(changeRem, <span class="hljs-number">30</span>);<br>        &#125;<br>    &#125;, <span class="hljs-literal">false</span>);<br>    <span class="hljs-title function_">changeRem</span>();<br>&#125;)(<span class="hljs-variable language_">window</span>)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>或者使用淘宝提供的库 <a target="_blank" rel="noopener" href="https://github.com/amfe/lib-flexible">https://github.com/amfe/lib-flexible</a></li>
+</ul>
+<p><strong>布局细节</strong></p>
+<ul>
+<li>结构用<code>section</code>区块划分更语义化</li>
+<li>然后在<code>body</code>设置宽度</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">body</span> &#123;<br>    <span class="hljs-attribute">width</span>: <span class="hljs-number">10rem</span>;<br>    <span class="hljs-attribute">margin</span>: auto;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>后面的区块都以百分比布局</p>
+</blockquote>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">&lt;div <span class="hljs-keyword">class</span>=&quot;<span class="hljs-symbol">wrapper</span>&quot;&gt;<br>   &lt;<span class="hljs-symbol">header</span>&gt;&lt;<span class="hljs-symbol">header</span>&gt;<br>   &lt;<span class="hljs-symbol">section</span>&gt;&lt;<span class="hljs-symbol">section</span>&gt;<br>   &lt;<span class="hljs-symbol">section</span>&gt;&lt;<span class="hljs-symbol">section</span>&gt;<br>   &lt;<span class="hljs-symbol">section</span>&gt;&lt;<span class="hljs-symbol">section</span>&gt;<br>   &lt;<span class="hljs-symbol">section</span>&gt;&lt;<span class="hljs-symbol">section</span>&gt;<br>&lt;/<span class="hljs-symbol">div</span>&gt;<br><span class="hljs-symbol">section,</span><br><span class="hljs-symbol"><span class="hljs-symbol">header</span></span> &#123;<br>    width: <span class="hljs-number">100</span>%;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>把视觉稿中的 px 转换成 rem</strong></p>
+<blockquote>
+<p>首先，目前日常工作当中，视觉设计师给到前端开发人员手中的视觉稿尺寸一般是基于 <code>640px</code> 、 <code>750px</code> 以及 <code>1125px</code> 宽度为准。甚至为什么？大家应该懂的（考虑<code>Retina</code>屏）</p>
+</blockquote>
+<blockquote>
+<p>假定设计稿的大小为<code>750</code>，那么我们则将整个图分成<code>10</code>等份来看。&#96;&#96; 对应的 <code>font-size</code>为<code>75px</code></p>
+</blockquote>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">html</span>&#123;<br>	<span class="hljs-attribute">font-size</span>: <span class="hljs-number">75px</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>这样一来，对于视觉稿上的元素尺寸换算，只需要原始的 <code>px</code>值 除以 <code>rem</code>基准值 即可</li>
+</ul>
+<blockquote>
+<p>那么，我们现在就可以比对设计稿，比如设计稿中，有一个<code>div</code>元素，宽度，高度都为<code>20px</code>,那么我们这样写即可（可以用 <code>markman</code>标准设计稿的元素大小）</p>
+</blockquote>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">div</span> &#123;<br>	<span class="hljs-attribute">height</span>: <span class="hljs-number">0.27rem</span>; <span class="hljs-comment">/*20/75*/</span><br>	<span class="hljs-attribute">width</span>: <span class="hljs-number">0.27rem</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>动态计算的<code>rem</code>最后会帮我们动态计算元素在不同屏幕下的宽高</li>
+<li>对于设计稿上的每个元素的尺寸在设计稿大小已知的时候，我们需要测量出，然后在用测量的宽高除以设计稿<code>750</code>的十分之一也就是<code>75</code>,得到我们想要的<code>rem</code>。而<code>rem</code>是根据屏幕动态变化的，也就达到了适配的效果。也就是同一套设计稿运用在不同的设备上。</li>
+</ul>
+<blockquote>
+<p>比如当我们切换到<code>320</code>设备大小的时候，这时候<code>1rem=32px;</code> <code>div</code>的像素实际是<code>0.27*32=8.64px``0.27</code>是我们在已知设计稿是<code>750</code>的情况下计算出来的，<code>rem</code>用来动态计算而已</p>
+</blockquote>
+<ul>
+<li>对于<code>margin</code> <code>padding</code> <code>line-height</code> <code>width</code> <code>height</code>使用<code>rem</code>计算</li>
+</ul>
+<p><strong>如何快速计算</strong></p>
+<blockquote>
+<p>在实际生产当中，如果每一次计算 <code>px</code> 转换 <code>rem</code> ，或许会觉得非常麻烦</p>
+</blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/flashlizi/cssrem"><code>CSSREM</code></a> 是一个<code>CSS</code>的 <code>px</code> 值转 <code>rem</code> 值的<code>Sublime Text3</code>自动完成插件</li>
+<li>插件效果</li>
+</ul>
+<p><img src="https://github.com/poetries/cssrem/raw/master/cssrem.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<blockquote>
+<p>插件使用方法</p>
+</blockquote>
+<ul>
+<li><p>安装</p>
+<ul>
+<li>下载本项目，比如：git clone <a target="_blank" rel="noopener" href="https://github.com/flashlizi/cssrem">https://github.com/flashlizi/cssrem</a></li>
+<li>进入<code>packages</code>目录：<code>Sublime Text</code> -&gt; <code>Preferences</code> -&gt; <code>Browse Packages</code>…</li>
+<li>复制下载的<code>cssrem</code>目录到刚才的packges目录里。</li>
+<li>重启<code>Sublime Text</code></li>
+</ul>
+</li>
+<li><p>配置参数</p>
+<ul>
+<li><p>参数配置文件：<code>Sublime Text -&gt; Preferences -&gt; Package Settings -&gt; cssrem</code></p>
+</li>
+<li><p><code>px_to_rem</code> - <code>px</code>转<code>rem</code>的单位比例，默认为<code>40</code>【根据设计稿来设置，如设计稿<code>750</code>，我们取十分之一即<code>75</code>】。</p>
+</li>
+<li><p><code>max_rem_fraction_length</code> - <code>px</code>转<code>rem</code>的小数部分的最大长度。默认为<code>6</code>。</p>
+</li>
+<li><p><code>available_file_types</code> - 启用此插件的文件类型。默认为：[“<code>.css</code>“, “<code>.less</code>“, “<code>.sass</code>“]。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>文字适配的解决方案</strong></p>
+<ul>
+<li>对于一些标题性的文字，我们依然可以用<code>rem</code>。让他随着屏幕来进行缩放，因为标题性文字一般较大，而较大的文字，点阵对其影响就越小。这样，即使出现奇怪的尺寸，也能够让字体得到很好的渲染。</li>
+<li>对于一些正文内容的文字（即站在使用者的角度，你不希望他进行缩放的文字）。我们采用<code>px</code>来进行处理</li>
+</ul>
+<h2 id="六、缩放比适配"><a href="#六、缩放比适配" class="headerlink" title="六、缩放比适配"></a>六、缩放比适配</h2><blockquote>
+<p>固定宽度，改变缩放比例适配</p>
+</blockquote>
+<ul>
+<li>设计图的宽度就是网页显示的宽度</li>
+<li>改变视口的缩放比例</li>
+<li>页面宽度固定死</li>
+</ul>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs processing"><span class="hljs-comment">// 缩放比例适配方案--用这个代码 </span><br>var <span class="hljs-built_in">width</span> = window.<span class="hljs-property">screen</span>.<span class="hljs-property">width</span>,<br>    fixedW = <span class="hljs-number">320</span>, <span class="hljs-comment">//设计稿宽度的一半</span><br>    <span class="hljs-built_in">scale</span> = <span class="hljs-built_in">width</span> / fixedW, <span class="hljs-comment">// 缩放比例</span><br>    meta = document.<span class="hljs-property">createElement</span>(<span class="hljs-string">&#x27;meta&#x27;</span>),<br>    metaAttr = &#123;<br>        name : <span class="hljs-string">&#x27;viewport&#x27;</span>,<br>        content : <span class="hljs-string">&#x27;width=&#x27;</span>+fixedW+<span class="hljs-string">&#x27;, initial-scale=&#x27;</span>+<span class="hljs-built_in">scale</span>+<span class="hljs-string">&#x27;, maximum-scale=&#x27;</span>+<span class="hljs-built_in">scale</span>+<span class="hljs-string">&#x27;, user-scalable=0&#x27;</span><br>    &#125;;<br>    <span class="hljs-keyword">for</span> (var <span class="hljs-built_in">key</span> in metaAttr) &#123;<br>        meta[<span class="hljs-built_in">key</span>] = metaAttr[<span class="hljs-built_in">key</span>];<br>    &#125;<br>    document.<span class="hljs-property">head</span>.<span class="hljs-property">appendChild</span>(meta);<br></code></pre></td></tr></table></figure>
+
+<h2 id="七、像素比适配"><a href="#七、像素比适配" class="headerlink" title="七、像素比适配"></a>七、像素比适配</h2><ul>
+<li><code>window.devicePixelRatio</code></li>
+<li>物理像素是手机屏幕分辨率</li>
+<li>独立像素 指<code>css</code>像素 屏幕宽度</li>
+<li>像素比 &#x3D; 物理像素 &#x2F; <code>css宽度</code></li>
+<li>获取设备的像素比 <code>window.devicePixelRatio</code></li>
+</ul>
+<h2 id="八、小结"><a href="#八、小结" class="headerlink" title="八、小结"></a>八、小结</h2><blockquote>
+<p>关于移动端布局方案有很多，<code>rem</code>和百分比运用最多的</p>
+</blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://ymblog.net/2015/07/01/%E7%A7%BB%E5%8A%A8%E5%89%8D%E7%AB%AFmeta%E6%A0%87%E7%AD%BE%E8%BD%AC/">http://ymblog.net/2015/07/01/移动前端meta标签转/</a>)</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%89%8D%E7%AB%AF/" class="category-chain-item">前端</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%89%8D%E7%AB%AF/%E7%A7%BB%E5%8A%A8%E7%AB%AF/" class="category-chain-item">移动端</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/html/">#html</a>
+      
+        <a href="/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF/">#移动端</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>移动端适配</div>
+      <div>http://example.com/2018/02/05/html+css+js+ts/1-移动端布局适配/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>February 5, 2018</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/02/07/html+css+js+ts/1-%E7%A7%BB%E5%8A%A8%E7%AB%AF%E9%80%82%E9%85%8D/" title="移动端像素比调试">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">移动端像素比调试</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/02/02/html+css+js+ts/1-flex/" title="flex布局">
+                        <span class="hidden-mobile">flex布局</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

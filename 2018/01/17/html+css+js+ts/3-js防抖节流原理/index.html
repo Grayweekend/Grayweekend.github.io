@@ -1,0 +1,619 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、防抖debounce 你是否在日常开发中遇到一个问题，在滚动事件中需要做个复杂计算或者实现一个按钮的防二次点击操作   这些需求都可以通过函数防抖动来实现。如果在频繁的事件回调中做复杂计算，很有可能导致页面卡顿，不如将多次计算合并为一次计算，只在一个精确点做操作 防抖和节流的作用都是防止函数多次调用。区别在于，假设一个用户一直触发这个函数，且每次触发函数的间隔小于wait，防抖的情况下只会调用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js-防抖节流原理">
+<meta property="og:url" content="http://example.com/2018/01/17/html+css+js+ts/3-js%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81%E5%8E%9F%E7%90%86/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、防抖debounce 你是否在日常开发中遇到一个问题，在滚动事件中需要做个复杂计算或者实现一个按钮的防二次点击操作   这些需求都可以通过函数防抖动来实现。如果在频繁的事件回调中做复杂计算，很有可能导致页面卡顿，不如将多次计算合并为一次计算，只在一个精确点做操作 防抖和节流的作用都是防止函数多次调用。区别在于，假设一个用户一直触发这个函数，且每次触发函数的间隔小于wait，防抖的情况下只会调用">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/312.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/313.png">
+<meta property="article:published_time" content="2018-01-17T13:23:24.000Z">
+<meta property="article:modified_time" content="2022-06-05T11:44:14.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://poetries1.gitee.io/img-repo/2019/10/312.png">
+  
+  
+  
+  <title>js-防抖节流原理 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="js-防抖节流原理"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-01-17 21:23" pubdate>
+          January 17, 2018 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.3k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          36 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">js-防抖节流原理</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="一、防抖debounce"><a href="#一、防抖debounce" class="headerlink" title="一、防抖debounce"></a>一、防抖debounce</h2><blockquote>
+<p>你是否在日常开发中遇到一个问题，在滚动事件中需要做个复杂计算或者实现一个按钮的防二次点击操作</p>
+</blockquote>
+<ul>
+<li>这些需求都可以通过函数防抖动来实现。如果在频繁的事件回调中做复杂计算，很有可能导致页面卡顿，不如将多次计算合并为一次计算，只在一个精确点做操作</li>
+<li>防抖和节流的作用都是防止函数多次调用。区别在于，假设一个用户一直触发这个函数，且每次触发函数的间隔小于<code>wait</code>，防抖的情况下只会调用一次，而节流的 情况会每隔一定时间（参数<code>wait</code>）调用函数</li>
+</ul>
+<blockquote>
+<p>持续触发<code>scroll</code>事件时，并不执行<code>handle</code>函数，当<code>1000</code>毫秒内没有触发<code>scroll</code>事件时，才会延时触发<code>scroll</code>事件</p>
+</blockquote>
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/312.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 防抖</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">debounce</span>(<span class="hljs-params">fn, wait</span>) &#123;    <br>    <span class="hljs-keyword">var</span> timeout = <span class="hljs-literal">null</span>;    <br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;        <br>        <span class="hljs-keyword">if</span>(timeout !== <span class="hljs-literal">null</span>)   <span class="hljs-built_in">clearTimeout</span>(timeout);        <br>        timeout = <span class="hljs-built_in">setTimeout</span>(fn, wait);    <br>    &#125;<br>&#125;<br><span class="hljs-comment">// 处理函数</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">handle</span>(<span class="hljs-params"></span>) &#123;    <br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">random</span>()); <br>&#125;<br><span class="hljs-comment">// 滚动事件</span><br><span class="hljs-comment">// 当持续触发scroll事件时，事件处理函数handle只在停止滚动1000毫秒之后才会调用一次，也就是说在持续触发scroll事件的过程中，事件处理函数handle一直没有执行</span><br><span class="hljs-variable language_">window</span>.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;scroll&#x27;</span>, <span class="hljs-title function_">debounce</span>(handle, <span class="hljs-number">1000</span>));<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>我们先来看一个袖珍版的防抖理解一下防抖的实现</p>
+</blockquote>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs actionscript"><span class="hljs-comment">// func是用户传入需要防抖的函数</span><br><span class="hljs-comment">// wait是等待时间</span><br><span class="hljs-keyword">const</span> debounce = (func, wait = <span class="hljs-number">50</span>) =&gt; &#123;<br>  <span class="hljs-comment">// 缓存一个定时器id</span><br>  let timer = <span class="hljs-number">0</span><br>  <span class="hljs-comment">// 这里返回的函数是每次用户实际调用的防抖函数</span><br>  <span class="hljs-comment">// 如果已经设定过定时器了就清空上一次的定时器</span><br>  <span class="hljs-comment">// 开始一个新的定时器，延迟执行用户传入的方法</span><br>  <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-rest_arg">...args</span>)</span> &#123;<br>    <span class="hljs-keyword">if</span> (timer) clearTimeout(timer)<br>    timer = setTimeout(() =&gt; &#123;<br>      func.apply(<span class="hljs-keyword">this</span>, args)<br>    &#125;, wait)<br>  &#125;<br>&#125;<br><span class="hljs-comment">// 不难看出如果用户调用该函数的间隔小于wait的情况下，上一次的时间还未到就被清除了，并不会执行函数</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这是一个简单版的防抖，但是有缺陷，这个防抖只能在最后调用。一般的防抖会有<code>immediate</code>选项，表示是否立即调用。这两者的区别，举个栗子来说</p>
+</blockquote>
+<ul>
+<li>例如在搜索引擎搜索问题的时候，我们当然是希望用户输入完最后一个字才调用查询接口，这个时候适用延迟执行的防抖函数，它总是在一连串（间隔小于<code>wait</code>的）函数触发之后调用。</li>
+<li>例如用户给<code>interviewMap</code>点<code>star</code>的时候，我们希望用户点第一下的时候就去调用接口，并且成功之后改变<code>star</code>按钮的样子，用户就可以立马得到反馈是否<code>star</code>成功了，这个情况适用立即执行的防抖函数，它总是在第一次调用，并且下一次调用必须与前一次调用的时间间隔大于<code>wait</code>才会触发</li>
+</ul>
+<p><strong>完整代码</strong></p>
+<blockquote>
+<p>下面我们来实现一个带有立即执行选项的防抖函数</p>
+</blockquote>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs actionscript"><span class="hljs-comment">// 这个是用来获取当前时间戳的</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">now</span><span class="hljs-params">()</span> &#123;<br>  <span class="hljs-keyword">return</span> +<span class="hljs-keyword">new</span> Date()<br>&#125;<br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 防抖函数，返回函数连续调用时，空闲时间必须大于或等于 wait，func 才会执行</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * @param  &#123;function&#125; func        回调函数</span><br><span class="hljs-comment"> * @param  &#123;number&#125;   wait        表示时间窗口的间隔</span><br><span class="hljs-comment"> * @param  &#123;boolean&#125;  immediate   设置为ture时，是否立即调用函数</span><br><span class="hljs-comment"> * @return &#123;function&#125;             返回客户调用函数</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">debounce</span> <span class="hljs-params">(func, wait = 50, immediate = true)</span> &#123;<br>  let timer, context, args<br><br>  <span class="hljs-comment">// 延迟执行函数</span><br>  <span class="hljs-keyword">const</span> later = () =&gt; setTimeout(() =&gt; &#123;<br>    <span class="hljs-comment">// 延迟函数执行完毕，清空缓存的定时器序号</span><br>    timer = <span class="hljs-literal">null</span><br>    <span class="hljs-comment">// 延迟执行的情况下，函数会在延迟函数中执行</span><br>    <span class="hljs-comment">// 使用到之前缓存的参数和上下文</span><br>    <span class="hljs-keyword">if</span> (!immediate) &#123;<br>      func.apply(context, args)<br>      context = args = <span class="hljs-literal">null</span><br>    &#125;<br>  &#125;, wait)<br><br>  <span class="hljs-comment">// 这里返回的函数是每次实际调用的函数</span><br>  <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-rest_arg">...params</span>)</span> &#123;<br>    <span class="hljs-comment">// 如果没有创建延迟执行函数（later），就创建一个</span><br>    <span class="hljs-keyword">if</span> (!timer) &#123;<br>      timer = later()<br>      <span class="hljs-comment">// 如果是立即执行，调用函数</span><br>      <span class="hljs-comment">// 否则缓存参数和调用上下文</span><br>      <span class="hljs-keyword">if</span> (immediate) &#123;<br>        func.apply(<span class="hljs-keyword">this</span>, params)<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        context = <span class="hljs-keyword">this</span><br>        args = params<br>      &#125;<br>    <span class="hljs-comment">// 如果已有延迟执行函数（later），调用的时候清除原来的并重新设定一个</span><br>    <span class="hljs-comment">// 这样做延迟函数会重新计时</span><br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      clearTimeout(timer)<br>      timer = later()<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>对于按钮防点击来说的实现：如果函数是立即执行的，就立即调用，如果函数是延迟执行的，就缓存上下文和参数，放到延迟函数中去执行。一旦我开始一个定时器，只要我定时器还在，你每次点击我都重新计时。一旦你点累了，定时器时间到，定时器重置为 <code>null</code>，就可以再次点击了。</li>
+<li>对于延时执行函数来说的实现：清除定时器ID，如果是延迟调用就调用函数<br>#</li>
+</ul>
+<h2 id="二、节流throttle"><a href="#二、节流throttle" class="headerlink" title="二、节流throttle"></a>二、节流throttle</h2><blockquote>
+<p>防抖动和节流本质是不一样的。防抖动是将多次执行变为最后一次执行，节流是将多次执行变成每隔一段时间执行</p>
+</blockquote>
+<p>如下图，持续触发<code>scroll</code>事件时，并不立即执行<code>handle</code>函数，每隔<code>1000</code>毫秒才会执行一次<code>handle</code>函数</p>
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/313.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>节流版本</strong></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><code class="hljs awk">/**<br> * underscore 节流函数，返回函数连续调用时，<span class="hljs-keyword">func</span> 执行频率限定为 次 / wait<br> *<br> * @param  &#123;<span class="hljs-keyword">function</span>&#125;   <span class="hljs-keyword">func</span>      回调函数<br> * @param  &#123;number&#125;     wait      表示时间窗口的间隔<br> * @param  &#123;object&#125;     options   如果想忽略开始函数的的调用，传入&#123;leading: false&#125;。<br> *                                如果想忽略结尾函数的调用，传入&#123;trailing: false&#125;<br> *                                两者不能共存，否则函数不能执行<br> * @return &#123;<span class="hljs-keyword">function</span>&#125;             返回客户调用函数   <br> */<br>_.throttle = <span class="hljs-keyword">function</span>(<span class="hljs-keyword">func</span>, wait, options) &#123;<br>    var context, args, result;<br>    var timeout = null;<br>    <span class="hljs-regexp">//</span> 之前的时间戳<br>    var previous = <span class="hljs-number">0</span>;<br>    <span class="hljs-regexp">//</span> 如果 options 没传则设为空对象<br>    <span class="hljs-keyword">if</span> (!options) options = &#123;&#125;;<br>    <span class="hljs-regexp">//</span> 定时器回调函数<br>    var later = <span class="hljs-keyword">function</span>() &#123;<br>      <span class="hljs-regexp">//</span> 如果设置了 leading，就将 previous 设为 <span class="hljs-number">0</span><br>      <span class="hljs-regexp">//</span> 用于下面函数的第一个 <span class="hljs-keyword">if</span> 判断<br>      previous = options.leading === false ? <span class="hljs-number">0</span> : _.now();<br>      <span class="hljs-regexp">//</span> 置空一是为了防止内存泄漏，二是为了下面的定时器判断<br>      timeout = null;<br>      result = <span class="hljs-keyword">func</span>.apply(context, args);<br>      <span class="hljs-keyword">if</span> (!timeout) context = args = null;<br>    &#125;;<br>    return <span class="hljs-keyword">function</span>() &#123;<br>      <span class="hljs-regexp">//</span> 获得当前时间戳<br>      var now = _.now();<br>      <span class="hljs-regexp">//</span> 首次进入前者肯定为 true<br>	  <span class="hljs-regexp">//</span> 如果需要第一次不执行函数<br>	  <span class="hljs-regexp">//</span> 就将上次时间戳设为当前的<br>      <span class="hljs-regexp">//</span> 这样在接下来计算 remaining 的值时会大于<span class="hljs-number">0</span><br>      <span class="hljs-keyword">if</span> (!previous &amp;&amp; options.leading === false) previous = now;<br>      <span class="hljs-regexp">//</span> 计算剩余时间<br>      var remaining = wait - (now - previous);<br>      context = this;<br>      args = arguments;<br>      <span class="hljs-regexp">//</span> 如果当前调用已经大于上次调用时间 + wait<br>      <span class="hljs-regexp">//</span> 或者用户手动调了时间<br> 	  <span class="hljs-regexp">//</span> 如果设置了 trailing，只会进入这个条件<br>	  <span class="hljs-regexp">//</span> 如果没有设置 leading，那么第一次会进入这个条件<br>	  <span class="hljs-regexp">//</span> 还有一点，你可能会觉得开启了定时器那么应该不会进入这个 <span class="hljs-keyword">if</span> 条件了<br>	  <span class="hljs-regexp">//</span> 其实还是会进入的，因为定时器的延时<br>	  <span class="hljs-regexp">//</span> 并不是准确的时间，很可能你设置了<span class="hljs-number">2</span>秒<br>	  <span class="hljs-regexp">//</span> 但是他需要<span class="hljs-number">2.2</span>秒才触发，这时候就会进入这个条件<br>      <span class="hljs-keyword">if</span> (remaining &lt;= <span class="hljs-number">0</span> || remaining &gt; wait) &#123;<br>        <span class="hljs-regexp">//</span> 如果存在定时器就清理掉否则会调用二次回调<br>        <span class="hljs-keyword">if</span> (timeout) &#123;<br>          clearTimeout(timeout);<br>          timeout = null;<br>        &#125;<br>        previous = now;<br>        result = <span class="hljs-keyword">func</span>.apply(context, args);<br>        <span class="hljs-keyword">if</span> (!timeout) context = args = null;<br>      &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!timeout &amp;&amp; options.trailing !== false) &#123;<br>        <span class="hljs-regexp">//</span> 判断是否设置了定时器和 trailing<br>	    <span class="hljs-regexp">//</span> 没有的话就开启一个定时器<br>        <span class="hljs-regexp">//</span> 并且不能不能同时设置 leading 和 trailing<br>        timeout = setTimeout(later, remaining);<br>      &#125;<br>      return result;<br>    &#125;;<br>&#125;;<br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%89%8D%E7%AB%AF/" class="category-chain-item">前端</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/javascript/">#javascript</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>js-防抖节流原理</div>
+      <div>http://example.com/2018/01/17/html+css+js+ts/3-js防抖节流原理/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>January 17, 2018</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/01/19/html+css+js+ts/3-js-%E5%A4%8D%E5%88%B6%E7%B2%98%E8%B4%B4/" title="js-复制粘贴">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">js-复制粘贴</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/01/16/html+css+js+ts/3-js%E7%AC%AC%E4%B8%89%E6%96%B9%E5%8C%85moment/" title="js-moment.js">
+                        <span class="hidden-mobile">js-moment.js</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

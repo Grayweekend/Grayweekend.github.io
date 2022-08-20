@@ -1,0 +1,640 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="微前端其实非常地简单，非常地容易落地，而且也非常不高大上~ 那么就来一起看看什么是微前端吧： 一.为什么需要微前端?这里我们通过3W(what,why,how)的方式来讲解什么是微前端： 1.What?什么是微前端?微前端就是将不同的功能按照不同的维度拆分成多个子应用。通过主应用来加载这些子应用。 微前端的核心在于拆, 拆完后再合! 2.Why?为什么去使用他?不同团队间开发同一个应用技术栈不同怎">
+<meta property="og:type" content="article">
+<meta property="og:title" content="qiankun微前端">
+<meta property="og:url" content="http://example.com/2022/04/12/%E5%BE%AE%E5%89%8D%E7%AB%AF/qiankun%E5%BE%AE%E5%89%8D%E7%AB%AF/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="微前端其实非常地简单，非常地容易落地，而且也非常不高大上~ 那么就来一起看看什么是微前端吧： 一.为什么需要微前端?这里我们通过3W(what,why,how)的方式来讲解什么是微前端： 1.What?什么是微前端?微前端就是将不同的功能按照不同的维度拆分成多个子应用。通过主应用来加载这些子应用。 微前端的核心在于拆, 拆完后再合! 2.Why?为什么去使用他?不同团队间开发同一个应用技术栈不同怎">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-04-12T07:28:31.000Z">
+<meta property="article:modified_time" content="2022-06-07T00:57:26.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="qiankun">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>qiankun微前端 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="qiankun微前端"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-04-12 15:28" pubdate>
+          April 12, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.4k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          70 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">qiankun微前端</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>微前端其实非常地简单，非常地容易落地，而且也非常不高大上~</p>
+<p>那么就来一起看看什么是微前端吧：</p>
+<h2 id="一-为什么需要微前端"><a href="#一-为什么需要微前端" class="headerlink" title="一.为什么需要微前端?"></a>一.为什么需要微前端?</h2><p>这里我们通过3W(what,why,how)的方式来讲解什么是微前端：</p>
+<h3 id="1-What-什么是微前端"><a href="#1-What-什么是微前端" class="headerlink" title="1.What?什么是微前端?"></a>1.What?什么是微前端?</h3><p>微前端就是将不同的功能按照不同的维度拆分成多个子应用。通过主应用来加载这些子应用。</p>
+<p>微前端的核心在于拆, 拆完后再合!</p>
+<h3 id="2-Why-为什么去使用他"><a href="#2-Why-为什么去使用他" class="headerlink" title="2.Why?为什么去使用他?"></a>2.Why?为什么去使用他?</h3><p>不同团队间开发同一个应用技术栈不同怎么破？<br>希望每个团队都可以独立开发，独立部署怎么破？<br>项目中还需要老的应用代码怎么破？<br>我们是不是可以将一个应用划分成若干个子应用，再将子应用打包成一个个的lib呢？当路径切换时加载不同的子应用，这样每个子应用都是独立的，技术栈也就不用再做限制了！从而解决了前端协同开发的问题。</p>
+<h3 id="3-How-怎样落地微前端"><a href="#3-How-怎样落地微前端" class="headerlink" title="3.How?怎样落地微前端?"></a>3.How?怎样落地微前端?</h3><p>2018年 Single-SPA诞生了， single-spa是一个用于前端微服务化的JavaScript前端解决方案  (本身没有处理样式隔离、js执行隔离)  实现了路由劫持和应用加载；</p>
+<p>2019年 qiankun基于Single-SPA, 提供了更加开箱即用的 API  (single-spa + sandbox + import-html-entry)，它 做到了技术栈无关，并且接入简单(有多简单呢，像iframe一样简单)。</p>
+<p>总结：子应用可以独立构建，运行时动态加载，主子应用完全解耦，并且技术栈无关，靠的是协议接入(这里提前强调一下：子应用必须导出 bootstrap、mount、unmount三个方法)。</p>
+<h3 id="这里先回答一下大家可能会有的疑问："><a href="#这里先回答一下大家可能会有的疑问：" class="headerlink" title="这里先回答一下大家可能会有的疑问："></a>这里先回答一下大家可能会有的疑问：</h3><p>这不是iframe吗？</p>
+<p>如果使用的是iframe，当iframe中的子应用切换路由时用户刷新页面就尴尬了。<br>应用间如何通信？</p>
+<p>基于URL来进行数据传递，但是这种传递消息的方式能力较弱；</p>
+<p>基于CustomEvent实现通信；</p>
+<p>基于props主子应用间通信；</p>
+<p>使用全局变量、Redux进行通信。</p>
+<p>如何处理公共依赖？</p>
+<p>CDN - externals</p>
+<p>webpack联邦模块</p>
+<h2 id="二-SingleSpa实战"><a href="#二-SingleSpa实战" class="headerlink" title="二 .SingleSpa实战"></a>二 .SingleSpa实战</h2><h3 id="1-构建子应用"><a href="#1-构建子应用" class="headerlink" title="1.构建子应用"></a>1.构建子应用</h3><p>首先创建一个vue子应用，并通过single-spa-vue来导出必要的生命周期：</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs coffeescript">vue create spa-vue  <span class="hljs-built_in">npm</span> install single-spa-vue  <br><span class="hljs-keyword">import</span> singleSpaVue <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;single-spa-vue&#x27;</span>;const appOptions = &#123;   el: <span class="hljs-string">&#x27;#vue&#x27;</span>,   router,   render: h =&gt; h(App)&#125;<span class="hljs-regexp">//</span> 在非子应用中正常挂载应用<span class="hljs-keyword">if</span>(!window.singleSpaNavigate)&#123; <span class="hljs-keyword">delete</span> appOptions.el; <span class="hljs-keyword">new</span> Vue(appOptions).$mount(<span class="hljs-string">&#x27;#app&#x27;</span>);&#125;const vueLifeCycle = singleSpaVue(&#123;   Vue,   appOptions&#125;);<span class="hljs-regexp">//</span> 子应用必须导出以下生命周期：bootstrap、mount、unmountexport const bootstrap = vueLifeCycle.bootstrap;<span class="hljs-keyword">export</span> const mount = vueLifeCycle.mount;<span class="hljs-keyword">export</span> const unmount = vueLifeCycle.unmount;<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> vueLifeCycle;<br>const router = <span class="hljs-keyword">new</span> VueRouter(&#123;  mode: <span class="hljs-string">&#x27;history&#x27;</span>,  base: <span class="hljs-string">&#x27;/vue&#x27;</span>,   <span class="hljs-regexp">//</span>改变路径配置  routes&#125;)配置子路由基础路径<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-配置库打包"><a href="#2-配置库打包" class="headerlink" title="2.配置库打包"></a>2.配置库打包</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span>vue.config.jsmodule.exports = &#123;    configureWebpack: &#123;        output: &#123;            library: <span class="hljs-string">&#x27;singleVue&#x27;</span>,            libraryTarget: <span class="hljs-string">&#x27;umd&#x27;</span>        &#125;,        devServer:&#123;            port:<span class="hljs-number">10000</span>        &#125;    &#125;&#125;<br></code></pre></td></tr></table></figure>
+
+
+<p>将子模块打包成类库</p>
+<h3 id="3-主应用搭建"><a href="#3-主应用搭建" class="headerlink" title="3.主应用搭建"></a>3.主应用搭建</h3><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;nav&quot;</span>&gt;    &lt;router-link <span class="hljs-keyword">to</span>=<span class="hljs-string">&quot;/vue&quot;</span>&gt;vue项目router-link&gt;     &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;vue&quot;</span>&gt;<span class="hljs-keyword">div</span>&gt;<span class="hljs-keyword">div</span>&gt;<br></code></pre></td></tr></table></figure>
+
+<p>将子应用挂载到id&#x3D;”vue”标签中</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs coffeescript"><span class="hljs-keyword">import</span> Vue <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span><span class="hljs-keyword">import</span> App <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./App.vue&#x27;</span><span class="hljs-keyword">import</span> router <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./router&#x27;</span><span class="hljs-keyword">import</span> ElementUI <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;element-ui&#x27;</span>;<span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;element-ui/lib/theme-chalk/index.css&#x27;</span>;Vue.use(ElementUI);const loadScript = <span class="hljs-keyword">async</span> (url)=&gt; &#123;  <span class="hljs-keyword">await</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function"><span class="hljs-params">(resolve,reject)</span>=&gt;</span>&#123;    const script = document.createElement(<span class="hljs-string">&#x27;script&#x27;</span>);    script.src = url;    script.onload = resolve;    script.onerror = reject;    document.head.appendChild(script)  &#125;);&#125;<span class="hljs-keyword">import</span> &#123; registerApplication, start &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;single-spa&#x27;</span>;registerApplication(    <span class="hljs-string">&#x27;singleVue&#x27;</span>,    <span class="hljs-keyword">async</span> ()=&gt;&#123;        <span class="hljs-regexp">//</span>这里通过协议来加载指定文件        <span class="hljs-keyword">await</span> loadScript(<span class="hljs-string">&#x27;http://localhost:10000/js/chunk-vendors.js&#x27;</span>);        <span class="hljs-keyword">await</span> loadScript(<span class="hljs-string">&#x27;http://localhost:10000/js/app.js&#x27;</span>);        <span class="hljs-keyword">return</span> window.singleVue    &#125;,    location =&gt; location.pathname.startsWith(<span class="hljs-string">&#x27;/vue&#x27;</span>))start();<span class="hljs-keyword">new</span> Vue(&#123;  router,  render: h =&gt; h(App)&#125;).$mount(<span class="hljs-string">&#x27;#app&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-动态设置子应用publicPath"><a href="#4-动态设置子应用publicPath" class="headerlink" title="4.动态设置子应用publicPath"></a>4.动态设置子应用publicPath</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">if</span><span class="hljs-params">(window.singleSpaNavigate)</span></span>&#123;  __webpack_public_path__ = <span class="hljs-string">&#x27;http://localhost:10000/&#x27;</span>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="三-qiankun实战"><a href="#三-qiankun实战" class="headerlink" title="三.qiankun实战"></a>三.qiankun实战</h2><p>qiankun是目前比较完善的一个微前端解决方案，它已在蚂蚁内部经受过足够大量的项目考验及打磨，十分健壮。这里附上官网。</p>
+<h3 id="1-主应用编写"><a href="#1-主应用编写" class="headerlink" title="1.主应用编写"></a>1.主应用编写</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">&lt;el-menu :<span class="hljs-attribute">router</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attribute">mode</span>=<span class="hljs-string">&quot;horizontal&quot;</span>&gt;    &lt;el-menu-item <span class="hljs-attribute">index</span>=<span class="hljs-string">&quot;/&quot;</span>&gt;首页el-menu-item&gt;    &lt;el-menu-item <span class="hljs-attribute">index</span>=<span class="hljs-string">&quot;/vue&quot;</span>&gt;vue应用el-menu-item&gt;    &lt;el-menu-item <span class="hljs-attribute">index</span>=<span class="hljs-string">&quot;/react&quot;</span>&gt;react应用el-menu-item&gt;el-menu&gt;&lt;router-view <span class="hljs-attribute">v-show</span>=<span class="hljs-string">&quot;<span class="hljs-variable">$route</span>.name&quot;</span>&gt;router-view&gt;&lt;div <span class="hljs-attribute">v-show</span>=<span class="hljs-string">&quot;!<span class="hljs-variable">$route</span>.name&quot;</span> <span class="hljs-attribute">id</span>=<span class="hljs-string">&quot;vue&quot;</span>&gt;div&gt;&lt;div <span class="hljs-attribute">v-show</span>=<span class="hljs-string">&quot;!<span class="hljs-variable">$route</span>.name&quot;</span> <span class="hljs-attribute">id</span>=<span class="hljs-string">&quot;react&quot;</span>&gt;div&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-注册子应用"><a href="#2-注册子应用" class="headerlink" title="2.注册子应用"></a>2.注册子应用</h3><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">import</span> &#123;registerMicroApps,<span class="hljs-keyword">start</span>&#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;qiankun&#x27;</span>const apps = [  &#123;    <span class="hljs-type">name</span>:<span class="hljs-string">&#x27;vueApp&#x27;</span>,    entry:<span class="hljs-string">&#x27;//localhost:10000&#x27;</span>,    container:<span class="hljs-string">&#x27;#vue&#x27;</span>,    activeRule:<span class="hljs-string">&#x27;/vue&#x27;</span>  &#125;,  &#123;    <span class="hljs-type">name</span>:<span class="hljs-string">&#x27;reactApp&#x27;</span>,    entry:<span class="hljs-string">&#x27;//localhost:20000&#x27;</span>,    container:<span class="hljs-string">&#x27;#react&#x27;</span>,    activeRule:<span class="hljs-string">&#x27;/react&#x27;</span>  &#125;]registerMicroApps(apps);<span class="hljs-keyword">start</span>();<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-子Vue应用"><a href="#3-子Vue应用" class="headerlink" title="3.子Vue应用"></a>3.子Vue应用</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> instance = <span class="hljs-literal">null</span>;<span class="hljs-keyword">function</span> <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>)&#123;  instance = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Vue</span>(&#123;    router,    <span class="hljs-attr">render</span>: <span class="hljs-function"><span class="hljs-params">h</span> =&gt;</span> <span class="hljs-title function_">h</span>(<span class="hljs-title class_">App</span>)  &#125;).$mount(<span class="hljs-string">&#x27;#app&#x27;</span>)&#125;<span class="hljs-keyword">if</span>(<span class="hljs-variable language_">window</span>.<span class="hljs-property">__POWERED_BY_QIANKUN__</span>)&#123;  __webpack_public_path__ = <span class="hljs-variable language_">window</span>.<span class="hljs-property">__INJECTED_PUBLIC_PATH_BY_QIANKUN__</span>;&#125;<span class="hljs-keyword">if</span>(!<span class="hljs-variable language_">window</span>.<span class="hljs-property">__POWERED_BY_QIANKUN__</span>)&#123;<span class="hljs-title function_">render</span>()&#125;<span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">bootstrap</span>(<span class="hljs-params"></span>)&#123;&#125;<span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">mount</span>(<span class="hljs-params">props</span>)&#123;<span class="hljs-title function_">render</span>();&#125;<span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">unmount</span>(<span class="hljs-params"></span>)&#123;instance.$destroy();&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这里不要忘记子应用的钩子导出。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">module.exports = &#123;    devServer:&#123;        port:<span class="hljs-number">10000</span>,        headers:&#123;            <span class="hljs-string">&#x27;Access-Control-Allow-Origin&#x27;</span>:<span class="hljs-string">&#x27;*&#x27;</span> <span class="hljs-regexp">//</span>允许访问跨域        &#125;    &#125;,    configureWebpack:&#123;        output:&#123;            library:<span class="hljs-string">&#x27;vueApp&#x27;</span>,            libraryTarget:<span class="hljs-string">&#x27;umd&#x27;</span>        &#125;    &#125;&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-子React应用"><a href="#4-子React应用" class="headerlink" title="4.子React应用"></a>4.子React应用</h3><p>再起一个子应用，为了表明技术栈无关特性，这里使用了一个React项目：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;<span class="hljs-keyword">import</span> <span class="hljs-title class_">ReactDOM</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react-dom&#x27;</span>;<span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;./index.css&#x27;</span>;<span class="hljs-keyword">import</span> <span class="hljs-title class_">App</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./App&#x27;</span>;<span class="hljs-keyword">function</span> <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>) &#123;  <span class="hljs-title class_">ReactDOM</span>.<span class="hljs-title function_">render</span>(    &lt;<span class="hljs-title class_">React</span>.<span class="hljs-property">StrictMode</span>&gt;<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">App</span> /&gt;</span></span><span class="hljs-title class_">React</span>.<span class="hljs-property">StrictMode</span>&gt;,    <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;root&#x27;</span>)  );&#125;<span class="hljs-keyword">if</span>(!<span class="hljs-variable language_">window</span>.<span class="hljs-property">__POWERED_BY_QIANKUN__</span>)&#123;  <span class="hljs-title function_">render</span>()&#125;<span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">bootstrap</span>(<span class="hljs-params"></span>) &#123;&#125;<span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">mount</span>(<span class="hljs-params"></span>) &#123;<span class="hljs-title function_">render</span>();&#125;<span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">unmount</span>(<span class="hljs-params"></span>) &#123;  <span class="hljs-title class_">ReactDOM</span>.<span class="hljs-title function_">unmountComponentAtNode</span>(<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;root&quot;</span>));&#125;<br></code></pre></td></tr></table></figure>
+
+<p>重写react中的webpack配置文件 (config-overrides.js)</p>
+<p>&#96;&#96;&#96;&#96;<br>yarn add react-app-rewired –save-dev</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs"><br></code></pre></td></tr></table></figure>
+<p>module.exports &#x3D; {  webpack: (config) &#x3D;&gt; {    config.output.library &#x3D; <code>reactApp</code>;    config.output.libraryTarget &#x3D; “umd”;    config.output.publicPath &#x3D; ‘<a target="_blank" rel="noopener" href="http://localhost:20000/&#39;">http://localhost:20000/&#39;</a>    return config  },  devServer: function (configFunction) {    return function (proxy, allowedHost) {      const config &#x3D; configFunction(proxy, allowedHost);      config.headers &#x3D; {        “Access-Control-Allow-Origin”: “*”,      };      return config;    };  },};</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br>配置.<span class="hljs-built_in">env</span>文件<br><br></code></pre></td></tr></table></figure>
+<p>PORT&#x3D;20000WDS_SOCKET_PORT&#x3D;20000</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs"><br><br>React路由配置<br><br></code></pre></td></tr></table></figure>
+<p>import { BrowserRouter, Route, Link } from “react-router-dom”const BASE_NAME &#x3D; window.<strong>POWERED_BY_QIANKUN</strong> ? “&#x2F;react” : “”;function App() {  return (    <BrowserRouter basename={BASE_NAME}><Link to="/">首页Link&gt;<Link to="/about">关于Link&gt;&lt;Route path&#x3D;”&#x2F;“ exact render&#x3D;{() &#x3D;&gt; <h1>hello homeh1&gt;}&gt;Route&gt;&lt;Route path&#x3D;”&#x2F;about” render&#x3D;{() &#x3D;&gt; <h1>hello abouth1&gt;}&gt;Route&gt;BrowserRouter&gt;  );}</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs clean"><br>## 四.CSS隔离方案<br><br>### 子应用之间样式隔离：<br><br>Dynamic Stylesheet动态样式表，当应用切换时移除掉老应用样式，再添加新应用样式，保证在一个时间点内只有一个应用的样式表生效<br><br>### 主应用和子应用之间的样式隔离：<br><br>BEM(Block Element Modifier)  约定项目前缀<br>CSS-Modules 打包时生成不冲突的选择器名<br>Shadow DOM 真正意义上的隔离<br>css-<span class="hljs-keyword">in</span>-js<br><br></code></pre></td></tr></table></figure>
+<p>let shadowDom &#x3D; shadow.attachShadow({ mode: ‘open’ }); &#x2F;&#x2F; open&#x2F;close设置可否从外部获取let pElement &#x3D; document.createElement(‘p’);pElement.innerHTML &#x3D; ‘hello world’;let styleElement &#x3D; document.createElement(‘style’);styleElement.textContent &#x3D; <code>  p&#123;color:red&#125;</code>shadowDom.appendChild(pElement);shadowDom.appendChild(styleElement)</p>
+<p>&#96;&#96;&#96;</p>
+<p>shadow DOM 内部的元素始终不会影响到它的外部元素，可以实现真正意义上的隔离</p>
+<h2 id="五-JS沙箱机制"><a href="#五-JS沙箱机制" class="headerlink" title="五.JS沙箱机制"></a>五.JS沙箱机制</h2><p>当运行子应用时应该跑在内部沙箱环境中</p>
+<p>快照沙箱，当应用沙箱挂载或卸载时记录快照，在切换时依据快照恢复环境 (无法支持多实例)<br>Proxy 代理沙箱，不影响全局环境</p>
+<h2 id="1-快照沙箱"><a href="#1-快照沙箱" class="headerlink" title="1.快照沙箱"></a>1.快照沙箱</h2><p>1.激活时将当前window属性进行快照处理</p>
+<p>2.失活时用快照中的内容和当前window属性比对</p>
+<p>3.如果属性发生变化保存到modifyPropsMap中，并用快照还原window属性</p>
+<p>4.再次激活时，再次进行快照，并用上次修改的结果还原window属性</p>
+<p>class SnapshotSandbox {    constructor() {        this.proxy &#x3D; window;         this.modifyPropsMap &#x3D; {}; &#x2F;&#x2F; 修改了哪些属性        this.active();    }    active() {        this.windowSnapshot &#x3D; {}; &#x2F;&#x2F; window对象的快照        for (const prop in window) {            if (window.hasOwnProperty(prop)) {                &#x2F;&#x2F; 将window上的属性进行拍照                this.windowSnapshot[prop] &#x3D; window[prop];            }        }        Object.keys(this.modifyPropsMap).forEach(p &#x3D;&gt; {            window[p] &#x3D; this.modifyPropsMap[p];        });    }    inactive() {        for (const prop in window) { &#x2F;&#x2F; diff 差异            if (window.hasOwnProperty(prop)) {                &#x2F;&#x2F; 将上次拍照的结果和本次window属性做对比                if (window[prop] !&#x3D;&#x3D; this.windowSnapshot[prop]) {                    &#x2F;&#x2F; 保存修改后的结果                    this.modifyPropsMap[prop] &#x3D; window[prop];                     &#x2F;&#x2F; 还原window                    window[prop] &#x3D; this.windowSnapshot[prop];                 }            }        }    }}<br>let sandbox &#x3D; new SnapshotSandbox();((window) &#x3D;&gt; {    window.a &#x3D; 1;    window.b &#x3D; 2;    window.c &#x3D; 3    console.log(a,b,c)    sandbox.inactive();    console.log(a,b,c)})(sandbox.proxy);<br>快照沙箱只能针对单实例应用场景，如果是多个实例同时挂载的情况则无法解决，这时只能通过Proxy代理沙箱来实现</p>
+<h3 id="2-Proxy-代理沙箱"><a href="#2-Proxy-代理沙箱" class="headerlink" title="2.Proxy 代理沙箱"></a>2.Proxy 代理沙箱</h3><p>class ProxySandbox {    constructor() {        const rawWindow &#x3D; window;        const fakeWindow &#x3D; {}        const proxy &#x3D; new Proxy(fakeWindow, {            set(target, p, value) {                target[p] &#x3D; value;                return true            },            get(target, p) {                return target[p] || rawWindow[p];            }        });        this.proxy &#x3D; proxy    }}let sandbox1 &#x3D; new ProxySandbox();let sandbox2 &#x3D; new ProxySandbox();window.a &#x3D; 1;((window) &#x3D;&gt; {    window.a &#x3D; ‘hello’;    console.log(window.a)})(sandbox1.proxy);((window) &#x3D;&gt; {    window.a &#x3D; ‘world’;    console.log(window.a)})(sandbox2.proxy);<br>每个应用都创建一个proxy来代理window对象，好处是每个应用都是相对独立的，不需要直接更改全局的window属性。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%BE%AE%E5%89%8D%E7%AB%AF/" class="category-chain-item">微前端</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/qiankun/">#qiankun</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>qiankun微前端</div>
+      <div>http://example.com/2022/04/12/微前端/qiankun微前端/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>April 12, 2022</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/11/hello-world/" title="Hello World">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Hello World</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/12/%E5%B7%A5%E5%85%B7/git-stach/" title="git-stach">
+                        <span class="hidden-mobile">git-stach</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

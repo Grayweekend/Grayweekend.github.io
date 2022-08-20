@@ -1,0 +1,1015 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、环境搭建1234567$ npm install dva-cli -g# 创建应用$ dva new dva-quickstart# 启动$ npm start   react项目的推荐目录结构（如果使用dva脚手架创建，则自动生成如下）  12345678910111213141516171819|── &#x2F;mock&#x2F;             # 数据mock的接口文件  |── &#x2F;src&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React dva总结">
+<meta property="og:url" content="http://example.com/2019/12/12/React/React-dva/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、环境搭建1234567$ npm install dva-cli -g# 创建应用$ dva new dva-quickstart# 启动$ npm start   react项目的推荐目录结构（如果使用dva脚手架创建，则自动生成如下）  12345678910111213141516171819|── &#x2F;mock&#x2F;             # 数据mock的接口文件  |── &#x2F;src&#x2F;">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/20191001/43.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/20191001/44.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1505342-9ecb8ba2d8fd3ec2.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/20191001/45.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/20191001/46.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/20191001/47.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6693922-948c3efcfeeaf4fd.gif">
+<meta property="article:published_time" content="2019-12-12T02:50:48.000Z">
+<meta property="article:modified_time" content="2022-06-06T13:51:00.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://poetries1.gitee.io/img-repo/20191001/43.png">
+  
+  
+  
+  <title>React dva总结 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="React dva总结"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-12-12 10:50" pubdate>
+          December 12, 2019 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          38k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          316 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">React dva总结</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="一、环境搭建"><a href="#一、环境搭建" class="headerlink" title="一、环境搭建"></a>一、环境搭建</h1><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-variable">$</span> npm install dva<span class="hljs-literal">-cli</span> <span class="hljs-literal">-g</span><br><br><span class="hljs-comment"># 创建应用</span><br><span class="hljs-variable">$</span> dva new dva<span class="hljs-literal">-quickstart</span><br><br><span class="hljs-comment"># 启动</span><br><span class="hljs-variable">$</span> npm <span class="hljs-built_in">start</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>react项目的推荐目录结构（如果使用dva脚手架创建，则自动生成如下）</p>
+</blockquote>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">|<span class="hljs-string">── /mock/             # 数据mock的接口文件  </span><br><span class="hljs-string"></span>|<span class="hljs-string">── /src/              # 项目源码目录（我们开发的主要工作区域）   </span><br><span class="hljs-string"></span>|<span class="hljs-string">   </span>|<span class="hljs-string">── /components/   # 项目组件（用于路由组件内引用的可复用组件）   </span><br><span class="hljs-string"></span>|<span class="hljs-string">   </span>|<span class="hljs-string">── /routes/       # 路由组件（页面维度） </span><br><span class="hljs-string"></span>|<span class="hljs-string">   </span>|<span class="hljs-string">  </span>|<span class="hljs-string">── route1.js  </span><br><span class="hljs-string"></span>|<span class="hljs-string">   </span>|<span class="hljs-string">  </span>|<span class="hljs-string">── route2.js   # 根据router.js中的映射，在不同的url下，挂载不同的路由组件</span><br><span class="hljs-string"></span>|<span class="hljs-string">   </span>|<span class="hljs-string">  └── route3.js    </span><br><span class="hljs-string"></span>|<span class="hljs-string">   </span>|<span class="hljs-string">── /models/       # 数据模型（可以理解为store，用于存储数据与方法）  </span><br><span class="hljs-string"></span>|<span class="hljs-string">   </span>|<span class="hljs-string">  </span>|<span class="hljs-string">── model1.js  </span><br><span class="hljs-string"></span>|<span class="hljs-string">   </span>|<span class="hljs-string">  </span>|<span class="hljs-string">── model2.js   # 选择分离为多个model模型，是根据业务实体进行划分</span><br><span class="hljs-string"></span>|<span class="hljs-string">   </span>|<span class="hljs-string">  └── model3.js  </span><br><span class="hljs-string"></span>|<span class="hljs-string">   </span>|<span class="hljs-string">── /services/     # 数据接口（处理前台页面的ajax请求，转发到后台）   </span><br><span class="hljs-string"></span>|<span class="hljs-string">   </span>|<span class="hljs-string">── /utils/        # 工具函数（工具库，存储通用函数与配置参数）     </span><br><span class="hljs-string"></span>|<span class="hljs-string">   </span>|<span class="hljs-string">── router.js       # 路由配置（定义路由与对应的路由组件）  </span><br><span class="hljs-string"></span>|<span class="hljs-string">   </span>|<span class="hljs-string">── index.js       # 入口文件  </span><br><span class="hljs-string"></span>|<span class="hljs-string">   </span>|<span class="hljs-string">── index.less      </span><br><span class="hljs-string"></span>|<span class="hljs-string">   └── index.html     </span><br><span class="hljs-string"></span>|<span class="hljs-string">── package.json       # 项目信息  </span><br><span class="hljs-string">└── proxy.config.js    # 数据mock配置</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>使用 antd</strong></p>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elm"><span class="hljs-title">npm</span> i babel-plugin-<span class="hljs-keyword">import</span> <span class="hljs-comment">--save</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>babel-plugin-import</code> 是用来按需加载 <code>antd</code> 的脚本和样式的</p>
+</blockquote>
+<ul>
+<li>编辑 <code>.webpackrc</code>，使 <code>babel-plugin-import</code> 插件生效</li>
+</ul>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs prolog">&#123;<br>+  <span class="hljs-string">&quot;extraBabelPlugins&quot;</span>: [<br>+    [<span class="hljs-string">&quot;import&quot;</span>, &#123; <span class="hljs-string">&quot;libraryName&quot;</span>: <span class="hljs-string">&quot;antd&quot;</span>, <span class="hljs-string">&quot;libraryDirectory&quot;</span>: <span class="hljs-string">&quot;es&quot;</span>, <span class="hljs-string">&quot;style&quot;</span>: <span class="hljs-string">&quot;css&quot;</span> &#125;]<br>+  ]<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h1 id="二、初识Dva"><a href="#二、初识Dva" class="headerlink" title="二、初识Dva"></a>二、初识Dva</h1><h2 id="2-1-Dva的特性"><a href="#2-1-Dva的特性" class="headerlink" title="2.1 Dva的特性"></a>2.1 Dva的特性</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">dva</span> = React-Router + Redux + Redux-saga<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>仅有 5 个<code>API</code>，仅有5个主要的<code>api</code></li>
+<li>支持 <code>HMR</code>，支持模块的热更新</li>
+<li>支持 <code>SSR (ServerSideRender)</code>，支持服务器端渲染</li>
+<li>支持 <code>Mobile/ReactNative</code>，支持移动手机端的代码编写</li>
+<li>支持<code>TypeScript</code></li>
+<li>支持路由和 <code>Model</code> 的动态加载</li>
+</ul>
+<h2 id="2-2-Dva的五个API"><a href="#2-2-Dva的五个API" class="headerlink" title="2.2 Dva的五个API"></a>2.2 Dva的五个API</h2><p><img src="https://poetries1.gitee.io/img-repo/20191001/43.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="2-2-1-app-x3D-dva-Opts"><a href="#2-2-1-app-x3D-dva-Opts" class="headerlink" title="2.2.1 app &#x3D; dva(Opts)"></a>2.2.1 app &#x3D; dva(Opts)</h3><blockquote>
+<p><code>app = dva(Opts)</code>：创建应用，返回 <code>dva</code> 实例。(注：dva 支持多实例)**</p>
+</blockquote>
+<p>在<code>opts</code>可以配置所有的<code>hooks</code></p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey">const app = dva(&#123;<br><span class="hljs-built_in">     history,</span><br><span class="hljs-built_in">     initialState,</span><br><span class="hljs-built_in">     onError,</span><br><span class="hljs-built_in">     onAction,</span><br><span class="hljs-built_in">     onStateChange,</span><br><span class="hljs-built_in">     onReducer,</span><br><span class="hljs-built_in">     onEffect,</span><br><span class="hljs-built_in">     onHmr,</span><br><span class="hljs-built_in">     extraReducers,</span><br><span class="hljs-built_in">     extraEnhancers,</span><br>&#125;)<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>hooks包含如下配置项</p>
+</blockquote>
+<p>1、 <code>onError((err, dispatch) =&gt; &#123;&#125;)</code></p>
+<ul>
+<li><code>effect</code> 执行错误或 <code>subscription</code> 通过<code>done</code> 主动抛错时触发，可用于管理全局出错状态</li>
+<li>注意：<code>subscription</code> 并没有加 <code>try...catch</code>，所以有错误时需通过第二个参数 <code>done</code> 主动抛错</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript">app.<span class="hljs-title function_">model</span>(&#123;<br>  <span class="hljs-attr">subscriptions</span>: &#123;<br>    <span class="hljs-title function_">setup</span>(<span class="hljs-params">&#123; dispatch &#125;, done</span>) &#123;<br>      <span class="hljs-title function_">done</span>(e)<br>    &#125;,<br>  &#125;,<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>2、 <code>onAction(fn | fn[])</code></p>
+<blockquote>
+<p>在<code>action</code>被<code>dispatch</code>时触发，用于注册 <code>redux</code> 中间件。支持函数或函数数组格式</p>
+</blockquote>
+<ul>
+<li>例如我们要通过 <code>redux-logger</code> 打印日志</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> createLogger <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;redux-logger&#x27;</span>;<br><span class="hljs-keyword">const</span> app = <span class="hljs-title function_">dva</span>(&#123;<br>  <span class="hljs-attr">onAction</span>: <span class="hljs-title function_">createLogger</span>(opts),<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>3、 <code>onStateChange(fn)</code></p>
+<blockquote>
+<p><code>state</code> 改变时触发，可用于同步 state 到 <code>localStorage</code>，服务器端等</p>
+</blockquote>
+<p>4、 <code>onReducer(fn)</code></p>
+<blockquote>
+<p>封装 <code>reducer</code> 执行，比如借助 <code>redux-undo</code> 实现 <code>redo/undo</code></p>
+</blockquote>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs pf">import undoable <span class="hljs-keyword">from</span> &#x27;redux-undo&#x27;;<br><span class="hljs-keyword">const</span> app = dva(&#123;<br>  <span class="hljs-keyword">on</span>Reducer: reducer =&gt; &#123;<br>    return (<span class="hljs-keyword">state</span>, action) =&gt; &#123;<br>      <span class="hljs-keyword">const</span> undoOpts = &#123;&#125;;<br>      <span class="hljs-keyword">const</span> newState = undoable(reducer, undoOpts)(<span class="hljs-keyword">state</span>, action);<br>      // 由于 dva 同步了 routing 数据，所以需要把这部分还原<br>      return &#123; ...newState, routing: newState.present.routing &#125;;<br>    &#125;,<br>  &#125;,<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>5、 <code>onEffect(fn)</code></p>
+<blockquote>
+<p>封装 <code>effect</code> 执行。比如 <code>dva-loading</code> 基于此实现了自动处理 <code>loading</code> 状态</p>
+</blockquote>
+<p>6、 <code>onHmr(fn)</code></p>
+<blockquote>
+<p>热替换相关，目前用于 <code>babel-plugin-dva-hmr</code></p>
+</blockquote>
+<p>7、 <code>extraReducers</code></p>
+<blockquote>
+<p>指定额外的 <code>reducer</code>，比如 <code>redux-form</code> 需要指定额外的 <code>form reducer</code></p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs php">import &#123; reducer <span class="hljs-keyword">as</span> formReducer &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;redux-form&#x27;</span><br><span class="hljs-keyword">const</span> <span class="hljs-variable constant_">app</span> = <span class="hljs-title function_ invoke__">dva</span>(&#123;<br>  <span class="hljs-attr">extraReducers</span>: &#123;<br>    <span class="hljs-attr">form</span>: formReducer,<br>  &#125;,<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这里比较常用的是，<code>history</code>的配置，一般默认的是<code>hashHistory</code>，如果要配置 <code>history</code>为 <code>browserHistory</code>，可以这样</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> createHistory <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;history/createBrowserHistory&#x27;</span>;<br><span class="hljs-keyword">const</span> app = <span class="hljs-title function_">dva</span>(&#123;<br>  <span class="hljs-attr">history</span>: <span class="hljs-title function_">createHistory</span>(),<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey">initialState`：指定初始数据，优先级高于 `model` 中的 `state`，默认是 `&#123;&#125;`，但是基本上都在`modal`里面设置相应的`state<br></code></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="2-2-2-app-use-Hooks"><a href="#2-2-2-app-use-Hooks" class="headerlink" title="2.2.2 app.use(Hooks)"></a>2.2.2 app.use(Hooks)</h3><blockquote>
+<p>app.use(Hooks)：配置 hooks 或者注册插件</p>
+</blockquote>
+<p>这里最常见的就是<code>dva-loading</code>插件的配置</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs clean"><span class="hljs-keyword">import</span> createLoading <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;dva-loading&#x27;</span>;<br>...<br>app.use(createLoading(opts));<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>但是一般对于全局的<code>loading</code>我们会根据业务的不同来显示相应不同的<code>loading</code>图标，我们可以根据自己的需要来选择注册相应的插件</p>
+</blockquote>
+<h3 id="2-2-3-app-model-ModelObject"><a href="#2-2-3-app-model-ModelObject" class="headerlink" title="2.2.3 app.model(ModelObject)"></a>2.2.3 app.model(ModelObject)</h3><blockquote>
+<p><code>app.model(ModelObject)</code>：这个是你数据逻辑处理，数据流动的地方</p>
+</blockquote>
+<p><img src="https://poetries1.gitee.io/img-repo/20191001/44.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="2-2-4-app-unmodel-namespace"><a href="#2-2-4-app-unmodel-namespace" class="headerlink" title="2.2.4 app.unmodel(namespace)"></a>2.2.4 app.unmodel(namespace)</h3><blockquote>
+<p>取消 <code>model</code> 注册，清理 <code>reducers</code>,<code>effects</code> 和 <code>subscriptions</code>。<code>subscription</code> 如果没有返回 <code>unlisten</code> 函数，使用 <code>app.unmodel</code> 会给予警告</p>
+</blockquote>
+<h3 id="2-2-5-app-router-Function"><a href="#2-2-5-app-router-Function" class="headerlink" title="2.2.5 app.router(Function)"></a>2.2.5 app.router(Function)</h3><blockquote>
+<p>注册路由表，这一操作步骤在dva中也很重要</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 注册路由</span><br>app.<span class="hljs-title function_">router</span>(<span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./router&#x27;</span>))<br><br><br><span class="hljs-comment">// 路由文件</span><br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">Router</span>, <span class="hljs-title class_">Route</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;dva/router&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-title class_">IndexPage</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./routes/IndexPage&#x27;</span><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">TodoList</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./routes/TodoList&#x27;</span><br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">RouterConfig</span>(<span class="hljs-params">&#123; history &#125;</span>) &#123;<br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Router</span> <span class="hljs-attr">history</span>=<span class="hljs-string">&#123;history&#125;</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Route</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/&quot;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">&#123;IndexPage&#125;</span> /&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Route</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&#x27;/todoList&#x27;</span> <span class="hljs-attr">components</span>=<span class="hljs-string">&#123;TodoList&#125;/</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">Router</span>&gt;</span></span><br>  )<br>&#125;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">RouterConfig</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果我们想解决组件动态加载问题，我们的路由文件也可以按照下面的写法来写</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">Router</span>, <span class="hljs-title class_">Switch</span>, <span class="hljs-title class_">Route</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;dva/router&#x27;</span><br><span class="hljs-keyword">import</span> dynamic <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;dva/dynamic&#x27;</span><br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">RouterConfig</span>(<span class="hljs-params">&#123; history, app &#125;</span>) &#123;<br>  <span class="hljs-keyword">const</span> <span class="hljs-title class_">IndexPage</span> = <span class="hljs-title function_">dynamic</span>(&#123;<br>    app,<br>    <span class="hljs-attr">component</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">import</span>(<span class="hljs-string">&#x27;./routes/IndexPage&#x27;</span>),<br>  &#125;)<br><br>  <span class="hljs-keyword">const</span> <span class="hljs-title class_">Users</span> = <span class="hljs-title function_">dynamic</span>(&#123;<br>    app,<br>    <span class="hljs-attr">models</span>: <span class="hljs-function">() =&gt;</span> [<span class="hljs-title function_">import</span>(<span class="hljs-string">&#x27;./models/users&#x27;</span>)],<br>    <span class="hljs-attr">component</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">import</span>(<span class="hljs-string">&#x27;./routes/Users&#x27;</span>),<br>  &#125;)<br><br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Router</span> <span class="hljs-attr">history</span>=<span class="hljs-string">&#123;history&#125;</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Switch</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Route</span> <span class="hljs-attr">exact</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/&quot;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">&#123;IndexPage&#125;</span> /&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Route</span> <span class="hljs-attr">exact</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/users&quot;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">&#123;Users&#125;</span> /&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">Switch</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">Router</span>&gt;</span></span><br>  )<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">RouterConfig</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>其中<code>dynamic(opts)</code> 中<code>opt</code>包含三个配置项：</p>
+</blockquote>
+<ul>
+<li><code>app</code>: <code>dva</code> 实例，加载 <code>models</code> 时需要</li>
+<li><code>models</code>: 返回 <code>Promise</code> 数组的函数，<code>Promise</code>返回 dva model&#96;</li>
+<li><code>component</code>：返回 <code>Promise</code>的函数，<code>Promise</code>返回 <code>React Component</code></li>
+</ul>
+<h3 id="2-2-6-app-start"><a href="#2-2-6-app-start" class="headerlink" title="2.2.6 app.start"></a>2.2.6 app.start</h3><blockquote>
+<p>启动应用，即将我们的应用跑起来</p>
+</blockquote>
+<h2 id="2-3-Dva九个概念"><a href="#2-3-Dva九个概念" class="headerlink" title="2.3 Dva九个概念"></a>2.3 Dva九个概念</h2><h3 id="2-3-1-State"><a href="#2-3-1-State" class="headerlink" title="2.3.1 State"></a>2.3.1 State</h3><blockquote>
+<p>初始值，我们在 <code>dva()</code> 初始化的时候和在 modal 里面的 <code>state</code> 对其两处进行定义，其中 modal 中的优先级低于传给 <code>dva()</code> 的 <code>opts.initialState</code></p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-comment">// dva()初始化</span><br><span class="hljs-keyword">const</span> <span class="hljs-variable constant_">app</span> = <span class="hljs-title function_ invoke__">dva</span>(&#123;<br>  <span class="hljs-attr">initialState</span>: &#123; <span class="hljs-attr">count</span>: <span class="hljs-number">1</span> &#125;,<br>&#125;);<br><br><span class="hljs-comment">// modal()定义事件</span><br>app.<span class="hljs-title function_ invoke__">model</span>(&#123;<br>  <span class="hljs-attr">namespace</span>: <span class="hljs-string">&#x27;count&#x27;</span>,<br>  <span class="hljs-attr">state</span>: <span class="hljs-number">0</span>,<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-3-2-Action"><a href="#2-3-2-Action" class="headerlink" title="2.3.2 Action"></a>2.3.2 Action</h3><blockquote>
+<p>表示操作事件，可以是同步，也可以是异步</p>
+</blockquote>
+<ul>
+<li><code>action</code> 的格式如下，它需要有一个 <code>type</code>，表示这个 <code>action</code> 要触发什么操作；<code>payload</code> 则表示这个 <code>action</code> 将要传递的数据</li>
+</ul>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs haskell">&#123;<br>  <span class="hljs-class"><span class="hljs-keyword">type</span>: <span class="hljs-type">String</span>,</span><br>  payload: <span class="hljs-class"><span class="hljs-keyword">data</span>,</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>我们通过 dispatch 方法来发送一个 action</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-title function_ invoke__">dispatch</span>(&#123; <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;todos/add&#x27;</span>, <span class="hljs-attr">payload</span>: <span class="hljs-string">&#x27;Learn Dva&#x27;</span> &#125;);<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>其实我们可以构建一个Action 创建函数，如下</p>
+</blockquote>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs ada"><span class="hljs-keyword">function</span> <span class="hljs-title">addTodo</span>(text) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-type">&#123;</span><br>    <span class="hljs-keyword">type</span>: ADD_TODO,<br>    text<br>  &#125;<br>&#125;<br><br>//我们直接dispatch(addTodo()),就发送了一个action。<br>dispatch(addTodo())<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-3-3-Model"><a href="#2-3-3-Model" class="headerlink" title="2.3.3 Model"></a>2.3.3 Model</h3><blockquote>
+<p><code>model</code> 是 <code>dva</code> 中最重要的概念，<code>Model</code> 非 <code>MVC</code> 中的 <code>M</code>，而是领域模型，用于把数据相关的逻辑聚合到一起，几乎所有的数据，逻辑都在这边进行处理分发</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> queryString <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;query-string&#x27;</span><br><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> todoService <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../services/todo&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-attr">namespace</span>: <span class="hljs-string">&#x27;todo&#x27;</span>,<br>  <span class="hljs-attr">state</span>: &#123;<br>    <span class="hljs-attr">list</span>: []<br>  &#125;,<br>  <span class="hljs-attr">reducers</span>: &#123;<br>    <span class="hljs-title function_">save</span>(<span class="hljs-params">state, &#123; payload: &#123; list &#125; &#125;</span>) &#123;<br>      <span class="hljs-keyword">return</span> &#123; ...state, list &#125;<br>    &#125;<br>  &#125;,<br>  <span class="hljs-attr">effects</span>: &#123;<br>    *<span class="hljs-title function_">addTodo</span>(<span class="hljs-params">&#123; payload: value &#125;, &#123; call, put, select &#125;</span>) &#123;<br>      <span class="hljs-comment">// 模拟网络请求</span><br>      <span class="hljs-keyword">const</span> data = <span class="hljs-keyword">yield</span> <span class="hljs-title function_">call</span>(todoService.<span class="hljs-property">query</span>, value)<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(data)<br>      <span class="hljs-keyword">let</span> tempList = <span class="hljs-keyword">yield</span> <span class="hljs-title function_">select</span>(<span class="hljs-function"><span class="hljs-params">state</span> =&gt;</span> state.<span class="hljs-property">todo</span>.<span class="hljs-property">list</span>)<br>      <span class="hljs-keyword">let</span> list = []<br>      list = list.<span class="hljs-title function_">concat</span>(tempList)<br>      <span class="hljs-keyword">const</span> tempObj = &#123;&#125;<br>      tempObj.<span class="hljs-property">title</span> = value<br>      tempObj.<span class="hljs-property">id</span> = list.<span class="hljs-property">length</span><br>      tempObj.<span class="hljs-property">finished</span> = <span class="hljs-literal">false</span><br>      list.<span class="hljs-title function_">push</span>(tempObj)<br>      <span class="hljs-keyword">yield</span> <span class="hljs-title function_">put</span>(&#123; <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;save&#x27;</span>, <span class="hljs-attr">payload</span>: &#123; list &#125;&#125;)<br>    &#125;,<br>    *<span class="hljs-title function_">toggle</span>(<span class="hljs-params">&#123; payload: index &#125;, &#123; call, put, select &#125;</span>) &#123;<br>      <span class="hljs-comment">// 模拟网络请求</span><br>      <span class="hljs-keyword">const</span> data = <span class="hljs-keyword">yield</span> <span class="hljs-title function_">call</span>(todoService.<span class="hljs-property">query</span>, index)<br>      <span class="hljs-keyword">let</span> tempList = <span class="hljs-keyword">yield</span> <span class="hljs-title function_">select</span>(<span class="hljs-function"><span class="hljs-params">state</span> =&gt;</span> state.<span class="hljs-property">todo</span>.<span class="hljs-property">list</span>)<br>      <span class="hljs-keyword">let</span> list = []<br>      list = list.<span class="hljs-title function_">concat</span>(tempList)<br>      <span class="hljs-keyword">let</span> obj = list[index]<br>      obj.<span class="hljs-property">finished</span> = !obj.<span class="hljs-property">finished</span><br>      <span class="hljs-keyword">yield</span> <span class="hljs-title function_">put</span>(&#123; <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;save&#x27;</span>, <span class="hljs-attr">payload</span>: &#123; list &#125; &#125;)<br>    &#125;,<br>    *<span class="hljs-title function_">delete</span>(<span class="hljs-params">&#123; payload: index &#125;, &#123; call, put, select &#125;</span>) &#123;<br>      <span class="hljs-keyword">const</span> data = <span class="hljs-keyword">yield</span> <span class="hljs-title function_">call</span>(todoService.<span class="hljs-property">query</span>, index)<br>      <span class="hljs-keyword">let</span> tempList = <span class="hljs-keyword">yield</span> <span class="hljs-title function_">select</span>(<span class="hljs-function"><span class="hljs-params">state</span> =&gt;</span> state.<span class="hljs-property">todo</span>.<span class="hljs-property">list</span>)<br>      <span class="hljs-keyword">let</span> list = []<br>      list = list.<span class="hljs-title function_">concat</span>(tempList)<br>      list.<span class="hljs-title function_">splice</span>(index, <span class="hljs-number">1</span>)<br>      <span class="hljs-keyword">yield</span> <span class="hljs-title function_">put</span>(&#123; <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;save&#x27;</span>, <span class="hljs-attr">payload</span>: &#123; list &#125; &#125;)<br>    &#125;,<br>    *<span class="hljs-title function_">modify</span>(<span class="hljs-params">&#123; payload: &#123; value, index &#125; &#125;, &#123; call, put, select &#125;</span>) &#123;<br>      <span class="hljs-keyword">const</span> data = <span class="hljs-keyword">yield</span> <span class="hljs-title function_">call</span>(todoService.<span class="hljs-property">query</span>, value)<br>      <span class="hljs-keyword">let</span> tempList = <span class="hljs-keyword">yield</span> <span class="hljs-title function_">select</span>(<span class="hljs-function"><span class="hljs-params">state</span> =&gt;</span> state.<span class="hljs-property">todo</span>.<span class="hljs-property">list</span>)<br>      <span class="hljs-keyword">let</span> list = []<br>      list = list.<span class="hljs-title function_">concat</span>(tempList)<br>      <span class="hljs-keyword">let</span> obj = list[index]<br>      obj.<span class="hljs-property">title</span> = value<br>      <span class="hljs-keyword">yield</span> <span class="hljs-title function_">put</span>(&#123; <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;save&#x27;</span>, <span class="hljs-attr">payload</span>: &#123; list &#125; &#125;)<br>    &#125;<br>  &#125;,<br>  <span class="hljs-attr">subscriptions</span>: &#123;<br>    <span class="hljs-title function_">setup</span>(<span class="hljs-params">&#123; dispatch, history &#125;</span>) &#123;<br>      <span class="hljs-comment">// 监听路由的变化，请求页面数据</span><br>      <span class="hljs-keyword">return</span> history.<span class="hljs-title function_">listen</span>(<span class="hljs-function">(<span class="hljs-params">&#123; pathname, search &#125;</span>) =&gt;</span> &#123;<br>        <span class="hljs-keyword">const</span> query = queryString.<span class="hljs-title function_">parse</span>(search)<br>        <span class="hljs-keyword">let</span> list = []<br>        <span class="hljs-keyword">if</span> (pathname === <span class="hljs-string">&#x27;todoList&#x27;</span>) &#123;<br>          <span class="hljs-title function_">dispatch</span>(&#123; <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;save&#x27;</span>, <span class="hljs-attr">payload</span>: &#123;list&#125; &#125;)<br>        &#125;<br>      &#125;)<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>model</code>对象中包含5个重要的属性</p>
+</blockquote>
+<p><strong>state</strong></p>
+<blockquote>
+<p>这里的 state 跟我们刚刚讲的 state 的概念是一样的，只不过她的优先级比初始化的低，但是基本上项目中的 state 都是在这里定义的</p>
+</blockquote>
+<p><strong>namespace</strong></p>
+<blockquote>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey">model` 的命名空间，同时也是他在全局 `state` 上的属性，只能用字符串，我们发送在发送 `action` 到相应的 `reducer` 时，就会需要用到 `namespace<br></code></pre></td></tr></table></figure>
+</blockquote>
+<p><strong>Reducer</strong></p>
+<blockquote>
+<p>以<code>key/value</code> 格式定义 <code>reducer</code>，用于处理同步操作，唯一可以修改 <code>state</code> 的地方。由 <code>action</code> 触发。其实一个纯函数</p>
+</blockquote>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs pf">namespace: &#x27;todo&#x27;,<br>  <span class="hljs-keyword">state</span>: &#123;<br>    list: []<br>  &#125;,<br>  // reducers 写法<br>  reducers: &#123;<br>    save(<span class="hljs-keyword">state</span>, &#123; payload: &#123; list &#125; &#125;) &#123;<br>      return &#123; ...<span class="hljs-keyword">state</span>, list &#125;<br>    &#125;<br> &#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>Effect</strong></p>
+<blockquote>
+<p>用于处理异步操作和业务逻辑，不直接修改 <code>state</code>，简单的来说，就是获取从服务端获取数据，并且发起一个 <code>action</code>交给<code>reducer</code> 的地方</p>
+</blockquote>
+<p>其中它用到了<code>redux-saga</code>，里面有几个常用的函数。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-comment">// effects 写法</span><br>effects: &#123;<br>    *<span class="hljs-built_in">addTodo</span>(&#123; payload: value &#125;, &#123; call, put, select &#125;) &#123;<br>      <span class="hljs-comment">// 模拟网络请求</span><br>      const data = yield <span class="hljs-built_in">call</span>(todoService<span class="hljs-selector-class">.query</span>, value)<br>      console<span class="hljs-selector-class">.log</span>(data)<br>      let tempList = yield <span class="hljs-built_in">select</span>(state =&gt; state<span class="hljs-selector-class">.todo</span>.list)<br>      let list = <span class="hljs-selector-attr">[]</span><br>      list = list<span class="hljs-selector-class">.concat</span>(tempList)<br>      const tempObj = &#123;&#125;<br>      tempObj<span class="hljs-selector-class">.title</span> = value<br>      tempObj<span class="hljs-selector-class">.id</span> = list<span class="hljs-selector-class">.length</span><br>      tempObj<span class="hljs-selector-class">.finished</span> = false<br>      list<span class="hljs-selector-class">.push</span>(tempObj)<br>      yield <span class="hljs-built_in">put</span>(&#123; type: <span class="hljs-string">&#x27;save&#x27;</span>, payload: &#123; list &#125;&#125;)<br>    &#125;,<br>    *<span class="hljs-built_in">toggle</span>(&#123; payload: index &#125;, &#123; call, put, select &#125;) &#123;<br>      <span class="hljs-comment">// 模拟网络请求</span><br>      const data = yield <span class="hljs-built_in">call</span>(todoService<span class="hljs-selector-class">.query</span>, index)<br>      let tempList = yield <span class="hljs-built_in">select</span>(state =&gt; state<span class="hljs-selector-class">.todo</span>.list)<br>      let list = <span class="hljs-selector-attr">[]</span><br>      list = list<span class="hljs-selector-class">.concat</span>(tempList)<br>      let obj = list<span class="hljs-selector-attr">[index]</span><br>      obj<span class="hljs-selector-class">.finished</span> = !obj<span class="hljs-selector-class">.finished</span><br>      yield <span class="hljs-built_in">put</span>(&#123; type: <span class="hljs-string">&#x27;save&#x27;</span>, payload: &#123; list &#125; &#125;)<br>    &#125;,<br>    *<span class="hljs-built_in">delete</span>(&#123; payload: index &#125;, &#123; call, put, select &#125;) &#123;<br>      const data = yield <span class="hljs-built_in">call</span>(todoService<span class="hljs-selector-class">.query</span>, index)<br>      let tempList = yield <span class="hljs-built_in">select</span>(state =&gt; state<span class="hljs-selector-class">.todo</span>.list)<br>      let list = <span class="hljs-selector-attr">[]</span><br>      list = list<span class="hljs-selector-class">.concat</span>(tempList)<br>      list<span class="hljs-selector-class">.splice</span>(index, <span class="hljs-number">1</span>)<br>      yield <span class="hljs-built_in">put</span>(&#123; type: <span class="hljs-string">&#x27;save&#x27;</span>, payload: &#123; list &#125; &#125;)<br>    &#125;,<br>    *<span class="hljs-built_in">modify</span>(&#123; payload: &#123; value, index &#125; &#125;, &#123; call, put, select &#125;) &#123;<br>      const data = yield <span class="hljs-built_in">call</span>(todoService<span class="hljs-selector-class">.query</span>, value)<br>      let tempList = yield <span class="hljs-built_in">select</span>(state =&gt; state<span class="hljs-selector-class">.todo</span>.list)<br>      let list = <span class="hljs-selector-attr">[]</span><br>      list = list<span class="hljs-selector-class">.concat</span>(tempList)<br>      let obj = list<span class="hljs-selector-attr">[index]</span><br>      obj<span class="hljs-selector-class">.title</span> = value<br>      yield <span class="hljs-built_in">put</span>(&#123; type: <span class="hljs-string">&#x27;save&#x27;</span>, payload: &#123; list &#125; &#125;)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/1505342-9ecb8ba2d8fd3ec2.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<blockquote>
+<p>在项目中最主要的会用到的是 <code>put</code> 与 <code>call</code></p>
+</blockquote>
+<p><strong>Subscription</strong></p>
+<blockquote>
+<ul>
+<li>以 <code>key/value</code> 格式定义 <code>subscription</code>，<code>subscription</code> 是订阅，用于订阅一个数据源，然后根据需要 dispatch 相应的 action</li>
+<li><code>subscription</code> 是订阅，用于订阅一个数据源，然后根据需要 <code>dispatch</code> 相应的<code>action</code>。在 <code>app.start()</code> 时被执行，数据源可以是当前的时间、当前页面的<code>url</code>、服务器的 <code>websocket</code> 连接、<code>history</code>路由变化等等。</li>
+</ul>
+</blockquote>
+<ul>
+<li><strong>注意</strong>：如果要使用 <code>app.unmodel()</code>，<code>subscription</code> 必须返回 <code>unlisten</code> 方法，用于取消数据订阅</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// subscriptions 写法</span><br><span class="hljs-attr">subscriptions</span>: &#123;<br>    <span class="hljs-title function_">setup</span>(<span class="hljs-params">&#123; dispatch, history &#125;</span>) &#123;<br>      <span class="hljs-comment">// 监听路由的变化，请求页面数据</span><br>      <span class="hljs-keyword">return</span> history.<span class="hljs-title function_">listen</span>(<span class="hljs-function">(<span class="hljs-params">&#123; pathname, search &#125;</span>) =&gt;</span> &#123;<br>        <span class="hljs-keyword">const</span> query = queryString.<span class="hljs-title function_">parse</span>(search)<br>        <span class="hljs-keyword">let</span> list = []<br>        <span class="hljs-keyword">if</span> (pathname === <span class="hljs-string">&#x27;todoList&#x27;</span>) &#123;<br>          <span class="hljs-title function_">dispatch</span>(&#123; <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;save&#x27;</span>, <span class="hljs-attr">payload</span>: &#123;list&#125; &#125;)<br>        &#125;<br>      &#125;)<br>    &#125;<br>  &#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-3-4-Router"><a href="#2-3-4-Router" class="headerlink" title="2.3.4 Router"></a>2.3.4 Router</h3><blockquote>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey">Router` 表示路由配置信息，项目中的 `router.js<br></code></pre></td></tr></table></figure>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span>(<span class="hljs-params">&#123; history &#125;</span>)&#123;<br>  <span class="hljs-keyword">return</span>(<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Router</span> <span class="hljs-attr">history</span>=<span class="hljs-string">&#123;history&#125;</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Route</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/&quot;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">&#123;App&#125;</span> /&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">Router</span>&gt;</span></span><br>  );<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>RouteComponent</strong></p>
+<blockquote>
+<p><code>RouteComponent</code> 表示<code>Router</code> 里匹配路径的 <code>Component</code>，通常会绑定<code>model</code>的数据。如下:</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> &#123; connect &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;dva&#x27;</span>;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">App</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>App<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>;<br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">mapStateToProps</span>(<span class="hljs-params">state</span>) &#123;<br>  <span class="hljs-keyword">return</span> &#123; <span class="hljs-attr">todos</span>: state.<span class="hljs-property">todos</span> &#125;;<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title function_">connect</span>(mapStateToProps)(<span class="hljs-title class_">App</span>);<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-4-整体架构"><a href="#2-4-整体架构" class="headerlink" title="2.4 整体架构"></a>2.4 整体架构</h2><p><img src="https://poetries1.gitee.io/img-repo/20191001/45.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ul>
+<li>首先我们根据 <code>url</code> 访问相关的 <code>Route-Component</code>，在组件中我们通过 <code>dispatch</code>发送 <code>action</code> 到 <code>model</code>里面的 <code>effect</code> 或者直接 <code>Reducer</code></li>
+<li>当我们将<code>action</code>发送给<code>Effect</code>，基本上是取服务器上面请求数据的，服务器返回数据之后，<code>effect</code> 会发送相应的 <code>action</code>给 <code>reducer</code>，由唯一能改变 <code>state</code>的 <code>reducer</code> 改变 <code>state</code> ，然后通过<code>connect</code>重新渲染组件。</li>
+<li>当我们将<code>action</code>发送给<code>reducer</code>，那直接由 <code>reducer</code> 改变 <code>state</code>，然后通过<code>connect</code>重新渲染组件</li>
+</ul>
+<h2 id="2-5-Dva图解"><a href="#2-5-Dva图解" class="headerlink" title="2.5 Dva图解"></a>2.5 Dva图解</h2><p><strong>图解一：加入Saga</strong></p>
+<blockquote>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey">React` 只负责页面渲染, 而不负责页面逻辑, 页面逻辑可以从中单独抽取出来, 变成 `store<br></code></pre></td></tr></table></figure>
+</blockquote>
+<p><img src="https://poetries1.gitee.io/img-repo/20191001/46.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<blockquote>
+<p>使用 <code>Middleware</code> 拦截 <code>action</code>, 这样一来异步的网络操作也就很方便了, 做成一个 <code>Middleware</code>就行了, 这里使用<code>redux-saga</code> 这个类库</p>
+</blockquote>
+<ul>
+<li>点击创建 <code>Todo</code>的按钮, 发起一个 <code>type == addTodo</code> 的 <code>action</code></li>
+<li><code>saga</code> 拦截这个 <code>action</code>, 发起 <code>http</code> 请求, 如果请求成功, 则继续向 <code>reducer</code> 发一个 <code>type == addTodoSucc</code> 的 <code>action</code>, 提示创建成功, 反之则发送 <code>type == addTodoFail</code> 的<code>action</code> 即可</li>
+</ul>
+<p><strong>图解二：Dva表示法</strong></p>
+<p><img src="https://poetries1.gitee.io/img-repo/20191001/47.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<blockquote>
+<p>dva做了 3 件很重要的事情</p>
+</blockquote>
+<ul>
+<li>把 <code>store</code>及 <code>saga</code> 统一为一个 <code>model</code> 的概念, 写在一个 js 文件里面</li>
+<li>增加了一个 <code>Subscriptions</code>, 用于收集其他来源的 <code>action</code>, eg: 键盘操作</li>
+<li><code>model</code> 写法很简约, 类似于 <code>DSL</code> 或者 <code>RoR</code></li>
+</ul>
+<h1 id="三、计数器例子"><a href="#三、计数器例子" class="headerlink" title="三、计数器例子"></a>三、计数器例子</h1><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs actionscript">$ dva <span class="hljs-keyword">new</span> myapp<br></code></pre></td></tr></table></figure>
+
+<p><strong>目录结构介绍</strong></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs awk">.<br>├── mock    <span class="hljs-regexp">//</span> mock数据文件夹<br>├── node_modules <span class="hljs-regexp">//</span> 第三方的依赖<br>├── public  <span class="hljs-regexp">//</span> 存放公共public文件的文件夹<br>├── src  <span class="hljs-regexp">//</span> 最重要的文件夹，编写代码都在这个文件夹下<br>│   ├── assets <span class="hljs-regexp">//</span> 可以放图片等公共资源<br>│   ├── components <span class="hljs-regexp">//</span> 就是react中的木偶组件<br>│   ├── models <span class="hljs-regexp">//</span> dva最重要的文件夹，所有的数据交互及逻辑都写在这里<br>│   ├── routes <span class="hljs-regexp">//</span> 就是react中的智能组件，不要被文件夹名字误导。<br>│   ├── services <span class="hljs-regexp">//</span> 放请求借口方法的文件夹<br>│   ├── utils <span class="hljs-regexp">//</span> 自己的工具方法可以放在这边<br>│   ├── index.css <span class="hljs-regexp">//</span> 入口文件样式<br>│   ├── index.ejs <span class="hljs-regexp">//</span> ejs模板引擎<br>│   ├── index.js <span class="hljs-regexp">//</span> 入口文件<br>│   └── router.js <span class="hljs-regexp">//</span> 项目的路由文件<br>├── .eslintrc <span class="hljs-regexp">//</span> bower安装目录的配置<br>├── .editorconfig <span class="hljs-regexp">//</span> 保证代码在不同编辑器可视化的工具<br>├── .gitignore <span class="hljs-regexp">//</span> git上传时忽略的文件<br>├── .roadhogrc.js <span class="hljs-regexp">//</span> 项目的配置文件，配置接口转发，css_module等都在这边。<br>├── .roadhogrc.mock.js <span class="hljs-regexp">//</span> 项目的配置文件<br>└── package.json <span class="hljs-regexp">//</span> 当前整一个项目的依赖<br></code></pre></td></tr></table></figure>
+
+<p><strong>首先是前端的页面，我们使用 class 形式来创建组件，原例子中是使用无状态来创建的。react 创建组件的各种方式，大家可以看<a target="_blank" rel="noopener" href="http://www.cnblogs.com/wonyun/p/5930333.html">React创建组件的三种方式及其区别</a></strong></p>
+<blockquote>
+<p>我们先修改<code>route/IndexPage.js</code></p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; connect &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;dva&#x27;</span>;<br><span class="hljs-keyword">import</span> styles <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./IndexPage.css&#x27;</span>;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">IndexPage</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">React.Component</span> &#123;<br>  <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">const</span> &#123; dispatch &#125; = <span class="hljs-variable language_">this</span>.<span class="hljs-property">props</span>;<br><br>    <span class="hljs-keyword">return</span> (<br>      <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&#123;styles.normal&#125;</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&#123;styles.record&#125;</span>&gt;</span>Highest Record: 1<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&#123;styles.current&#125;</span>&gt;</span>2<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&#123;styles.button&#125;</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> &#123;&#125;&#125;&gt;+<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>    );<br>  &#125;<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title function_">connect</span>()(<span class="hljs-title class_">IndexPage</span>);<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>同时修改样式<code>routes/IndexPage.css</code></p>
+</blockquote>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.normal</span> &#123;<br>  <span class="hljs-attribute">width</span>: <span class="hljs-number">200px</span>;<br>  <span class="hljs-attribute">margin</span>: <span class="hljs-number">100px</span> auto;<br>  <span class="hljs-attribute">padding</span>: <span class="hljs-number">20px</span>;<br>  <span class="hljs-attribute">border</span>: <span class="hljs-number">1px</span> solid <span class="hljs-number">#ccc</span>;<br>  <span class="hljs-attribute">box-shadow</span>: <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">20px</span> <span class="hljs-number">#ccc</span>;<br>&#125;<br><span class="hljs-selector-class">.record</span> &#123;<br>  <span class="hljs-attribute">border-bottom</span>: <span class="hljs-number">1px</span> solid <span class="hljs-number">#ccc</span>;<br>  <span class="hljs-attribute">padding-bottom</span>: <span class="hljs-number">8px</span>;<br>  <span class="hljs-attribute">color</span>: <span class="hljs-number">#ccc</span>;<br>&#125;<br><span class="hljs-selector-class">.current</span> &#123;<br>  <span class="hljs-attribute">text-align</span>: center;<br>  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">40px</span>;<br>  <span class="hljs-attribute">padding</span>: <span class="hljs-number">40px</span> <span class="hljs-number">0</span>;<br>&#125;<br><span class="hljs-selector-class">.button</span> &#123;<br>  <span class="hljs-attribute">text-align</span>: center;<br>  <span class="hljs-selector-tag">button</span> &#123;<br>    <span class="hljs-attribute">width</span>: <span class="hljs-number">100px</span>;<br>    <span class="hljs-attribute">height</span>: <span class="hljs-number">40px</span>;<br>    <span class="hljs-attribute">background</span>: <span class="hljs-number">#aaa</span>;<br>    <span class="hljs-attribute">color</span>: <span class="hljs-number">#fff</span>;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>在 <code>model</code> 处理<code>state</code>，在页面里面输出 <code>model</code> 中的 <code>state</code></p>
+</blockquote>
+<ul>
+<li>首先我们在index.js中将<code>models/example.js</code>，即将model下一行的的注释打开</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs awk">import dva from <span class="hljs-string">&#x27;dva&#x27;</span>;<br>import <span class="hljs-string">&#x27;./index.css&#x27;</span>;<br><br><span class="hljs-regexp">//</span> <span class="hljs-number">1</span>. Initialize<br>const app = dva();<br><br><span class="hljs-regexp">//</span> <span class="hljs-number">2</span>. Plugins<br><span class="hljs-regexp">//</span> app.use(&#123;&#125;);<br><br><span class="hljs-regexp">//</span> <span class="hljs-number">3</span>. Model<br>app.model(require(<span class="hljs-string">&#x27;./models/example&#x27;</span>)); <span class="hljs-regexp">//</span> 打开注释<br><br><span class="hljs-regexp">//</span> <span class="hljs-number">4</span>. Router<br>app.router(require(<span class="hljs-string">&#x27;./router&#x27;</span>));<br><br><span class="hljs-regexp">//</span> <span class="hljs-number">5</span>. Start<br>app.start(<span class="hljs-string">&#x27;#root&#x27;</span>);<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>接下来我们进入 <code>models/example.js</code>，将<code>namespace</code> 名字改为 <code>count</code>，<code>state</code>对象加上 <code>record</code> 与 <code>current</code> 属性。如下</p>
+</blockquote>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs pf">export <span class="hljs-keyword">default</span> &#123;<br>  namespace: &#x27;count&#x27;,<br>  <span class="hljs-keyword">state</span>: &#123;<br>    record: <span class="hljs-number">0</span>,<br>    current: <span class="hljs-number">0</span>,<br>  &#125;,<br>  ...<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>接着我们来到 <code>routes/indexpage.js</code> 页面，通过的 <code>mapStateToProps</code>引入相关的 <code>state</code></p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; connect &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;dva&#x27;</span>;<br><span class="hljs-keyword">import</span> styles <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./IndexPage.css&#x27;</span>;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">IndexPage</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">React.Component</span> &#123;<br>  <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">const</span> &#123; dispatch, count &#125; = <span class="hljs-variable language_">this</span>.<span class="hljs-property">props</span>;<br>    <br>    <span class="hljs-keyword">return</span> (<br>      <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&#123;styles.normal&#125;</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&#123;styles.record&#125;</span>&gt;</span></span><br><span class="language-xml">         Highest Record: &#123;count.record&#125; // 将count的record输出</span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&#123;styles.current&#125;</span>&gt;</span></span><br><span class="language-xml">         &#123;count.current&#125;</span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&#123;styles.button&#125;</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> &#123;&#125; &#125; &gt;</span><br><span class="language-xml">                 +</span><br><span class="language-xml">          <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>    );<br>  &#125;<br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">mapStateToProps</span>(<span class="hljs-params">state</span>) &#123;<br>  <span class="hljs-keyword">return</span> &#123; <span class="hljs-attr">count</span>: state.<span class="hljs-property">count</span> &#125;;<br>&#125; <span class="hljs-comment">// 获取state</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title function_">connect</span>(mapStateToProps)(<span class="hljs-title class_">IndexPage</span>);<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>通过 <code>+</code> 发送 <code>action</code>，通过 <code>reducer</code> 改变相应的 <code>state</code></p>
+</blockquote>
+<ul>
+<li>首先我们在 <code>models/example.js</code>，写相应的 <code>reducer</code></li>
+</ul>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs pf">export <span class="hljs-keyword">default</span> &#123;<br>  ...<br>  reducers: &#123;<br>    add1(<span class="hljs-keyword">state</span>) &#123;<br>      <span class="hljs-keyword">const</span> newCurrent = <span class="hljs-keyword">state</span>.current + <span class="hljs-number">1</span>;<br>      return &#123; ...<span class="hljs-keyword">state</span>,<br>        record: newCurrent &gt; <span class="hljs-keyword">state</span>.record ? newCurrent : <span class="hljs-keyword">state</span>.record,<br>        current: newCurrent,<br>      &#125;;<br>    &#125;,<br>    minus(<span class="hljs-keyword">state</span>) &#123;<br>      return &#123; ...<span class="hljs-keyword">state</span>, current: <span class="hljs-keyword">state</span>.current - <span class="hljs-number">1</span> &#125;;<br>    &#125;,<br>  &#125;,<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>在页面的模板 <code>routes/IndexPage.js</code> 中 <code>+</code> 号点击的时候，<code>dispatch</code>一个 <code>action</code></p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; connect &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;dva&#x27;</span>;<br><span class="hljs-keyword">import</span> styles <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./IndexPage.css&#x27;</span>;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">IndexPage</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">React.Component</span> &#123;<br>  <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">const</span> &#123; dispatch, count &#125; = <span class="hljs-variable language_">this</span>.<span class="hljs-property">props</span>;<br>    <span class="hljs-keyword">return</span> (<br>      <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&#123;styles.normal&#125;</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&#123;styles.record&#125;</span>&gt;</span>Highest Record: &#123;count.record&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&#123;styles.current&#125;</span>&gt;</span>&#123;count.current&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&#123;styles.button&#125;</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">button</span> </span></span><br><span class="hljs-tag"><span class="language-xml">+            <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> &#123; dispatch(&#123; type: &#x27;count/add1&#x27; &#125;);&#125;</span><br><span class="language-xml">          &#125;&gt;+<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>    );<br>  &#125;<br>&#125;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">mapStateToProps</span>(<span class="hljs-params">state</span>) &#123;<br>  <span class="hljs-keyword">return</span> &#123; <span class="hljs-attr">count</span>: state.<span class="hljs-property">count</span> &#125;;<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title function_">connect</span>(mapStateToProps)(<span class="hljs-title class_">IndexPage</span>);<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>接下来我们来使用 <code>effect</code> 模拟一个数据接口请求，返回之后，通过 <code>yield put()</code> 改变相应的 <code>state</code></p>
+</blockquote>
+<ul>
+<li>首先我们替换相应的 <code>models/example.js</code> 的 <code>effect</code></li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs csharp">effects: &#123;<br>    *<span class="hljs-keyword">add</span>(action, &#123; call, put &#125;) &#123;<br>      <span class="hljs-function"><span class="hljs-keyword">yield</span> <span class="hljs-title">call</span>(<span class="hljs-params">delay, <span class="hljs-number">1000</span></span>)</span>;<br>      <span class="hljs-function"><span class="hljs-keyword">yield</span> <span class="hljs-title">put</span>(<span class="hljs-params">&#123; type: <span class="hljs-string">&#x27;minus&#x27;</span> &#125;</span>)</span>;<br>    &#125;,<br>&#125;,<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这里的 <code>delay</code>，是我这边写的一个延时的函数，我们在 <code>utils</code> 里面编写一个 <code>utils.js</code> ，一般请求接口的函数都会写在 <code>servers</code> 文件夹中</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">delay</span>(<span class="hljs-params">timeout</span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve</span>) =&gt;</span> &#123;<br>    <span class="hljs-built_in">setTimeout</span>(resolve, timeout);<br>  &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>订阅订阅键盘事件，使用 <code>subscriptions</code>，当用户按住 <code>command+up</code> 时候触发添加数字的 <code>action</code></p>
+</blockquote>
+<ul>
+<li>在 <code>models/example.js</code> 中作如下修改</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript">+<span class="hljs-keyword">import</span> key <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;keymaster&#x27;</span>;<br>...<br>app.<span class="hljs-title function_">model</span>(&#123;<br>  <span class="hljs-attr">namespace</span>: <span class="hljs-string">&#x27;count&#x27;</span>,<br>+ <span class="hljs-attr">subscriptions</span>: &#123;<br>+   <span class="hljs-title function_">keyboardWatcher</span>(<span class="hljs-params">&#123; dispatch &#125;</span>) &#123;<br>+     <span class="hljs-title function_">key</span>(<span class="hljs-string">&#x27;⌘+up, ctrl+up&#x27;</span>, <span class="hljs-function">() =&gt;</span> &#123; <span class="hljs-title function_">dispatch</span>(&#123;<span class="hljs-attr">type</span>:<span class="hljs-string">&#x27;add&#x27;</span>&#125;) &#125;);<br>+   &#125;,<br>+ &#125;,<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在这里你需要安装 <code>keymaster</code> 这个依赖</li>
+</ul>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">npm install keymaster <span class="hljs-comment">--save</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>现在你可以按住 <code>command+up</code> 就可以使 <code>current</code> 加1</li>
+</ul>
+<h1 id="四、Dva实践"><a href="#四、Dva实践" class="headerlink" title="四、Dva实践"></a>四、Dva实践</h1><h2 id="4-1-抽离Model"><a href="#4-1-抽离Model" class="headerlink" title="4.1 抽离Model"></a>4.1 抽离Model</h2><blockquote>
+<p>抽离<code>Model</code>，根据设计页面需求，设计相应的<code>Model</code></p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// models/users.js</span><br><span class="hljs-comment">// version1: 从数据维度抽取，更适用于无状态的数据</span><br><span class="hljs-comment">// version2: 从业务状态抽取，将数据与组件的业务状态统一抽离成一个model</span><br><span class="hljs-comment">// 新增部分为在数据维度基础上，改为从业务状态抽取而添加的代码</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-attr">namespace</span>: <span class="hljs-string">&#x27;users&#x27;</span>,<br>  <span class="hljs-attr">state</span>: &#123;<br>    <span class="hljs-attr">list</span>: [],<br>    <span class="hljs-attr">total</span>: <span class="hljs-literal">null</span>,<br>+   <span class="hljs-attr">loading</span>: <span class="hljs-literal">false</span>, <span class="hljs-comment">// 控制加载状态</span><br>+   <span class="hljs-attr">current</span>: <span class="hljs-literal">null</span>, <span class="hljs-comment">// 当前分页信息</span><br>+   <span class="hljs-attr">currentItem</span>: &#123;&#125;, <span class="hljs-comment">// 当前操作的用户对象</span><br>+   <span class="hljs-attr">modalVisible</span>: <span class="hljs-literal">false</span>, <span class="hljs-comment">// 弹出窗的显示状态</span><br>+   <span class="hljs-attr">modalType</span>: <span class="hljs-string">&#x27;create&#x27;</span>, <span class="hljs-comment">// 弹出窗的类型（添加用户，编辑用户）</span><br>  &#125;,<br><br>    <span class="hljs-comment">// 异步操作</span><br>    <span class="hljs-attr">effects</span>: &#123;<br>        *<span class="hljs-title function_">query</span>(<span class="hljs-params"></span>)&#123;&#125;,<br>        *<span class="hljs-title function_">create</span>(<span class="hljs-params"></span>)&#123;&#125;,<br>        *<span class="hljs-string">&#x27;delete&#x27;</span>()&#123;&#125;,   <span class="hljs-comment">// 因为delete是关键字，特殊处理</span><br>        *<span class="hljs-title function_">update</span>(<span class="hljs-params"></span>)&#123;&#125;,<br>    &#125;,<br><br>    <span class="hljs-comment">// 替换状态树</span><br>    <span class="hljs-attr">reducers</span>: &#123;<br>+       <span class="hljs-title function_">showLoading</span>(<span class="hljs-params"></span>)&#123;&#125;, <span class="hljs-comment">// 控制加载状态的 reducer</span><br>+       <span class="hljs-title function_">showModel</span>(<span class="hljs-params"></span>)&#123;&#125;, <span class="hljs-comment">// 控制 Model 显示状态的 reducer</span><br>+       <span class="hljs-title function_">hideModel</span>(<span class="hljs-params"></span>)&#123;&#125;,<br>        <span class="hljs-title function_">querySuccess</span>(<span class="hljs-params"></span>)&#123;&#125;,<br>        <span class="hljs-title function_">createSuccess</span>(<span class="hljs-params"></span>)&#123;&#125;,<br>        <span class="hljs-title function_">deleteSuccess</span>(<span class="hljs-params"></span>)&#123;&#125;,<br>        <span class="hljs-title function_">updateSuccess</span>(<span class="hljs-params"></span>)&#123;&#125;,<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="4-2-设计组件"><a href="#4-2-设计组件" class="headerlink" title="4.2 设计组件"></a>4.2 设计组件</h2><blockquote>
+<p>先设置容器组件的访问路径，再创建组件文件</p>
+</blockquote>
+<h3 id="4-2-1-容器组件"><a href="#4-2-1-容器组件" class="headerlink" title="4.2.1 容器组件"></a>4.2.1 容器组件</h3><blockquote>
+<p>具有监听数据行为的组件，职责是绑定相关联的 model 数据，包含子组件；传入的数据来源于model</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span>, &#123; <span class="hljs-title class_">Component</span>, <span class="hljs-title class_">PropTypes</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;<br><br><span class="hljs-comment">// dva 的 connect 方法可以将组件和数据关联在一起</span><br><span class="hljs-keyword">import</span> &#123; connect &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;dva&#x27;</span>;<br><br><span class="hljs-comment">// 组件本身</span><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">MyComponent</span> = (<span class="hljs-params">props</span>)=&gt;&#123;&#125;;<br><br><span class="hljs-comment">// propTypes属性，用于限制props的传入数据类型</span><br><span class="hljs-title class_">MyComponent</span>.<span class="hljs-property">propTypes</span> = &#123;&#125;;<br><br><span class="hljs-comment">// 声明模型传递函数，用于建立组件和数据的映射关系</span><br><span class="hljs-comment">// 实际表示 将ModelA这一个数据模型，绑定到当前的组件中，则在当前组件中，随时可以取到ModelA的最新值</span><br><span class="hljs-comment">// 可以绑定多个Model</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">mapStateToProps</span>(<span class="hljs-params">&#123;ModelA&#125;</span>) &#123;<br>  <span class="hljs-keyword">return</span> &#123;<span class="hljs-title class_">ModelA</span>&#125;;<br>&#125;<br><br><span class="hljs-comment">// 关联 model</span><br><span class="hljs-comment">// 正式调用模型传递函数，完成模型绑定</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title function_">connect</span>(mapStateToProps)(<span class="hljs-title class_">MyComponent</span>);<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-2-2-展示组件"><a href="#4-2-2-展示组件" class="headerlink" title="4.2.2 展示组件"></a>4.2.2 展示组件</h3><blockquote>
+<p>展示通过 <code>props</code> 传递到组件内部数据；传入的数据来源于容器组件向展示组件的<code>props</code></p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span>, &#123; <span class="hljs-title class_">Component</span>, <span class="hljs-title class_">PropTypes</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;<br><br><span class="hljs-comment">// 组件本身</span><br><span class="hljs-comment">// 所需要的数据通过 Container Component 通过 props 传递下来</span><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">MyComponent</span> = (<span class="hljs-params">props</span>)=&gt;&#123;&#125;<br><span class="hljs-title class_">MyComponent</span>.<span class="hljs-property">propTypes</span> = &#123;&#125;;<br><br><span class="hljs-comment">// 并不会监听数据</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">MyComponent</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-2-3-设置路由"><a href="#4-2-3-设置路由" class="headerlink" title="4.2.3 设置路由"></a>4.2.3 设置路由</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// .src/router.js</span><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span>, &#123; <span class="hljs-title class_">PropTypes</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">Router</span>, <span class="hljs-title class_">Route</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;dva/router&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-title class_">Users</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./routes/Users&#x27;</span>;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span>(<span class="hljs-params">&#123; history &#125;</span>) &#123;<br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Router</span> <span class="hljs-attr">history</span>=<span class="hljs-string">&#123;history&#125;</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Route</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/users&quot;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">&#123;Users&#125;</span> /&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">Router</span>&gt;</span></span><br>  );<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p><strong>容器组件雏形</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// .src/routes/Users.jsx</span><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span>, &#123; <span class="hljs-title class_">PropTypes</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">Users</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>User Router Component<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>  );<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">Users</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-2-4-设计容器组件"><a href="#4-2-4-设计容器组件" class="headerlink" title="4.2.4 设计容器组件"></a>4.2.4 设计容器组件</h3><blockquote>
+<p>自顶向下的设计方法：先设计容器组件，再逐步细化内部的展示容器</p>
+</blockquote>
+<p>组件的定义方式</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs scala"><span class="hljs-comment">// 方法一： es6 的写法，当组件设计react生命周期时，可采用这种写法</span><br><span class="hljs-comment">// 具有生命周期的组件，可以在接收到传入数据变化时，自定义执行方法，有自己的行为模式</span><br><span class="hljs-comment">// 比如在组件生成后调用xx请求(componentDidMount)、可以自己决定要不要更新渲染(shouldComponentUpdate)等</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span>(<span class="hljs-params">&#123;&#125;</span>)</span>;<br><br><span class="hljs-comment">// 方法二： stateless 的写法，定义无状态组件</span><br><span class="hljs-comment">// 无状态组件，仅仅根据传入的数据更新，修改自己的渲染内容</span><br>const <span class="hljs-type">App</span> = (props) =&gt; (&#123;&#125;);<br></code></pre></td></tr></table></figure>
+
+<p>容器组件：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// ./src/routes/Users.jsx</span><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span>, &#123; <span class="hljs-title class_">Component</span>, <span class="hljs-title class_">PropTypes</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;<br><br><span class="hljs-comment">// 引入展示组件 （暂时都没实现）</span><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">UserList</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../components/Users/UserList&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-title class_">UserSearch</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../components/Users/UserSearch&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-title class_">UserModal</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../components/Users/UserModal&#x27;</span>;<br><br><span class="hljs-comment">// 引入css样式表</span><br><span class="hljs-keyword">import</span> styles <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./style.less&#x27;</span><br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">Users</span>(<span class="hljs-params"></span>) &#123;<br><br>  <span class="hljs-comment">// 向userListProps中传入静态数据</span><br>  <span class="hljs-keyword">const</span> userSearchProps = &#123;&#125;;<br>  <span class="hljs-keyword">const</span> userListProps = &#123;<br>    <span class="hljs-attr">total</span>: <span class="hljs-number">3</span>,<br>    <span class="hljs-attr">current</span>: <span class="hljs-number">1</span>,<br>    <span class="hljs-attr">loading</span>: <span class="hljs-literal">false</span>,<br>    <span class="hljs-attr">dataSource</span>: [<br>      &#123;<br>        <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;张三&#x27;</span>,<br>        <span class="hljs-attr">age</span>: <span class="hljs-number">23</span>,<br>        <span class="hljs-attr">address</span>: <span class="hljs-string">&#x27;成都&#x27;</span>,<br>      &#125;,<br>      &#123;<br>        <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;李四&#x27;</span>,<br>        <span class="hljs-attr">age</span>: <span class="hljs-number">24</span>,<br>        <span class="hljs-attr">address</span>: <span class="hljs-string">&#x27;杭州&#x27;</span>,<br>      &#125;,<br>      &#123;<br>        <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;王五&#x27;</span>,<br>        <span class="hljs-attr">age</span>: <span class="hljs-number">25</span>,<br>        <span class="hljs-attr">address</span>: <span class="hljs-string">&#x27;上海&#x27;</span>,<br>      &#125;,<br>    ],<br>  &#125;;<br>  <span class="hljs-keyword">const</span> userModalProps = &#123;&#125;;<br><br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&#123;styles.normal&#125;</span>&gt;</span></span><br><span class="language-xml">      &#123;/* 用户筛选搜索框 */&#125;</span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">UserSearch</span> &#123;<span class="hljs-attr">...userSearchProps</span>&#125; /&gt;</span></span><br><span class="language-xml">      &#123;/* 用户信息展示列表 */&#125;</span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">UserList</span> &#123;<span class="hljs-attr">...userListProps</span>&#125; /&gt;</span></span><br><span class="language-xml">      &#123;/* 添加用户 &amp; 修改用户弹出的浮层 */&#125;</span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">UserModal</span> &#123;<span class="hljs-attr">...userModalProps</span>&#125; /&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>  );<br>&#125;<br><br><span class="hljs-comment">// 很关键的对外输出export；使外部可通过import引用使用此组件</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">Users</span>;<br></code></pre></td></tr></table></figure>
+
+<p>展示组件UserList</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// ./src/components/Users/UserList.jsx</span><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span>, &#123; <span class="hljs-title class_">Component</span>, <span class="hljs-title class_">PropTypes</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;<br><br><span class="hljs-comment">// 采用antd的UI组件</span><br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">Table</span>, message, <span class="hljs-title class_">Popconfirm</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;antd&#x27;</span>;<br><br><span class="hljs-comment">// 采用 stateless 的写法</span><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">UserList</span> = (<span class="hljs-params">&#123;</span><br><span class="hljs-params">    total,</span><br><span class="hljs-params">    current,</span><br><span class="hljs-params">    loading,</span><br><span class="hljs-params">    dataSource,</span><br><span class="hljs-params">&#125;</span>) =&gt; &#123;<br>  <span class="hljs-keyword">const</span> columns = [&#123;<br>    <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;姓名&#x27;</span>,<br>    <span class="hljs-attr">dataIndex</span>: <span class="hljs-string">&#x27;name&#x27;</span>,<br>    <span class="hljs-attr">key</span>: <span class="hljs-string">&#x27;name&#x27;</span>,<br>    <span class="hljs-attr">render</span>: <span class="hljs-function">(<span class="hljs-params">text</span>) =&gt;</span> <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;#&quot;</span>&gt;</span>&#123;text&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span>,<br>  &#125;, &#123;<br>    <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;年龄&#x27;</span>,<br>    <span class="hljs-attr">dataIndex</span>: <span class="hljs-string">&#x27;age&#x27;</span>,<br>    <span class="hljs-attr">key</span>: <span class="hljs-string">&#x27;age&#x27;</span>,<br>  &#125;, &#123;<br>    <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;住址&#x27;</span>,<br>    <span class="hljs-attr">dataIndex</span>: <span class="hljs-string">&#x27;address&#x27;</span>,<br>    <span class="hljs-attr">key</span>: <span class="hljs-string">&#x27;address&#x27;</span>,<br>  &#125;, &#123;<br>    <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;操作&#x27;</span>,<br>    <span class="hljs-attr">key</span>: <span class="hljs-string">&#x27;operation&#x27;</span>,<br>    <span class="hljs-attr">render</span>: <span class="hljs-function">(<span class="hljs-params">text, record</span>) =&gt;</span> (<br>      <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;()</span>=&gt;</span>&#123;&#125;&#125;&gt;编辑<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br><span class="language-xml">         </span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Popconfirm</span> <span class="hljs-attr">title</span>=<span class="hljs-string">&quot;确定要删除吗？&quot;</span> <span class="hljs-attr">onConfirm</span>=<span class="hljs-string">&#123;()</span>=&gt;</span>&#123;&#125;&#125;&gt;</span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">a</span>&gt;</span>删除<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">Popconfirm</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br>    ),<br>  &#125;];<br><br>  <span class="hljs-comment">// 定义分页对象</span><br>  <span class="hljs-keyword">const</span> pagination = &#123;<br>    total,<br>    current,<br>    <span class="hljs-attr">pageSize</span>: <span class="hljs-number">10</span>,<br>    <span class="hljs-attr">onChange</span>: <span class="hljs-function">()=&gt;</span>&#123;&#125;,<br>  &#125;;<br><br><br>  <span class="hljs-comment">// 此处的Table标签使用了antd组件，传入的参数格式是由antd组件库本身决定的</span><br>  <span class="hljs-comment">// 此外还需要在index.js中引入antd  import &#x27;antd/dist/antd.css&#x27;</span><br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Table</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">columns</span>=<span class="hljs-string">&#123;columns&#125;</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">dataSource</span>=<span class="hljs-string">&#123;dataSource&#125;</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">loading</span>=<span class="hljs-string">&#123;loading&#125;</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">rowKey</span>=<span class="hljs-string">&#123;record</span> =&gt;</span> record.id&#125;</span><br><span class="language-xml">        pagination=&#123;pagination&#125;</span><br><span class="language-xml">      /&gt;</span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>  );<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">UserList</span>;<br></code></pre></td></tr></table></figure>
+
+<h2 id="4-3-添加Reducer"><a href="#4-3-添加Reducer" class="headerlink" title="4.3 添加Reducer"></a>4.3 添加Reducer</h2><blockquote>
+<p>在整个应用中，只有<code>model</code>中的<code>reducer</code>函数可以直接修改自己所在<code>model</code>的<code>state</code>参数，其余都是非法操作；<br>并且必须使用<code>return &#123;...state&#125;</code>的形式进行修改</p>
+</blockquote>
+<h3 id="4-3-1-第一步：实现reducer函数"><a href="#4-3-1-第一步：实现reducer函数" class="headerlink" title="4.3.1 第一步：实现reducer函数"></a>4.3.1 第一步：实现reducer函数</h3><figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs pf">// models/users.js<br>// 使用静态数据返回，把<span class="hljs-keyword">user</span>List中的静态数据移到此处<br>// querySuccess这个action的作用在于，修改了model的数据<br>export <span class="hljs-keyword">default</span> &#123;<br>  namespace: &#x27;users&#x27;,<br>  <span class="hljs-keyword">state</span>： &#123;&#125;，<br>  subscriptions: &#123;&#125;,<br>  effects: &#123;&#125;,<br>  reducers: &#123;<br>    querySuccess(<span class="hljs-keyword">state</span>)&#123;<br>        <span class="hljs-keyword">const</span> mock = &#123;<br>          total: <span class="hljs-number">3</span>,<br>          current: <span class="hljs-number">1</span>,<br>          loading: false,<br>          list: [<br>            &#123;<br>              id: <span class="hljs-number">1</span>,<br>              name: &#x27;张三&#x27;,<br>              age: <span class="hljs-number">23</span>,<br>              address: &#x27;成都&#x27;,<br>            &#125;,<br>            &#123;<br>              id: <span class="hljs-number">2</span>,<br>              name: &#x27;李四&#x27;,<br>              age: <span class="hljs-number">24</span>,<br>              address: &#x27;杭州&#x27;,<br>            &#125;,<br>            &#123;<br>              id: <span class="hljs-number">3</span>,<br>              name: &#x27;王五&#x27;,<br>              age: <span class="hljs-number">25</span>,<br>              address: &#x27;上海&#x27;,<br>            &#125;,<br>          ]<br>        &#125;;<br>        // return 的内容是一个对象，涵盖原<span class="hljs-keyword">state</span>中的所有属性，以实现“更新替换”的效果<br>        return &#123;...<span class="hljs-keyword">state</span>, ...mock, loading: false&#125;;<br>      &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-3-2-第二步：关联Model中的数据源"><a href="#4-3-2-第二步：关联Model中的数据源" class="headerlink" title="4.3.2 第二步：关联Model中的数据源"></a>4.3.2 第二步：关联Model中的数据源</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// routes/Users.jsx</span><br><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span>, &#123; <span class="hljs-title class_">PropTypes</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;<br><br><span class="hljs-comment">// 最后用到了connect函数，需要在头部预先引入connect</span><br><span class="hljs-keyword">import</span> &#123; connect &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;dva&#x27;</span>;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">Users</span>(<span class="hljs-params">&#123; location, dispatch, users &#125;</span>) &#123;<br><br>  <span class="hljs-keyword">const</span> &#123;<br>    loading, list, total, current,<br>    currentItem, modalVisible, modalType<br>    &#125; = users;<br><br>  <span class="hljs-keyword">const</span> userSearchProps=&#123;&#125;;<br><br>  <span class="hljs-comment">// 使用传入的数据源，进行数据渲染</span><br>  <span class="hljs-keyword">const</span> userListProps=&#123;<br>    <span class="hljs-attr">dataSource</span>: list,<br>    total,<br>    loading,<br>    current,<br>  &#125;;<br>  <span class="hljs-keyword">const</span> userModalProps=&#123;&#125;;<br><br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&#123;styles.normal&#125;</span>&gt;</span></span><br><span class="language-xml">      &#123;/* 用户筛选搜索框 */&#125;</span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">UserSearch</span> &#123;<span class="hljs-attr">...userSearchProps</span>&#125; /&gt;</span></span><br><span class="language-xml">      &#123;/* 用户信息展示列表 */&#125;</span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">UserList</span> &#123;<span class="hljs-attr">...userListProps</span>&#125; /&gt;</span></span><br><span class="language-xml">      &#123;/* 添加用户 &amp; 修改用户弹出的浮层 */&#125;</span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">UserModal</span> &#123;<span class="hljs-attr">...userModalProps</span>&#125; /&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>  );<br>&#125;<br><br><span class="hljs-comment">// 声明组件的props类型</span><br><span class="hljs-title class_">Users</span>.<span class="hljs-property">propTypes</span> = &#123;<br>  <span class="hljs-attr">users</span>: <span class="hljs-title class_">PropTypes</span>.<span class="hljs-property">object</span>,<br>&#125;;<br><br><span class="hljs-comment">// 指定订阅数据，并且关联到users中</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">mapStateToProps</span>(<span class="hljs-params">&#123; users &#125;</span>) &#123;<br>  <span class="hljs-keyword">return</span> &#123;users&#125;;<br>&#125;<br><br><span class="hljs-comment">// 建立数据关联关系</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title function_">connect</span>(mapStateToProps)(<span class="hljs-title class_">Users</span>);<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-3-3-第三步：通过发起Action，在组件中获取Model中的数据"><a href="#4-3-3-第三步：通过发起Action，在组件中获取Model中的数据" class="headerlink" title="4.3.3 第三步：通过发起Action，在组件中获取Model中的数据"></a>4.3.3 第三步：通过发起Action，在组件中获取Model中的数据</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> models/users.js<br><span class="hljs-regexp">//</span> 在组件生成后发出action，示例：<br>componentDidMount() &#123;<br>  this.props.dispatch(&#123;<br>    type: <span class="hljs-string">&#x27;model/action&#x27;</span>,     <span class="hljs-regexp">//</span> type对应action的名字<br>  &#125;);<br>&#125;<br><br><span class="hljs-regexp">//</span> 在本次实践中，在访问<span class="hljs-regexp">/users/</span>路由时，就是我们获取用户数据的时机<br><span class="hljs-regexp">//</span> 因此把dispatch移至subscription中<br><span class="hljs-regexp">//</span> subcription，订阅(或是监听)一个数据源，然后根据条件dispatch对应的action<br><span class="hljs-regexp">//</span> 数据源可以是当前的时间、服务器的 websocket 连接、keyboard 输入、geolocation 变化、history 路由变化等等  <br><span class="hljs-regexp">//</span> 此处订阅的数据源就是路由信息，当路由为/users，则派发<span class="hljs-string">&#x27;querySuccess&#x27;</span>这个effects方法<br>subscriptions: &#123;<br>    setup(&#123; dispatch, history &#125;) &#123;<br>      history.listen(location =&gt; &#123;<br>        <span class="hljs-keyword">if</span> (location.pathname === <span class="hljs-string">&#x27;/users&#x27;</span>) &#123;<br>          dispatch(&#123;<br>            type: <span class="hljs-string">&#x27;querySuccess&#x27;</span>,<br>            payload: &#123;&#125;<br>          &#125;);<br>        &#125;<br>      &#125;);<br>    &#125;,<br>  &#125;,<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-3-4-第四步：-在index-js中添加models"><a href="#4-3-4-第四步：-在index-js中添加models" class="headerlink" title="4.3.4 第四步： 在index.js中添加models"></a>4.3.4 第四步： 在index.js中添加models</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> model必须在此完成注册，才能全局有效<br><span class="hljs-regexp">//</span> index.js<br>app.model(require(<span class="hljs-string">&#x27;./models/users.js&#x27;</span>));<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-4-添加Effects"><a href="#4-4-添加Effects" class="headerlink" title="4.4 添加Effects"></a>4.4 添加Effects</h3><blockquote>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey">Effects`的作用在于处理异步函数，控制数据流程。<br>因为在真实场景中，数据都来自服务器，需要在发起异步请求获得返回值后再设置数据，更新`state`。<br>因此我们往往在`Effects`中调用`reducer<br></code></pre></td></tr></table></figure>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-attr">namespace</span>: <span class="hljs-string">&#x27;users&#x27;</span>,<br>  state： &#123;&#125;，<br>  <span class="hljs-attr">subscriptions</span>: &#123;&#125;,<br>  <span class="hljs-attr">effects</span>: &#123;<br>    <span class="hljs-comment">// 添加effects函数</span><br>    <span class="hljs-comment">// call与put是dva的函数</span><br>    <span class="hljs-comment">// call调用执行一个函数</span><br>    <span class="hljs-comment">// put则是dispatch执行一个action</span><br>    <span class="hljs-comment">// select用于访问其他model</span><br>    *<span class="hljs-title function_">query</span>(<span class="hljs-params">&#123; payload &#125;, &#123; select, call, put &#125;</span>) &#123;<br>        <span class="hljs-keyword">yield</span> <span class="hljs-title function_">put</span>(&#123; <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;showLoading&#x27;</span> &#125;);<br>        <span class="hljs-keyword">const</span> &#123; data &#125; = <span class="hljs-keyword">yield</span> <span class="hljs-title function_">call</span>(query);<br>        <span class="hljs-keyword">if</span> (data) &#123;<br>          <span class="hljs-keyword">yield</span> <span class="hljs-title function_">put</span>(&#123;<br>            <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;querySuccess&#x27;</span>,<br>            <span class="hljs-attr">payload</span>: &#123;<br>              <span class="hljs-attr">list</span>: data.<span class="hljs-property">data</span>,<br>              <span class="hljs-attr">total</span>: data.<span class="hljs-property">page</span>.<span class="hljs-property">total</span>,<br>              <span class="hljs-attr">current</span>: data.<span class="hljs-property">page</span>.<span class="hljs-property">current</span><br>            &#125;<br>          &#125;);<br>        &#125;<br>      &#125;,<br>    &#125;,<br>  <span class="hljs-attr">reducers</span>: &#123;&#125;<br>&#125;<br><br><br><br><span class="hljs-comment">// 添加请求处理   包含了一个ajax请求</span><br><span class="hljs-comment">// models/users.js</span><br><span class="hljs-keyword">import</span> request <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../utils/request&#x27;</span>;<br><span class="hljs-keyword">import</span> qs <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;qs&#x27;</span>;<br><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">query</span>(<span class="hljs-params">params</span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-title function_">request</span>(<span class="hljs-string">`/api/users?<span class="hljs-subst">$&#123;qs.stringify(params)&#125;</span>`</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-5-把请求处理分离到service中"><a href="#4-5-把请求处理分离到service中" class="headerlink" title="4.5 把请求处理分离到service中"></a>4.5 把请求处理分离到service中</h3><blockquote>
+<p>用意在于分离(可复用的)ajax请求</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// services/users.js</span><br><span class="hljs-keyword">import</span> request <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../utils/request&#x27;</span>;<br><span class="hljs-keyword">import</span> qs <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;qs&#x27;</span>;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">query</span>(<span class="hljs-params">params</span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-title function_">request</span>(<span class="hljs-string">`/api/users?<span class="hljs-subst">$&#123;qs.stringify(params)&#125;</span>`</span>);<br>&#125;<br><br><span class="hljs-comment">// 在models中引用</span><br><span class="hljs-comment">// models/users.js</span><br><span class="hljs-keyword">import</span> &#123;query&#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../services/users&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<h2 id="五、使用dva框架和直接使用redux写法的区别"><a href="#五、使用dva框架和直接使用redux写法的区别" class="headerlink" title="五、使用dva框架和直接使用redux写法的区别"></a>五、使用dva框架和直接使用redux写法的区别</h2><h3 id="5-1-使用-redux"><a href="#5-1-使用-redux" class="headerlink" title="5.1 使用 redux"></a>5.1 使用 redux</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// action.js</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">REQUEST_TODO</span> = <span class="hljs-string">&#x27;REQUEST_TODO&#x27;</span>;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">RESPONSE_TODO</span> = <span class="hljs-string">&#x27;RESPONSE_TODO&#x27;</span>;<br><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">request</span> = count =&gt; (&#123;<span class="hljs-attr">type</span>: <span class="hljs-variable constant_">REQUEST_TODO</span>, <span class="hljs-attr">payload</span>: &#123;<span class="hljs-attr">loading</span>: <span class="hljs-literal">true</span>, count&#125;&#125;);<br><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">response</span> = count =&gt; (&#123;<span class="hljs-attr">type</span>: <span class="hljs-variable constant_">RESPONSE_TODO</span>, <span class="hljs-attr">payload</span>: &#123;<span class="hljs-attr">loading</span>: <span class="hljs-literal">false</span>, count&#125;&#125;);<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-title function_">fetch</span> = count =&gt; &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-function">(<span class="hljs-params">dispatch</span>) =&gt;</span> &#123;<br>    <span class="hljs-title function_">dispatch</span>(<span class="hljs-title function_">request</span>(count));<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function"><span class="hljs-params">resolve</span> =&gt;</span> &#123;<br>      <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>        <span class="hljs-title function_">resolve</span>(count + <span class="hljs-number">1</span>);<br>      &#125;, <span class="hljs-number">1000</span>)<br>    &#125;).<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">data</span> =&gt;</span> &#123;<br>      <span class="hljs-title function_">dispatch</span>(<span class="hljs-title function_">response</span>(data))<br>    &#125;)<br>  &#125;<br>&#125;<br><span class="hljs-comment">//reducer.js</span><br><span class="hljs-keyword">import</span> &#123; <span class="hljs-variable constant_">REQUEST_TODO</span>, <span class="hljs-variable constant_">RESPONSE_TODO</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./actions&#x27;</span>;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> (state = &#123;<br>  <span class="hljs-attr">loading</span>: <span class="hljs-literal">false</span>,<br>  <span class="hljs-attr">count</span>: <span class="hljs-number">0</span><br>&#125;, action) =&gt; &#123;<br>  <span class="hljs-keyword">switch</span> (action.<span class="hljs-property">type</span>) &#123;<br>    <span class="hljs-keyword">case</span> <span class="hljs-attr">REQUEST_TODO</span>:<br>      <span class="hljs-keyword">return</span> &#123;...state, ...action.<span class="hljs-property">payload</span>&#125;;<br>    <span class="hljs-keyword">case</span> <span class="hljs-attr">RESPONSE_TODO</span>:<br>      <span class="hljs-keyword">return</span> &#123;...state, ...action.<span class="hljs-property">payload</span>&#125;;<br>    <span class="hljs-attr">default</span>:<br>      <span class="hljs-keyword">return</span> state;<br>  &#125;<br>&#125;<br><span class="hljs-comment">// app.js</span><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; bindActionCreators &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;redux&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; connect &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react-redux&#x27;</span>;<br><br><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> actions <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./actions&#x27;</span>;<br><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">App</span> = (<span class="hljs-params">&#123;fetch, count, loading&#125;</span>) =&gt; &#123;<br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">      &#123;loading ? <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>loading...<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span> : <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>&#123;count&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>&#125;</span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> fetch(count)&#125;&gt;add<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>  )<br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">mapStateToProps</span>(<span class="hljs-params">state</span>) &#123;<br>  <span class="hljs-keyword">return</span> state;<br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">mapDispatchToProps</span>(<span class="hljs-params">dispatch</span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-title function_">bindActionCreators</span>(actions, dispatch)<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title function_">connect</span>(mapStateToProps, mapDispatchToProps)(<span class="hljs-title class_">App</span>)<br><span class="hljs-comment">//index.js</span><br><span class="hljs-keyword">import</span> &#123; render &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react-dom&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; createStore, applyMiddleware &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;redux&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">Provider</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react-redux&#x27;</span><br><span class="hljs-keyword">import</span> thunkMiddleware <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;redux-thunk&#x27;</span>;<br><br><span class="hljs-keyword">import</span> reducer <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./app/reducer&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-title class_">App</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./app/app&#x27;</span>;<br><br><span class="hljs-keyword">const</span> store = <span class="hljs-title function_">createStore</span>(reducer, <span class="hljs-title function_">applyMiddleware</span>(thunkMiddleware));<br><br><span class="hljs-title function_">render</span>(<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Provider</span> <span class="hljs-attr">store</span>=<span class="hljs-string">&#123;store&#125;</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">App</span>/&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">Provider</span>&gt;</span></span><br>  ,<br>  <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;app&#x27;</span>)<br>)<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-2-使用dva"><a href="#5-2-使用dva" class="headerlink" title="5.2 使用dva"></a>5.2 使用dva</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// model.js</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-attr">namespace</span>: <span class="hljs-string">&#x27;demo&#x27;</span>,<br>  <span class="hljs-attr">state</span>: &#123;<br>    <span class="hljs-attr">loading</span>: <span class="hljs-literal">false</span>,<br>    <span class="hljs-attr">count</span>: <span class="hljs-number">0</span><br>  &#125;,<br>  <span class="hljs-attr">reducers</span>: &#123;<br>    <span class="hljs-title function_">request</span>(<span class="hljs-params">state, payload</span>) &#123;<br>      <span class="hljs-keyword">return</span> &#123;...state, ...payload&#125;;<br>    &#125;,<br>    <span class="hljs-title function_">response</span>(<span class="hljs-params">state, payload</span>) &#123;<br>      <span class="hljs-keyword">return</span> &#123;...state, ...payload&#125;;<br>    &#125;<br>  &#125;,<br>  <span class="hljs-attr">effects</span>: &#123;<br>    *<span class="hljs-string">&#x27;fetch&#x27;</span>(action, &#123;put, call&#125;) &#123;<br>      <span class="hljs-keyword">yield</span> <span class="hljs-title function_">put</span>(&#123;<span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;request&#x27;</span>, <span class="hljs-attr">loading</span>: <span class="hljs-literal">true</span>&#125;);<br><br>      <span class="hljs-keyword">let</span> count = <span class="hljs-keyword">yield</span> <span class="hljs-title function_">call</span>(<span class="hljs-function">(<span class="hljs-params">count</span>) =&gt;</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function"><span class="hljs-params">resolve</span> =&gt;</span> &#123;<br>          <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>            <span class="hljs-title function_">resolve</span>(count + <span class="hljs-number">1</span>);<br>          &#125;, <span class="hljs-number">1000</span>);<br>        &#125;);<br>      &#125;, action.<span class="hljs-property">count</span>);<br><br>      <span class="hljs-keyword">yield</span> <span class="hljs-title function_">put</span>(&#123;<br>        <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;response&#x27;</span>,<br>        <span class="hljs-attr">loading</span>: <span class="hljs-literal">false</span>,<br>        count<br>      &#125;);<br>    &#125;<br>  &#125;<br>&#125;<br><span class="hljs-comment">//app.js</span><br><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span><br><span class="hljs-keyword">import</span> &#123; connect &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;dva&#x27;</span>;<br><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">App</span> = (<span class="hljs-params">&#123;fetch, count, loading&#125;</span>) =&gt; &#123;<br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">      &#123;loading ? <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>loading...<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span> : <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>&#123;count&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>&#125;</span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> fetch(count)&#125;&gt;add<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>  )<br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">mapStateToProps</span>(<span class="hljs-params">state</span>) &#123;<br>  <span class="hljs-keyword">return</span> state.<span class="hljs-property">demo</span>;<br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">mapDispatchToProps</span>(<span class="hljs-params">dispatch</span>) &#123;<br>  <span class="hljs-keyword">return</span> &#123;<br>    <span class="hljs-title function_">fetch</span>(<span class="hljs-params">count</span>)&#123;<br>      <span class="hljs-title function_">dispatch</span>(&#123;<span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;demo/fetch&#x27;</span>, count&#125;);<br>    &#125;<br>  &#125;<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title function_">connect</span>(mapStateToProps, mapDispatchToProps)(<span class="hljs-title class_">App</span>)<br><span class="hljs-comment">// index.js</span><br><span class="hljs-keyword">import</span> dva <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;dva&#x27;</span>;<br><span class="hljs-keyword">import</span> model <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./model&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-title class_">App</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./app&#x27;</span>;<br><br><span class="hljs-keyword">const</span> app = <span class="hljs-title function_">dva</span>();<br><br>app.<span class="hljs-title function_">use</span>(&#123;&#125;);<br><br>app.<span class="hljs-title function_">model</span>(model);<br><br>app.<span class="hljs-title function_">router</span>(<span class="hljs-function">() =&gt;</span> <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">App</span> /&gt;</span></span>);<br><br>app.<span class="hljs-title function_">start</span>();<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>使用 <code>redux</code> 需要拆分出<code>action</code>模块和<code>reducer</code>模块</li>
+<li><code>dva</code>将<code>action</code>和<code>reducer</code>封装到<code>model</code>中，异步流程采用<code>Generator</code>处理</li>
+</ul>
+<h1 id="六、使用axios统一处理"><a href="#六、使用axios统一处理" class="headerlink" title="六、使用axios统一处理"></a>六、使用axios统一处理</h1><h2 id="6-1-示例代码"><a href="#6-1-示例代码" class="headerlink" title="6.1 示例代码"></a>6.1 示例代码</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// request.js</span><br><span class="hljs-keyword">import</span> axios <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;axios&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-title class_">NProgress</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;nprogress&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; notification, message &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;antd&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; routerRedux &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;dva/router&#x27;</span>;<br><span class="hljs-keyword">import</span> store <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../index&#x27;</span>;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 一、功能：</span><br><span class="hljs-comment"> * 1. 统一拦截http错误请求码；</span><br><span class="hljs-comment"> * 2. 统一拦截业务错误代码；</span><br><span class="hljs-comment"> * 3. 统一设置请求前缀</span><br><span class="hljs-comment"> * |-- 每个 http 加前缀 baseURL = /api/v1，从配置文件中获取 apiPrefix</span><br><span class="hljs-comment"> * 4. 配置异步请求过渡状态：显示蓝色加载条表示正在请求中，避免给用户页面假死的不好体验。</span><br><span class="hljs-comment"> * |-- 使用 NProgress 工具库。</span><br><span class="hljs-comment"> * </span><br><span class="hljs-comment"> * 二、引包：</span><br><span class="hljs-comment"> * |-- axios：http 请求工具库</span><br><span class="hljs-comment"> * |-- NProgress：异步请求过度条，在浏览器主体部分顶部显示蓝色小条</span><br><span class="hljs-comment"> * |-- notification：Antd组件 &gt; 处理错误响应码提示信息</span><br><span class="hljs-comment"> * |-- routerRedux：dva/router对象，用于路由跳转，错误响应码跳转相应页面</span><br><span class="hljs-comment"> * |-- store：dva中对象，使用里面的 dispatch 对象，用于触发路由跳转</span><br><span class="hljs-comment"> */</span><br><br><span class="hljs-comment">// 设置全局参数，如响应超市时间，请求前缀等。</span><br>axios.<span class="hljs-property">defaults</span>.<span class="hljs-property">timeout</span> = <span class="hljs-number">5000</span><br>axios.<span class="hljs-property">defaults</span>.<span class="hljs-property">baseURL</span> = <span class="hljs-string">&#x27;/api/v1&#x27;</span>;<br>axios.<span class="hljs-property">defaults</span>.<span class="hljs-property">withCredentials</span> = <span class="hljs-literal">true</span>;<br><br><span class="hljs-comment">// 状态码错误信息</span><br><span class="hljs-keyword">const</span> codeMessage = &#123;<br>  <span class="hljs-number">200</span>: <span class="hljs-string">&#x27;服务器成功返回请求的数据。&#x27;</span>,<br>  <span class="hljs-number">201</span>: <span class="hljs-string">&#x27;新建或修改数据成功。&#x27;</span>,<br>  <span class="hljs-number">202</span>: <span class="hljs-string">&#x27;一个请求已经进入后台排队（异步任务）。&#x27;</span>,<br>  <span class="hljs-number">204</span>: <span class="hljs-string">&#x27;删除数据成功。&#x27;</span>,<br>  <span class="hljs-number">400</span>: <span class="hljs-string">&#x27;发出的请求有错误，服务器没有进行新建或修改数据的操作。&#x27;</span>,<br>  <span class="hljs-number">401</span>: <span class="hljs-string">&#x27;用户没有权限（令牌、用户名、密码错误）。&#x27;</span>,<br>  <span class="hljs-number">403</span>: <span class="hljs-string">&#x27;用户得到授权，但是访问是被禁止的。&#x27;</span>,<br>  <span class="hljs-number">404</span>: <span class="hljs-string">&#x27;发出的请求针对的是不存在的记录，服务器没有进行操作。&#x27;</span>,<br>  <span class="hljs-number">406</span>: <span class="hljs-string">&#x27;请求的格式不可得。&#x27;</span>,<br>  <span class="hljs-number">410</span>: <span class="hljs-string">&#x27;请求的资源被永久删除，且不会再得到的。&#x27;</span>,<br>  <span class="hljs-number">422</span>: <span class="hljs-string">&#x27;当创建一个对象时，发生一个验证错误。&#x27;</span>,<br>  <span class="hljs-number">500</span>: <span class="hljs-string">&#x27;服务器发生错误，请检查服务器。&#x27;</span>,<br>  <span class="hljs-number">502</span>: <span class="hljs-string">&#x27;网关错误。&#x27;</span>,<br>  <span class="hljs-number">503</span>: <span class="hljs-string">&#x27;服务不可用，服务器暂时过载或维护。&#x27;</span>,<br>  <span class="hljs-number">504</span>: <span class="hljs-string">&#x27;网关超时。&#x27;</span>,<br>&#125;;<br><br><span class="hljs-comment">// 添加一个请求拦截器，用于设置请求过渡状态</span><br>axios.<span class="hljs-property">interceptors</span>.<span class="hljs-property">request</span>.<span class="hljs-title function_">use</span>(<span class="hljs-function">(<span class="hljs-params">config</span>) =&gt;</span> &#123;<br>  <span class="hljs-comment">// 请求开始，蓝色过渡滚动条开始出现</span><br>  <span class="hljs-title class_">NProgress</span>.<span class="hljs-title function_">start</span>();<br>  <span class="hljs-keyword">return</span> config;<br>&#125;, <span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">reject</span>(error);<br>&#125;);<br><br><span class="hljs-comment">// 添加一个返回拦截器</span><br>axios.<span class="hljs-property">interceptors</span>.<span class="hljs-property">response</span>.<span class="hljs-title function_">use</span>(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> &#123;<br>  <span class="hljs-comment">// 请求结束，蓝色过渡滚动条消失</span><br>  <span class="hljs-title class_">NProgress</span>.<span class="hljs-title function_">done</span>();<br>  <span class="hljs-keyword">return</span> response;<br>&#125;, <span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> &#123;<br>  <span class="hljs-comment">// 请求结束，蓝色过渡滚动条消失</span><br>  <span class="hljs-comment">// 即使出现异常，也要调用关闭方法，否则一直处于加载状态很奇怪</span><br>  <span class="hljs-title class_">NProgress</span>.<span class="hljs-title function_">done</span>();<br>  <span class="hljs-keyword">return</span> <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">reject</span>(error);<br>&#125;);<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">request</span> (opt) &#123;<br>  <span class="hljs-comment">// 调用 axios api，统一拦截</span><br>  <span class="hljs-keyword">return</span> <span class="hljs-title function_">axios</span>(opt)<br>    .<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> <br>      <span class="hljs-comment">// &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; 请求成功 &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span><br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`【<span class="hljs-subst">$&#123;opt.method&#125;</span> <span class="hljs-subst">$&#123;opt.url&#125;</span>】请求成功，响应数据：%o`</span>, response);<br><br>      <span class="hljs-comment">// 打印业务错误提示</span><br>      <span class="hljs-keyword">if</span> (response.<span class="hljs-property">data</span> &amp;&amp; response.<span class="hljs-property">data</span>.<span class="hljs-property">code</span> != <span class="hljs-string">&#x27;0000&#x27;</span>) &#123;<br>        message.<span class="hljs-title function_">error</span>(response.<span class="hljs-property">data</span>.<span class="hljs-property">message</span>);<br>      &#125;<br><br>      <span class="hljs-keyword">return</span> &#123; ...response.<span class="hljs-property">data</span> &#125;;<br>    &#125;)<br>    .<span class="hljs-title function_">catch</span>(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> &#123;<br>      <span class="hljs-comment">// &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; 请求失败 &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span><br>      <span class="hljs-comment">// 请求配置发生的错误</span><br>      <span class="hljs-keyword">if</span> (!error.<span class="hljs-property">response</span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Error&#x27;</span>, error.<span class="hljs-property">message</span>);<br>      &#125;<br><br>      <span class="hljs-comment">// 响应时状态码处理 </span><br>      <span class="hljs-keyword">const</span> status = error.<span class="hljs-property">response</span>.<span class="hljs-property">status</span>;<br>      <span class="hljs-keyword">const</span> errortext = codeMessage[status] || error.<span class="hljs-property">response</span>.<span class="hljs-property">statusText</span>;<br>      <br>      notification.<span class="hljs-title function_">error</span>(&#123;<br>        <span class="hljs-attr">message</span>: <span class="hljs-string">`请求错误 <span class="hljs-subst">$&#123;status&#125;</span>`</span>,<br>        <span class="hljs-attr">description</span>: errortext,<br>      &#125;);<br>      <br>      <span class="hljs-comment">// 存在请求，但是服务器的返回一个状态码，它们都在2xx之外</span><br>      <span class="hljs-keyword">const</span> &#123; dispatch &#125; = store;<br><br>      <span class="hljs-keyword">if</span> (status === <span class="hljs-number">401</span>) &#123;<br>        <span class="hljs-title function_">dispatch</span>(routerRedux.<span class="hljs-title function_">push</span>(<span class="hljs-string">&#x27;/user/login&#x27;</span>));<br>      &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (status === <span class="hljs-number">403</span>) &#123;<br>        <span class="hljs-title function_">dispatch</span>(routerRedux.<span class="hljs-title function_">push</span>(<span class="hljs-string">&#x27;/exception/403&#x27;</span>));<br>      &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (status &lt;= <span class="hljs-number">504</span> &amp;&amp; status &gt;= <span class="hljs-number">500</span>) &#123;<br>        <span class="hljs-title function_">dispatch</span>(routerRedux.<span class="hljs-title function_">push</span>(<span class="hljs-string">&#x27;/exception/500&#x27;</span>));<br>      &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (status &gt;= <span class="hljs-number">404</span> &amp;&amp; status &lt; <span class="hljs-number">422</span>) &#123;<br>        <span class="hljs-title function_">dispatch</span>(routerRedux.<span class="hljs-title function_">push</span>(<span class="hljs-string">&#x27;/exception/404&#x27;</span>));<br>      &#125;<br><br>      <span class="hljs-comment">// 开发时使用，上线时删除</span><br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`【<span class="hljs-subst">$&#123;opt.method&#125;</span> <span class="hljs-subst">$&#123;opt.url&#125;</span>】请求失败，响应数据：%o`</span>, error.<span class="hljs-property">response</span>);<br><br>      <span class="hljs-keyword">return</span> &#123; <span class="hljs-attr">code</span>: status, <span class="hljs-attr">message</span>: errortext &#125;; <br>    &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="6-2-明确响应体"><a href="#6-2-明确响应体" class="headerlink" title="6.2 明确响应体"></a>6.2 明确响应体</h2><blockquote>
+<p>以微信小程序为例，请求响应数据分为两部分：</p>
+</blockquote>
+<ul>
+<li>网络请求是否成功；</li>
+<li>业务场景值。即便网络请求成功了，业务处理上可能有时也会出错，比如校验不通过</li>
+</ul>
+<p>我们在拦截响应时要分别对这两部分进行处理</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs awk">response = &#123;<br>  status: <span class="hljs-number">200</span>,                <span class="hljs-regexp">//</span> 网络请求状态。<br>  statusText: <span class="hljs-string">&#x27;xxx&#x27;</span>,<br>  data: &#123;<br>    code: <span class="hljs-string">&#x27;1001&#x27;</span>,             <span class="hljs-regexp">//</span> 业务请求状态。这里 <span class="hljs-string">&#x27;0000&#x27;</span> 表示业务没问题，其它都有问题<br>    message: <span class="hljs-string">&#x27;yyy&#x27;</span>,<br>    data: &#123;  &#125;,<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="6-3-依赖包分析"><a href="#6-3-依赖包分析" class="headerlink" title="6.3 依赖包分析"></a>6.3 依赖包分析</h2><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs clean"><span class="hljs-keyword">import</span> axios <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;axios&#x27;</span>;<br><span class="hljs-keyword">import</span> NProgress <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;nprogress&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; notification, message &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;antd&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; routerRedux &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;dva/router&#x27;</span>;<br><span class="hljs-keyword">import</span> store <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../index&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>import store from &#39;../index&#39;;</code>这是 <code>dva</code> 中导出的对象。即下面代码最终导出的 <code>app._store</code>，引入它是因为 <code>dispatch</code> 对象在里面，我们需要 dispatch 对象进行路由跳转</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// index.js</span><br><span class="hljs-keyword">import</span> dva <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;dva&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; message &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;antd&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; createBrowserHistory <span class="hljs-keyword">as</span> createHistory &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;history&#x27;</span>;<br><br><span class="hljs-comment">// 1. Initialize</span><br><span class="hljs-keyword">const</span> app = <span class="hljs-title function_">dva</span>(&#123;<br>  <span class="hljs-attr">history</span>: <span class="hljs-title function_">createHistory</span>(),<br>&#125;);<br><br><span class="hljs-comment">// 2. Plugins</span><br>app.<span class="hljs-title function_">use</span>(<span class="hljs-title function_">createLoading</span>());<br><br><span class="hljs-comment">// 3. Model</span><br>app.<span class="hljs-title function_">model</span>(<span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./models/app/global&#x27;</span>).<span class="hljs-property">default</span>);<br><br><span class="hljs-comment">// 4. Router</span><br>app.<span class="hljs-title function_">router</span>(<span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./router&#x27;</span>).<span class="hljs-property">default</span>);<br><br><span class="hljs-comment">// 5. Start</span><br>app.<span class="hljs-title function_">start</span>(<span class="hljs-string">&#x27;#root&#x27;</span>);<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> app.<span class="hljs-property">_store</span>;<br></code></pre></td></tr></table></figure>
+
+<h2 id="6-4-axios-全局配置"><a href="#6-4-axios-全局配置" class="headerlink" title="6.4 axios 全局配置"></a>6.4 axios 全局配置</h2><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs actionscript"><span class="hljs-comment">// 设置全局参数，如响应超市时间，请求前缀等。</span><br>axios.defaults.timeout = <span class="hljs-number">5000</span><br>axios.defaults.baseURL = <span class="hljs-string">&#x27;/api/v1&#x27;</span>;<br>axios.defaults.withCredentials = <span class="hljs-literal">true</span>;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>axios 可以设置很多全局配置，具体可参阅 <a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000008470355">https://segmentfault.com/a/1190000008470355</a></p>
+</blockquote>
+<h2 id="6-5-加载-NProgress-过渡组件"><a href="#6-5-加载-NProgress-过渡组件" class="headerlink" title="6.5 加载 NProgress 过渡组件"></a>6.5 加载 NProgress 过渡组件</h2><figure class="highlight moonscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs moonscript">/ 添加一个请求拦截器，用于设置请求过渡状态<br>axios.interceptors.request.use(<span class="hljs-function"><span class="hljs-params">(config)</span> =&gt;</span> &#123;<br>  // 请求开始，蓝色过渡滚动条开始出现<br>  NProgress.start();<br>  <span class="hljs-keyword">return</span> config;<br>&#125;, <span class="hljs-function"><span class="hljs-params">(<span class="hljs-built_in">error</span>)</span> =&gt;</span> &#123;<br>  <span class="hljs-keyword">return</span> Promise.reject(<span class="hljs-built_in">error</span>);<br>&#125;);<br><br>// 添加一个返回拦截器<br>axios.interceptors.response.use(<span class="hljs-function"><span class="hljs-params">(response)</span> =&gt;</span> &#123;<br>  // 请求结束，蓝色过渡滚动条消失<br>  NProgress.done();<br>  <span class="hljs-keyword">return</span> response;<br>&#125;, <span class="hljs-function"><span class="hljs-params">(<span class="hljs-built_in">error</span>)</span> =&gt;</span> &#123;<br>  // 请求结束，蓝色过渡滚动条消失<br>  // 即使出现异常，也要调用关闭方法，否则一直处于加载状态很奇怪<br>  NProgress.done();<br>  <span class="hljs-keyword">return</span> Promise.reject(<span class="hljs-built_in">error</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>NProgress</code> 的使用主要有两个方法，当调用 <code>NProgress.start();</code> 时在浏览器顶部就会出现蓝色小条，当调用 <code>NProgress.done();</code> 蓝色小条就会消失。我们分别在请求开始和接收到响应调用这两个方法</p>
+</blockquote>
+<p><img src="https://upload-images.jianshu.io/upload_images/6693922-948c3efcfeeaf4fd.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="6-6-网络请求成功处理"><a href="#6-6-网络请求成功处理" class="headerlink" title="6.6 网络请求成功处理"></a>6.6 网络请求成功处理</h2><figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs arcade">.then(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> <br>      <span class="hljs-comment">// &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; 请求成功 &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span><br>      <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">`【<span class="hljs-subst">$&#123;opt.method&#125;</span> <span class="hljs-subst">$&#123;opt.url&#125;</span>】请求成功，响应数据：%o`</span>, response);<br><br>      <span class="hljs-comment">// 打印业务错误提示</span><br>      <span class="hljs-keyword">if</span> (response.data &amp;&amp; response.data.code != <span class="hljs-string">&#x27;0000&#x27;</span>) &#123;<br>        message.error(response.data.message);<br>      &#125;<br><br>      <span class="hljs-keyword">return</span> &#123; ...response.data &#125;;<br>    &#125;)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>网络请求状态码为 <code>200-300</code> 表示成功，此时还应该判断业务处理是否成功。这个根据具体项目具体规定，比如微信小程序有一套场景值。在实际项目中可以自行规定 <code>code = &#39;0000&#39;</code> 业务处理完全没问题，<code>code = &#39;1111&#39;</code>校验不通过，<code>code = &#39;2222&#39;</code> 数据库出错等等。</p>
+</blockquote>
+<ul>
+<li>最后别忘了要返回具体对象 <code>&#123; ...response.data &#125;</code></li>
+</ul>
+<h2 id="6-7-网络请求失败处理"><a href="#6-7-网络请求失败处理" class="headerlink" title="6.7 网络请求失败处理"></a>6.7 网络请求失败处理</h2><figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-comment">// 状态码错误信息</span><br>const codeMessage = &#123;<br>  <span class="hljs-number">200</span>: <span class="hljs-string">&#x27;服务器成功返回请求的数据。&#x27;</span>,<br>  <span class="hljs-number">201</span>: <span class="hljs-string">&#x27;新建或修改数据成功。&#x27;</span>,<br>  <span class="hljs-number">202</span>: <span class="hljs-string">&#x27;一个请求已经进入后台排队（异步任务）。&#x27;</span>,<br>  <span class="hljs-number">204</span>: <span class="hljs-string">&#x27;删除数据成功。&#x27;</span>,<br>  <span class="hljs-number">400</span>: <span class="hljs-string">&#x27;发出的请求有错误，服务器没有进行新建或修改数据的操作。&#x27;</span>,<br>  <span class="hljs-number">401</span>: <span class="hljs-string">&#x27;用户没有权限（令牌、用户名、密码错误）。&#x27;</span>,<br>  <span class="hljs-number">403</span>: <span class="hljs-string">&#x27;用户得到授权，但是访问是被禁止的。&#x27;</span>,<br>  <span class="hljs-number">404</span>: <span class="hljs-string">&#x27;发出的请求针对的是不存在的记录，服务器没有进行操作。&#x27;</span>,<br>  <span class="hljs-number">406</span>: <span class="hljs-string">&#x27;请求的格式不可得。&#x27;</span>,<br>  <span class="hljs-number">410</span>: <span class="hljs-string">&#x27;请求的资源被永久删除，且不会再得到的。&#x27;</span>,<br>  <span class="hljs-number">422</span>: <span class="hljs-string">&#x27;当创建一个对象时，发生一个验证错误。&#x27;</span>,<br>  <span class="hljs-number">500</span>: <span class="hljs-string">&#x27;服务器发生错误，请检查服务器。&#x27;</span>,<br>  <span class="hljs-number">502</span>: <span class="hljs-string">&#x27;网关错误。&#x27;</span>,<br>  <span class="hljs-number">503</span>: <span class="hljs-string">&#x27;服务不可用，服务器暂时过载或维护。&#x27;</span>,<br>  <span class="hljs-number">504</span>: <span class="hljs-string">&#x27;网关超时。&#x27;</span>,<br>&#125;;<br><br><span class="hljs-comment">// ...........</span><br><br>.catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> &#123;<br>      <span class="hljs-comment">// &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; 请求失败 &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span><br>      <span class="hljs-comment">// 请求配置发生的错误</span><br>      <span class="hljs-keyword">if</span> (!error.response) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&#x27;Error&#x27;</span>, error.message);<br>      &#125;<br><br>      <span class="hljs-comment">// 响应时状态码处理 </span><br>      const status = error.response.status;<br>      const errortext = codeMessage[status] || error.response.statusText;<br>      <br>      notification.error(&#123;<br>        <span class="hljs-attr">message</span>: <span class="hljs-string">`请求错误 <span class="hljs-subst">$&#123;status&#125;</span>`</span>,<br>        <span class="hljs-attr">description</span>: errortext,<br>      &#125;);<br>      <br>      <span class="hljs-comment">// 存在请求，但是服务器的返回一个状态码，它们都在2xx之外</span><br>      const &#123; dispatch &#125; = store;<br><br>      <span class="hljs-keyword">if</span> (status === <span class="hljs-number">401</span>) &#123;<br>        dispatch(routerRedux.<span class="hljs-built_in">push</span>(<span class="hljs-string">&#x27;/user/login&#x27;</span>));<br>      &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (status === <span class="hljs-number">403</span>) &#123;<br>        dispatch(routerRedux.<span class="hljs-built_in">push</span>(<span class="hljs-string">&#x27;/exception/403&#x27;</span>));<br>      &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (status &lt;= <span class="hljs-number">504</span> &amp;&amp; status &gt;= <span class="hljs-number">500</span>) &#123;<br>        dispatch(routerRedux.<span class="hljs-built_in">push</span>(<span class="hljs-string">&#x27;/exception/500&#x27;</span>));<br>      &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (status &gt;= <span class="hljs-number">404</span> &amp;&amp; status &lt; <span class="hljs-number">422</span>) &#123;<br>        dispatch(routerRedux.<span class="hljs-built_in">push</span>(<span class="hljs-string">&#x27;/exception/404&#x27;</span>));<br>      &#125;<br><br>      <span class="hljs-comment">// 开发时使用，上线时删除</span><br>      <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">`【<span class="hljs-subst">$&#123;opt.method&#125;</span> <span class="hljs-subst">$&#123;opt.url&#125;</span>】请求失败，响应数据：%o`</span>, error.response);<br><br>      <span class="hljs-keyword">return</span> &#123; <span class="hljs-attr">code</span>: status, <span class="hljs-attr">message</span>: errortext &#125;; <br>    &#125;);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>网络请求失败，首先需要根据 <code>status</code> 打印提示消息，告诉用户为什么请求失败。如响应码为 <code>401</code>，那么提示用户的文字就会是 用户没有权限（令牌、用户名、密码错误）</li>
+<li>如果是 <code>401</code> 错误，表示用户没有权限访问或者用户名密码输入错误，应该跳转到登录页面：<code>dispatch(routerRedux.push(&#39;/user/login&#39;));</code></li>
+</ul>
+<h1 id="七、更多参考"><a href="#七、更多参考" class="headerlink" title="七、更多参考"></a>七、更多参考</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/dvajs/dva-docs/blob/master/v1/zh-cn/tutorial/01-%E6%A6%82%E8%A6%81.md">dva官方教程</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/dvajs/dva/blob/master/README_zh-CN.md">官方文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/dvajs/dva-knowledgemap">使用Dva的所有知识点</a></li>
+<li><a target="_blank" rel="noopener" href="http://slides.com/sorrycc/dva#/">Dva-React 应用框架在蚂蚁金服的实践</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/sorrycc/roadhog#%E9%85%8D%E7%BD%AE">roadhog介绍</a></li>
+<li><a target="_blank" rel="noopener" href="https://my.oschina.net/dkvirus/blog/1057996">创建一个 dva 脚手架工程</a></li>
+<li><a target="_blank" rel="noopener" href="https://my.oschina.net/dkvirus/blog/1058203">dva 脚手架目录分析</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/sorrycc/blog/issues/18">12 步 30 分钟，完成用户管理的 CURD 应用 (react+dva+antd)</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/c5ec9ffa29be">dva router4.0 使用实践总结</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/7de59752b8a8">dva 2.0中如何使用代码进行路由跳转</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/2e9e45e9a880">dva 配置 browserHistory 实践总结</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/61fe7a57fad4">dva-loading 实践用法</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/649e97ff4354">dva 升级2.0版本遇到的问题小结</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/e0a220906301">dva 中进行页面复用实践总结</a></li>
+<li><a target="_blank" rel="noopener" href="https://dvajs.com/knowledgemap/#javascript-%E8%AF%AD%E8%A8%80">Dva知识地图</a></li>
+<li><a target="_blank" rel="noopener" href="https://dvajs.com/api/">dva-API文档</a></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%A1%86%E6%9E%B6/" class="category-chain-item">框架</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/React/">#React</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>React dva总结</div>
+      <div>http://example.com/2019/12/12/React/React-dva/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>December 12, 2019</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/12/16/React/React-%E5%BC%95%E5%85%A5css/" title="React引入css">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">React引入css</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/12/05/React/React-diff%E5%8E%9F%E7%90%86/" title="React-diff原理">
+                        <span class="hidden-mobile">React-diff原理</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

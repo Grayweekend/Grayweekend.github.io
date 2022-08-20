@@ -1,0 +1,1295 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="好久没用sql，都忘得干干净净，翻阅以前的学习笔记，觉得有些可记录的点，放在这里以便备用查阅  一、环境搭建 1mac&#96;安装&#96;MySQL  1brew install mysql   12345# 启动mysql.server start#登录mysql -uroot  二、基础知识1、数据库的连接12# 例子mysql -u root -p 123456 -h 127.0.0.1   -u 用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql">
+<meta property="og:url" content="http://example.com/2019/03/15/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="好久没用sql，都忘得干干净净，翻阅以前的学习笔记，觉得有些可记录的点，放在这里以便备用查阅  一、环境搭建 1mac&#96;安装&#96;MySQL  1brew install mysql   12345# 启动mysql.server start#登录mysql -uroot  二、基础知识1、数据库的连接12# 例子mysql -u root -p 123456 -h 127.0.0.1   -u 用">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/355.png">
+<meta property="article:published_time" content="2019-03-15T01:58:46.000Z">
+<meta property="article:modified_time" content="2022-06-06T12:16:30.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="mysql">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://poetries1.gitee.io/img-repo/2019/10/355.png">
+  
+  
+  
+  <title>mysql - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="mysql"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-03-15 09:58" pubdate>
+          March 15, 2019 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          26k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          218 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">mysql</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>好久没用<code>sql</code>，都忘得干干净净，翻阅以前的学习笔记，觉得有些可记录的点，放在这里以便备用查阅</p>
+</blockquote>
+<h2 id="一、环境搭建"><a href="#一、环境搭建" class="headerlink" title="一、环境搭建"></a>一、环境搭建</h2><blockquote>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey">mac`安装`MySQL<br></code></pre></td></tr></table></figure>
+</blockquote>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">brew </span><span class="hljs-keyword">install </span>mysql<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/355.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-meta"># 启动</span><br><br>mysql.<span class="hljs-keyword">server</span> start<br><span class="hljs-meta">#登录</span><br>mysql -uroot<br></code></pre></td></tr></table></figure>
+
+<h2 id="二、基础知识"><a href="#二、基础知识" class="headerlink" title="二、基础知识"></a>二、基础知识</h2><h3 id="1、数据库的连接"><a href="#1、数据库的连接" class="headerlink" title="1、数据库的连接"></a>1、数据库的连接</h3><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-comment"># 例子</span><br><span class="hljs-attribute">mysql</span> -u root -p <span class="hljs-number">123456</span> -h <span class="hljs-number">127.0.0.1</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-u</code> 用户名</li>
+<li><code>-p</code> 密码</li>
+<li><code>-h</code> <code>host</code>主机</li>
+</ul>
+<h3 id="2、库级知识"><a href="#2、库级知识" class="headerlink" title="2、库级知识"></a>2、库级知识</h3><blockquote>
+<p>命令后面加上分号</p>
+</blockquote>
+<ul>
+<li>显示数据库: <code>show databases;</code></li>
+<li>选择数据库: <code>use dbname;</code></li>
+<li>创建数据库: <code>create database dbname charset utf8;</code></li>
+<li>删除数据库: <code>drop database dbname;</code></li>
+</ul>
+<h3 id="3、表级操作"><a href="#3、表级操作" class="headerlink" title="3、表级操作"></a>3、表级操作</h3><h4 id="3-1-显示库下面的表"><a href="#3-1-显示库下面的表" class="headerlink" title="3.1 显示库下面的表"></a>3.1 显示库下面的表</h4><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">show</span> <span class="hljs-keyword">tables</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-2-查看表的结构"><a href="#3-2-查看表的结构" class="headerlink" title="3.2 查看表的结构"></a>3.2 查看表的结构</h4><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">desc tableName<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="3-3-查看表的创建过程"><a href="#3-3-查看表的创建过程" class="headerlink" title="3.3 查看表的创建过程:"></a>3.3 查看表的创建过程:</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">show</span> <span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span>  tableName;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-4-创建表"><a href="#3-4-创建表" class="headerlink" title="3.4 创建表"></a>3.4 创建表</h4><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs gradle">create table tbName (<br>列名称<span class="hljs-number">1</span>　列类型　[列参数]　[not <span class="hljs-keyword">null</span> <span class="hljs-keyword">default</span> ],<br>列名称N　列类型　[列参数]　[not <span class="hljs-keyword">null</span> <span class="hljs-keyword">default</span> ]<br>) engine myisam<span class="hljs-regexp">/innodb charset utf8/g</span>bk<br></code></pre></td></tr></table></figure>
+
+<p><strong>例子</strong></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> <span class="hljs-keyword">user</span> (<br>    id    <span class="hljs-type">int</span>         auto_increment,<br>    <span class="hljs-type">name</span>  <span class="hljs-type">varchar</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">not</span> <span class="hljs-keyword">null</span> <span class="hljs-keyword">default</span> <span class="hljs-string">&#x27;&#x27;</span>,<br>    age   tinyint unsigned <span class="hljs-keyword">not</span> <span class="hljs-keyword">null</span> <span class="hljs-keyword">default</span> <span class="hljs-number">0</span>,<br>    <span class="hljs-keyword">index</span> id (id)<br>)engine=innodb charset=utf8;<br><br># 注:innodb是表引擎,也可以是myisam或其他,但最常用的是myisam和innodb,<br># charset 常用的有utf8,gbk;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-5-修改表"><a href="#3-5-修改表" class="headerlink" title="3.5 修改表"></a>3.5 修改表</h4><p><strong>3.5.1 修改表之增加列</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> tbName <span class="hljs-keyword">add</span> 列名称１　列类型　[列参数]　[<span class="hljs-keyword">not</span> <span class="hljs-keyword">null</span> <span class="hljs-keyword">default</span> ]　<br><br>#(<span class="hljs-keyword">add</span>之后的旧列名之后的语法和创建表时的列声明一样)<br></code></pre></td></tr></table></figure>
+
+<p><strong>3.5.2 修改表之修改列</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> tbName change 旧列名  新列名  列类型　[列参数]　[<span class="hljs-keyword">not</span> <span class="hljs-keyword">null</span> <span class="hljs-keyword">default</span> ]<br><br># (注:旧列名之后的语法和创建表时的列声明一样)<br></code></pre></td></tr></table></figure>
+
+<p><strong>3.5.3 修改表之减少列</strong></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> tbName <span class="hljs-keyword">drop</span> 列名称;<br></code></pre></td></tr></table></figure>
+
+<p><strong>3.5.4 修改表之增加主键</strong></p>
+<figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sas"><span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> tbName <span class="hljs-keyword">add</span> <span class="hljs-keyword">primary</span> <span class="hljs-keyword">key</span>(主键所在列名);<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>例:<code>alter table goods add primary key(id)</code> 该例是把主键建立在<code>id</code>列上</p>
+</blockquote>
+<p><strong>3.5.5 修改表之删除主键</strong></p>
+<figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sas"><span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> tbName　<span class="hljs-keyword">drop</span> <span class="hljs-keyword">primary</span> <span class="hljs-keyword">key</span>;<br></code></pre></td></tr></table></figure>
+
+<p><strong>3.5.6 修改表之增加索引</strong></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> tbName <span class="hljs-keyword">add</span> [<span class="hljs-keyword">unique</span>|fulltext] <span class="hljs-keyword">index</span> 索引名(列名);<br></code></pre></td></tr></table></figure>
+
+<p><strong>3.5.7 修改表之删除索引</strong></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> tbName <span class="hljs-keyword">drop</span> <span class="hljs-keyword">index</span> 索引名;<br></code></pre></td></tr></table></figure>
+
+<p><strong>3.5.8 清空表的数据</strong></p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">truncate tableName<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="4、列类型讲解"><a href="#4、列类型讲解" class="headerlink" title="4、列类型讲解"></a>4、列类型讲解</h3><h4 id="4-1-列类型"><a href="#4-1-列类型" class="headerlink" title="4.1 列类型"></a>4.1 列类型</h4><ul>
+<li><code>tinyint (0~255/-128~127)</code></li>
+<li><code>smallint (0~65535/-32768~32767)</code></li>
+<li><code>mediumint</code></li>
+<li><code>int</code></li>
+<li><code>bigint</code></li>
+</ul>
+<p><strong>参数解释</strong></p>
+<blockquote>
+<p><code>unsigned</code> 无符号(不能为负) <code>zerofill 0</code>填充 <code>M</code> 填充后的宽度</p>
+</blockquote>
+<ul>
+<li>举例:</li>
+</ul>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs abnf">tinyint unsigned<span class="hljs-comment">;</span><br>tinyint(<span class="hljs-number">6</span>) zerofill<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="4-2-数值型"><a href="#4-2-数值型" class="headerlink" title="4.2 数值型"></a>4.2 数值型</h4><ul>
+<li>浮点型:<code>float</code> <code>double</code></li>
+<li>格式:<code>float(M,D)</code> <code>unsigned\zerofill;</code></li>
+</ul>
+<h4 id="4-3-字符型"><a href="#4-3-字符型" class="headerlink" title="4.3 字符型"></a>4.3 字符型</h4><ul>
+<li><code>char(m)</code> 定长</li>
+<li><code>varchar(m)</code>变长</li>
+<li><code>text</code></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">列</th>
+<th align="left">实存字符i</th>
+<th align="left">实占空间</th>
+<th align="left">利用率</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>char(M)</code></td>
+<td align="left"><code>0&lt;=i&lt;=M</code></td>
+<td align="left"><code>M</code></td>
+<td align="left"><code>i/m&lt;=100%</code></td>
+</tr>
+<tr>
+<td align="left"><code>varchar(M)</code></td>
+<td align="left"><code>0&lt;=i&lt;=M</code></td>
+<td align="left"><code>i+1,2</code></td>
+<td align="left"><code>i/i+1/2&lt;100%</code></td>
+</tr>
+</tbody></table>
+<h4 id="4-4-日期时间类型"><a href="#4-4-日期时间类型" class="headerlink" title="4.4 日期时间类型"></a>4.4 日期时间类型</h4><ul>
+<li><code>year</code> <code>YYYY</code> 范围:<code>1901~2155</code>. 可输入值<code>2</code>位和<code>4</code>位(如<code>98</code>,<code>2012</code>)</li>
+<li><code>date</code> <code>YYYY-MM-DD</code> 如:<code>2010-03-14</code></li>
+<li><code>time</code> <code>HH:MM:SS</code> 如:<code>19:26:32</code></li>
+<li><code>datetime</code> <code>YYYY-MM-DD</code> <code>HH:MM:SS</code> 如:<code>2010-03-14 19:26:32</code></li>
+<li><code>timestamp</code> <code>YYYY-MM-DD</code> <code>HH:MM:SS</code></li>
+</ul>
+<blockquote>
+<p>特性:不用赋值,该列会为自己赋当前的具体时间</p>
+</blockquote>
+<h3 id="5、增删改查基本操作"><a href="#5、增删改查基本操作" class="headerlink" title="5、增删改查基本操作"></a>5、增删改查基本操作</h3><h4 id="5-1-插入数据"><a href="#5-1-插入数据" class="headerlink" title="5.1 插入数据"></a>5.1 插入数据</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> 表名(col1,col2,……) <span class="hljs-keyword">values</span>(val1,val2……); # <span class="hljs-comment">-- 插入指定列</span><br><br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> 表名 <span class="hljs-keyword">values</span> (,,,,); # <span class="hljs-comment">-- 插入所有列</span><br><br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> 表名 <span class="hljs-keyword">values</span>	# <span class="hljs-comment">-- 一次插入多行 </span><br>(val1,val2……),<br>(val1,val2……),<br>(val1,val2……);<br></code></pre></td></tr></table></figure>
+
+<h4 id="5-2-修改数据"><a href="#5-2-修改数据" class="headerlink" title="5.2 修改数据"></a>5.2 修改数据</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs routeros">update tablename <br><br><span class="hljs-built_in">set</span> <br><br><span class="hljs-attribute">col1</span>=newval1,  <br><span class="hljs-attribute">col2</span>=newval2,<br><span class="hljs-built_in">..</span>.<br><span class="hljs-built_in">..</span>.<br><span class="hljs-attribute">colN</span>=newvalN<br>where 条件;<br></code></pre></td></tr></table></figure>
+
+<h4 id="5-3-删除数据"><a href="#5-3-删除数据" class="headerlink" title="5.3 删除数据"></a>5.3 删除数据</h4><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">delete</span> <span class="hljs-keyword">from</span> tablenaeme <span class="hljs-keyword">where</span> 条件;<br></code></pre></td></tr></table></figure>
+
+<h4 id="5-4-select-查询"><a href="#5-4-select-查询" class="headerlink" title="5.4 select 查询"></a>5.4 select 查询</h4><ol>
+<li>条件查询 <code>where</code></li>
+</ol>
+<ul>
+<li>条件表达式的意义，表达式为真，则该行取出</li>
+<li>比较运算符 <code>=</code> ，<code>!=</code>，<code>&lt; &gt;</code> <code>&lt;=</code> <code>&gt;=</code></li>
+<li><code>like</code> , <code>not like</code> (‘<code>%</code>‘匹配任意多个字符,’<code>_</code>‘匹配任意单个字符) <code>in</code>, <code>not in</code> , <code>between and</code></li>
+<li><code>is null</code> , <code>is not null</code></li>
+</ul>
+<ol>
+<li>分组 <code>group by</code> 一般要配合<code>5</code>个聚合函数使用 <code>max</code>, <code>min</code>, <code>sum</code>, <code>avg</code>, <code>count</code></li>
+<li>筛选<code>having</code></li>
+<li>排序<code>order by</code></li>
+<li>限制<code>limit</code></li>
+</ol>
+<h3 id="6、连接查询"><a href="#6、连接查询" class="headerlink" title="6、连接查询"></a>6、连接查询</h3><h4 id="6-1-左连接"><a href="#6-1-左连接" class="headerlink" title="6.1 左连接"></a>6.1 左连接</h4><figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs pf">.. left join .. <span class="hljs-keyword">on</span><br><span class="hljs-built_in">table</span> A left join <span class="hljs-built_in">table</span> B <span class="hljs-keyword">on</span> <span class="hljs-built_in">table</span>A.col1 = <span class="hljs-built_in">table</span>B.col2 ;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>例句:</p>
+</blockquote>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pf">select 列名 <span class="hljs-keyword">from</span> <span class="hljs-built_in">table</span> A left join <span class="hljs-built_in">table</span> B <span class="hljs-keyword">on</span> <span class="hljs-built_in">table</span>A.col1 = <span class="hljs-built_in">table</span>B.col2<br></code></pre></td></tr></table></figure>
+
+<h4 id="6-2-右链接"><a href="#6-2-右链接" class="headerlink" title="6.2 右链接"></a>6.2 右链接</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">right</span> <span class="hljs-keyword">join</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="6-3-内连接"><a href="#6-3-内连接" class="headerlink" title="6.3 内连接"></a>6.3 内连接</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">inner</span> <span class="hljs-keyword">join</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>左右连接都是以在左边的表的数据为准,沿着左表查右表.</li>
+<li>内连接是以两张表都有的共同部分数据为准,也就是左右连接的数据之交集</li>
+</ul>
+<h3 id="7、子查询"><a href="#7、子查询" class="headerlink" title="7、子查询"></a>7、子查询</h3><blockquote>
+<p><code>where</code> 型子查询:内层<code>sql</code>的返回值在<code>where</code>后作为条件表达式的一部分</p>
+</blockquote>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"># 例句: <span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> tableA <span class="hljs-keyword">where</span> colA = (<span class="hljs-keyword">select</span> colB <span class="hljs-keyword">from</span> tableB <span class="hljs-keyword">where</span> ...);<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>from</code> 型子查询:内层<code>sql</code>查询结果,作为一张表,供外层的<code>sql</code>语句再次查询</p>
+</blockquote>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs axapta">例句:<span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> (<span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> ...) <span class="hljs-keyword">as</span> tableName <span class="hljs-keyword">where</span> ....<br></code></pre></td></tr></table></figure>
+
+<h3 id="8、字符集"><a href="#8、字符集" class="headerlink" title="8、字符集"></a>8、字符集</h3><ul>
+<li>客户端<code>sql</code>编码 <code>character_set_client</code></li>
+<li>服务器转化后的<code>sql</code>编码 <code>character_set_connection</code></li>
+<li>服务器返回给客户端的结果集编码<code>character_set_results</code></li>
+<li>快速把以上<code>3</code>个变量设为相同值: <code>set names</code> 字符集</li>
+</ul>
+<p><strong>存储引擎 engine&#x3D;1\2</strong></p>
+<ul>
+<li><code>Myisam</code> 速度快 不支持事务 回滚</li>
+<li><code>Innodb</code> 速度慢 支持事务,回滚</li>
+</ul>
+<p><strong>事务</strong></p>
+<ul>
+<li>开启事务 <code>start transaction</code></li>
+<li>运行<code>sql;</code></li>
+<li>提交,同时生效\回滚 <code>commit\rollback</code></li>
+</ul>
+<p><strong>触发器</strong></p>
+<ul>
+<li>触发器 <code>trigger</code></li>
+<li>监视地点:表</li>
+<li>监视行为:增 删 改</li>
+<li>触发时间:<code>after\before</code></li>
+<li>触发事件:增删改</li>
+</ul>
+<p><strong>创建触发器语法</strong></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">create</span> <span class="hljs-keyword">trigger</span> tgName<br><span class="hljs-keyword">after</span>/<span class="hljs-keyword">before</span> <span class="hljs-keyword">insert</span>/<span class="hljs-keyword">delete</span>/<span class="hljs-keyword">update</span> <br><span class="hljs-keyword">on</span> tableName<br><span class="hljs-keyword">for</span> <span class="hljs-keyword">each</span> <span class="hljs-keyword">row</span><br><span class="hljs-keyword">sql</span>; # <span class="hljs-comment">-- 触发语句</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>删除触发器:</li>
+</ul>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">drop</span> <span class="hljs-keyword">trigger</span> tgName;<br></code></pre></td></tr></table></figure>
+
+<p><strong>索引</strong></p>
+<ul>
+<li>提高查询速度,但是降低了增删改的速度,所以使用索引时,要综合考虑.</li>
+<li>索引不是越多越好,一般我们在常出现于条件表达式中的列加索引.</li>
+<li>值越分散的列，索引的效果越好</li>
+</ul>
+<p><strong>索引类型</strong></p>
+<ul>
+<li><code>primary key</code>主键索引</li>
+<li><code>index</code> 普通索引</li>
+<li><code>unique index</code> 唯一性索引</li>
+<li><code>fulltext index</code> 全文索引</li>
+</ul>
+<p><strong>综合练习:</strong></p>
+<ul>
+<li>连接上数据库服务器</li>
+<li>创建一个<code>gbk</code>编码的数据库</li>
+<li>建立商品表和栏目表,字段如下:</li>
+</ul>
+<p><strong>商品表:goods</strong></p>
+<ul>
+<li><code>goods_id</code>　–主键,</li>
+<li><code>goods_name</code> – 商品名称</li>
+<li><code>cat_id</code> – 栏目<code>id</code></li>
+<li><code>brand_id</code> – 品牌<code>id</code></li>
+<li><code>goods_sn</code> – 货号</li>
+<li><code>goods_number</code> – 库存量</li>
+<li><code>shop_price</code> – 价格</li>
+<li><code>goods_desc</code>　–商品详细描述</li>
+</ul>
+<p><strong>栏目表:category</strong></p>
+<ul>
+<li>cat_id –主键</li>
+<li>cat_name – 栏目名称</li>
+<li>parent_id – 栏目的父id</li>
+</ul>
+<blockquote>
+<p>建表完成后,作以下操作:</p>
+</blockquote>
+<ul>
+<li>删除goods表的goods_desc 字段,及货号字段</li>
+<li>并增加字段:click_count – 点击量</li>
+<li>在goods_name列上加唯一性索引</li>
+<li>在shop_price列上加普通索引</li>
+<li>在clcik_count列上加普通索引</li>
+<li>删除click_count列上的索引</li>
+</ul>
+<p><strong>对goods表插入以下数据:</strong></p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">+----------+------------------------------+--------+----------+-----------+--------------+------------+-------------+<br>|<span class="hljs-string"> goods_id </span>|<span class="hljs-string"> goods_name                   </span>|<span class="hljs-string"> cat_id </span>|<span class="hljs-string"> brand_id </span>|<span class="hljs-string"> goods_sn  </span>|<span class="hljs-string"> goods_number </span>|<span class="hljs-string"> shop_price </span>|<span class="hljs-string"> click_count </span>|<br>+----------+------------------------------+--------+----------+-----------+--------------+------------+-------------+<br>|<span class="hljs-string">        1 </span>|<span class="hljs-string"> KD876                        </span>|<span class="hljs-string">      4 </span>|<span class="hljs-string">        8 </span>|<span class="hljs-string"> ECS000000 </span>|<span class="hljs-string">           10 </span>|<span class="hljs-string">    1388.00 </span>|<span class="hljs-string">           7 </span>|<br>|<span class="hljs-string">        4 </span>|<span class="hljs-string"> 诺基亚N85原装充电器          </span>|<span class="hljs-string">      8 </span>|<span class="hljs-string">        1 </span>|<span class="hljs-string"> ECS000004 </span>|<span class="hljs-string">           17 </span>|<span class="hljs-string">      58.00 </span>|<span class="hljs-string">           0 </span>|<br>|<span class="hljs-string">        3 </span>|<span class="hljs-string"> 诺基亚原装5800耳机           </span>|<span class="hljs-string">      8 </span>|<span class="hljs-string">        1 </span>|<span class="hljs-string"> ECS000002 </span>|<span class="hljs-string">           24 </span>|<span class="hljs-string">      68.00 </span>|<span class="hljs-string">           3 </span>|<br>|<span class="hljs-string">        5 </span>|<span class="hljs-string"> 索爱原装M2卡读卡器           </span>|<span class="hljs-string">     11 </span>|<span class="hljs-string">        7 </span>|<span class="hljs-string"> ECS000005 </span>|<span class="hljs-string">            8 </span>|<span class="hljs-string">      20.00 </span>|<span class="hljs-string">           3 </span>|<br>|<span class="hljs-string">        6 </span>|<span class="hljs-string"> 胜创KINGMAX内存卡            </span>|<span class="hljs-string">     11 </span>|<span class="hljs-string">        0 </span>|<span class="hljs-string"> ECS000006 </span>|<span class="hljs-string">           15 </span>|<span class="hljs-string">      42.00 </span>|<span class="hljs-string">           0 </span>|<br>|<span class="hljs-string">        7 </span>|<span class="hljs-string"> 诺基亚N85原装立体声耳机HS-82 </span>|<span class="hljs-string">      8 </span>|<span class="hljs-string">        1 </span>|<span class="hljs-string"> ECS000007 </span>|<span class="hljs-string">           20 </span>|<span class="hljs-string">     100.00 </span>|<span class="hljs-string">           0 </span>|<br>|<span class="hljs-string">        8 </span>|<span class="hljs-string"> 飞利浦9@9v                   </span>|<span class="hljs-string">      3 </span>|<span class="hljs-string">        4 </span>|<span class="hljs-string"> ECS000008 </span>|<span class="hljs-string">           17 </span>|<span class="hljs-string">     399.00 </span>|<span class="hljs-string">           9 </span>|<br>|<span class="hljs-string">        9 </span>|<span class="hljs-string"> 诺基亚E66                    </span>|<span class="hljs-string">      3 </span>|<span class="hljs-string">        1 </span>|<span class="hljs-string"> ECS000009 </span>|<span class="hljs-string">           13 </span>|<span class="hljs-string">    2298.00 </span>|<span class="hljs-string">          20 </span>|<br>|<span class="hljs-string">       10 </span>|<span class="hljs-string"> 索爱C702c                    </span>|<span class="hljs-string">      3 </span>|<span class="hljs-string">        7 </span>|<span class="hljs-string"> ECS000010 </span>|<span class="hljs-string">            7 </span>|<span class="hljs-string">    1328.00 </span>|<span class="hljs-string">          11 </span>|<br>|<span class="hljs-string">       11 </span>|<span class="hljs-string"> 索爱C702c                    </span>|<span class="hljs-string">      3 </span>|<span class="hljs-string">        7 </span>|<span class="hljs-string"> ECS000011 </span>|<span class="hljs-string">            1 </span>|<span class="hljs-string">    1300.00 </span>|<span class="hljs-string">           0 </span>|<br>|<span class="hljs-string">       12 </span>|<span class="hljs-string"> 摩托罗拉A810                 </span>|<span class="hljs-string">      3 </span>|<span class="hljs-string">        2 </span>|<span class="hljs-string"> ECS000012 </span>|<span class="hljs-string">            8 </span>|<span class="hljs-string">     983.00 </span>|<span class="hljs-string">          14 </span>|<br>|<span class="hljs-string">       13 </span>|<span class="hljs-string"> 诺基亚5320 XpressMusic       </span>|<span class="hljs-string">      3 </span>|<span class="hljs-string">        1 </span>|<span class="hljs-string"> ECS000013 </span>|<span class="hljs-string">            8 </span>|<span class="hljs-string">    1311.00 </span>|<span class="hljs-string">          13 </span>|<br>|<span class="hljs-string">       14 </span>|<span class="hljs-string"> 诺基亚5800XM                 </span>|<span class="hljs-string">      4 </span>|<span class="hljs-string">        1 </span>|<span class="hljs-string"> ECS000014 </span>|<span class="hljs-string">            4 </span>|<span class="hljs-string">    2625.00 </span>|<span class="hljs-string">           6 </span>|<br>|<span class="hljs-string">       15 </span>|<span class="hljs-string"> 摩托罗拉A810                 </span>|<span class="hljs-string">      3 </span>|<span class="hljs-string">        2 </span>|<span class="hljs-string"> ECS000015 </span>|<span class="hljs-string">            3 </span>|<span class="hljs-string">     788.00 </span>|<span class="hljs-string">           8 </span>|<br>|<span class="hljs-string">       16 </span>|<span class="hljs-string"> 恒基伟业G101                 </span>|<span class="hljs-string">      2 </span>|<span class="hljs-string">       11 </span>|<span class="hljs-string"> ECS000016 </span>|<span class="hljs-string">            0 </span>|<span class="hljs-string">     823.33 </span>|<span class="hljs-string">           3 </span>|<br>|<span class="hljs-string">       17 </span>|<span class="hljs-string"> 夏新N7                       </span>|<span class="hljs-string">      3 </span>|<span class="hljs-string">        5 </span>|<span class="hljs-string"> ECS000017 </span>|<span class="hljs-string">            1 </span>|<span class="hljs-string">    2300.00 </span>|<span class="hljs-string">           2 </span>|<br>|<span class="hljs-string">       18 </span>|<span class="hljs-string"> 夏新T5                       </span>|<span class="hljs-string">      4 </span>|<span class="hljs-string">        5 </span>|<span class="hljs-string"> ECS000018 </span>|<span class="hljs-string">            1 </span>|<span class="hljs-string">    2878.00 </span>|<span class="hljs-string">           0 </span>|<br>|<span class="hljs-string">       19 </span>|<span class="hljs-string"> 三星SGH-F258                 </span>|<span class="hljs-string">      3 </span>|<span class="hljs-string">        6 </span>|<span class="hljs-string"> ECS000019 </span>|<span class="hljs-string">            0 </span>|<span class="hljs-string">     858.00 </span>|<span class="hljs-string">           7 </span>|<br>|<span class="hljs-string">       20 </span>|<span class="hljs-string"> 三星BC01                     </span>|<span class="hljs-string">      3 </span>|<span class="hljs-string">        6 </span>|<span class="hljs-string"> ECS000020 </span>|<span class="hljs-string">           13 </span>|<span class="hljs-string">     280.00 </span>|<span class="hljs-string">          14 </span>|<br>|<span class="hljs-string">       21 </span>|<span class="hljs-string"> 金立 A30                     </span>|<span class="hljs-string">      3 </span>|<span class="hljs-string">       10 </span>|<span class="hljs-string"> ECS000021 </span>|<span class="hljs-string">           40 </span>|<span class="hljs-string">    2000.00 </span>|<span class="hljs-string">           4 </span>|<br>|<span class="hljs-string">       22 </span>|<span class="hljs-string"> 多普达Touch HD               </span>|<span class="hljs-string">      3 </span>|<span class="hljs-string">        3 </span>|<span class="hljs-string"> ECS000022 </span>|<span class="hljs-string">            0 </span>|<span class="hljs-string">    5999.00 </span>|<span class="hljs-string">          15 </span>|<br>|<span class="hljs-string">       23 </span>|<span class="hljs-string"> 诺基亚N96                    </span>|<span class="hljs-string">      5 </span>|<span class="hljs-string">        1 </span>|<span class="hljs-string"> ECS000023 </span>|<span class="hljs-string">            8 </span>|<span class="hljs-string">    3700.00 </span>|<span class="hljs-string">          17 </span>|<br>|<span class="hljs-string">       24 </span>|<span class="hljs-string"> P806                         </span>|<span class="hljs-string">      3 </span>|<span class="hljs-string">        9 </span>|<span class="hljs-string"> ECS000024 </span>|<span class="hljs-string">          148 </span>|<span class="hljs-string">    2000.00 </span>|<span class="hljs-string">          36 </span>|<br>|<span class="hljs-string">       25 </span>|<span class="hljs-string"> 小灵通/固话50元充值卡        </span>|<span class="hljs-string">     13 </span>|<span class="hljs-string">        0 </span>|<span class="hljs-string"> ECS000025 </span>|<span class="hljs-string">            2 </span>|<span class="hljs-string">      48.00 </span>|<span class="hljs-string">           0 </span>|<br>|<span class="hljs-string">       26 </span>|<span class="hljs-string"> 小灵通/固话20元充值卡        </span>|<span class="hljs-string">     13 </span>|<span class="hljs-string">        0 </span>|<span class="hljs-string"> ECS000026 </span>|<span class="hljs-string">            2 </span>|<span class="hljs-string">      19.00 </span>|<span class="hljs-string">           0 </span>|<br>|<span class="hljs-string">       27 </span>|<span class="hljs-string"> 联通100元充值卡              </span>|<span class="hljs-string">     15 </span>|<span class="hljs-string">        0 </span>|<span class="hljs-string"> ECS000027 </span>|<span class="hljs-string">            2 </span>|<span class="hljs-string">      95.00 </span>|<span class="hljs-string">           0 </span>|<br>|<span class="hljs-string">       28 </span>|<span class="hljs-string"> 联通50元充值卡               </span>|<span class="hljs-string">     15 </span>|<span class="hljs-string">        0 </span>|<span class="hljs-string"> ECS000028 </span>|<span class="hljs-string">            0 </span>|<span class="hljs-string">      45.00 </span>|<span class="hljs-string">           0 </span>|<br>|<span class="hljs-string">       29 </span>|<span class="hljs-string"> 移动100元充值卡              </span>|<span class="hljs-string">     14 </span>|<span class="hljs-string">        0 </span>|<span class="hljs-string"> ECS000029 </span>|<span class="hljs-string">            0 </span>|<span class="hljs-string">      90.00 </span>|<span class="hljs-string">           0 </span>|<br>|<span class="hljs-string">       30 </span>|<span class="hljs-string"> 移动20元充值卡               </span>|<span class="hljs-string">     14 </span>|<span class="hljs-string">        0 </span>|<span class="hljs-string"> ECS000030 </span>|<span class="hljs-string">            9 </span>|<span class="hljs-string">      18.00 </span>|<span class="hljs-string">           1 </span>|<br>|<span class="hljs-string">       31 </span>|<span class="hljs-string"> 摩托罗拉E8                   </span>|<span class="hljs-string">      3 </span>|<span class="hljs-string">        2 </span>|<span class="hljs-string"> ECS000031 </span>|<span class="hljs-string">            1 </span>|<span class="hljs-string">    1337.00 </span>|<span class="hljs-string">           5 </span>|<br>|<span class="hljs-string">       32 </span>|<span class="hljs-string"> 诺基亚N85                    </span>|<span class="hljs-string">      3 </span>|<span class="hljs-string">        1 </span>|<span class="hljs-string"> ECS000032 </span>|<span class="hljs-string">            1 </span>|<span class="hljs-string">    3010.00 </span>|<span class="hljs-string">           9 </span>|<br>+----------+------------------------------+--------+----------+-----------+--------------+------------+-------------+<br></code></pre></td></tr></table></figure>
+
+<h2 id="三、查询知识"><a href="#三、查询知识" class="headerlink" title="三、查询知识"></a>三、查询知识</h2><blockquote>
+<p>注:以下查询基于<code>ecshop</code>网站的商品表(<code>ecs_goods</code>)</p>
+</blockquote>
+<blockquote>
+<p>在练习时可以只取部分列,方便查看.</p>
+</blockquote>
+<h3 id="3-1-基础查询-where的练习"><a href="#3-1-基础查询-where的练习" class="headerlink" title="3.1 基础查询 where的练习"></a>3.1 基础查询 where的练习</h3><blockquote>
+<p>查出满足以下条件的商品</p>
+</blockquote>
+<h4 id="3-1-1-主键为32的商品"><a href="#3-1-1-主键为32的商品" class="headerlink" title="3.1.1 主键为32的商品"></a>3.1.1 主键为32的商品</h4><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">select</span> goods_id,goods_name,shop_price <br>     <span class="hljs-keyword">from</span> ecs_goods<br>     <span class="hljs-keyword">where</span> goods_id=<span class="hljs-number">32</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-1-2-不属第3栏目的所有商品"><a href="#3-1-2-不属第3栏目的所有商品" class="headerlink" title="3.1.2 不属第3栏目的所有商品"></a>3.1.2 不属第3栏目的所有商品</h4><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">select</span> goods_id,cat_id,goods_name,shop_price  <span class="hljs-keyword">from</span> ecs_goods<br>     <span class="hljs-keyword">where</span> cat_id!=<span class="hljs-number">3</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-1-3-本店价格高于3000元的商品"><a href="#3-1-3-本店价格高于3000元的商品" class="headerlink" title="3.1.3 本店价格高于3000元的商品"></a>3.1.3 本店价格高于3000元的商品</h4><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">select</span> goods_id,cat_id,goods_name,shop_price  <span class="hljs-keyword">from</span> ecs_goods<br>     <span class="hljs-keyword">where</span> shop_price &gt;<span class="hljs-number">3000</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-1-4-本店价格低于或等于100元的商品"><a href="#3-1-4-本店价格低于或等于100元的商品" class="headerlink" title="3.1.4 本店价格低于或等于100元的商品"></a>3.1.4 本店价格低于或等于100元的商品</h4><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">select</span> goods_id,cat_id,goods_name,shop_price  <span class="hljs-keyword">from</span> ecs_goods <span class="hljs-keyword">where</span> shop_price &lt;=<span class="hljs-number">100</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-1-5-取出第4栏目或第11栏目的商品-不许用or"><a href="#3-1-5-取出第4栏目或第11栏目的商品-不许用or" class="headerlink" title="3.1.5 取出第4栏目或第11栏目的商品(不许用or)"></a>3.1.5 取出第4栏目或第11栏目的商品(不许用or)</h4><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">select</span> goods_id,cat_id,goods_name,<span class="hljs-function">shop_price  <span class="hljs-keyword">from</span> ecs_goods</span><br><span class="hljs-function">     <span class="hljs-keyword">where</span> cat_id <span class="hljs-title">in</span> (<span class="hljs-params"><span class="hljs-number">4</span>,<span class="hljs-number">11</span></span>)</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-1-6-取出100-lt-x3D-价格-lt-x3D-500的商品-不许用and"><a href="#3-1-6-取出100-lt-x3D-价格-lt-x3D-500的商品-不许用and" class="headerlink" title="3.1.6 取出100&lt;&#x3D;价格&lt;&#x3D;500的商品(不许用and)"></a>3.1.6 取出100&lt;&#x3D;价格&lt;&#x3D;500的商品(不许用and)</h4><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">select goods_id,cat_id,goods_name,<span class="hljs-keyword">shop_price </span> from ecs_goods<br>     where <span class="hljs-keyword">shop_price </span><span class="hljs-keyword">between </span><span class="hljs-number">100</span> <span class="hljs-keyword">and </span><span class="hljs-number">500</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-1-7-取出不属于第3栏目且不属于第11栏目的商品-and-或not-in分别实现"><a href="#3-1-7-取出不属于第3栏目且不属于第11栏目的商品-and-或not-in分别实现" class="headerlink" title="3.1.7 取出不属于第3栏目且不属于第11栏目的商品(and,或not in分别实现)"></a>3.1.7 取出不属于第3栏目且不属于第11栏目的商品(and,或not in分别实现)</h4><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">select</span> goods_id,cat_id,goods_name,shop_price <span class="hljs-keyword">from</span> ecs_goods <span class="hljs-keyword">where</span> cat_id!=<span class="hljs-number">3</span> <span class="hljs-keyword">and</span> cat_id!=<span class="hljs-number">11</span>;<br><br><span class="hljs-keyword">select</span> goods_id,cat_id,goods_name,<span class="hljs-function">shop_price <span class="hljs-keyword">from</span> ecs_goods <span class="hljs-keyword">where</span> cat_id <span class="hljs-keyword">not</span> <span class="hljs-title">in</span> (<span class="hljs-params"><span class="hljs-number">3</span>,<span class="hljs-number">11</span></span>)</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-1-8-取出价格大于100且小于300-或者大于4000且小于5000的商品"><a href="#3-1-8-取出价格大于100且小于300-或者大于4000且小于5000的商品" class="headerlink" title="3.1.8 取出价格大于100且小于300,或者大于4000且小于5000的商品"></a>3.1.8 取出价格大于100且小于300,或者大于4000且小于5000的商品</h4><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">select goods_id,cat_id,goods_name,<span class="hljs-keyword">shop_price </span>from ecs_goods where <span class="hljs-keyword">shop_price&gt;100 </span><span class="hljs-keyword">and </span><span class="hljs-keyword">shop_price </span>&lt;<span class="hljs-number">300</span> <span class="hljs-keyword">or </span><span class="hljs-keyword">shop_price </span>&gt;<span class="hljs-number">4000</span> <span class="hljs-keyword">and </span><span class="hljs-keyword">shop_price </span>&lt;<span class="hljs-number">5000</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-1-9-取出第3个栏目下面价格-lt-1000或-gt-3000-并且点击量-gt-5的系列商品"><a href="#3-1-9-取出第3个栏目下面价格-lt-1000或-gt-3000-并且点击量-gt-5的系列商品" class="headerlink" title="3.1.9 取出第3个栏目下面价格&lt;1000或&gt;3000,并且点击量&gt;5的系列商品"></a>3.1.9 取出第3个栏目下面价格&lt;1000或&gt;3000,并且点击量&gt;5的系列商品</h4><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">select goods_id,cat_id,goods_name,<span class="hljs-keyword">shop_price,click_count </span>from ecs_goods where<br>cat_id=<span class="hljs-number">3</span> <span class="hljs-keyword">and </span>(<span class="hljs-keyword">shop_price </span>&lt;<span class="hljs-number">1000</span> <span class="hljs-keyword">or </span><span class="hljs-keyword">shop_price&gt;3000) </span><span class="hljs-keyword">and </span>click_count&gt;<span class="hljs-number">5</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-1-10-取出第1个栏目下面的商品-注意-1栏目下面没商品-但其子栏目下有"><a href="#3-1-10-取出第1个栏目下面的商品-注意-1栏目下面没商品-但其子栏目下有" class="headerlink" title="3.1.10 取出第1个栏目下面的商品(注意:1栏目下面没商品,但其子栏目下有)"></a>3.1.10 取出第1个栏目下面的商品(注意:1栏目下面没商品,但其子栏目下有)</h4><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">select</span> goods_id,cat_id,goods_name,shop_price,click_count from ecs_goods<br>     <span class="hljs-attribute">where</span> cat_id in (<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>);<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-1-11-取出名字以”诺基亚”开头的商品"><a href="#3-1-11-取出名字以”诺基亚”开头的商品" class="headerlink" title="3.1.11 取出名字以”诺基亚”开头的商品"></a>3.1.11 取出名字以”诺基亚”开头的商品</h4><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">select</span> goods_id,cat_id,goods_name,shop_price  <span class="hljs-keyword">from</span> ecs_goods     <span class="hljs-keyword">where</span> goods_name <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;诺基亚%&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-1-12-取出名字为”诺基亚Nxx”的手机"><a href="#3-1-12-取出名字为”诺基亚Nxx”的手机" class="headerlink" title="3.1.12 取出名字为”诺基亚Nxx”的手机"></a>3.1.12 取出名字为”诺基亚Nxx”的手机</h4><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">select</span> goods_id,cat_id,goods_name,shop_price  <span class="hljs-keyword">from</span> ecs_goods  <br>   <span class="hljs-keyword">where</span> goods_name <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;诺基亚N__&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-1-13-取出名字不以”诺基亚”开头的商品"><a href="#3-1-13-取出名字不以”诺基亚”开头的商品" class="headerlink" title="3.1.13 取出名字不以”诺基亚”开头的商品"></a>3.1.13 取出名字不以”诺基亚”开头的商品</h4><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">select</span> goods_id,cat_id,goods_name,shop_price <span class="hljs-keyword">from</span> ecs_goos<br>     <span class="hljs-keyword">where</span> goods_name not <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;诺基亚%&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-1-14-取出第3个栏目下面价格在1000到3000之间-并且点击量-gt-5-“诺基亚”开头的系列商品"><a href="#3-1-14-取出第3个栏目下面价格在1000到3000之间-并且点击量-gt-5-“诺基亚”开头的系列商品" class="headerlink" title="3.1.14 取出第3个栏目下面价格在1000到3000之间,并且点击量&gt;5 “诺基亚”开头的系列商品"></a>3.1.14 取出第3个栏目下面价格在1000到3000之间,并且点击量&gt;5 “诺基亚”开头的系列商品</h4><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">select goods_id,cat_id,goods_name,<span class="hljs-keyword">shop_price </span>from ecs_goods where <br>cat_id=<span class="hljs-number">3</span> <span class="hljs-keyword">and </span><span class="hljs-keyword">shop_price&gt;1000 </span><span class="hljs-keyword">and </span><span class="hljs-keyword">shop_price </span>&lt;<span class="hljs-number">3000</span> <span class="hljs-keyword">and </span>click_count&gt;<span class="hljs-number">5</span> <span class="hljs-keyword">and </span>goods_name like <span class="hljs-string">&#x27;诺基亚%&#x27;</span>;<br>select goods_id,cat_id,goods_name,<span class="hljs-keyword">shop_price </span> from ecs_goods where <br><span class="hljs-keyword">shop_price </span><span class="hljs-keyword">between </span><span class="hljs-number">1000</span> <span class="hljs-keyword">and </span><span class="hljs-number">3000</span> <span class="hljs-keyword">and </span>cat_id=<span class="hljs-number">3</span>  <span class="hljs-keyword">and </span>click_count&gt;<span class="hljs-number">5</span> <span class="hljs-keyword">and </span>goods_name like <span class="hljs-string">&#x27;诺基亚%&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-1-15-一道面试题"><a href="#3-1-15-一道面试题" class="headerlink" title="3.1.15 一道面试题"></a>3.1.15 一道面试题</h4><blockquote>
+<p>有如下表和数组</p>
+</blockquote>
+<ul>
+<li>把<code>num</code>值处于<code>[20,29]</code>之间,改为<code>20</code></li>
+<li><code>num</code>值处于<code>[30,39]</code>之间的,改为<code>30</code></li>
+</ul>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">+------+<br>|<span class="hljs-string"> num  </span>|<br>+------+<br>|<span class="hljs-string">    3 </span>|<br>|<span class="hljs-string">   12 </span>|<br>|<span class="hljs-string">   15 </span>|<br>|<span class="hljs-string">   25 </span>|<br>|<span class="hljs-string">   23 </span>|<br>|<span class="hljs-string">   29 </span>|<br>|<span class="hljs-string">   34 </span>|<br>|<span class="hljs-string">   37 </span>|<br>|<span class="hljs-string">   32 </span>|<br>|<span class="hljs-string">   45 </span>|<br>|<span class="hljs-string">   48 </span>|<br>|<span class="hljs-string">   52 </span>|<br>+------+<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-1-16-练习题"><a href="#3-1-16-练习题" class="headerlink" title="3.1.16 练习题:"></a>3.1.16 练习题:</h4><blockquote>
+<p>把<code>good</code>表中商品名为’诺基亚xxxx’的商品,改为’HTCxxxx’,</p>
+</blockquote>
+<ul>
+<li>提示:大胆的把列看成变量,参与运算,甚至调用函数来处理 。<code>ubstring()</code>, <code>concat()</code></li>
+</ul>
+<h3 id="3-2-分组查询group"><a href="#3-2-分组查询group" class="headerlink" title="3.2 分组查询group"></a>3.2 分组查询group</h3><h4 id="3-2-1-查出最贵的商品的价格"><a href="#3-2-1-查出最贵的商品的价格" class="headerlink" title="3.2.1 查出最贵的商品的价格"></a>3.2.1 查出最贵的商品的价格</h4><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-function"><span class="hljs-keyword">select</span> <span class="hljs-title">max</span>(<span class="hljs-params">shop_price</span>) <span class="hljs-keyword">from</span> ecs_goods</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-2-2-查出最大-最新-的商品编号"><a href="#3-2-2-查出最大-最新-的商品编号" class="headerlink" title="3.2.2 查出最大(最新)的商品编号"></a>3.2.2 查出最大(最新)的商品编号</h4><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-function"><span class="hljs-keyword">select</span> <span class="hljs-title">max</span>(<span class="hljs-params">goods_id</span>) <span class="hljs-keyword">from</span> ecs_goods</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-2-3-查出最便宜的商品的价格"><a href="#3-2-3-查出最便宜的商品的价格" class="headerlink" title="3.2.3 查出最便宜的商品的价格"></a>3.2.3 查出最便宜的商品的价格</h4><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-function"><span class="hljs-keyword">select</span> <span class="hljs-title">min</span>(<span class="hljs-params">shop_price</span>) <span class="hljs-keyword">from</span> ecs_goods</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-2-4-查出最旧-最小-的商品编号"><a href="#3-2-4-查出最旧-最小-的商品编号" class="headerlink" title="3.2.4 查出最旧(最小)的商品编号"></a>3.2.4 查出最旧(最小)的商品编号</h4><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-function"><span class="hljs-keyword">select</span> <span class="hljs-title">min</span>(<span class="hljs-params">goods_id</span>) <span class="hljs-keyword">from</span> ecs_goods</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-2-5-查询该店所有商品的库存总量"><a href="#3-2-5-查询该店所有商品的库存总量" class="headerlink" title="3.2.5 查询该店所有商品的库存总量"></a>3.2.5 查询该店所有商品的库存总量</h4><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">select</span> <span class="hljs-keyword">sum</span>(goods_number) <span class="hljs-keyword">from</span> ecs_goods;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-2-6-查询所有商品的平均价"><a href="#3-2-6-查询所有商品的平均价" class="headerlink" title="3.2.6 查询所有商品的平均价"></a>3.2.6 查询所有商品的平均价</h4><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">select</span> <span class="hljs-keyword">avg</span>(shop_price) <span class="hljs-keyword">from</span> ecs_goods;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-2-7-查询该店一共有多少种商品"><a href="#3-2-7-查询该店一共有多少种商品" class="headerlink" title="3.2.7 查询该店一共有多少种商品"></a>3.2.7 查询该店一共有多少种商品</h4><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">select</span> <span class="hljs-keyword">count</span>(*) <span class="hljs-keyword">from</span> ecs_goods;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-2-8-查询每个栏目下面"><a href="#3-2-8-查询每个栏目下面" class="headerlink" title="3.2.8 查询每个栏目下面"></a>3.2.8 查询每个栏目下面</h4><ul>
+<li>最贵商品价格</li>
+<li>最低商品价格</li>
+<li>商品平均价格</li>
+<li>商品库存量</li>
+<li>商品种类</li>
+</ul>
+<blockquote>
+<p>提示:(<code>5</code>个聚合函数,<code>sum</code>, <code>avg</code>, <code>max</code>, <code>min</code>, <code>count</code>与<code>group</code>综合运用)<br><code>select cat_id,max(shop_price) from ecs_goods group by cat_id;</code></p>
+</blockquote>
+<h3 id="3-3-having与group综合运用查询"><a href="#3-3-having与group综合运用查询" class="headerlink" title="3.3 having与group综合运用查询"></a>3.3 having与group综合运用查询</h3><h4 id="3-3-1-查询该店的商品比市场价所节省的价格"><a href="#3-3-1-查询该店的商品比市场价所节省的价格" class="headerlink" title="3.3.1 查询该店的商品比市场价所节省的价格"></a>3.3.1 查询该店的商品比市场价所节省的价格</h4><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">select</span> goods_id,goods_name,market_price-shop_price <span class="hljs-keyword">as</span> j <br>     <span class="hljs-keyword">from</span> ecs_goods ;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-3-2-查询每个商品所积压的货款-提示-库存-单价"><a href="#3-3-2-查询每个商品所积压的货款-提示-库存-单价" class="headerlink" title="3.3.2 查询每个商品所积压的货款(提示:库存*单价)"></a>3.3.2 查询每个商品所积压的货款(提示:库存*单价)</h4><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">select</span> goods_id,goods_name,goods_number*shop_price  <span class="hljs-keyword">from</span> ecs_goods<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-3-3-查询该店积压的总货款"><a href="#3-3-3-查询该店积压的总货款" class="headerlink" title="3.3.3 查询该店积压的总货款"></a>3.3.3 查询该店积压的总货款</h4><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">select</span> <span class="hljs-keyword">sum</span>(goods_number*shop_price) <span class="hljs-keyword">from</span> ecs_goods;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-3-4-查询该店每个栏目下面积压的货款"><a href="#3-3-4-查询该店每个栏目下面积压的货款" class="headerlink" title="3.3.4 查询该店每个栏目下面积压的货款."></a>3.3.4 查询该店每个栏目下面积压的货款.</h4><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">select</span> cat_id,<span class="hljs-keyword">sum</span>(goods_number*shop_price) <span class="hljs-keyword">as</span> k <span class="hljs-keyword">from</span> ecs_goods <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> cat_id;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-3-5-查询比市场价省钱200元以上的商品及该商品所省的钱-where和having分别实现"><a href="#3-3-5-查询比市场价省钱200元以上的商品及该商品所省的钱-where和having分别实现" class="headerlink" title="3.3.5 查询比市场价省钱200元以上的商品及该商品所省的钱(where和having分别实现)"></a>3.3.5 查询比市场价省钱200元以上的商品及该商品所省的钱(where和having分别实现)</h4><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">select</span> goods_id,goods_name,market_price-shop_price  <span class="hljs-keyword">as</span> k <span class="hljs-keyword">from</span> ecs_goods<br><span class="hljs-keyword">where</span> market_price-shop_price &gt;<span class="hljs-number">200</span>;<br><span class="hljs-keyword">select</span> goods_id,goods_name,market_price-shop_price  <span class="hljs-keyword">as</span> k <span class="hljs-keyword">from</span> ecs_goods<br><span class="hljs-keyword">having</span> k &gt;<span class="hljs-number">200</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-3-6-查询积压货款超过2W元的栏目-以及该栏目积压的货款"><a href="#3-3-6-查询积压货款超过2W元的栏目-以及该栏目积压的货款" class="headerlink" title="3.3.6 查询积压货款超过2W元的栏目,以及该栏目积压的货款"></a>3.3.6 查询积压货款超过2W元的栏目,以及该栏目积压的货款</h4><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">select</span> cat_id,<span class="hljs-built_in">sum</span>(goods_number*shop_price) <span class="hljs-keyword">as</span> k <span class="hljs-keyword">from</span> ecs_goods <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> cat_id<br><span class="hljs-keyword">having</span> k&gt;<span class="hljs-number">20000</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="3-3-7-where-having-group综合练习题"><a href="#3-3-7-where-having-group综合练习题" class="headerlink" title="3. 3.7 where-having-group综合练习题"></a>3. 3.7 where-having-group综合练习题</h4><blockquote>
+<p>有如下表及数据</p>
+</blockquote>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">+------+---------+-------+<br>|<span class="hljs-string"> name </span>|<span class="hljs-string"> subject </span>|<span class="hljs-string"> score </span>|<br>+------+---------+-------+<br>|<span class="hljs-string"> 张三 </span>|<span class="hljs-string"> 数学    </span>|<span class="hljs-string">    90 </span>|<br>|<span class="hljs-string"> 张三 </span>|<span class="hljs-string"> 语文    </span>|<span class="hljs-string">    50 </span>|<br>|<span class="hljs-string"> 张三 </span>|<span class="hljs-string"> 地理    </span>|<span class="hljs-string">    40 </span>|<br>|<span class="hljs-string"> 李四 </span>|<span class="hljs-string"> 语文    </span>|<span class="hljs-string">    55 </span>|<br>|<span class="hljs-string"> 李四 </span>|<span class="hljs-string"> 政治    </span>|<span class="hljs-string">    45 </span>|<br>|<span class="hljs-string"> 王五 </span>|<span class="hljs-string"> 政治    </span>|<span class="hljs-string">    30 </span>|<br>+------+---------+-------+<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>要求:查询出2门及2门以上不及格者的平均成绩</p>
+</blockquote>
+<p>先查看每个人的平均成绩</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-section">mysql&gt; select name,avg(score) from stu group by name;</span><br><span class="hljs-section">+------+------------+</span><br><span class="hljs-section">| name | avg(score) |</span><br><span class="hljs-section">+------+------------+</span><br>| 张三 |    60.0000 |<br>| 李四 |    50.0000 |<br>| 王五 |    30.0000 |<br><span class="hljs-section">| 赵六 |    99.0000 |</span><br><span class="hljs-section">+------+------------+</span><br>4 rows in set (0.00 sec)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>看每个人挂科情况</p>
+</blockquote>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-section">mysql&gt; select name,score &lt; 60 from stu;</span><br><span class="hljs-section">+------+------------+</span><br><span class="hljs-section">| name | score &lt; 60 |</span><br><span class="hljs-section">+------+------------+</span><br>| 张三 |          0 |<br>| 张三 |          1 |<br>| 张三 |          1 |<br>| 李四 |          1 |<br>| 李四 |          1 |<br>| 王五 |          1 |<br>| 赵六 |          0 |<br>| 赵六 |          0 |<br><span class="hljs-section">| 赵六 |          0 |</span><br><span class="hljs-section">+------+------------+</span><br>9 rows in set (0.00 sec)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>计算每个人的挂科科目</p>
+</blockquote>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-section">mysql&gt; select name,sum(score &lt; 60) from stu group by name;</span><br><span class="hljs-section">+------+-----------------+</span><br><span class="hljs-section">| name | sum(score &lt; 60) |</span><br><span class="hljs-section">+------+-----------------+</span><br>| 张三 |               2 |<br>| 李四 |               2 |<br>| 王五 |               1 |<br><span class="hljs-section">| 赵六 |               0 |</span><br><span class="hljs-section">+------+-----------------+</span><br>4 rows in set (0.00 sec)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>同时计算每人的平均分</p>
+</blockquote>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-section">mysql&gt; select name,sum(score &lt; 60),avg(score) as pj from stu group by name;</span><br><span class="hljs-section">+------+-----------------+---------+</span><br><span class="hljs-section">| name | sum(score &lt; 60) | pj      |</span><br><span class="hljs-section">+------+-----------------+---------+</span><br>| 张三 |               2 | 60.0000 |<br>| 李四 |               2 | 50.0000 |<br>| 王五 |               1 | 30.0000 |<br><span class="hljs-section">| 赵六 |               0 | 99.0000 |</span><br><span class="hljs-section">+------+-----------------+---------+</span><br>4 rows in set (0.00 sec)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>利用<code>having</code>筛选挂科<code>2</code>门以上的.</p>
+</blockquote>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-section">mysql&gt; select name,sum(score &lt; 60) as gk ,avg(score) as pj from stu group by name having gk &gt;=2;</span><br><span class="hljs-section">+------+------+---------+</span><br><span class="hljs-section">| name | gk   | pj      |</span><br><span class="hljs-section">+------+------+---------+</span><br>| 张三 |    2 | 60.0000 |<br><span class="hljs-section">| 李四 |    2 | 50.0000 |</span><br><span class="hljs-section">+------+------+---------+</span><br>2 rows in set (0.00 sec)<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-4、order-by-与-limit查询"><a href="#3-4、order-by-与-limit查询" class="headerlink" title="3.4、order by 与 limit查询"></a>3.4、order by 与 limit查询</h3><h4 id="3-4-1-按价格由高到低排序"><a href="#3-4-1-按价格由高到低排序" class="headerlink" title="3.4.1 按价格由高到低排序"></a>3.4.1 按价格由高到低排序</h4><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">select</span> goods_id,goods_name,shop_price <span class="hljs-keyword">from</span> ecs_goods <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> shop_price <span class="hljs-keyword">desc</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-4-2-按发布时间由早到晚排序"><a href="#3-4-2-按发布时间由早到晚排序" class="headerlink" title="3.4.2 按发布时间由早到晚排序"></a>3.4.2 按发布时间由早到晚排序</h4><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">select</span> goods_id,goods_name,add_time <span class="hljs-keyword">from</span> ecs_goods <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> add_time;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-4-3-接栏目由低到高排序-栏目内部按价格由高到低排序"><a href="#3-4-3-接栏目由低到高排序-栏目内部按价格由高到低排序" class="headerlink" title="3.4.3 接栏目由低到高排序,栏目内部按价格由高到低排序"></a>3.4.3 接栏目由低到高排序,栏目内部按价格由高到低排序</h4><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">select</span> goods_id,cat_id,goods_name,shop_price <span class="hljs-keyword">from</span> ecs_goods<br>     <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> cat_id ,shop_price <span class="hljs-keyword">desc</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-4-4-取出价格最高的前三名商品"><a href="#3-4-4-取出价格最高的前三名商品" class="headerlink" title="3.4.4 取出价格最高的前三名商品"></a>3.4.4 取出价格最高的前三名商品</h4><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">select</span> goods_id,goods_name,shop_price <span class="hljs-keyword">from</span> ecs_goods <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> shop_price <span class="hljs-keyword">desc</span> <span class="hljs-keyword">limit</span> <span class="hljs-number">3</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-4-5-取出点击量前三名到前5名的商品"><a href="#3-4-5-取出点击量前三名到前5名的商品" class="headerlink" title="3.4.5 取出点击量前三名到前5名的商品"></a>3.4.5 取出点击量前三名到前5名的商品</h4><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">select</span> goods_id,goods_name,click_count <span class="hljs-keyword">from</span> ecs_goods <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> click_count <span class="hljs-keyword">desc</span> <span class="hljs-keyword">limit</span> <span class="hljs-number">2</span>,<span class="hljs-number">3</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-5-连接查询"><a href="#3-5-连接查询" class="headerlink" title="3.5 连接查询"></a>3.5 连接查询</h3><h4 id="3-5-1-取出所有商品的商品名-栏目名-价格"><a href="#3-5-1-取出所有商品的商品名-栏目名-价格" class="headerlink" title="3.5.1 取出所有商品的商品名,栏目名,价格"></a>3.5.1 取出所有商品的商品名,栏目名,价格</h4><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">select</span> goods_name,cat_name,shop_price <span class="hljs-keyword">from</span> <br>ecs_goods <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> ecs_category<br><span class="hljs-keyword">on</span> ecs_goods.cat_id=ecs_category.cat_id;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-5-2-取出第4个栏目下的商品的商品名-栏目名-价格"><a href="#3-5-2-取出第4个栏目下的商品的商品名-栏目名-价格" class="headerlink" title="3.5.2 取出第4个栏目下的商品的商品名,栏目名,价格"></a>3.5.2 取出第4个栏目下的商品的商品名,栏目名,价格</h4><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">select</span> goods_name,cat_name,shop_price <span class="hljs-keyword">from</span> <br>ecs_goods <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> ecs_category<br><span class="hljs-keyword">on</span> ecs_goods.cat_id=ecs_category.cat_id<br><span class="hljs-keyword">where</span> ecs_goods.cat_id = <span class="hljs-number">4</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-5-3-取出第4个栏目下的商品的商品名-栏目名-与品牌名"><a href="#3-5-3-取出第4个栏目下的商品的商品名-栏目名-与品牌名" class="headerlink" title="3.5.3 取出第4个栏目下的商品的商品名,栏目名,与品牌名"></a>3.5.3 取出第4个栏目下的商品的商品名,栏目名,与品牌名</h4><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">select</span> goods_name,cat_name,brand_name <span class="hljs-keyword">from</span> <br>ecs_goods <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> ecs_category<br><span class="hljs-keyword">on</span> ecs_goods.cat_id=ecs_category.cat_id<br><span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> ecs_brand <br><span class="hljs-keyword">on</span> ecs_goods.brand_id=ecs_brand.brand_id<br><span class="hljs-keyword">where</span> ecs_goods.cat_id = <span class="hljs-number">4</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-5-4-面试题"><a href="#3-5-4-面试题" class="headerlink" title="3.5.4 面试题"></a>3.5.4 面试题</h4><blockquote>
+<p>根据给出的表结构按要求写出<code>SQL</code>语句。</p>
+</blockquote>
+<p><strong>Match 赛程表</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">字段名称</th>
+<th align="left">字段类型</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>matchID</code></td>
+<td align="left"><code>int</code></td>
+<td align="left">主键</td>
+</tr>
+<tr>
+<td align="left"><code>hostTeamID</code></td>
+<td align="left"><code>int</code></td>
+<td align="left">主队的<code>ID</code></td>
+</tr>
+<tr>
+<td align="left"><code>guestTeamID</code></td>
+<td align="left"><code>int</code></td>
+<td align="left">客队的<code>ID</code></td>
+</tr>
+<tr>
+<td align="left"><code>matchResult</code></td>
+<td align="left"><code>varchar(20)</code></td>
+<td align="left">比赛结果，如（<code>2:0</code>）</td>
+</tr>
+<tr>
+<td align="left"><code>matchTime</code></td>
+<td align="left"><code>date</code></td>
+<td align="left">比赛开始时间</td>
+</tr>
+</tbody></table>
+<p><strong>Team 参赛队伍表</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">字段名称</th>
+<th align="left">字段类型</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>teamID</code></td>
+<td align="left"><code>int</code></td>
+<td align="left">主键</td>
+</tr>
+<tr>
+<td align="left"><code>teamName</code></td>
+<td align="left"><code>varchar(20)</code></td>
+<td align="left">队伍名称</td>
+</tr>
+</tbody></table>
+<ul>
+<li><code>Match</code>的<code>hostTeamID</code>与<code>guestTeamID</code>都与<code>Team</code>中的<code>teamID</code>关联</li>
+<li>查出 <code>2006-6-1</code> 到<code>2006-7-1</code>之间举行的所有比赛，并且用以下形式列出：</li>
+<li>拜仁 <code>2：0</code> 不来梅 <code>2006-6-21</code></li>
+</ul>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-section">mysql&gt; select * from m;</span><br><span class="hljs-section">+-----+------+------+------+------------+</span><br><span class="hljs-section">| mid | hid  | gid  | mres | matime     |</span><br><span class="hljs-section">+-----+------+------+------+------------+</span><br>|   1 |    1 |    2 | 2:0  | 2006-05-21 |<br>|   2 |    2 |    3 | 1:2  | 2006-06-21 |<br>|   3 |    3 |    1 | 2:5  | 2006-06-25 |<br><span class="hljs-section">|   4 |    2 |    1 | 3:2  | 2006-07-21 |</span><br><span class="hljs-section">+-----+------+------+------+------------+</span><br>4 rows in set (0.00 sec)<br><span class="hljs-section">mysql&gt; select * from t;</span><br><span class="hljs-section">+------+----------+</span><br><span class="hljs-section">| tid  | tname    |</span><br><span class="hljs-section">+------+----------+</span><br>|    1 | 国安     |<br>|    2 | 申花     |<br><span class="hljs-section">|    3 | 公益联队 |</span><br><span class="hljs-section">+------+----------+</span><br>3 rows in set (0.00 sec)<br>mysql&gt; select hid,t1.tname as hname ,mres,gid,t2.tname as gname,matime<br><span class="hljs-code">    -&gt; from </span><br><span class="hljs-code">    -&gt; m left join t as t1</span><br><span class="hljs-code">    -&gt; on m.hid = t1.tid</span><br><span class="hljs-code">    -&gt; left join t as t2</span><br><span class="hljs-section">    -&gt; on m.gid = t2.tid;</span><br><span class="hljs-section">+------+----------+------+------+----------+------------+</span><br><span class="hljs-section">| hid  | hname    | mres | gid  | gname    | matime     |</span><br><span class="hljs-section">+------+----------+------+------+----------+------------+</span><br>|    1 | 国安     | 2:0  |    2 | 申花     | 2006-05-21 |<br>|    2 | 申花     | 1:2  |    3 | 公益联队 | 2006-06-21 |<br>|    3 | 公益联队 | 2:5  |    1 | 国安     | 2006-06-25 |<br><span class="hljs-section">|    2 | 申花     | 3:2  |    1 | 国安     | 2006-07-21 |</span><br><span class="hljs-section">+------+----------+------+------+----------+------------+</span><br>4 rows in set (0.00 sec)<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-6、union查询"><a href="#3-6、union查询" class="headerlink" title="3.6、union查询"></a>3.6、union查询</h3><ul>
+<li>把<code>ecs_comment</code>,<code>ecs_feedback</code>两个表中的数据,各取出<code>4</code>列,并把结果集<code>union</code>成一个结果集</li>
+</ul>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-section">A表:</span><br><span class="hljs-section">+------+------+</span><br><span class="hljs-section">| id   | num  |</span><br><span class="hljs-section">+------+------+</span><br>| a    |    5 |<br>| b    |   10 |<br>| c    |   15 |<br><span class="hljs-section">| d    |   10 |</span><br><span class="hljs-section">+------+------+</span><br><span class="hljs-section">B表:</span><br><span class="hljs-section">+------+------+</span><br><span class="hljs-section">| id   | num  |</span><br><span class="hljs-section">+------+------+</span><br>| b    |    5 |<br>| c    |   15 |<br>| d    |   20 |<br><span class="hljs-section">| e    |   99 |</span><br><span class="hljs-section">+------+------+</span><br></code></pre></td></tr></table></figure>
+
+<p>要求查询出以下效果:</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-code">+------+</span>----------+<br><span class="hljs-section">| id   |    num   |</span><br><span class="hljs-section">+------+----------+</span><br>| a    |        5 |<br>| b    |       15 |<br>| c    |       30 |<br>| d    |       30 |<br><span class="hljs-section">| e    |       99 |</span><br><span class="hljs-section">+------+----------+</span><br>create table a (<br>id char(1),<br>num int<br>) engine myisam charset utf8;<br><br>insert into a values (<span class="hljs-emphasis">&#x27;a&#x27;</span>,5),(<span class="hljs-emphasis">&#x27;b&#x27;</span>,10),(<span class="hljs-emphasis">&#x27;c&#x27;</span>,15),(<span class="hljs-emphasis">&#x27;d&#x27;</span>,10);<br><br>create table b (<br>id char(1),<br>num int<br>) engine myisam charset utf8;<br><br>insert into b values (<span class="hljs-emphasis">&#x27;b&#x27;</span>,5),(<span class="hljs-emphasis">&#x27;c&#x27;</span>,15),(<span class="hljs-emphasis">&#x27;d&#x27;</span>,20),(<span class="hljs-emphasis">&#x27;e&#x27;</span>,99);<br>mysql&gt; # 合并 ,注意all的作用<br>mysql&gt; select * from ta <br><span class="hljs-code">    -&gt; union all</span><br><span class="hljs-section">    -&gt; select * from tb;</span><br><span class="hljs-section">+------+------+</span><br><span class="hljs-section">| id   | num  |</span><br><span class="hljs-section">+------+------+</span><br>| a    |    5 |<br>| b    |   10 |<br>| c    |   15 |<br>| d    |   10 |<br>| b    |    5 |<br>| c    |   15 |<br>| d    |   20 |<br><span class="hljs-section">| e    |   99 |</span><br><span class="hljs-section">+------+------+</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>参考答案:</strong></p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">mysql&gt; # sum,group求和<br><span class="hljs-section">mysql&gt; select id,sum(num) from (select * from ta union all select * from tb) as tmp group by id;</span><br><span class="hljs-section">+------+----------+</span><br><span class="hljs-section">| id   | sum(num) |</span><br><span class="hljs-section">+------+----------+</span><br>| a    |        5 |<br>| b    |       15 |<br>| c    |       30 |<br>| d    |       30 |<br><span class="hljs-section">| e    |       99 |</span><br><span class="hljs-section">+------+----------+</span><br>5 rows in set (0.00 sec)<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-7、子查询"><a href="#3-7、子查询" class="headerlink" title="3.7、子查询:"></a>3.7、子查询:</h3><p><strong>查询出最新一行商品(以商品编号最大为最新,用子查询实现)</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">select</span> goods_id,goods_name <span class="hljs-keyword">from</span> <br>     ecs_goods <span class="hljs-keyword">where</span> goods_id =(<span class="hljs-function"><span class="hljs-keyword">select</span> <span class="hljs-title">max</span>(<span class="hljs-params">goods_id</span>) <span class="hljs-keyword">from</span> ecs_goods)</span>;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>查询出编号为<code>19</code>的商品的栏目名称(用左连接查询和子查询分别)</li>
+<li>用<code>where</code>型子查询把<code>ecs_goods</code>表中的每个栏目下面最新的商品取出来</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">select</span> goods_id,goods_name,<span class="hljs-function">cat_id <span class="hljs-keyword">from</span> ecs_goods <span class="hljs-keyword">where</span> goods_id <span class="hljs-title">in</span> (<span class="hljs-params"><span class="hljs-keyword">select</span> max(goods_id</span>) <span class="hljs-keyword">from</span> ecs_goods <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> cat_id)</span>;<br></code></pre></td></tr></table></figure>
+
+<p><strong>用from型子查询把ecs_goods表中的每个栏目下面最新的商品取出来</strong></p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> (<span class="hljs-keyword">select</span> goods_id,cat_id,goods_name <span class="hljs-keyword">from</span> ecs_goods <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> goods_id <span class="hljs-keyword">desc</span>) <span class="hljs-keyword">as</span> t <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> cat_id;<br></code></pre></td></tr></table></figure>
+
+<p><strong>用exists型子查询,查出所有有商品的栏目</strong></p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> category<br><span class="hljs-keyword">where</span> <span class="hljs-keyword">exists</span> (<span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> goods <span class="hljs-keyword">where</span> goods.cat_id=category.cat_id);<br></code></pre></td></tr></table></figure>
+
+<p><strong>创建触发器:</strong></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">CREATE</span>  <span class="hljs-keyword">trigger</span> tg2<br><span class="hljs-keyword">after</span> <span class="hljs-keyword">insert</span> <span class="hljs-keyword">on</span> ord<br><span class="hljs-keyword">for</span> <span class="hljs-keyword">each</span> <span class="hljs-keyword">row</span><br><span class="hljs-keyword">update</span> goods <span class="hljs-keyword">set</span> goods_number=goods_number-<span class="hljs-built_in">new</span>.num <span class="hljs-keyword">where</span> id=<span class="hljs-built_in">new</span>.gid<br><br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">trigger</span> tg3<br><span class="hljs-keyword">after</span> <span class="hljs-keyword">delete</span> <span class="hljs-keyword">on</span> ord<br><span class="hljs-keyword">for</span> <span class="hljs-keyword">each</span> <span class="hljs-keyword">row</span><br><span class="hljs-keyword">update</span> goods <span class="hljs-keyword">set</span> goods_number=good_number+<span class="hljs-built_in">old</span>.num <span class="hljs-keyword">where</span> id=<span class="hljs-built_in">old</span>.gid<br><br><br><span class="hljs-keyword">CREATE</span>  <span class="hljs-keyword">trigger</span> tg4<br><span class="hljs-keyword">after</span> <span class="hljs-keyword">update</span> <span class="hljs-keyword">on</span> ord<br><span class="hljs-keyword">for</span> <span class="hljs-keyword">each</span> <span class="hljs-keyword">row</span><br><span class="hljs-keyword">update</span> goods <span class="hljs-keyword">set</span> goods_number=goods_number+<span class="hljs-built_in">old</span>.num-<span class="hljs-built_in">new</span>.num <span class="hljs-keyword">where</span> id=<span class="hljs-built_in">old</span>.gid<br></code></pre></td></tr></table></figure>
+
+<h2 id="四、常用表管理语句"><a href="#四、常用表管理语句" class="headerlink" title="四、常用表管理语句"></a>四、常用表管理语句</h2><ul>
+<li>设置字符编码 <code>set names gbk;</code></li>
+<li>查看所有数据库：<code>show databases;</code></li>
+<li>查看所有表：<code>show tables</code></li>
+<li>查看表结构：<code>desc 表名/视图名</code></li>
+<li>选择表 <code>use 表名;</code></li>
+<li>查看建表过程：<code>show create table 表名</code></li>
+<li>查看建视图过程：<code>show create view 视图</code></li>
+<li>查看所有详细表信息：<code>show table status\G(让结果显示好看一些)</code></li>
+<li>查看某张表详细信息：<code>show table status where name=&#39;goods（表名）&#39;\G</code></li>
+<li>删除表：<code>drop table 表名</code></li>
+<li>删除视图：<code>drop view 视图名；</code></li>
+<li>删除列：<code>alter table drop column 指定列</code></li>
+<li>改表名：<code>rename table oldName to newName</code></li>
+<li>更新表：<code>update 表名 set 字段</code></li>
+<li>插入数据：<code>insert into 表名 value()</code></li>
+<li>清空数据：<code>truncate 表名;(相当于删除表在重建)</code></li>
+<li>写错语句退出:<code>\c</code></li>
+<li>让结果显示好看一些:<code>\G</code></li>
+</ul>
+<h2 id="五、查询总结"><a href="#五、查询总结" class="headerlink" title="五、查询总结"></a>五、查询总结</h2><h3 id="5-1-insert"><a href="#5-1-insert" class="headerlink" title="5.1 insert"></a>5.1 insert</h3><ul>
+<li><code>insert into 表名</code> 插入列与值要严格对应</li>
+<li>数字不必加单引号 字符串必须加单引号</li>
+<li>例子：<code>insert into test(age,name)values(10,&#39;小明&#39;);</code></li>
+</ul>
+<h3 id="5-2-update操作"><a href="#5-2-update操作" class="headerlink" title="5.2 update操作"></a>5.2 update操作</h3><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">// 例子：<br><span class="hljs-keyword">update</span> <span class="hljs-keyword">user</span> <span class="hljs-keyword">set</span> age=<span class="hljs-number">8</span> <span class="hljs-keyword">where</span> <span class="hljs-type">name</span>=lianying;<br>//（注意<span class="hljs-keyword">where</span>条件不加会影响所有行，需要小心）<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-3-delete操作"><a href="#5-3-delete操作" class="headerlink" title="5.3 delete操作"></a>5.3 delete操作</h3><ul>
+<li>不可能针对某一列删除 要删必须一行</li>
+<li><code>delete from 表名 where 添加</code></li>
+<li><code>delete from user where uid=1;</code>（必须加上添加，否则全部数据删除）</li>
+</ul>
+<h3 id="5-4-select查找"><a href="#5-4-select查找" class="headerlink" title="5.4 select查找"></a>5.4 select查找</h3><ul>
+<li><code>select * from 表名</code>（全部查出）</li>
+<li><code>select uid,name from user where uid&gt;10;</code></li>
+<li><code>select * from user where uid=11;</code></li>
+</ul>
+<h3 id="5-5-select查询模型（重要）"><a href="#5-5-select查询模型（重要）" class="headerlink" title="5.5 select查询模型（重要）"></a>5.5 select查询模型（重要）</h3><ul>
+<li><code>select * from 表名 where 1</code>（<code>where</code>是一个表达式 为真则取出来 为假不取）</li>
+<li>把列看成变量，既然是变量就能参与运。这个过程称为广义投影（比如：取出两列参与运算）也可以带到函数里面计算</li>
+</ul>
+<blockquote>
+<p>注意：<code>NULL</code>：查询方法： <code>select * from test where name is （not）null</code></p>
+</blockquote>
+<h3 id="5-6-limit用法（做分页类能用到）"><a href="#5-6-limit用法（做分页类能用到）" class="headerlink" title="5.6 limit用法（做分页类能用到）"></a>5.6 limit用法（做分页类能用到）</h3><blockquote>
+<p>限制取出条目（limit有两个参数 ：偏移量 取出的条目）</p>
+</blockquote>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">select</span> goods_id,goods_name,shop_price<br>	-&gt; <span class="hljs-keyword">from</span> goods<br>	-&gt; <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> shop_price <span class="hljs-keyword">desc</span><br>	-&gt; <span class="hljs-keyword">limit</span>  <span class="hljs-number">0</span>,<span class="hljs-number">3</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-7-子句的查询陷阱"><a href="#5-7-子句的查询陷阱" class="headerlink" title="5.7 子句的查询陷阱"></a>5.7 子句的查询陷阱</h3><blockquote>
+<p><code>5</code>种语句有严格的顺序，<code>where</code> ，<code>group by</code>,<code>having</code>,<code>order by</code>,<code>limit</code><br>不能颠倒顺序</p>
+</blockquote>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"># 例子:语句有严格的顺序<br>mysql&gt; <span class="hljs-keyword">select</span> id,sum(num) <br>					-&gt; <span class="hljs-keyword">from</span><br>					-&gt; (<span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> a <span class="hljs-keyword">union</span> <span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> b) <span class="hljs-keyword">as</span> <span class="hljs-keyword">temp</span><br>					-&gt; <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> id<br>					-&gt; <span class="hljs-keyword">having</span> sum(num)&gt;<span class="hljs-number">10</span><br>					-&gt; <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> sum(num) <span class="hljs-keyword">desc</span><br>					-&gt; <span class="hljs-keyword">limit</span> <span class="hljs-number">0</span>,<span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-8-子查询"><a href="#5-8-子查询" class="headerlink" title="5.8 子查询"></a>5.8 子查询</h3><p><strong>where字查询：（内层的查询结果作为外层的比较条件）</strong></p>
+<ul>
+<li>静态的：select goods_id,goods_name from goods where goods_id&#x3D;32;</li>
+<li>动态的：select goods_id,goods_name from goods where goods_id&#x3D;(select max(goods_id) from goods);</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-meta">#取出每个栏目下最新的商品：</span><br><span class="hljs-keyword">select</span> goods_id,cat_id,<span class="hljs-function">goods_name <span class="hljs-keyword">from</span> goods <span class="hljs-keyword">where</span> goods_id <span class="hljs-title">in</span> (<span class="hljs-params"><span class="hljs-keyword">select</span> max(goods_id</span>) <span class="hljs-keyword">from</span> goods <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> cat_id)</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-9-from子查询"><a href="#5-9-from子查询" class="headerlink" title="5.9 from子查询"></a>5.9 from子查询</h3><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-meta">#每个栏目下最新的商品：</span><br>		mysql&gt; <span class="hljs-keyword">select</span> goods_id,goods_name <span class="hljs-keyword">from</span> (<span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> goods <span class="hljs-keyword">where</span> <span class="hljs-number">1</span> <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> cat_id <span class="hljs-keyword">desc</span>) <span class="hljs-keyword">as</span> tmp<br>			-&gt; <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> cat_id;<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-10-exists子查询："><a href="#5-10-exists子查询：" class="headerlink" title="5.10 exists子查询："></a>5.10 exists子查询：</h3><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-meta">#查询栏目下是否有商品</span><br>		mysql&gt; <span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> category<br>			-&gt; <span class="hljs-keyword">where</span> <span class="hljs-keyword">exists</span>(<span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> goods <span class="hljs-keyword">where</span> goods.cat_id=category.cat_id)<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-11-内连接查询（重要）"><a href="#5-11-内连接查询（重要）" class="headerlink" title="5.11 内连接查询（重要）"></a>5.11 内连接查询（重要）</h3><blockquote>
+<p>内连接是左右连接结果的交集</p>
+</blockquote>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">select</span> xxx <span class="hljs-keyword">from</span><br>			table1 <span class="hljs-keyword">inner</span> jion table2 <span class="hljs-keyword">on</span> table1.xx=table2.xx<br>			<br>		<br>mysql&gt; <span class="hljs-keyword">select</span> boy.hid,boy.bname,girl.hid,girl.gname<br>			-&gt; <span class="hljs-keyword">from</span><br>			-&gt; boy <span class="hljs-keyword">inner</span> <span class="hljs-keyword">join</span> girl <span class="hljs-keyword">on</span> boy.hid=girl.hid;<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-12-左连接特点"><a href="#5-12-左连接特点" class="headerlink" title="5.12 左连接特点"></a>5.12 左连接特点</h3><blockquote>
+<p>以左表的数据为标准，去找右表的数据，查不到的为<code>NULL</code></p>
+</blockquote>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs n1ql">#左连接<br>mysql&gt; <span class="hljs-keyword">select</span> boy.hid,boy.bname,girl.hid,girl.gname<br>	-&gt; <span class="hljs-keyword">from</span><br>	-&gt; boy <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> girl <span class="hljs-keyword">on</span> boy.hid=girl.hid;<br><br>#右连接<br>mysql&gt; <span class="hljs-keyword">select</span> boy.hid,boy.bname,girl.hid,girl.gname<br>-&gt; <span class="hljs-keyword">from</span><br>-&gt; boy <span class="hljs-keyword">right</span> <span class="hljs-keyword">join</span> girl <span class="hljs-keyword">on</span> boy.hid=girl.hid;<br><br><br>mysql&gt; <span class="hljs-keyword">select</span> goods_id,cat_name,goods_name,shop_price<br>	-&gt; <span class="hljs-keyword">from</span><br>	-&gt; goods <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> category <span class="hljs-keyword">on</span> goods.cat_id= category.cat_id<br>	-&gt; <span class="hljs-keyword">where</span> goods.cat_id=<span class="hljs-number">4</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-13-union查询"><a href="#5-13-union查询" class="headerlink" title="5.13 union查询"></a>5.13 union查询</h3><blockquote>
+<p>把<code>2</code>条或多条的额查询结果，合并成<code>1</code>个结果集</p>
+</blockquote>
+<ul>
+<li><code>sql1 N行</code></li>
+<li><code>sql2 M行</code></li>
+<li><code>sql1 union sql2，N+M行</code></li>
+</ul>
+<blockquote>
+<ul>
+<li><code>union</code>语句必须满足一个条件：各语句取出的列数要相同</li>
+<li><code>union</code>语句中不用写<code>order by</code> 因为<code>sql</code>合并后得到总的结果集可以<code>order by</code>字句<code>order by</code>失去意义</li>
+<li>场景：<code>2</code>条语句，各自的<code>where</code>非常复杂，可以简化成简单的条件在<code>union</code></li>
+<li>注意：使用<code>union</code>时，完全相等的行将会被合并。合并是比较耗时的操作，一般不让<code>union</code>合并，使用<code>union all</code>可以避免合并 对速度有提升</li>
+</ul>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs sql">mysql<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> a<br>	<span class="hljs-operator">-</span><span class="hljs-operator">&gt;</span> <span class="hljs-keyword">union</span> <span class="hljs-keyword">all</span> #<span class="hljs-keyword">union</span> <span class="hljs-keyword">all</span> 可以避免重复语句合并<br>	<span class="hljs-operator">-</span><span class="hljs-operator">&gt;</span> <span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> b;<br><br>mysql<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">select</span> goods_id,cat_id,goods_name,shop_price <span class="hljs-keyword">from</span> goods <span class="hljs-keyword">where</span> cat_id<span class="hljs-operator">=</span><span class="hljs-number">2</span><br>	<span class="hljs-operator">-</span><span class="hljs-operator">&gt;</span> <span class="hljs-keyword">union</span><br>	<span class="hljs-operator">-</span><span class="hljs-operator">&gt;</span> <span class="hljs-keyword">select</span> goods_id,cat_id,goods_name,shop_price <span class="hljs-keyword">from</span> goods <span class="hljs-keyword">where</span> cat_id<span class="hljs-operator">=</span><span class="hljs-number">4</span>;<br>​```			<br><br><br>## 六、建表总结<br><br>​```bash<br><span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> 表名 （<br>	列<span class="hljs-number">1</span> 列类型 [列属性 默认值]<br>	列<span class="hljs-number">2</span> 列类型 [列属性 默认值]<br>	...<br>	);<br>	engine <span class="hljs-operator">=</span> 存储引擎<br>	chartset <span class="hljs-operator">=</span> 字符集<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>建表过程：声明表头的过程，也就是声明列的过程</p>
+</blockquote>
+<ul>
+<li>选择合理的列类型 合理的列宽度（即放下内容 又不浪费磁盘空间）</li>
+<li>列选什么类型的列 列给什么样的属性</li>
+<li>数值型–整形，浮点型，定点型</li>
+<li>字符串型–<code>char</code> <code>varchar</code> <code>text</code></li>
+<li>日期时间类型–<code>2012-12-13 14.25.36</code></li>
+</ul>
+<h3 id="6-1-整型列"><a href="#6-1-整型列" class="headerlink" title="6.1 整型列"></a>6.1 整型列</h3><table>
+<thead>
+<tr>
+<th align="left">类型：</th>
+<th align="left">字节：</th>
+<th align="left">最小值：</th>
+<th align="left">最大值：</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>bigint</code></td>
+<td align="left"><code>8</code>字节</td>
+<td align="left"><code>-9223372036854775808</code></td>
+<td align="left">18446744073709551615</td>
+</tr>
+<tr>
+<td align="left"><code>int</code></td>
+<td align="left"><code>4</code>字节</td>
+<td align="left"><code>-2147483648</code></td>
+<td align="left"><code>4294967295</code></td>
+</tr>
+<tr>
+<td align="left"><code>mediunint</code></td>
+<td align="left"><code>3</code>字节</td>
+<td align="left"><code>-8388608</code></td>
+<td align="left"><code>8388607</code></td>
+</tr>
+<tr>
+<td align="left"><code>smallint</code></td>
+<td align="left">&#96;2字节</td>
+<td align="left"><code>-32768</code></td>
+<td align="left"><code>3276</code>7</td>
+</tr>
+<tr>
+<td align="left"><code>tinyint</code></td>
+<td align="left"><code>1</code>字节</td>
+<td align="left"><code>-128</code></td>
+<td align="left"><code>127</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>整型列的可选参数</p>
+</blockquote>
+<ul>
+<li><code>unsigned</code> 无符号，列的值从<code>0</code>开始不为负</li>
+<li><code>zerofill M</code>（宽度）适合用于 学号 编码等固定宽度的数字，可以用0填充至固定宽度</li>
+<li>学号：<code>1--0001</code></li>
+<li>注意：<code>zerofill</code>属性默认决定是<code>unsigned</code></li>
+</ul>
+<h3 id="6-2-浮点列与定点列"><a href="#6-2-浮点列与定点列" class="headerlink" title="6.2 浮点列与定点列"></a>6.2 浮点列与定点列</h3><ul>
+<li><code>float（M，D）</code> <code>M</code>是精度总位数 <code>D</code>代表小数点后面的位数</li>
+<li><code>float/double</code> 范围区别和<code>decimal</code>相比：浮点数存储有精度的损失</li>
+<li><code>decimal</code> 定点型更精确</li>
+</ul>
+<h3 id="6-3-字符型列"><a href="#6-3-字符型列" class="headerlink" title="6.3 字符型列"></a>6.3 字符型列</h3><ul>
+<li><p><code>char(M)</code>–<code>char(10)</code>只能存<code>10</code>个字符</p>
+</li>
+<li><pre><code class="hljs">char
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><br><span class="hljs-section">型:如果不够</span><br><br></code></pre></td></tr></table></figure>
+M
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br>  个字符，内部会用空格补齐，取出时在把右侧空格删掉<br><br>  - 注意：这意味着右侧本身有空格将会丢失<br><br>- `varchar(M)`–用多少占多少–自动扩展<br><br>- `varchar`不会丢失空格<br><br>- 速度上：定长`char`快一些 在一定范围内用`char`定长寻址快 速度快<br><br>- `M`比较短`20`个以内用`char`<br><br>- `text` 存大段文本<br><br>- ```<br>  blob<br></code></pre></td></tr></table></figure>
+
+ 
+
+是二进制类型 用来存图像信息 音频等二进制信息
+
+- `blob`意义在于防止因为字符集的问题导致信息丢失
+</code></pre>
+</li>
+<li><p>&#96;&#96;&#96;<br>enum</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><br>  枚举类型：是定义好 值就在某几个枚举范围内<br><br><span class="hljs-bullet">  -</span> <span class="hljs-code">`gender emum(&#x27;男&#x27;,&#x27;女&#x27;) insert`</span> 只能选其中之一<br><br><span class="hljs-section">### 6.4 日期时间类型</span><br><br><span class="hljs-bullet">-</span> <span class="hljs-code">`year`</span>：存年份<br><span class="hljs-bullet">-</span> <span class="hljs-code">`date`</span>:存年份日期2016-18<br><span class="hljs-bullet">-</span> <span class="hljs-code">`time`</span>：存时分秒<br><span class="hljs-bullet">-</span> <span class="hljs-code">`datetime`</span>:年月日时分秒<br><br></code></pre></td></tr></table></figure>
+<p>mysql&gt; create table t8(<br>  -&gt; ya year,<br>  -&gt; dt date,<br>  -&gt; tm time,<br>  -&gt; dttm datetime);<br>  -&gt; insert into t8 (ya,dt,tm) values(2015,’2015-12-18’,’18:28:36’);</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br>### <span class="hljs-number">6.5</span> 列的默认值<br><br>- `NULL`查询不方便<br>- `NULL`索引效率不高<br>- 实际中避免列的值为`NULL`<br><br>&gt; 如何避免：声明列`NOT NULL default`默认值<br><br></code></pre></td></tr></table></figure>
+<p>mysql&gt; create table t10(<br>  -&gt; id int not null default 0,<br>  -&gt; name char(10) not null default ‘’<br>  -&gt; );</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><br><span class="hljs-section">### 6.6 主键与自增</span><br><br><span class="hljs-bullet">-</span> 主键<span class="hljs-code">`primary key`</span> 此列不重复，能区分每一行<br><span class="hljs-bullet">-</span> <span class="hljs-code">`primary key,auto_increment(一般那两个一起出现)`</span><br><span class="hljs-bullet">-</span> 注意：一张表列只能有一列为<span class="hljs-code">`auto_increment`</span> 且此列必须加索引（<span class="hljs-code">`index`</span> <span class="hljs-code">`key`</span>）<br><span class="hljs-bullet">-</span> 优化：<br><span class="hljs-bullet">  -</span> 定长（<span class="hljs-code">`char`</span>）与变长（<span class="hljs-code">`varchar`</span>）分离<br><span class="hljs-bullet">  -</span> 常用与不常用列分离<br><span class="hljs-bullet">  -</span> 能提高表的查询效率<br><br><span class="hljs-section">### 6.7 列的删除与增加：（列的增删改）</span><br><br><span class="hljs-bullet">-</span> <span class="hljs-code">`alter table 表名 add 列名 列类型 列属性`</span> 默认在表的最后<br><span class="hljs-bullet">-</span> <span class="hljs-code">`alter table 表名 drop column 指定列`</span>–删除列<br><span class="hljs-bullet">-</span> <span class="hljs-code">`alter table 表名 add 列名 列类型 列属性`</span> [<span class="hljs-code">`after`</span> 指定列的后面]<br><span class="hljs-bullet">-</span> <span class="hljs-code">`alter table 表名 change height(要修改的) shengao（被修改后的） smallint`</span><br><span class="hljs-bullet">-</span> <span class="hljs-code">`alter table 表名 modify 列名`</span> 要改成的新的属性<br><br><span class="hljs-section">### 6.8 视图：（存储的都是语句）</span><br><br><span class="hljs-quote">&gt; `view`被称为虚拟表，view是sql语句的查询结果（物理表的一个映射结果，物理表一改变，视图表也改变）</span><br><br><span class="hljs-strong">**1. view好处**</span><br><br><span class="hljs-bullet">-</span> 权限控制可用：<br><span class="hljs-bullet">  -</span> 比如某几个列允许用户查询，其他不允许<br><span class="hljs-bullet">  -</span> 可通过视图开放其中一列或几列，起到权限控制作用<br><span class="hljs-bullet">-</span> 简化复杂的查询<br><span class="hljs-bullet">-</span> 视图能更新？<br><span class="hljs-bullet">  -</span> 如果视图的每一行是与物理表一一对应的可以<br><span class="hljs-bullet">  -</span> view的行是由物理表多行经过计算得到的结果，view不可以更新<br><br><span class="hljs-strong">**2. 视图的algorithm**</span><br><br><span class="hljs-bullet">-</span> 对于检查查询形成的view，在对view查询时，如order by where<br><span class="hljs-bullet">-</span> 可以把建视图语句+查视图的语句===合并成==&gt;查物理的语句<br><span class="hljs-bullet">-</span> 这种视图的算法叫merger（合并）<br><br><span class="hljs-section">### 6.9 引擎的概念</span><br><br><span class="hljs-bullet">-</span> <span class="hljs-code">`mysql 5.0`</span>以上默认的引擎是<span class="hljs-code">`innoDB`</span> 一般建表时指定引擎<br><span class="hljs-bullet">-</span> <span class="hljs-code">`myisam`</span>引擎存储的数据可以直接考出来拿去用<br><span class="hljs-bullet">-</span> <span class="hljs-code">`innDB`</span>要把数据导出来<br><br><span class="hljs-quote">&gt; `myisam`和`innDB`引擎区别</span><br><br>| mysiam           | innDB |        |<br>| :--------------- | :---- | ------ |<br>| 批量插入的速度： | 高    | 低     |<br>| 存储限制：       | 没有  | <span class="hljs-code">`64TB`</span> |<br><br><span class="hljs-section">### 6.10 字符集与乱码问题</span><br><br><span class="hljs-bullet">-</span> 字符集、校对集(排序规则)、乱码<br><span class="hljs-bullet">-</span> 文字本来的字符集与展示的字符集不一致导致<br><span class="hljs-bullet">-</span> 客户端编码设置：<span class="hljs-code">`set names gbk/utf8;`</span><br><span class="hljs-bullet">-</span> 表设置编码:<span class="hljs-code">`create table ()charset utf8;`</span><br><span class="hljs-bullet">-</span> 服务器端<span class="hljs-code">`utf8/gbk`</span> 都可<br><span class="hljs-bullet">-</span> 网页的话：<span class="hljs-code">`mate:charset=utf8;`</span><br><br><span class="hljs-section">### 6.11 索引</span><br><br><span class="hljs-bullet">-</span> 索引是数据的目录，能快速定位行数据的位置<br><span class="hljs-bullet">-</span> 索引提高了查询的速度，降低了增删改的速度，并非越多越好<br><span class="hljs-bullet">-</span> 一般在查询频率的列上加，而且在重复低列上加效果好<br><span class="hljs-bullet">-</span> <span class="hljs-code">`key`</span> 普通索引<br><span class="hljs-bullet">-</span> <span class="hljs-code">`unique key`</span> 唯一键<br><span class="hljs-bullet">-</span> <span class="hljs-code">`primary key`</span> 主键索引<br><span class="hljs-bullet">-</span> 索引长度：建索引时，可以只索引列的前一部分的内容比如：前十个字符 <span class="hljs-code">`key email(email(10));`</span><br><span class="hljs-bullet">-</span> 多列索引:就是把<span class="hljs-code">`2`</span>列或者多列的值，看成一个整体，然后键索引<br><span class="hljs-bullet">-</span> 冗余索引：在某个列上可能存在多个索引<br><br><span class="hljs-section">### 6.12 索引操作</span><br><br><span class="hljs-bullet">-</span> 查看索引：<span class="hljs-code">`show index from goods\G`</span><br><br><span class="hljs-bullet">-</span> 删除索引：<br><br></code></pre></td></tr></table></figure>
+<p>alter table 表名 drop index 索引名</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br>  - 或者：`drop index 索引名 on 表名`<br><br>- 添加：`alter table 表名 add [index \unqiue]索引名(列名)`<br><br>- 添加主键索引：`alter table 表名 add primary key 列名`<br><br>- 删除主键索引：`alter table 表名 drop primary key`<br><br>## 七、常用函数<br><br>### <span class="hljs-number">7.1</span> 数学函数<br><br>- `abs(x)` 返回x的绝对值<br>- `bin(x)` 返回x的二进制（oct返回八进制，hex返回十六进制）<br>- `ceiling(x)` 返回大于x的最小整数值<br>- `exp(x)` 返回值`e`（自然对数的底）的`x`次方<br>- `floor(x)` 返回小于`x`的最大整数值<br>- `greatest(x1,x2,...,xn)`返回集合中最大的值<br>- `least(x1,x2,...,xn)` 返回集合中最小的值<br>- `ln(x)` 返回x的自然对数<br>- `log(x,y)`返回`x`的以`y`为底的对数<br>- `mod(x,y)` 返回x/y的模（余数）<br>- `pi()`返回`pi`的值（圆周率）<br>- `r<span class="hljs-literal">and</span>()`返回`０`到`1`内的随机值,可以通过提供一个参数(种子)使`r<span class="hljs-literal">and</span>()`随机数生成器生成一个指定的值。<br>- `round(x,y)`返回参数`x`的四舍五入的有`y`位小数的值<br>- `sign(x)`返回代表数字`x`的符号的值<br>- `sqrt(x)`返回一个数的平方根<br>- `truncate(x,y)` 返回数字`x`截短为`y`位小数的结果<br><br>### <span class="hljs-number">7.2</span> 聚合函数(常用于group by从句的select查询中)<br><br>- `avg(col)`返回指定列的平均值<br>- `count(col)`返回指定列中非`null`值的个数<br>- `min(col)`返回指定列的最小值<br>- `max(col)`返回指定列的最大值<br>- `sum(col)`返回指定列的所有值之和<br>- `group_concat(col)`返回由属于一组的列值连接组合而成的结果<br><br>### <span class="hljs-number">7.3</span> 字符串函数<br><br>- `ascii(char)`返回字符的`ascii`码值<br>- `bit_length(str)`返回字符串的比特长度<br>- `concat(s1,s2...,sn)`将s`1,s2...,sn`连接成字符串<br>- `concat_ws(sep,s1,s2...,sn)`将`s1,s2...,sn`连接成字符串，并用`sep`字符间隔<br>- `insert(str,x,y,instr)`将字符串`str`从第`x`位置开始，`y`个字符长的子串替换为字符串`instr`，返回结果<br>- `find_in_set(str,list)`分析逗号分隔的`list`列表，如果发现`str`，返回`str`在`list`中的位置<br>- `lcase(str)`或`lower(str)` 返回将字符串`str`中所有字符改变为小写后的结果<br>- `left(str,x)`返回字符串`str`中最左边的`x`个字符<br>- `length(s)`返回字符串`str`中的字符数<br>- `ltrim(str)` 从字符串`str`中切掉开头的空格<br>- `position(substr,str)` 返回子串`substr`在字符串`str`中第一次出现的位置<br>- `quote(str)` 用反斜杠转义`str`中的单引号<br>- `repeat(str,srchstr,rplcstr)`返回字符串`str`重复`x`次的结果<br>- `reverse(str) 返回颠倒字符串`str`的结果<br>- `right(str,x) 返回字符串`str`中最右边的`x`个字符<br>- `rtrim(str) 返回字符串`str`尾部的空格<br>- `strcmp(s1,s2)`比较字符串`s1`和`s2`<br>- `trim(str)`去除字符串首部和尾部的所有空格<br>- `ucase(str)`或`upper(str)` 返回将字符串`str`中所有字符转变为大写后的结果<br><br>### <span class="hljs-number">7.4</span> 日期和时间函数<br><br>- `curdate()`或`current_date()` 返回当前的日期<br>- `curtime()`或`current_time()` 返回当前的时间<br>- `date_add(date,interval int - keyword)`返回日期`date`加上间隔时间`int`的结果(`int`必须按照关键字进行格式化),如：`selectdate_add(current_date,interval <span class="hljs-number">6</span> month)<span class="hljs-comment">;`</span><br>- `date_format(date,fmt)` 依照指定的`fmt`格式格式化日期`date`值<br>- `date_sub(date,interval int - keyword)`返回日期`date`加上间隔时间`int`的结果(`int`必须按照关键字进行格式化),如：`selectdate_sub(current_date,interval <span class="hljs-number">6</span> month)<span class="hljs-comment">;`</span><br>- `dayofweek(date)` 返回date所代表的一星期中的第几天(`1~<span class="hljs-number">7</span>`)<br>- `dayofmonth(date)` 返回date是一个月的第几天(`1~<span class="hljs-number">31</span>`)<br>- `dayofyear(date)` 返回date是一年的第几天(`1~<span class="hljs-number">366</span>`)<br>- `dayname(date)` 返回date的星期名，如：`select dayname(current_date)<span class="hljs-comment">;`</span><br>- `from_unixtime(ts,fmt)` 根据指定的`fmt`格式，格式化`unix`时间戳`ts`<br>- `hour(time)` 返回time的小时值`(<span class="hljs-number">0</span>~<span class="hljs-number">23</span>)`<br>- `minute(time)` 返回time的分钟值`(<span class="hljs-number">0</span>~<span class="hljs-number">59</span>)`<br>- `month(date)` 返回`date`的月份值`(<span class="hljs-number">1</span>~<span class="hljs-number">12</span>)`<br>- `monthname(date)` 返回`date`的月份名，如：`select monthname(current_date)<span class="hljs-comment">;`</span><br>- `now()` 返回当前的日期和时间<br>- `quarter(date)` 返回`date`在一年中的季度`(<span class="hljs-number">1</span>~<span class="hljs-number">4</span>)`，如`select quarter(current_date)<span class="hljs-comment">;``</span><br>- `week(date)` 返回日期`date`为一年中第几周(`0~<span class="hljs-number">53</span>`)<br>- `year(date)` 返回日期`date`的年份(`1000~<span class="hljs-number">9999</span>`)<br><br>**一些示例**<br><br>- 获取当前系统时间：<br><br></code></pre></td></tr></table></figure>
+<p>select from_unixtime(unix_timestamp());</p>
+</li>
+</ul>
+<p>select extract(year_month from current_date);</p>
+<p>select extract(day_second from current_date);</p>
+<p>select extract(hour_minute from current_date);</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><br><span class="hljs-bullet">- </span>返回两个日期值之间的差值(月数)：<br><br></code></pre></td></tr></table></figure>
+<p>select period_diff(200302,199802);</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br>- 在`mysql`中计算年龄：<br><br></code></pre></td></tr></table></figure>
+<p>select date_format(from_days(to_days(now())-to_days(birthday)),’%y’)+0 as age from employee;</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br>&gt; 这样，如果`brithday`是未来的年月日的话，计算结果为`0`。<br><br>下面的`sql`语句计算员工的绝对年龄，即当`birthday`是未来的日期时，将得到负值<br><br></code></pre></td></tr></table></figure>
+<p>select date_format(now(), ‘%y’) - date_format(birthday, ‘%y’) -(date_format(now(), ‘00-%m-%d’) &lt;date_format(birthday, ‘00-%m-%d’)) as age from employee</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br>### <span class="hljs-number">7.5</span> 加密函数<br><br>- `aes_encrypt(str,key)` 返回用密钥`key`对字符串`str`利用高级加密标准算法加密后的结果，调用`aes_encrypt`的结果是一个二进制字符串，以`blob`类型存储<br>- `aes_decrypt(str,key)` 返回用密钥`key`对字符串`str`利用高级加密标准算法解密后的结果<br>- `decode(str,key)` 使用`key`作为密钥解密加密字符串`str`<br>- `encrypt(str,salt)` 使用`unixcrypt()`函数，用关键词`salt`(一个可以惟一确定口令的字符串，就像钥匙一样)加密字符串`str`<br>- `encode(str,key)` 使用key作为密钥加密字符串str，调用`encode()`的结果是一个二进制字符串，它以`blob`类型存储<br>- `md5()` 计算字符串`str`的`md5`校验和<br>- `password(str)` 返回字符串`str`的加密版本，这个加密过程是不可逆转的，和`unix`密码加密过程使用不同的算法。<br>- `sha()` 计算字符串`str`的安全散列算法(`sha`)校验和<br><br></code></pre></td></tr></table></figure>
+<h1 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h1><p>select encrypt(‘root’,’salt’);<br>select encode(‘xufeng’,’key’);<br>select decode(encode(‘xufeng’,’key’),’key’);#加解密放在一起<br>select aes_encrypt(‘root’,’key’);<br>select aes_decrypt(aes_encrypt(‘root’,’key’),’key’);<br>select md5(‘123456’);<br>select sha(‘123456’);</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br>### <span class="hljs-number">7.6</span> 格式化函数<br><br>- `date_format(date,fmt)` 依照字符串`fmt`格式化日期`date`值<br>- `format(x,y)` 把`x`格式化为以逗号隔开的数字序列，`y`是结果的小数位数<br>- `inet_aton(ip)` 返回`ip`地址的数字表示<br>- `inet_ntoa(num)` 返回数字所代表的`ip`地址<br>- `time_format(time,fmt)` 依照字符串`fmt`格式化时间`time`值<br>- 其中最简单的是`format()`函数，它可以把大的数值格式化为以逗号间隔的易读的序列。<br><br></code></pre></td></tr></table></figure>
+<h1 id="示例：-1"><a href="#示例：-1" class="headerlink" title="示例："></a>示例：</h1><p>select format(34234.34323432,3);</p>
+<p>select date_format(now(),’%w,%d %m %y %r’);</p>
+<p>select date_format(now(),’%y-%m-%d’);</p>
+<p>select date_format(19990330,’%y-%m-%d’);</p>
+<p>select date_format(now(),’%h:%i %p’);</p>
+<p>select inet_aton(‘10.122.89.47’);</p>
+<p>select inet_ntoa(175790383);</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br>### <span class="hljs-number">7.7</span> 类型转化函数<br><br>&gt; 为了进行数据类型转化，`mysql`提供了`cast()`函数，它可以把一个值转化为指定的数据类型。类型有：`binary`,`char`,`date`,`time`,`datetime`,`igned`,`unsigned`<br><br></code></pre></td></tr></table></figure>
+<h1 id="示例：-2"><a href="#示例：-2" class="headerlink" title="示例："></a>示例：</h1><p>select cast(now() as signed integer),curdate()+0;<br>select ‘f’&#x3D;binary ‘f’,’f’&#x3D;cast(‘f’ as binary);</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br>### <span class="hljs-number">7.8</span> 系统信息函数<br><br>- `database()` 返回当前数据库名<br>- `benchmark(count,expr)` 将表达式`expr`重复运行`count`次<br>- `connection_id()` 返回当前客户的连接`id`<br>- `found_rows()` 返回最后一个`select`查询进行检索的总行数<br>- `user()`或`system_user()` 返回当前登陆用户名<br>- `version()` 返回`mysql`服务器的版本<br><br></code></pre></td></tr></table></figure>
+<h1 id="示例：-3"><a href="#示例：-3" class="headerlink" title="示例："></a>示例：</h1><p>select database(),version(),user();</p>
+<p>#该例中,mysql计算log(rand()*pi())表达式9999999次。<br>selectbenchmark(9999999,log(rand()*pi()));</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs clean"><br>## 八、Mysql十条常用语句<br><br>**<span class="hljs-number">1.</span> 链接到数据库服务器**<br><br></code></pre></td></tr></table></figure>
+<p>mysql -h 地址 -u root -p 密码</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><br><span class="hljs-strong">**2. 查看所有库**</span><br><br></code></pre></td></tr></table></figure>
+<p>show databases;</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><br><span class="hljs-strong">**3. 选库**</span><br><br></code></pre></td></tr></table></figure>
+<p>use 库名</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><br><span class="hljs-strong">**4. 查看库下面的表**</span><br><br></code></pre></td></tr></table></figure>
+<p>show tables;</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><br><span class="hljs-strong">**5. 建表**</span><br><br></code></pre></td></tr></table></figure>
+<p>create table msg{<br>    id int auto_increment primary key，<br>    content varcha(200)，<br>    pubtime int<br>}charset utf8;</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><br>*<span class="hljs-number">*6</span>. 告诉服务器你的字符集：<span class="hljs-built_in">set</span> names gbk/utg8;**<br><br>*<span class="hljs-number">*7</span>. 添加数据**<br><br></code></pre></td></tr></table></figure>
+<p>insert into msg(id,content,pubtime) values(1,’哈哈哈哈’,13445);</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><br><span class="hljs-strong">**8. 查询所有数据**</span><br><br></code></pre></td></tr></table></figure>
+<p>select * from msg;</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs applescript"><br>**<span class="hljs-number">9.</span> 按<span class="hljs-built_in">id</span>查询**<br><br></code></pre></td></tr></table></figure>
+<p>select * from where id &#x3D; 2…</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><br><span class="hljs-strong">**10. 快速清空表**</span><br><br></code></pre></td></tr></table></figure>
+<p>truncate 表名</p>
+<p>&#96;&#96;&#96;</p>
+<h2 id="九、可视化管理数据"><a href="#九、可视化管理数据" class="headerlink" title="九、可视化管理数据"></a>九、可视化管理数据</h2><blockquote>
+<p>一般为了方便管理数据，我们都需要用到可视化工具</p>
+</blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.navicat.com.cn/download/navicat-for-mysql">navicat-for-mysql</a></li>
+</ul>
+<blockquote>
+<p>这里提供一份数据表，供学习使用，<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_33699659/article/details/79261661">导入sql数据到navicat</a></p>
+</blockquote>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://blog.poetries.top/sql/mysql-table.sql">http://blog.poetries.top/sql/mysql-table.sql</a></p>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="category-chain-item">数据库</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/mysql/">#mysql</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>mysql</div>
+      <div>http://example.com/2019/03/15/数据库/mysql/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>March 15, 2019</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/04/07/%E6%95%B0%E6%8D%AE%E5%BA%93/MongoDB/" title="mongodb">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">mongodb</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/03/12/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" title="工厂模式">
+                        <span class="hidden-mobile">工厂模式</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

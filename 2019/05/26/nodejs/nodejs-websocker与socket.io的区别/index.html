@@ -1,0 +1,730 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第一部分 WebSocket一、WebSocket 解决了什么问题 客户端(浏览器)和服务器端进行通信，只能由客户端发起ajax请求，才能进行通信，服务器端无法主动向客户端推送信息 当出现类似体育赛事、聊天室、实时位置之类的场景时，客户端要获取服务器端的变化，就只能通过轮询(定时请求)来了解服务器端有没有新的信息变化  轮询效率低，非常浪费资源(需要不断发送请求，不停链接服务器)  WebSock">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nodejs-websocker与socket.io的区别">
+<meta property="og:url" content="http://example.com/2019/05/26/nodejs/nodejs-websocker%E4%B8%8Esocket.io%E7%9A%84%E5%8C%BA%E5%88%AB/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="第一部分 WebSocket一、WebSocket 解决了什么问题 客户端(浏览器)和服务器端进行通信，只能由客户端发起ajax请求，才能进行通信，服务器端无法主动向客户端推送信息 当出现类似体育赛事、聊天室、实时位置之类的场景时，客户端要获取服务器端的变化，就只能通过轮询(定时请求)来了解服务器端有没有新的信息变化  轮询效率低，非常浪费资源(需要不断发送请求，不停链接服务器)  WebSock">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/389.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/390.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/391.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/392.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/393.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/394.png">
+<meta property="article:published_time" content="2019-05-26T05:16:35.000Z">
+<meta property="article:modified_time" content="2022-06-06T13:04:00.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="nodejs">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://poetries1.gitee.io/img-repo/2019/10/389.png">
+  
+  
+  
+  <title>nodejs-websocker与socket.io的区别 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="nodejs-websocker与socket.io的区别"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-05-26 13:16" pubdate>
+          May 26, 2019 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          17k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          139 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">nodejs-websocker与socket.io的区别</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="第一部分-WebSocket"><a href="#第一部分-WebSocket" class="headerlink" title="第一部分 WebSocket"></a>第一部分 WebSocket</h1><h2 id="一、WebSocket-解决了什么问题"><a href="#一、WebSocket-解决了什么问题" class="headerlink" title="一、WebSocket 解决了什么问题"></a>一、WebSocket 解决了什么问题</h2><ul>
+<li>客户端(浏览器)和服务器端进行通信，只能由客户端发起<code>ajax</code>请求，才能进行通信，服务器端无法主动向客户端推送信息</li>
+<li>当出现类似体育赛事、聊天室、实时位置之类的场景时，客户端要获取服务器端的变化，就只能通过轮询(定时请求)来了解服务器端有没有新的信息变化</li>
+</ul>
+<p>轮询效率低，非常浪费资源(需要不断发送请求，不停链接服务器)</p>
+<blockquote>
+<p><code>WebSocket</code>的出现，让服务器端可以主动向服务器端发送信息，使得浏览器具备了实时双向通信的能力,这就是<code>WebSocket</code>解决的问题</p>
+</blockquote>
+<p><strong>一个超简单例子</strong></p>
+<blockquote>
+<p>新建一个<code>html</code>文件，将本栗子找个地方跑一下试试，即可轻松入门<code>WebSocket</code></p>
+</blockquote>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">function</span> <span class="hljs-title function_">socketConnect</span>(<span class="hljs-params">url</span>) &#123;<br>    <span class="hljs-comment">// 客户端与服务器进行连接</span><br>    let ws = <span class="hljs-keyword">new</span> WebSocket(url); <span class="hljs-comment">// 返回`WebSocket`对象，赋值给变量ws</span><br>    <span class="hljs-comment">// 连接成功回调</span><br>    ws.onopen = <span class="hljs-function"><span class="hljs-params">e</span> =&gt;</span> &#123;<br>        <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&#x27;连接成功&#x27;</span>, e)<br>        ws.send(<span class="hljs-string">&#x27;我发送消息给服务端&#x27;</span>); <span class="hljs-comment">// 客户端与服务器端通信</span><br>    &#125;<br>    <span class="hljs-comment">// 监听服务器端返回的信息</span><br>    ws.onmessage = <span class="hljs-function"><span class="hljs-params">e</span> =&gt;</span> &#123;<br>        <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&#x27;服务器端返回：&#x27;</span>, e.data)<br>        <span class="hljs-comment">// do something</span><br>    &#125;<br>    <span class="hljs-keyword">return</span> ws; <span class="hljs-comment">// 返回websocket对象</span><br>&#125;<br>let wsValue = socketConnect(<span class="hljs-string">&#x27;ws://121.40.165.18:8800&#x27;</span>); <span class="hljs-comment">// websocket对象</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>上述栗子中<code>WebSocket</code>的接口地址出自：<code>WebSocket</code> 在线测试，在开发的时候也可以用于测试后端给的地址是否可用</p>
+</blockquote>
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/389.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="二、webSocket的class类"><a href="#二、webSocket的class类" class="headerlink" title="二、webSocket的class类"></a>二、webSocket的class类</h2><blockquote>
+<p>当项目中很多地方使用<code>WebSocket</code>，把它封成一个<code>class</code>类，是更好的选择</p>
+</blockquote>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><code class="hljs awk">class WebSocketClass &#123;<br>    /**<br>     * @description: 初始化实例属性，保存参数<br>     * @param &#123;String&#125; url ws的接口<br>     * @param &#123;Function&#125; msgCallback 服务器信息的回调传数据给函数<br>     * @param &#123;String&#125; name 可选值 用于区分ws，用于debugger<br>     */<br>    constructor(url, msgCallback, name = <span class="hljs-string">&#x27;default&#x27;</span>) &#123;<br>        this.url = url;<br>        this.msgCallback = msgCallback;<br>        this.name = name;<br>        this.ws = null;  <span class="hljs-regexp">//</span> websocket对象<br>        this.status = null; <span class="hljs-regexp">//</span> websocket是否关闭<br>    &#125;<br>    /**<br>     * @description: 初始化 连接websocket或重连webSocket时调用<br>     * @param &#123;*&#125; 可选值 要传的数据<br>     */<br>    connect(data) &#123;<br>        <span class="hljs-regexp">//</span> 新建 WebSocket 实例<br>        this.ws = new WebSocket(this.url);<br>        this.ws.onopen = e =&gt; &#123;<br>            <span class="hljs-regexp">//</span> 连接ws成功回调<br>            this.status = <span class="hljs-string">&#x27;open&#x27;</span>;<br>            console.log(`<span class="hljs-variable">$&#123;this.name&#125;</span>连接成功`, e)<br>            <span class="hljs-regexp">//</span> this.heartCheck();<br>            <span class="hljs-keyword">if</span> (data !== undefined) &#123;<br>                <span class="hljs-regexp">//</span> 有要传的数据,就发给后端<br>                return this.ws.send(data);<br>            &#125;<br>        &#125;<br>        <span class="hljs-regexp">//</span> 监听服务器端返回的信息<br>        this.ws.onmessage = e =&gt; &#123;<br>            <span class="hljs-regexp">//</span> 把数据传给回调函数，并执行回调<br>            <span class="hljs-regexp">//</span> <span class="hljs-keyword">if</span> (e.data === <span class="hljs-string">&#x27;pong&#x27;</span>) &#123;<br>            <span class="hljs-regexp">//</span>     this.pingPong = <span class="hljs-string">&#x27;pong&#x27;</span>; <span class="hljs-regexp">//</span> 服务器端返回pong,修改pingPong的状态<br>            <span class="hljs-regexp">//</span> &#125;<br>            return this.msgCallback(e.data);<br>        &#125;<br>        <span class="hljs-regexp">//</span> ws关闭回调<br>        this.ws.onclose = e =&gt; &#123;<br>            this.closeHandle(e); <span class="hljs-regexp">//</span> 判断是否关闭<br>        &#125;<br>        <span class="hljs-regexp">//</span> ws出错回调<br>        this.onerror = e =&gt; &#123;<br>            this.closeHandle(e); <span class="hljs-regexp">//</span> 判断是否关闭<br>        &#125;<br>    &#125;<br>    <span class="hljs-regexp">//</span> heartCheck() &#123;<br>    <span class="hljs-regexp">//</span>     <span class="hljs-regexp">//</span> 心跳机制的时间可以自己与后端约定<br>    <span class="hljs-regexp">//</span>     this.pingPong = <span class="hljs-string">&#x27;ping&#x27;</span>; <span class="hljs-regexp">//</span> ws的心跳机制状态值<br>    <span class="hljs-regexp">//</span>     this.pingInterval = setInterval(() =&gt; &#123;<br>    <span class="hljs-regexp">//</span>         <span class="hljs-keyword">if</span> (this.ws.readyState === <span class="hljs-number">1</span>) &#123;<br>    <span class="hljs-regexp">//</span>             <span class="hljs-regexp">//</span> 检查ws为链接状态 才可发送<br>    <span class="hljs-regexp">//</span>             this.ws.send(<span class="hljs-string">&#x27;ping&#x27;</span>); <span class="hljs-regexp">//</span> 客户端发送ping<br>    <span class="hljs-regexp">//</span>         &#125;<br>    <span class="hljs-regexp">//</span>     &#125;, <span class="hljs-number">10000</span>)<br>    <span class="hljs-regexp">//</span>     this.pongInterval = setInterval(() =&gt; &#123;<br>    <span class="hljs-regexp">//</span>         this.pingPong = false;<br>    <span class="hljs-regexp">//</span>         <span class="hljs-keyword">if</span> (this.pingPong === <span class="hljs-string">&#x27;ping&#x27;</span>) &#123;<br>    <span class="hljs-regexp">//</span>             this.closeHandle(<span class="hljs-string">&#x27;pingPong没有改变为pong&#x27;</span>); <span class="hljs-regexp">//</span> 没有返回pong 重启webSocket<br>    <span class="hljs-regexp">//</span>         &#125;<br>    <span class="hljs-regexp">//</span>         <span class="hljs-regexp">//</span> 重置为ping 若下一次 ping 发送失败 或者pong返回失败(pingPong不会改成pong)，将重启<br>    <span class="hljs-regexp">//</span>         console.log(<span class="hljs-string">&#x27;返回pong&#x27;</span>)<br>    <span class="hljs-regexp">//</span>         this.pingPong = <span class="hljs-string">&#x27;ping&#x27;</span><br>    <span class="hljs-regexp">//</span>     &#125;, <span class="hljs-number">20000</span>)<br>    <span class="hljs-regexp">//</span> &#125;<br>    <span class="hljs-regexp">//</span> 发送信息给服务器<br>    sendHandle(data) &#123;<br>        console.log(`<span class="hljs-variable">$&#123;this.name&#125;</span>发送消息给服务器:`, data)<br>        return this.ws.send(data);<br>    &#125;<br>    closeHandle(e = <span class="hljs-string">&#x27;err&#x27;</span>) &#123;<br>        <span class="hljs-regexp">//</span> 因为webSocket并不稳定，规定只能手动关闭(调closeMyself方法)，否则就重连<br>        <span class="hljs-keyword">if</span> (this.status !== <span class="hljs-string">&#x27;close&#x27;</span>) &#123;<br>            console.log(`<span class="hljs-variable">$&#123;this.name&#125;</span>断开，重连websocket`, e)<br>            <span class="hljs-regexp">//</span> <span class="hljs-keyword">if</span> (this.pingInterval !== undefined &amp;&amp; this.pongInterval !== undefined) &#123;<br>            <span class="hljs-regexp">//</span>     <span class="hljs-regexp">//</span> 清除定时器<br>            <span class="hljs-regexp">//</span>     clearInterval(this.pingInterval);<br>            <span class="hljs-regexp">//</span>     clearInterval(this.pongInterval);<br>            <span class="hljs-regexp">//</span> &#125;<br>            this.connect(); <span class="hljs-regexp">//</span> 重连<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            console.log(`<span class="hljs-variable">$&#123;this.name&#125;</span>websocket手动关闭`)<br>        &#125;<br>    &#125;<br>    <span class="hljs-regexp">//</span> 手动关闭WebSocket<br>    closeMyself() &#123;<br>        console.log(`关闭<span class="hljs-variable">$&#123;this.name&#125;</span>`)<br>        this.status = <span class="hljs-string">&#x27;close&#x27;</span>;<br>        return this.ws.close();<br>    &#125;<br>&#125;<br><span class="hljs-keyword">function</span> someFn(data) &#123;<br>    console.log(<span class="hljs-string">&#x27;接收服务器消息的回调：&#x27;</span>, data);<br>&#125;<br><span class="hljs-regexp">//</span> const wsValue = new WebSocketClass(<span class="hljs-string">&#x27;ws://121.40.165.18:8800&#x27;</span>, someFn, <span class="hljs-string">&#x27;wsName&#x27;</span>); <span class="hljs-regexp">//</span> 这个链接一天只能发送消息<span class="hljs-number">50</span>次<br>const wsValue = new WebSocketClass(<span class="hljs-string">&#x27;wss://echo.websocket.org&#x27;</span>, someFn, <span class="hljs-string">&#x27;wsName&#x27;</span>); <span class="hljs-regexp">//</span> 阮一峰老师教程链接<br>wsValue.connect(<span class="hljs-string">&#x27;立即与服务器通信&#x27;</span>); <span class="hljs-regexp">//</span> 连接服务器<br><span class="hljs-regexp">//</span> setTimeout(() =&gt; &#123;<br><span class="hljs-regexp">//</span>     wsValue.sendHandle(<span class="hljs-string">&#x27;传消息给服务器&#x27;</span>)<br><span class="hljs-regexp">//</span> &#125;, <span class="hljs-number">1000</span>);<br><span class="hljs-regexp">//</span> setTimeout(() =&gt; &#123;<br><span class="hljs-regexp">//</span>     wsValue.closeMyself(); <span class="hljs-regexp">//</span> 关闭ws<br><span class="hljs-regexp">//</span> &#125;, <span class="hljs-number">10000</span>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>可以把<code>class</code>放在一个js文件里面,<code>export</code>出去，然后在需要用的地方再<code>import</code>进来，把参数传进去就可以用了</p>
+</blockquote>
+<h2 id="三、WebSocket不稳定"><a href="#三、WebSocket不稳定" class="headerlink" title="三、WebSocket不稳定"></a>三、WebSocket不稳定</h2><blockquote>
+<p><code>WebSocket</code>并不稳定，在使用一段时间后，可能会断开连接，貌似至今没有一个为何会断开连接的公论，所以我们需要让<code>WebSocket</code>保持连接状态，这里推荐两种方法</p>
+</blockquote>
+<h3 id="3-1-WebSocket设置变量，判断是否手动关闭连接"><a href="#3-1-WebSocket设置变量，判断是否手动关闭连接" class="headerlink" title="3.1 WebSocket设置变量，判断是否手动关闭连接"></a>3.1 WebSocket设置变量，判断是否手动关闭连接</h3><blockquote>
+<p><code>class</code>类中就是用的这种方式:设置一个变量，在<code>webSocket</code>关闭&#x2F;报错的回调中，判断是不是手动关闭的，如果不是的话，就重新连接，这样做的优缺点如下</p>
+</blockquote>
+<ul>
+<li>优点：请求较少(相对于心跳连接)，易设置。</li>
+<li>缺点：可能会导致丢失数据,在断开重连的这段时间中，恰好双方正在通信</li>
+</ul>
+<h3 id="3-2-WebSocket心跳机制"><a href="#3-2-WebSocket心跳机制" class="headerlink" title="3.2 WebSocket心跳机制"></a>3.2 WebSocket心跳机制</h3><blockquote>
+<p>因为第一种方案的缺点，并且可能会有其他一些未知情况导致断开连接而没有触发Error或Close事件。这样就导致实际连接已经断开了，而客户端和服务端却不知道，还在傻傻的等着消息来</p>
+</blockquote>
+<ul>
+<li>想出了一种叫做心跳机制的解决方法：</li>
+<li>客户端就像心跳一样每隔固定的时间发送一次ping，来告诉服务器，我还活着，而服务器也会返回pong，来告诉客户端，服务器还活着。</li>
+<li>具体的实现方法，在上面<code>class</code>的注释中，将其打开，即可看到效果</li>
+</ul>
+<h2 id="四、关于WebSocket"><a href="#四、关于WebSocket" class="headerlink" title="四、关于WebSocket"></a>四、关于WebSocket</h2><h3 id="4-1-WebSocket的当前状态-WebSocket-readyState"><a href="#4-1-WebSocket的当前状态-WebSocket-readyState" class="headerlink" title="4.1 WebSocket的当前状态:WebSocket.readyState"></a>4.1 WebSocket的当前状态:<code>WebSocket.readyState</code></h3><p><strong>下面是WebSocket.readyState的四个值(四种状态)：</strong></p>
+<ul>
+<li><code>0</code>: 表示正在连接</li>
+<li><code>1</code>: 表示连接成功，可以通信了</li>
+<li><code>2</code>: 表示连接正在关闭</li>
+<li><code>3</code>: 表示连接已经关闭，或者打开连接失败</li>
+</ul>
+<blockquote>
+<p>我们可以利用当前状态来做一些事情，比如上面栗子中当<code>WebSocket</code>链接成功后，才允许客户端发<code>送ping</code></p>
+</blockquote>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.ws.readyState === <span class="hljs-number">1</span>) &#123;<br>    <span class="hljs-comment">// 检查ws为链接状态 才可发送</span><br>    <span class="hljs-keyword">this</span>.ws.send(<span class="hljs-string">&#x27;ping&#x27;</span>); <span class="hljs-comment">// 客户端发送ping</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-2-WebSocket还可以发送-x2F-接收-二进制数据"><a href="#4-2-WebSocket还可以发送-x2F-接收-二进制数据" class="headerlink" title="4.2 WebSocket还可以发送&#x2F;接收 二进制数据"></a>4.2 <code>WebSocket</code>还可以发送&#x2F;接收 二进制数据</h3><blockquote>
+<p>二进制数据包括：<code>blob</code>对象和<code>Arraybuffer</code>对象，所以我们需要分开来处理</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs javascript"> <span class="hljs-comment">// 接收数据</span><br>ws.<span class="hljs-property">onmessage</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>)&#123;<br>    <span class="hljs-keyword">if</span>(event.<span class="hljs-property">data</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">ArrayBuffer</span>)&#123;<br>        <span class="hljs-comment">// 判断 ArrayBuffer 对象</span><br>    &#125;<br><br>    <span class="hljs-keyword">if</span>(event.<span class="hljs-property">data</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">Blob</span>)&#123;<br>        <span class="hljs-comment">// 判断 Blob 对象</span><br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// 发送 Blob 对象的例子</span><br><span class="hljs-keyword">let</span> file = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;input[type=&quot;file&quot;]&#x27;</span>).<span class="hljs-property">files</span>[<span class="hljs-number">0</span>];<br>ws.<span class="hljs-title function_">send</span>(file);<br><br><span class="hljs-comment">// 发送 ArrayBuffer 对象的例子</span><br><span class="hljs-keyword">var</span> img = canvas_context.<span class="hljs-title function_">getImageData</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">400</span>, <span class="hljs-number">320</span>);<br><span class="hljs-keyword">var</span> binary = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Uint8Array</span>(img.<span class="hljs-property">data</span>.<span class="hljs-property">length</span>);<br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; img.<span class="hljs-property">data</span>.<span class="hljs-property">length</span>; i++) &#123;<br>    binary[i] = img.<span class="hljs-property">data</span>[i];<br>&#125;<br>ws.<span class="hljs-title function_">send</span>(binary.<span class="hljs-property">buffer</span>);<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果你要发送的二进制数据很大的话，如何判断发送完毕：</p>
+</blockquote>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs lasso">webSocket.bufferedAmount属性，表示还有多少字节的二进制数据没有发送出去：<br><br><span class="hljs-built_in">var</span> <span class="hljs-built_in">data</span> = <span class="hljs-literal">new</span> ArrayBuffer(<span class="hljs-number">10000000</span>);<br>socket.send(<span class="hljs-built_in">data</span>);<br><span class="hljs-keyword">if</span> (socket.bufferedAmount === <span class="hljs-number">0</span>) &#123;<br>    <span class="hljs-comment">// 发送完毕</span><br>&#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-comment">// 发送还没结束</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="五、WebSocket的优点"><a href="#五、WebSocket的优点" class="headerlink" title="五、WebSocket的优点"></a>五、WebSocket的优点</h2><ul>
+<li>双向通信</li>
+<li>数据格式比较轻量，性能开销小，通信高效<ul>
+<li>协议控制的数据包头部较小，而<code>HTTP</code>协议每次通信都需要携带完整的头部</li>
+</ul>
+</li>
+<li>更好的二进制支持</li>
+<li>没有同源限制，客户端可以与任意服务器通信</li>
+<li>与 <code>HTTP</code> 协议有着良好的兼容性。默认端口也是<code>80</code>和<code>443</code>，并且握手阶段采用 <code>HTTP</code> 协议，因此握手时不容易屏蔽，能通过各种 <code>HTTP</code> 代理服务器</li>
+</ul>
+<h1 id="第二部分-socket-io"><a href="#第二部分-socket-io" class="headerlink" title="第二部分 socket.io"></a>第二部分 <code>socket.io</code></h1><h2 id="一、原生Node与socket-io通信"><a href="#一、原生Node与socket-io通信" class="headerlink" title="一、原生Node与socket.io通信"></a>一、原生Node与socket.io通信</h2><blockquote>
+<p>原生<code>nodejs</code>结合<code>Socket.io</code>实现服务器和客户端的相互通信</p>
+</blockquote>
+<blockquote>
+<p>官方文档 <a target="_blank" rel="noopener" href="https://socket.io/">https://socket.io</a></p>
+</blockquote>
+<h3 id="1-1-搭建服务"><a href="#1-1-搭建服务" class="headerlink" title="1.1 搭建服务"></a>1.1 搭建服务</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-comment"># 新建目录</span><br>mkdir socket &amp;&amp; cd socket<br><br><span class="hljs-comment"># 生成package.json</span><br>npm init -y<br><br><span class="hljs-comment"># 安装socket</span><br>npm install socket.io<br><span class="hljs-regexp">//</span> app.js<br><br>var http = require(<span class="hljs-string">&quot;http&quot;</span>);<br><br>var server = http.createServer(<span class="hljs-keyword">function</span>(req,res)&#123;<br>    <span class="hljs-keyword">if</span>(req.url == <span class="hljs-string">&quot;/&quot;</span>)&#123; <span class="hljs-regexp">//</span>显示首页<br>        fs.readFile(<span class="hljs-string">&quot;./index.html&quot;</span>,<span class="hljs-keyword">function</span>(err,data)&#123; <br>            res.end(data);<br>        &#125;); <br>    &#125;<br>&#125;);<br><br>var io = require(<span class="hljs-string">&#x27;socket.io&#x27;</span>)(server);<br><br><span class="hljs-regexp">//</span>监听连接事件 <br>io.on(<span class="hljs-string">&quot;connection&quot;</span>,<span class="hljs-keyword">function</span>(socket)&#123;<br>    console.log(<span class="hljs-string">&quot;1 个客户端连接了&quot;</span>); <br>&#125;)<br><br>server.listen(<span class="hljs-number">3000</span>,<span class="hljs-string">&quot;127.0.0.1&quot;</span>,<span class="hljs-keyword">function</span>()&#123;<br>    console.log(<span class="hljs-string">&#x27;app run at 127.0.0.1:3000&#x27;</span>)<br>&#125;);<br><br><span class="hljs-regexp">//</span> 写完这句话之后，你就会发现，http:<span class="hljs-regexp">//</span><span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">3000</span><span class="hljs-regexp">/socket.io/</span>socket.io.js 就是一个 js 文件 的地址了<br></code></pre></td></tr></table></figure>
+
+<h3 id="1-2-新建页面"><a href="#1-2-新建页面" class="headerlink" title="1.2 新建页面"></a>1.2 新建页面</h3><blockquote>
+<p>现在需要制作一个<code>index</code>页面，这个页面中，必须引用秘密<code>js</code>文件。调用<code>io</code>函数，取得<code>socket</code> 对象</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Document<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>我是 index 页面，我引用了秘密 script 文件<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;/socket.io/socket.io.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">    <span class="hljs-keyword">var</span> socket = <span class="hljs-title function_">io</span>(); </span><br><span class="language-javascript">    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(socket)</span><br><span class="language-javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span> <br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>至此，服务器和客户端都有 <code>socket</code> 对象了。服务器的 <code>socket</code> 对象:</p>
+</blockquote>
+<blockquote>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver"><span class="hljs-built_in">socket</span>对象<br></code></pre></td></tr></table></figure>
+</blockquote>
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/390.png" srcset="/img/loading.gif" lazyload alt="img"><br><img src="https://poetries1.gitee.io/img-repo/2019/10/391.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="1-3-服务器端通过emit广播，通过on接收广播"><a href="#1-3-服务器端通过emit广播，通过on接收广播" class="headerlink" title="1.3 服务器端通过emit广播，通过on接收广播"></a>1.3 服务器端通过emit广播，通过on接收广播</h3><figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-comment">// app.js</span><br><br><span class="hljs-keyword">var</span> http = require(<span class="hljs-string">&quot;http&quot;</span>);<br><br><span class="hljs-keyword">var</span> server = http.createServer(<span class="hljs-keyword">function</span>(<span class="hljs-params">req,res</span>)&#123;<br>    <span class="hljs-keyword">if</span>(req.url == <span class="hljs-string">&quot;/&quot;</span>)&#123; <span class="hljs-comment">//显示首页</span><br>        fs.readFile(<span class="hljs-string">&quot;./index.html&quot;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params">err,data</span>)&#123; <br>            res.end(data);<br>        &#125;); <br>    &#125;<br>&#125;);<br><br><span class="hljs-keyword">var</span> io = require(<span class="hljs-string">&#x27;socket.io&#x27;</span>)(server);<br><br><span class="hljs-comment">//监听连接事件 </span><br>io.on(<span class="hljs-string">&#x27;connection&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params">socket</span>) &#123;<br>    <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&#x27;和服务器建立连接了&#x27;</span>);<br>    <br>    socket.on(<span class="hljs-string">&#x27;to-server&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) &#123;<br>    <br>        <span class="hljs-comment">// 接收客户端传过来的数据</span><br>        <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&#x27;客户端说:&#x27;</span> + data);<br>        <br>        <span class="hljs-comment">// 向客户端发送数据</span><br>        <span class="hljs-comment">// socket 只给当前发送消息给服务端的客户端发送消息</span><br>        socket.emit(<span class="hljs-string">&#x27;to-client&#x27;</span>,<span class="hljs-string">&#x27;我是服务器返回的数据&#x27;</span>);<br>        <br>    &#125;) <br>    socket.on(<span class="hljs-string">&#x27;disconnect&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&#x27;断开连接了&#x27;</span>);<br>    &#125;)<br>&#125;)<br><br>server.listen(<span class="hljs-number">3000</span>,<span class="hljs-string">&quot;127.0.0.1&quot;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&#x27;app run at 127.0.0.1:3000&#x27;</span>)<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/392.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<blockquote>
+<p>每一个连接上来的用户，都有一个 <code>socket</code>。由于我们的 <code>emit</code> 语句，是 <code>socket.emit()</code>发 出的，所以指的是向这个客户端发出语句。<br>广播，就是给所有当前连接的用户发送信息:</p>
+</blockquote>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">var</span> io = require(<span class="hljs-string">&#x27;socket.io&#x27;</span>)(server);<br><br>io.on(<span class="hljs-string">&#x27;connection&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params">socket</span>) &#123;<br><br>    <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&#x27;和服务器建立连接了&#x27;</span>)<br>    <br>    socket.on(<span class="hljs-string">&#x27;to-server&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) &#123;<br>    <br>        <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&#x27;客户端说:&#x27;</span> + data);<br>        <br>        <span class="hljs-comment">// io 给所有建立连接的客户端发送数据，不管是哪个客户端发送消息，都会对所有客户端进行广播一次</span><br>        io.emit(<span class="hljs-string">&#x27;to-client&#x27;</span>,<span class="hljs-string">&#x27;我是服务器返回的数据&#x27;</span>);<br>    &#125;) <br>    socket.on(<span class="hljs-string">&#x27;disconnect&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&#x27;断开连接了&#x27;</span>);<br>    &#125;)<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/393.png" srcset="/img/loading.gif" lazyload alt="img"><br><img src="https://poetries1.gitee.io/img-repo/2019/10/394.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ul>
+<li><code>io.emit()</code>可以实现聊天室消息群发</li>
+<li><code>socket.emit()</code>可以实现聊天机器人，一对一发送</li>
+</ul>
+<h3 id="1-4-客户端端通过emit广播，通过on接收广播"><a href="#1-4-客户端端通过emit广播，通过on接收广播" class="headerlink" title="1.4 客户端端通过emit广播，通过on接收广播"></a>1.4 客户端端通过emit广播，通过on接收广播</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs xml">// index.html<br><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span> <br><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span> <br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>socket demo<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span> <br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>我是 index 页面，我引用了秘密 script 文件<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;btn&quot;</span>&gt;</span>给服务端发送数据<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;/socket.io/socket.io.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript"></span><br><span class="language-javascript">    <span class="hljs-comment">// 连接的地址http://localhost:3000 后台提供</span></span><br><span class="language-javascript">    <span class="hljs-keyword">var</span> socket = io.<span class="hljs-title function_">connect</span>(<span class="hljs-string">&#x27;http://localhost:3000&#x27;</span>);</span><br><span class="language-javascript"></span><br><span class="language-javascript">    <span class="hljs-comment">// 客户端建立连接</span></span><br><span class="language-javascript">    socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;connect&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;客户端和服务端建立连接了&#x27;</span>);</span><br><span class="language-javascript">    &#125;) </span><br><span class="language-javascript"></span><br><span class="language-javascript">    socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;disconnect&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;客户端和服务端断开连接了&#x27;</span>);</span><br><span class="language-javascript">    &#125;) </span><br><span class="language-javascript"></span><br><span class="language-javascript">    <span class="hljs-comment">// 客户端给服务端发送数据后，监听服务端返回的数据</span></span><br><span class="language-javascript">    socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;to-client&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) &#123;</span><br><span class="language-javascript">        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;客户端说:&#x27;</span> + data);</span><br><span class="language-javascript">    &#125;) </span><br><span class="language-javascript"></span><br><span class="language-javascript">    <span class="hljs-keyword">var</span> btn = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;btn&#x27;</span>);</span><br><span class="language-javascript"></span><br><span class="language-javascript">    btn.<span class="hljs-property">onclick</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">        socket.<span class="hljs-title function_">emit</span>(<span class="hljs-string">&#x27;to-server&#x27;</span>,<span class="hljs-string">&#x27;我是客户端的数据&#x27;</span>);</span><br><span class="language-javascript">    &#125;</span><br><span class="language-javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span> <br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="二、聊天室、智能机器人实现原理"><a href="#二、聊天室、智能机器人实现原理" class="headerlink" title="二、聊天室、智能机器人实现原理"></a>二、聊天室、智能机器人实现原理</h2><h3 id="2-1-express简单例子"><a href="#2-1-express简单例子" class="headerlink" title="2.1 express简单例子"></a>2.1 express简单例子</h3><blockquote>
+<p><code>Express</code> 结合 <code>Socket.io</code> 实现服务器和客户 端的相互通信、聊天室、智能机器人实现 原理</p>
+</blockquote>
+<blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://www.expressjs.com.cn/starter/generator.html">express文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://socket.io/docs">socket.io文档</a></li>
+</ul>
+</blockquote>
+<p><strong>1. Server (app.js)</strong></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">var app = require(<span class="hljs-string">&#x27;express&#x27;</span>)();<br>var <span class="hljs-keyword">server</span> = require(<span class="hljs-string">&#x27;http&#x27;</span>).<span class="hljs-keyword">Server</span>(app);<br>var io = require(<span class="hljs-string">&#x27;socket.io&#x27;</span>)(<span class="hljs-keyword">server</span>);<br><br><span class="hljs-keyword">server</span>.<span class="hljs-keyword">listen</span>(<span class="hljs-number">80</span>);<br>// <span class="hljs-built_in">WARNING</span>: app.<span class="hljs-keyword">listen</span>(<span class="hljs-number">80</span>) will <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">work</span> here!<br><br>app.<span class="hljs-keyword">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-keyword">function</span> (req, res) &#123;<br>  res.sendFile(__dirname + <span class="hljs-string">&#x27;/index.html&#x27;</span>);<br>&#125;);<br><br>io.<span class="hljs-keyword">on</span>(<span class="hljs-string">&#x27;connection&#x27;</span>, <span class="hljs-keyword">function</span> (socket) &#123;<br>  socket.emit(<span class="hljs-string">&#x27;news&#x27;</span>, &#123; hello: <span class="hljs-string">&#x27;world&#x27;</span> &#125;);<br>  socket.<span class="hljs-keyword">on</span>(<span class="hljs-string">&#x27;my other event&#x27;</span>, <span class="hljs-keyword">function</span> (data) &#123;<br>    console.log(data);<br>  &#125;);<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<p><strong>2. Client (index.html)</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;/socket.io/socket.io.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">  <span class="hljs-keyword">var</span> socket = io.<span class="hljs-title function_">connect</span>(<span class="hljs-string">&#x27;http://localhost&#x27;</span>);</span><br><span class="language-javascript">  socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;news&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">data</span>) &#123;</span><br><span class="language-javascript">    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(data);</span><br><span class="language-javascript">    socket.<span class="hljs-title function_">emit</span>(<span class="hljs-string">&#x27;my other event&#x27;</span>, &#123; <span class="hljs-attr">my</span>: <span class="hljs-string">&#x27;data&#x27;</span> &#125;);</span><br><span class="language-javascript">  &#125;);</span><br><span class="language-javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="2-2-express实现智能机器人"><a href="#2-2-express实现智能机器人" class="headerlink" title="2.2 express实现智能机器人"></a>2.2 express实现智能机器人</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><code class="hljs javascript">&lt;!--views/index.<span class="hljs-property">ejx</span>--&gt;<br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;/jquery-1.11.3.min.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;/socket.io/socket.io.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;msg&quot;</span>/&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">br</span>/&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">br</span>/&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;send&quot;</span>&gt;</span>发送<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span><br><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="language-javascript"><span class="language-xml">$(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;</span></span><br><span class="language-javascript"><span class="language-xml"></span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-keyword">var</span> socket = io.<span class="hljs-title function_">connect</span>(<span class="hljs-string">&#x27;http://127.0.0.1:8000&#x27;</span>);</span></span><br><span class="language-javascript"><span class="language-xml"></span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-comment">//群聊功能--聊天室</span></span></span><br><span class="language-javascript"><span class="language-xml">    $(<span class="hljs-string">&#x27;#send&#x27;</span>).<span class="hljs-title function_">click</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-keyword">var</span> msg=$(<span class="hljs-string">&#x27;#msg&#x27;</span>).<span class="hljs-title function_">val</span>();</span></span><br><span class="language-javascript"><span class="language-xml"></span></span><br><span class="language-javascript"><span class="language-xml">        socket.<span class="hljs-title function_">emit</span>(<span class="hljs-string">&#x27;message&#x27;</span>,msg);  <span class="hljs-comment">/*客户端给服务器发送数据*/</span></span></span><br><span class="language-javascript"><span class="language-xml"></span></span><br><span class="language-javascript"><span class="language-xml">    &#125;)</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-comment">//接受服务器返回的数据</span></span></span><br><span class="language-javascript"><span class="language-xml">    socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;servermessage&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>)&#123;</span></span><br><span class="language-javascript"><span class="language-xml"></span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(data)</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;)</span></span><br><span class="language-javascript"><span class="language-xml"></span></span><br><span class="language-javascript"><span class="language-xml">&#125;)</span></span><br><span class="language-javascript"><span class="language-xml"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="hljs-comment">// app.js</span><br><br><span class="hljs-keyword">var</span> express=<span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;express&#x27;</span>);<br><br><span class="hljs-keyword">var</span> app=<span class="hljs-title function_">express</span>();<br><br><span class="hljs-comment">/*第一步*/</span><br><span class="hljs-keyword">var</span> server = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;http&#x27;</span>).<span class="hljs-title class_">Server</span>(app);<br><span class="hljs-keyword">var</span> io = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;socket.io&#x27;</span>)(server);<br><br><br>app.<span class="hljs-title function_">set</span>(<span class="hljs-string">&#x27;view engine&#x27;</span>,<span class="hljs-string">&#x27;ejs&#x27;</span>);<br>app.<span class="hljs-title function_">use</span>(express.<span class="hljs-title function_">static</span>(<span class="hljs-string">&#x27;public&#x27;</span>));<br><br>app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params">req,res</span>)&#123;<br>    <span class="hljs-comment">//res.send(&#x27;首页&#x27;);</span><br>    res.<span class="hljs-title function_">render</span>(<span class="hljs-string">&#x27;index&#x27;</span>);<br>&#125;)<br><br><br>app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/news&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params">req,res</span>)&#123;<br>    res.<span class="hljs-title function_">send</span>(<span class="hljs-string">&#x27;news&#x27;</span>);<br><br>&#125;)<br><br><span class="hljs-comment">//2.监听端口</span><br>server.<span class="hljs-title function_">listen</span>(<span class="hljs-number">8000</span>,<span class="hljs-string">&#x27;127.0.0.1&#x27;</span>);   <span class="hljs-comment">/*改ip*/</span><br><br><br><br><span class="hljs-comment">//3、写socket的代码</span><br><br>io.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;connection&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">socket</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;建立链接&#x27;</span>)<br><br>    socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;message&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>)&#123;<br><br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(data);<br><br>        <span class="hljs-comment">//io.emit  广播 --- 聊天室</span><br>        <span class="hljs-comment">//socket.emit  谁给我发的信息我回返回给谁 --- 智能机器人</span><br><br><br>        <span class="hljs-comment">//io.emit(&#x27;servermessage&#x27;,data);   /*服务器给客户端发送数据*/</span><br><br><br>        <span class="hljs-keyword">if</span>(data==<span class="hljs-number">1</span>)&#123;<br><br>            <span class="hljs-keyword">var</span> msg=<span class="hljs-string">&#x27;您当前的话费有2元&#x27;</span><br>        &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(data==<span class="hljs-number">2</span>)&#123;<br>            <span class="hljs-keyword">var</span> msg=<span class="hljs-string">&#x27;您当前的流量有200M&#x27;</span><br><br>        &#125;<span class="hljs-keyword">else</span>&#123;<br>            <span class="hljs-keyword">var</span> msg=<span class="hljs-string">&#x27;请输入正确的信息&#x27;</span><br>        &#125;<br><br>        socket.<span class="hljs-title function_">emit</span>(<span class="hljs-string">&#x27;servermessage&#x27;</span>,msg);<br><br>    &#125;)<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/poetries/socket.io-demo/tree/master/express-socket-chat">完整代码</a></p>
+</blockquote>
+<h3 id="2-3-express结合socket-io及数据库实现智能机器人"><a href="#2-3-express结合socket-io及数据库实现智能机器人" class="headerlink" title="2.3 express结合socket.io及数据库实现智能机器人"></a>2.3 express结合<code>socket.io</code>及数据库实现智能机器人</h3><blockquote>
+<p>跨域也可以访问<code>socket.io</code></p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// app.js</span><br><br><span class="hljs-keyword">var</span> express=<span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;express&#x27;</span>);<br><br><span class="hljs-keyword">var</span> app=<span class="hljs-title function_">express</span>();<br><br><span class="hljs-keyword">var</span> <span class="hljs-variable constant_">DB</span>=<span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./module/db.js&#x27;</span>);<br><br><span class="hljs-comment">/*第一步*/</span><br><span class="hljs-keyword">var</span> server = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;http&#x27;</span>).<span class="hljs-title class_">Server</span>(app);<br><span class="hljs-keyword">var</span> io = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;socket.io&#x27;</span>)(server);<br><br><br>app.<span class="hljs-title function_">set</span>(<span class="hljs-string">&#x27;view engine&#x27;</span>,<span class="hljs-string">&#x27;ejs&#x27;</span>);<br>app.<span class="hljs-title function_">use</span>(express.<span class="hljs-title function_">static</span>(<span class="hljs-string">&#x27;public&#x27;</span>));<br><br>app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params">req,res</span>)&#123;<br>    <span class="hljs-comment">//res.send(&#x27;首页&#x27;);</span><br>    res.<span class="hljs-title function_">render</span>(<span class="hljs-string">&#x27;index&#x27;</span>);<br>&#125;)<br><br><br>app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/news&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params">req,res</span>)&#123;<br>    res.<span class="hljs-title function_">send</span>(<span class="hljs-string">&#x27;news&#x27;</span>);<br><br>&#125;)<br><br><span class="hljs-comment">//2.监听端口</span><br>server.<span class="hljs-title function_">listen</span>(<span class="hljs-number">8000</span>,<span class="hljs-string">&#x27;127.0.0.1&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;app run at 127.0.0.1:8000&#x27;</span>)<br>&#125;);   <span class="hljs-comment">/*改ip*/</span><br><br><br><span class="hljs-comment">//3、写socket的代码</span><br><br>io.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;connection&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">socket</span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;建立链接&#x27;</span>)<br><br>    socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;message&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>)&#123;<br><br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(data)<br>        <span class="hljs-comment">//socket.emit(&#x27;servermessage&#x27;,msg);</span><br><br>        <span class="hljs-keyword">var</span> msg=data.<span class="hljs-property">msg</span>||<span class="hljs-string">&#x27;&#x27;</span>;  <span class="hljs-comment">/*获取客户端的数据*/</span><br><br>        <span class="hljs-comment">//去服务器查询数据</span><br><br>        <span class="hljs-variable constant_">DB</span>.<span class="hljs-title function_">find</span>(<span class="hljs-string">&#x27;article&#x27;</span>,&#123;<span class="hljs-string">&#x27;title&#x27;</span>:&#123;<span class="hljs-attr">$regex</span>:<span class="hljs-keyword">new</span> <span class="hljs-title class_">RegExp</span>(msg)&#125;&#125;,&#123;<span class="hljs-string">&#x27;title&#x27;</span>:<span class="hljs-number">1</span>&#125;,<span class="hljs-keyword">function</span>(<span class="hljs-params">err,data</span>)&#123;<br><br>            <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(data);<br><br><br>            socket.<span class="hljs-title function_">emit</span>(<span class="hljs-string">&#x27;servermessage&#x27;</span>,&#123;<br>                <span class="hljs-attr">result</span>:data<br>            &#125;);<br>        &#125;)<br><br><br>    &#125;)<br>&#125;);<br>&lt;!<span class="hljs-variable constant_">DOCTYPE</span>&gt;<br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">script</span></span></span><br><span class="hljs-tag"><span class="language-xml">  <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://code.jquery.com/jquery-3.3.1.min.js&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">  <span class="hljs-attr">integrity</span>=<span class="hljs-string">&quot;sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">  <span class="hljs-attr">crossorigin</span>=<span class="hljs-string">&quot;anonymous&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;/socket.io/socket.io.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="language-css"><span class="language-xml"></span></span><br><span class="language-css"><span class="language-xml">        <span class="hljs-selector-class">.box</span>&#123;</span></span><br><span class="language-css"><span class="language-xml">            <span class="hljs-attribute">width</span>: <span class="hljs-number">300px</span>;</span></span><br><span class="language-css"><span class="language-xml">            <span class="hljs-attribute">height</span>: <span class="hljs-number">400px</span>;</span></span><br><span class="language-css"><span class="language-xml">            <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span> auto;</span></span><br><span class="language-css"><span class="language-xml">            <span class="hljs-attribute">border</span>: <span class="hljs-number">1px</span> solid <span class="hljs-number">#666</span>;</span></span><br><span class="language-css"><span class="language-xml">            <span class="hljs-attribute">margin-top</span>:<span class="hljs-number">20px</span>;</span></span><br><span class="language-css"><span class="language-xml"></span></span><br><span class="language-css"><span class="language-xml"></span></span><br><span class="language-css"><span class="language-xml">        &#125;</span></span><br><span class="language-css"><span class="language-xml">        <span class="hljs-selector-class">.list</span>&#123;</span></span><br><span class="language-css"><span class="language-xml">            <span class="hljs-attribute">width</span>: <span class="hljs-number">300px</span>;</span></span><br><span class="language-css"><span class="language-xml">            <span class="hljs-attribute">height</span>: <span class="hljs-number">360px</span>;</span></span><br><span class="language-css"><span class="language-xml">            <span class="hljs-attribute">overflow-y</span>: auto;</span></span><br><span class="language-css"><span class="language-xml">        &#125;</span></span><br><span class="language-css"><span class="language-xml">        <span class="hljs-selector-class">.message</span>&#123;</span></span><br><span class="language-css"><span class="language-xml">            <span class="hljs-attribute">height</span>: <span class="hljs-number">40px</span>;</span></span><br><span class="language-css"><span class="language-xml">            <span class="hljs-attribute">line-height</span>: <span class="hljs-number">44px</span>;</span></span><br><span class="language-css"><span class="language-xml">            <span class="hljs-attribute">display</span>: flex;</span></span><br><span class="language-css"><span class="language-xml">        &#125;</span></span><br><span class="language-css"><span class="language-xml">        <span class="hljs-selector-class">.message</span> <span class="hljs-selector-tag">input</span>&#123;</span></span><br><span class="language-css"><span class="language-xml"></span></span><br><span class="language-css"><span class="language-xml">            <span class="hljs-attribute">border</span>: <span class="hljs-number">1px</span> solid <span class="hljs-number">#666</span>;</span></span><br><span class="language-css"><span class="language-xml">        &#125;</span></span><br><span class="language-css"><span class="language-xml">        <span class="hljs-selector-class">.message</span> <span class="hljs-selector-tag">input</span><span class="hljs-selector-attr">[type=<span class="hljs-string">&#x27;text&#x27;</span>]</span>&#123;</span></span><br><span class="language-css"><span class="language-xml">            <span class="hljs-attribute">flex</span>: <span class="hljs-number">1</span>;</span></span><br><span class="language-css"><span class="language-xml">            <span class="hljs-attribute">height</span>: <span class="hljs-number">38px</span>;</span></span><br><span class="language-css"><span class="language-xml">        &#125;</span></span><br><span class="language-css"><span class="language-xml">        <span class="hljs-selector-class">.message</span> <span class="hljs-selector-tag">input</span><span class="hljs-selector-attr">[type=<span class="hljs-string">&#x27;button&#x27;</span>]</span>&#123;</span></span><br><span class="language-css"><span class="language-xml">            <span class="hljs-attribute">width</span>: <span class="hljs-number">100px</span>;</span></span><br><span class="language-css"><span class="language-xml">            <span class="hljs-attribute">height</span>: <span class="hljs-number">40px</span>;</span></span><br><span class="language-css"><span class="language-xml">            <span class="hljs-attribute">border</span>: <span class="hljs-number">1px</span> solid <span class="hljs-number">#666</span>;</span></span><br><span class="language-css"><span class="language-xml">        &#125;</span></span><br><span class="language-css"><span class="language-xml">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;box&quot;</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;list&quot;</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;list&quot;</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;footer&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;footer&quot;</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml">            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">        </span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;message&quot;</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;msg&quot;</span> /&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;send&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;发送&quot;</span>/&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span><br><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="language-javascript"><span class="language-xml"></span></span><br><span class="language-javascript"><span class="language-xml"></span></span><br><span class="language-javascript"><span class="language-xml">    $(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;</span></span><br><span class="language-javascript"><span class="language-xml"></span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-keyword">var</span> socket = io.<span class="hljs-title function_">connect</span>(<span class="hljs-string">&#x27;http://127.0.0.1:8000&#x27;</span>);</span></span><br><span class="language-javascript"><span class="language-xml"></span></span><br><span class="language-javascript"><span class="language-xml">        socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;servermessage&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>)&#123;</span></span><br><span class="language-javascript"><span class="language-xml"></span></span><br><span class="language-javascript"><span class="language-xml">            <span class="hljs-keyword">if</span>(data.<span class="hljs-property">result</span>.<span class="hljs-property">length</span>)</span></span><br><span class="language-javascript"><span class="language-xml"></span></span><br><span class="language-javascript"><span class="language-xml">            &#123;</span></span><br><span class="language-javascript"><span class="language-xml">                <span class="hljs-keyword">var</span> str=<span class="hljs-string">&#x27;&lt;ul&gt;&#x27;</span>;</span></span><br><span class="language-javascript"><span class="language-xml">                <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>;i&lt;data.<span class="hljs-property">result</span>.<span class="hljs-property">length</span>;i++)&#123;</span></span><br><span class="language-javascript"><span class="language-xml"></span></span><br><span class="language-javascript"><span class="language-xml">                    str+=<span class="hljs-string">&#x27;&lt;li&gt;&#x27;</span>+data.<span class="hljs-property">result</span>[i].<span class="hljs-property">title</span>+<span class="hljs-string">&#x27;&lt;/li&gt;&#x27;</span>;</span></span><br><span class="language-javascript"><span class="language-xml">                &#125;</span></span><br><span class="language-javascript"><span class="language-xml">                str+=<span class="hljs-string">&#x27;&lt;/ul&gt;&#x27;</span>;</span></span><br><span class="language-javascript"><span class="language-xml">            &#125;<span class="hljs-keyword">else</span>&#123;</span></span><br><span class="language-javascript"><span class="language-xml"></span></span><br><span class="language-javascript"><span class="language-xml">                <span class="hljs-keyword">var</span> str=<span class="hljs-string">&#x27;&lt;p&gt;没有找到您要的数据，请联系人工客服&lt;/p&gt;&#x27;</span></span></span><br><span class="language-javascript"><span class="language-xml">            &#125;</span></span><br><span class="language-javascript"><span class="language-xml">            $(<span class="hljs-string">&#x27;#list&#x27;</span>).<span class="hljs-title function_">append</span>(str);</span></span><br><span class="language-javascript"><span class="language-xml">            $(<span class="hljs-string">&#x27;#footer&#x27;</span>).<span class="hljs-title function_">get</span>(<span class="hljs-number">0</span>).<span class="hljs-title function_">scrollIntoView</span>();</span></span><br><span class="language-javascript"><span class="language-xml"></span></span><br><span class="language-javascript"><span class="language-xml">        &#125;)</span></span><br><span class="language-javascript"><span class="language-xml"></span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-keyword">var</span> username=<span class="hljs-string">&#x27;zhangsan&#x27;</span>+<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">floor</span>(<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">random</span>()*<span class="hljs-number">10</span>);</span></span><br><span class="language-javascript"><span class="language-xml"></span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-comment">//群聊功能--聊天室</span></span></span><br><span class="language-javascript"><span class="language-xml">        $(<span class="hljs-string">&#x27;#send&#x27;</span>).<span class="hljs-title function_">click</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;</span></span><br><span class="language-javascript"><span class="language-xml">            <span class="hljs-keyword">var</span> msg=$(<span class="hljs-string">&#x27;#msg&#x27;</span>).<span class="hljs-title function_">val</span>();</span></span><br><span class="language-javascript"><span class="language-xml">            socket.<span class="hljs-title function_">emit</span>(<span class="hljs-string">&#x27;message&#x27;</span>,&#123;</span></span><br><span class="language-javascript"><span class="language-xml">                <span class="hljs-string">&#x27;username&#x27;</span>:username,</span></span><br><span class="language-javascript"><span class="language-xml">                <span class="hljs-string">&#x27;msg&#x27;</span>:msg</span></span><br><span class="language-javascript"><span class="language-xml">            &#125;);</span></span><br><span class="language-javascript"><span class="language-xml">            $(<span class="hljs-string">&#x27;#list&#x27;</span>).<span class="hljs-title function_">append</span>(<span class="hljs-string">`&lt;p&gt;&lt;strong&gt;<span class="hljs-subst">$&#123;username&#125;</span>:&lt;/strong&gt;  <span class="hljs-subst">$&#123;msg&#125;</span>&lt;/p&gt;`</span>);</span></span><br><span class="language-javascript"><span class="language-xml"></span></span><br><span class="language-javascript"><span class="language-xml">            $(<span class="hljs-string">&#x27;#msg&#x27;</span>).<span class="hljs-title function_">val</span>();</span></span><br><span class="language-javascript"><span class="language-xml"></span></span><br><span class="language-javascript"><span class="language-xml">        &#125;)</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;)</span></span><br><span class="language-javascript"><span class="language-xml"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/poetries/socket.io-demo/tree/master/express-socket-chat-use-db">完整代码</a></p>
+</blockquote>
+<h2 id="三、Koa中Socket-io的使用"><a href="#三、Koa中Socket-io的使用" class="headerlink" title="三、Koa中Socket.io的使用"></a>三、Koa中Socket.io的使用</h2><p><strong>1. 服务端配置</strong></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-comment"># 1 安装</span><br>cnpm i -S koa-socket<br><span class="hljs-regexp">//</span> app.js<br><br><span class="hljs-regexp">//</span> <span class="hljs-number">2</span> 引入<br>const IO = require( <span class="hljs-string">&#x27;koa-socket&#x27;</span> )<br><br><span class="hljs-regexp">//</span> <span class="hljs-number">3</span> 实例化<br>const io = new IO()<br><br>io.attach( app )<br><br><span class="hljs-regexp">//</span> <span class="hljs-number">4</span> 配置服务端<br><br>app._io.on( <span class="hljs-string">&#x27;connection&#x27;</span>, socket =&gt; &#123;<br><br>console.log(<span class="hljs-string">&#x27;建立连接了&#x27;</span>);<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p><strong>2. 客户端代码</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;http://localhost:3000/socket.io/socket.io.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">   <span class="hljs-keyword">var</span> socket=io.<span class="hljs-title function_">connect</span>(<span class="hljs-string">&#x27;http://localhost:3000/&#x27;</span>)</span><br><span class="language-javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/poetries/socket.io-demo/tree/master/koa-socket.io">完整代码</a></p>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%90%8E%E7%AB%AF/" class="category-chain-item">后端</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/nodejs/">#nodejs</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>nodejs-websocker与socket.io的区别</div>
+      <div>http://example.com/2019/05/26/nodejs/nodejs-websocker与socket.io的区别/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>May 26, 2019</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/06/07/nodejs/express/" title="node-express框架总结">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">node-express框架总结</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/05/14/nodejs/node-%E5%9F%BA%E7%A1%80%E7%AF%87/" title="node-基础总结">
+                        <span class="hidden-mobile">node-基础总结</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

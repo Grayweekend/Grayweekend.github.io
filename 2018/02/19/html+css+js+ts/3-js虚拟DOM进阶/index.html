@@ -1,0 +1,694 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、为什么需要虚拟DOM 先介绍浏览器加载一个HTML文件需要做哪些事，帮助我们理解为什么我们需要虚拟DOM。webkit引擎的处理流程   所有浏览器的引擎工作流程都差不多，如上图大致分5步：创建DOM tree –&gt; 创建Style Rules -&gt; 构建Render tree -&gt; 布局Layout –&gt; 绘制Painting   第一步，用HTML分析器，分析HTM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js DOM进阶">
+<meta property="og:url" content="http://example.com/2018/02/19/html+css+js+ts/3-js%E8%99%9A%E6%8B%9FDOM%E8%BF%9B%E9%98%B6/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、为什么需要虚拟DOM 先介绍浏览器加载一个HTML文件需要做哪些事，帮助我们理解为什么我们需要虚拟DOM。webkit引擎的处理流程   所有浏览器的引擎工作流程都差不多，如上图大致分5步：创建DOM tree –&gt; 创建Style Rules -&gt; 构建Render tree -&gt; 布局Layout –&gt; 绘制Painting   第一步，用HTML分析器，分析HTM">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/606.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/607.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/608.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/609.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/610.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/611.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/612.png">
+<meta property="article:published_time" content="2018-02-19T01:16:46.000Z">
+<meta property="article:modified_time" content="2022-06-05T12:01:08.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://poetries1.gitee.io/img-repo/2019/10/606.png">
+  
+  
+  
+  <title>js DOM进阶 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="js DOM进阶"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-02-19 09:16" pubdate>
+          February 19, 2018 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.9k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          58 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">js DOM进阶</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="一、为什么需要虚拟DOM"><a href="#一、为什么需要虚拟DOM" class="headerlink" title="一、为什么需要虚拟DOM"></a>一、为什么需要虚拟DOM</h2><blockquote>
+<p>先介绍浏览器加载一个<code>HTML</code>文件需要做哪些事，帮助我们理解为什么我们需要虚拟<code>DOM</code>。<code>webkit</code>引擎的处理流程</p>
+</blockquote>
+<blockquote>
+<p>所有浏览器的引擎工作流程都差不多，如上图大致分5步：创建<code>DOM tree</code> –&gt; 创建<code>Style Rules</code> -&gt; 构建<code>Render tree</code> -&gt; 布局<code>Layout</code> –&gt; 绘制<code>Painting</code></p>
+</blockquote>
+<ul>
+<li>第一步，用<code>HTML</code>分析器，分析<code>HTML</code>元素，构建一颗<code>DOM</code>树。</li>
+<li>第二步：用<code>CSS</code>分析器，分析<code>CSS</code>文件和元素上的<code>inline</code>样式，生成页面的样式表。</li>
+<li>第三步：将上面的<code>DOM</code>树和样式表，关联起来，构建一颗<code>Render</code>树。这一过程又称为<code>Attachment</code>。每个<code>DOM</code>节点都有<code>attach</code>方法，接受样式信息，返回一个<code>render</code>对象（又名<code>renderer</code>）。这些<code>render</code>对象最终会被构建成一颗<code>Render</code>树。</li>
+<li>第四步：有了<code>Render</code>树后，浏览器开始布局，会为每个<code>Render</code>树上的节点确定一个在显示屏上出现的精确坐标值。</li>
+<li>第五步：<code>Render</code>数有了，节点显示的位置坐标也有了，最后就是调用每个节点的<code>paint</code>方法，让它们显示出来。</li>
+</ul>
+<blockquote>
+<p>当你用传统的源生<code>api</code>或<code>jQuery</code>去操作<code>DOM</code>时，浏览器会从构建<code>DOM</code>树开始从头到尾执行一遍流程。比如当你在一次操作时，需要更新<code>10</code>个<code>DOM</code>节点，理想状态是一次性构建完<code>DOM</code>树，再执行后续操作。但浏览器没这么智能，收到第一个更新<code>DOM</code>请求后，并不知道后续还有9次更新操作，因此会马上执行流程，最终执行10次流程。显然例如计算<code>DOM</code>节点的坐标值等都是白白浪费性能，可能这次计算完，紧接着的下一个<code>DOM</code>更新请求，这个节点的坐标值就变了，前面的一次计算是无用功。</p>
+</blockquote>
+<ul>
+<li>即使计算机硬件一直在更新迭代，操作<code>DOM</code>的代价仍旧是昂贵的，频繁操作还是会出现页面卡顿，影响用户的体验。真实的<code>DOM</code>节点，哪怕一个最简单的div也包含着很多属性，可以打印出来直观感受一下</li>
+</ul>
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/606.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<blockquote>
+<p>虚拟<code>DOM</code>就是为了解决这个浏览器性能问题而被设计出来的。例如前面的例子，假如一次操作中有<code>10</code>次更新<code>DOM</code>的动作，虚拟<code>DOM</code>不会立即操作<code>DOM</code>，而是将这<code>10</code>次更新的<code>diff</code>内容保存到本地的一个<code>js</code>对象中，最终将这个js对象一次性<code>attach</code>到<code>DOM</code>树上，通知浏览器去执行绘制工作，这样可以避免大量的无谓的计算量</p>
+</blockquote>
+<h2 id="二、实现虚拟DOM"><a href="#二、实现虚拟DOM" class="headerlink" title="二、实现虚拟DOM"></a>二、实现虚拟DOM</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;real-container&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Real DOM<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>cannot update<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;item&quot;</span>&gt;</span>Item 1<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;item&quot;</span>&gt;</span>Item 2<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;item&quot;</span>&gt;</span>Item 3<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>用<code>js</code>对象来模拟<code>DOM</code>节点如下</p>
+</blockquote>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs prolog">const tree = <span class="hljs-symbol">Element</span>(<span class="hljs-string">&#x27;div&#x27;</span>, &#123; id: <span class="hljs-string">&#x27;virtual-container&#x27;</span> &#125;, [<br>    <span class="hljs-symbol">Element</span>(<span class="hljs-string">&#x27;p&#x27;</span>, &#123;&#125;, [<span class="hljs-string">&#x27;Virtual DOM&#x27;</span>]),<br>    <span class="hljs-symbol">Element</span>(<span class="hljs-string">&#x27;div&#x27;</span>, &#123;&#125;, [<span class="hljs-string">&#x27;before update&#x27;</span>]),<br>    <span class="hljs-symbol">Element</span>(<span class="hljs-string">&#x27;ul&#x27;</span>, &#123;&#125;, [<br>        <span class="hljs-symbol">Element</span>(<span class="hljs-string">&#x27;li&#x27;</span>, &#123; class: <span class="hljs-string">&#x27;item&#x27;</span> &#125;, [<span class="hljs-string">&#x27;Item 1&#x27;</span>]),<br>        <span class="hljs-symbol">Element</span>(<span class="hljs-string">&#x27;li&#x27;</span>, &#123; class: <span class="hljs-string">&#x27;item&#x27;</span> &#125;, [<span class="hljs-string">&#x27;Item 2&#x27;</span>]),<br>        <span class="hljs-symbol">Element</span>(<span class="hljs-string">&#x27;li&#x27;</span>, &#123; class: <span class="hljs-string">&#x27;item&#x27;</span> &#125;, [<span class="hljs-string">&#x27;Item 3&#x27;</span>]),<br>    ]),<br>]);<br><br>const root = tree.render();<br>document.getElementById(<span class="hljs-string">&#x27;virtualDom&#x27;</span>).appendChild(root);<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>用<code>js</code>对象模拟<code>DOM</code>节点的好处是，页面的更新可以先全部反映在<code>js</code>对象上，操作内存中的<code>js</code>对象的速度显然要快多了。等更新完后，再将最终的<code>js</code>对象映射成真实的<code>DOM</code>，交由浏览器去绘制</p>
+</blockquote>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs gradle">function Element(tagName, props, children) &#123;<br>    <span class="hljs-keyword">if</span> (!(<span class="hljs-keyword">this</span> <span class="hljs-keyword">instanceof</span> Element)) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Element(tagName, props, children);<br>    &#125;<br><br>    <span class="hljs-keyword">this</span>.tagName = tagName;<br>    <span class="hljs-keyword">this</span>.props = props || &#123;&#125;;<br>    <span class="hljs-keyword">this</span>.children = children || [];<br>    <span class="hljs-keyword">this</span>.key = props ? props.key : undefined;<br><br>    let <span class="hljs-keyword">count</span> = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">this</span>.children.forEach((child) =&gt; &#123;<br>        <span class="hljs-keyword">if</span> (child <span class="hljs-keyword">instanceof</span> Element) &#123;<br>            <span class="hljs-keyword">count</span> += child.<span class="hljs-keyword">count</span>;<br>        &#125;<br>        <span class="hljs-keyword">count</span>++;<br>    &#125;);<br>    <span class="hljs-keyword">this</span>.<span class="hljs-keyword">count</span> = <span class="hljs-keyword">count</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>第一个参数是节点名（如<code>div</code>），第二个参数是节点的属性（如<code>class</code>），第三个参数是子节点（如<code>ul</code>的<code>li</code>）。除了这三个参数会被保存在对象上外，还保存了<code>key</code>和<code>count</code></p>
+</blockquote>
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/607.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<blockquote>
+<p>有了<code>js</code>对象后，最终还需要将其映射成真实的<code>DOM</code></p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">Element</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">render</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">const</span> el = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">tagName</span>);<br>    <span class="hljs-keyword">const</span> props = <span class="hljs-variable language_">this</span>.<span class="hljs-property">props</span>;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> propName <span class="hljs-keyword">in</span> props) &#123;<br>        <span class="hljs-title function_">setAttr</span>(el, propName, props[propName]);<br>    &#125;<br><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">children</span>.<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">child</span>) =&gt;</span> &#123;<br>        <span class="hljs-keyword">const</span> childEl = (child <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">Element</span>) ? child.<span class="hljs-title function_">render</span>() : <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createTextNode</span>(child);<br>        el.<span class="hljs-title function_">appendChild</span>(childEl);<br>    &#125;);<br><br>    <span class="hljs-keyword">return</span> el;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>根据<code>DOM</code>名调用源生的<code>createElement</code>创建真实<code>DOM</code>，将<code>DOM</code>的属性全都加到这个<code>DOM</code>元素上，如果有子元素继续递归调用创建子元素，并<code>appendChild</code>挂到该<code>DOM</code>元素上。这样就完成了从创建虚拟<code>DOM</code>到将其映射成真实<code>DOM</code>的全部工作</p>
+</blockquote>
+<h2 id="三、Diff算法"><a href="#三、Diff算法" class="headerlink" title="三、Diff算法"></a>三、Diff算法</h2><blockquote>
+<p>我们已经完成了创建虚拟<code>DOM</code>并将其映射成真实<code>DOM</code>的工作，这样所有的更新都可以先反映到虚拟<code>DOM</code>上，如何反映呢？需要明确一下<code>Diff</code>算法</p>
+</blockquote>
+<ul>
+<li>两棵树如果完全比较时间复杂度是<code>O(n^3)</code></li>
+<li><code>React</code>的<code>Diff</code>算法的时间复杂度是<code>O(n)</code>。要实现这么低的时间复杂度，意味着只能平层地比较两棵树的节点，放弃了深度遍历</li>
+<li>这样做，似乎牺牲了一定的精确性来换取速度，但考虑到现实中前端页面通常也不会跨层级移动<code>DOM</code>元素，所以这样做是最优的。</li>
+</ul>
+<p>我们新创建一棵树，用于和之前的树进行比较</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs awk">const newTree = Element(<span class="hljs-string">&#x27;div&#x27;</span>, &#123; id: <span class="hljs-string">&#x27;virtual-container&#x27;</span> &#125;, [<br>    Element(<span class="hljs-string">&#x27;h3&#x27;</span>, &#123;&#125;, [<span class="hljs-string">&#x27;Virtual DOM&#x27;</span>]),                     <span class="hljs-regexp">//</span> REPLACE<br>    Element(<span class="hljs-string">&#x27;div&#x27;</span>, &#123;&#125;, [<span class="hljs-string">&#x27;after update&#x27;</span>]),                   <span class="hljs-regexp">//</span> TEXT<br>    Element(<span class="hljs-string">&#x27;ul&#x27;</span>, &#123; class: <span class="hljs-string">&#x27;marginLeft10&#x27;</span> &#125;, [              <span class="hljs-regexp">//</span> PROPS<br>        Element(<span class="hljs-string">&#x27;li&#x27;</span>, &#123; class: <span class="hljs-string">&#x27;item&#x27;</span> &#125;, [<span class="hljs-string">&#x27;Item 1&#x27;</span>]),<br>        <span class="hljs-regexp">//</span> Element(<span class="hljs-string">&#x27;li&#x27;</span>, &#123; class: <span class="hljs-string">&#x27;item&#x27;</span> &#125;, [<span class="hljs-string">&#x27;Item 2&#x27;</span>]),    <span class="hljs-regexp">//</span> REORDER remove<br>        Element(<span class="hljs-string">&#x27;li&#x27;</span>, &#123; class: <span class="hljs-string">&#x27;item&#x27;</span> &#125;, [<span class="hljs-string">&#x27;Item 3&#x27;</span>]),<br>    ]),<br>]);<br></code></pre></td></tr></table></figure>
+
+<p>只考虑平层地<code>Diff</code>的话，就简单多了，只需要考虑以下4种情况</p>
+<blockquote>
+<p>第一种是最简单的，节点类型变了，例如下图中的<code>P</code>变成了<code>h3</code>。我们将这个过程称之为<code>REPLACE</code>。直接将旧节点卸载（<code>componentWillUnmount</code>）并装载新节点（<code>componentWillMount</code>）就行了</p>
+</blockquote>
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/608.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>旧节点包括下面的子节点都将被卸载，如果新节点和旧节点仅仅是类型不同，但下面的所有子节点都一样时，这样做显得效率不高。但为了避免<code>O(n^3)</code>的时间复杂度，这样做是值得的。这也提醒了<code>React</code>开发者，应该避免无谓的节点类型的变化，例如运行时将<code>div</code>变成<code>p</code>就没什么太大意义</p>
+<blockquote>
+<p>第二种也比较简单，节点类型一样，仅仅属性或属性值变了</p>
+</blockquote>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs excel">rende<span class="hljs-symbol">rA:</span> &lt;ul&gt;<br>rende<span class="hljs-symbol">rB:</span> &lt;ul cla<span class="hljs-symbol">ss:</span> &#x27;marginLeft10&#x27;&gt;<br>=&gt; [addAttribute class <span class="hljs-string">&quot;marginLeft10&quot;</span>]<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>我们将这个过程称之为<code>PROPS</code>。此时不会触发节点的卸载（<code>componentWillUnmount</code>）和装载（<code>componentWillMount</code>）动作。而是执行节点更新（<code>shouldComponentUpdate</code>到<code>componentDidUpdate</code>的一系列方法）</p>
+</blockquote>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs haxe"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">diffProps</span></span>(oldNode, <span class="hljs-keyword">new</span><span class="hljs-type">Node</span>) &#123;<br>    const oldProps = oldNode.props;<br>    const <span class="hljs-keyword">new</span><span class="hljs-type">Props</span> = <span class="hljs-keyword">new</span><span class="hljs-type">Node</span>.props;<br><br>    let key;<br>    const propsPatches = &#123;&#125;;<br>    let isSame = <span class="hljs-literal">true</span>;<br><br>    <span class="hljs-comment">// find out different props</span><br>    <span class="hljs-keyword">for</span> (key <span class="hljs-keyword">in</span> oldProps) &#123;<br>        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">new</span><span class="hljs-type">Props</span>[key] !== oldProps[key]) &#123;<br>            isSame = <span class="hljs-literal">false</span>;<br>            propsPatches[key] = <span class="hljs-keyword">new</span><span class="hljs-type">Props</span>[key];<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">// find out new props</span><br>    <span class="hljs-keyword">for</span> (key <span class="hljs-keyword">in</span> <span class="hljs-keyword">new</span><span class="hljs-type">Props</span>) &#123;<br>        <span class="hljs-keyword">if</span> (!oldProps.hasOwnProperty(key)) &#123;<br>            isSame = <span class="hljs-literal">false</span>;<br>            propsPatches[key] = <span class="hljs-keyword">new</span><span class="hljs-type">Props</span>[key];<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> isSame ? <span class="hljs-literal">null</span> : <span class="hljs-type">propsPatches</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>第三种是文本变了，文本对也是一个<code>Text Node</code>，也比较简单，直接修改文字内容就行了，我们将这个过程称之为<code>TEXT</code></li>
+<li>第四种是移动，增加，删除子节点，我们将这个过程称之为<code>REORDER</code></li>
+</ul>
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/609.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<blockquote>
+<p>在中间插入一个节点，程序员写代码很简单：$(B).after(F)。但如何高效地插入呢？简单粗暴的做法是：卸载C，装载F，卸载D，装载C，卸载E，装载D，装载E。如下图</p>
+</blockquote>
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/610.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<blockquote>
+<p>我们写<code>JSX</code>代码时，如果没有给数组或枚举类型定义一个<code>key</code>，就会看到下面这样的<code>warning</code>。<code>React</code>提醒我们，没有<code>key</code>的话，涉及到移动，增加，删除子节点的操作时，就会用上面那种简单粗暴的做法来更新。虽然程序运行不会有错，但效率太低，因此<code>React</code>会给我们一个<code>warning</code></p>
+</blockquote>
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/611.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<blockquote>
+<p>如果我们在<code>JSX</code>里为数组或枚举型元素增加上<code>key</code>后，<code>React</code>就能根据<code>key</code>，直接找到具体的位置进行操作，效率比较高。如下图</p>
+</blockquote>
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/612.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<blockquote>
+<p>常见的最小编辑距离问题，可以用<code>Levenshtein Distance</code>算法来实现，时间复杂度是<code>O(M*N)</code>，但通常我们只要一些简单的移动就能满足需要，降低点精确性，将时间复杂度降低到<code>O(max(M, N)</code>即可</p>
+</blockquote>
+<p>最终<code>Diff</code>出来的结果如下</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs yaml">&#123;<br>    <span class="hljs-attr">1:</span> [ &#123;<span class="hljs-attr">type:</span> <span class="hljs-string">REPLACE</span>, <span class="hljs-attr">node:</span> <span class="hljs-string">Element</span>&#125; ],<br>    <span class="hljs-attr">4:</span> [ &#123;<span class="hljs-attr">type:</span> <span class="hljs-string">TEXT</span>, <span class="hljs-attr">content:</span> <span class="hljs-string">&quot;after update&quot;</span>&#125; ],<br>    <span class="hljs-attr">5:</span> [ &#123;<span class="hljs-attr">type:</span> <span class="hljs-string">PROPS</span>, <span class="hljs-attr">props:</span> &#123;<span class="hljs-attr">class:</span> <span class="hljs-string">&quot;marginLeft10&quot;</span>&#125;&#125;, &#123;<span class="hljs-attr">type:</span> <span class="hljs-string">REORDER</span>, <span class="hljs-attr">moves:</span> [&#123;<span class="hljs-attr">index:</span> <span class="hljs-number">2</span>, <span class="hljs-attr">type:</span> <span class="hljs-number">0</span>&#125;]&#125; ],<br>    <span class="hljs-attr">6:</span> [ &#123;<span class="hljs-attr">type:</span> <span class="hljs-string">REORDER</span>, <span class="hljs-attr">moves:</span> [&#123;<span class="hljs-attr">index:</span> <span class="hljs-number">2</span>, <span class="hljs-attr">type:</span> <span class="hljs-number">0</span>&#125;]&#125; ],<br>    <span class="hljs-attr">8:</span> [ &#123;<span class="hljs-attr">type:</span> <span class="hljs-string">REORDER</span>, <span class="hljs-attr">moves:</span> [&#123;<span class="hljs-attr">index:</span> <span class="hljs-number">2</span>, <span class="hljs-attr">type:</span> <span class="hljs-number">0</span>&#125;]&#125; ],<br>    <span class="hljs-attr">9:</span> [ &#123;<span class="hljs-attr">type:</span> <span class="hljs-string">TEXT</span>, <span class="hljs-attr">content:</span> <span class="hljs-string">&quot;Item 3&quot;</span>&#125; ],<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="四、映射成真实DOM"><a href="#四、映射成真实DOM" class="headerlink" title="四、映射成真实DOM"></a>四、映射成真实DOM</h2><blockquote>
+<p>虚拟<code>DOM</code>有了，<code>Diff</code>也有了，现在就可以将<code>Diff</code>应用到真实<code>DOM</code>上了</p>
+</blockquote>
+<p>深度遍历DOM将Diff的内容更新进去</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-keyword">function</span> dfs<span class="hljs-constructor">Walk(<span class="hljs-params">node</span>, <span class="hljs-params">walker</span>, <span class="hljs-params">patches</span>)</span> &#123;<br>    const currentPatches = patches<span class="hljs-literal">[<span class="hljs-identifier">walker</span>.<span class="hljs-identifier">index</span>]</span>;<br><br>    const len = node.childNodes ? node.childNodes.length : <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; len; i++) &#123;<br>        walker.index++;<br>        dfs<span class="hljs-constructor">Walk(<span class="hljs-params">node</span>.<span class="hljs-params">childNodes</span>[<span class="hljs-params">i</span>], <span class="hljs-params">walker</span>, <span class="hljs-params">patches</span>)</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">if</span> (currentPatches) &#123;<br>        apply<span class="hljs-constructor">Patches(<span class="hljs-params">node</span>, <span class="hljs-params">currentPatches</span>)</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>具体更新的代码如下，其实就是根据<code>Diff</code>信息调用源生<code>API</code>操作<code>DOM</code></p>
+</blockquote>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-keyword">function</span> apply<span class="hljs-constructor">Patches(<span class="hljs-params">node</span>, <span class="hljs-params">currentPatches</span>)</span> &#123;<br>    currentPatches.<span class="hljs-keyword">for</span><span class="hljs-constructor">Each((<span class="hljs-params">currentPatch</span>)</span> =&gt; &#123;<br>        switch (currentPatch.<span class="hljs-keyword">type</span>) &#123;<br>            case REPLACE: &#123;<br>                const newNode = (typeof currentPatch.node<span class="hljs-operator"> === </span>&#x27;<span class="hljs-built_in">string</span>&#x27;)<br>                    ? document.create<span class="hljs-constructor">TextNode(<span class="hljs-params">currentPatch</span>.<span class="hljs-params">node</span>)</span><br>                    : currentPatch.node.render<span class="hljs-literal">()</span>;<br>                node.parentNode.replace<span class="hljs-constructor">Child(<span class="hljs-params">newNode</span>, <span class="hljs-params">node</span>)</span>;<br>                break;<br>            &#125;<br>            case REORDER:<br>                reorder<span class="hljs-constructor">Children(<span class="hljs-params">node</span>, <span class="hljs-params">currentPatch</span>.<span class="hljs-params">moves</span>)</span>;<br>                break;<br>            case PROPS:<br>                set<span class="hljs-constructor">Props(<span class="hljs-params">node</span>, <span class="hljs-params">currentPatch</span>.<span class="hljs-params">props</span>)</span>;<br>                break;<br>            case TEXT:<br>                <span class="hljs-keyword">if</span> (node.textContent) &#123;<br>                    node.textContent = currentPatch.content;<br>                &#125; <span class="hljs-keyword">else</span> &#123;<br>                    <span class="hljs-comment">// ie</span><br>                    node.nodeValue = currentPatch.content;<br>                &#125;<br>                break;<br>            default:<br>                throw <span class="hljs-keyword">new</span> <span class="hljs-constructor">Error(`Unknown <span class="hljs-params">patch</span> <span class="hljs-params">type</span> $&#123;<span class="hljs-params">currentPatch</span>.<span class="hljs-params">type</span>&#125;`)</span>;<br>        &#125;<br>    &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>虚拟<code>DOM</code>的目的是将所有操作累加起来，统计计算出所有的变化后，统一更新一次<code>DOM</code></p>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%89%8D%E7%AB%AF/" class="category-chain-item">前端</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/javascript/">#javascript</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>js DOM进阶</div>
+      <div>http://example.com/2018/02/19/html+css+js+ts/3-js虚拟DOM进阶/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>February 19, 2018</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/02/20/html+css+js+ts/2-css%20BFC/" title="css-BFC">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">css-BFC</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/02/17/html+css+js+ts/3-js%E8%99%9A%E6%8B%9FDOM%E5%9F%BA%E7%A1%80/" title="js DOM基础">
+                        <span class="hidden-mobile">js DOM基础</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

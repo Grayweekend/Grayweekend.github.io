@@ -1,0 +1,668 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、是什么权限是对特定资源的访问许可，所谓权限控制，也就是确保用户只能访问到被分配的资源 而前端权限归根结底是请求的发起权，请求的发起可能有下面两种形式触发  页面加载触发 页面上的按钮点击触发  总的来说，所有的请求发起都触发自前端路由或视图 所以我们可以从这两方面入手，对触发权限的源头进行控制，最终要实现的目标是：  路由方面，用户登录后只能看到自己有权访问的导航菜单，也只能访问自己有权访问的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue-权限管理">
+<meta property="og:url" content="http://example.com/2018/08/10/vue/vue-%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、是什么权限是对特定资源的访问许可，所谓权限控制，也就是确保用户只能访问到被分配的资源 而前端权限归根结底是请求的发起权，请求的发起可能有下面两种形式触发  页面加载触发 页面上的按钮点击触发  总的来说，所有的请求发起都触发自前端路由或视图 所以我们可以从这两方面入手，对触发权限的源头进行控制，最终要实现的目标是：  路由方面，用户登录后只能看到自己有权访问的导航菜单，也只能访问自己有权访问的">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-08-10T06:31:15.000Z">
+<meta property="article:modified_time" content="2022-06-06T10:51:22.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="vue">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>vue-权限管理 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="vue-权限管理"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-08-10 14:31" pubdate>
+          August 10, 2018 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.9k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          74 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">vue-权限管理</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="一、是什么"><a href="#一、是什么" class="headerlink" title="一、是什么"></a>一、是什么</h2><p>权限是对特定资源的访问许可，所谓权限控制，也就是确保用户只能访问到被分配的资源</p>
+<p>而前端权限归根结底是请求的发起权，请求的发起可能有下面两种形式触发</p>
+<ul>
+<li>页面加载触发</li>
+<li>页面上的按钮点击触发</li>
+</ul>
+<p>总的来说，所有的请求发起都触发自前端路由或视图</p>
+<p>所以我们可以从这两方面入手，对触发权限的源头进行控制，最终要实现的目标是：</p>
+<ul>
+<li>路由方面，用户登录后只能看到自己有权访问的导航菜单，也只能访问自己有权访问的路由地址，否则将跳转 <code>4xx</code> 提示页</li>
+<li>视图方面，用户只能看到自己有权浏览的内容和有权操作的控件</li>
+<li>最后再加上请求控制作为最后一道防线，路由可能配置失误，按钮可能忘了加权限，这种时候请求控制可以用来兜底，越权请求将在前端被拦截</li>
+</ul>
+<h2 id="二、如何做"><a href="#二、如何做" class="headerlink" title="二、如何做"></a>二、如何做</h2><p>前端权限控制可以分为四个方面：</p>
+<ul>
+<li>接口权限</li>
+<li>按钮权限</li>
+<li>菜单权限</li>
+<li>路由权限</li>
+</ul>
+<h3 id="接口权限"><a href="#接口权限" class="headerlink" title="接口权限"></a>接口权限</h3><p>接口权限目前一般采用<code>jwt</code>的形式来验证，没有通过的话一般返回<code>401</code>，跳转到登录页面重新进行登录</p>
+<p>登录完拿到<code>token</code>，将<code>token</code>存起来，通过<code>axios</code>请求拦截器进行拦截，每次请求的时候头部携带<code>token</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs js">axios.<span class="hljs-property">interceptors</span>.<span class="hljs-property">request</span>.<span class="hljs-title function_">use</span>(<span class="hljs-function"><span class="hljs-params">config</span> =&gt;</span> &#123;<br>    config.<span class="hljs-property">headers</span>[<span class="hljs-string">&#x27;token&#x27;</span>] = cookie.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;token&#x27;</span>)<br>    <span class="hljs-keyword">return</span> config<br>&#125;)<br>axios.<span class="hljs-property">interceptors</span>.<span class="hljs-property">response</span>.<span class="hljs-title function_">use</span>(<span class="hljs-function"><span class="hljs-params">res</span>=&gt;</span>&#123;&#125;,&#123;response&#125;=&gt;&#123;<br>    <span class="hljs-keyword">if</span> (response.<span class="hljs-property">data</span>.<span class="hljs-property">code</span> === <span class="hljs-number">40099</span> || response.<span class="hljs-property">data</span>.<span class="hljs-property">code</span> === <span class="hljs-number">40098</span>) &#123; <span class="hljs-comment">//token过期或者错误</span><br>        router.<span class="hljs-title function_">push</span>(<span class="hljs-string">&#x27;/login&#x27;</span>)<br>    &#125;<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<h3 id="路由权限控制"><a href="#路由权限控制" class="headerlink" title="路由权限控制"></a>路由权限控制</h3><p><strong>方案一</strong></p>
+<p>初始化即挂载全部路由，并且在路由上标记相应的权限信息，每次路由跳转前做校验</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> routerMap = [<br>  &#123;<br>    <span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;/permission&#x27;</span>,<br>    <span class="hljs-attr">component</span>: <span class="hljs-title class_">Layout</span>,<br>    <span class="hljs-attr">redirect</span>: <span class="hljs-string">&#x27;/permission/index&#x27;</span>,<br>    <span class="hljs-attr">alwaysShow</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">// will always show the root menu</span><br>    <span class="hljs-attr">meta</span>: &#123;<br>      <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;permission&#x27;</span>,<br>      <span class="hljs-attr">icon</span>: <span class="hljs-string">&#x27;lock&#x27;</span>,<br>      <span class="hljs-attr">roles</span>: [<span class="hljs-string">&#x27;admin&#x27;</span>, <span class="hljs-string">&#x27;editor&#x27;</span>] <span class="hljs-comment">// you can set roles in root nav</span><br>    &#125;,<br>    <span class="hljs-attr">children</span>: [&#123;<br>      <span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;page&#x27;</span>,<br>      <span class="hljs-attr">component</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">import</span>(<span class="hljs-string">&#x27;@/views/permission/page&#x27;</span>),<br>      <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;pagePermission&#x27;</span>,<br>      <span class="hljs-attr">meta</span>: &#123;<br>        <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;pagePermission&#x27;</span>,<br>        <span class="hljs-attr">roles</span>: [<span class="hljs-string">&#x27;admin&#x27;</span>] <span class="hljs-comment">// or you can only set roles in sub nav</span><br>      &#125;<br>    &#125;, &#123;<br>      <span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;directive&#x27;</span>,<br>      <span class="hljs-attr">component</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">import</span>(<span class="hljs-string">&#x27;@/views/permission/directive&#x27;</span>),<br>      <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;directivePermission&#x27;</span>,<br>      <span class="hljs-attr">meta</span>: &#123;<br>        <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;directivePermission&#x27;</span><br>        <span class="hljs-comment">// if do not set roles, means: this page does not require permission</span><br>      &#125;<br>    &#125;]<br>  &#125;]<br></code></pre></td></tr></table></figure>
+
+<p>这种方式存在以下四种缺点：</p>
+<ul>
+<li>加载所有的路由，如果路由很多，而用户并不是所有的路由都有权限访问，对性能会有影响。</li>
+<li>全局路由守卫里，每次路由跳转都要做权限判断。</li>
+<li>菜单信息写死在前端，要改个显示文字或权限信息，需要重新编译</li>
+<li>菜单跟路由耦合在一起，定义路由的时候还有添加菜单显示标题，图标之类的信息，而且路由不一定作为菜单显示，还要多加字段进行标识</li>
+</ul>
+<p><strong>方案二</strong></p>
+<p>初始化的时候先挂载不需要权限控制的路由，比如登录页，404等错误页。如果用户通过URL进行强制访问，则会直接进入404，相当于从源头上做了控制</p>
+<p>登录后，获取用户的权限信息，然后筛选有权限访问的路由，在全局路由守卫里进行调用<code>addRoutes</code>添加路由</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> router <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./router&#x27;</span><br><span class="hljs-keyword">import</span> store <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./store&#x27;</span><br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">Message</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;element-ui&#x27;</span><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">NProgress</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;nprogress&#x27;</span> <span class="hljs-comment">// progress bar</span><br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;nprogress/nprogress.css&#x27;</span><span class="hljs-comment">// progress bar style</span><br><span class="hljs-keyword">import</span> &#123; getToken &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@/utils/auth&#x27;</span> <span class="hljs-comment">// getToken from cookie</span><br><br><span class="hljs-title class_">NProgress</span>.<span class="hljs-title function_">configure</span>(&#123; <span class="hljs-attr">showSpinner</span>: <span class="hljs-literal">false</span> &#125;)<span class="hljs-comment">// NProgress Configuration</span><br><br><span class="hljs-comment">// permission judge function</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">hasPermission</span>(<span class="hljs-params">roles, permissionRoles</span>) &#123;<br>  <span class="hljs-keyword">if</span> (roles.<span class="hljs-title function_">indexOf</span>(<span class="hljs-string">&#x27;admin&#x27;</span>) &gt;= <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span> <span class="hljs-comment">// admin permission passed directly</span><br>  <span class="hljs-keyword">if</span> (!permissionRoles) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br>  <span class="hljs-keyword">return</span> roles.<span class="hljs-title function_">some</span>(<span class="hljs-function"><span class="hljs-params">role</span> =&gt;</span> permissionRoles.<span class="hljs-title function_">indexOf</span>(role) &gt;= <span class="hljs-number">0</span>)<br>&#125;<br><br><span class="hljs-keyword">const</span> whiteList = [<span class="hljs-string">&#x27;/login&#x27;</span>, <span class="hljs-string">&#x27;/authredirect&#x27;</span>]<span class="hljs-comment">// no redirect whitelist</span><br><br>router.<span class="hljs-title function_">beforeEach</span>(<span class="hljs-function">(<span class="hljs-params">to, <span class="hljs-keyword">from</span>, next</span>) =&gt;</span> &#123;<br>  <span class="hljs-title class_">NProgress</span>.<span class="hljs-title function_">start</span>() <span class="hljs-comment">// start progress bar</span><br>  <span class="hljs-keyword">if</span> (<span class="hljs-title function_">getToken</span>()) &#123; <span class="hljs-comment">// determine if there has token</span><br>    <span class="hljs-comment">/* has token*/</span><br>    <span class="hljs-keyword">if</span> (to.<span class="hljs-property">path</span> === <span class="hljs-string">&#x27;/login&#x27;</span>) &#123;<br>      <span class="hljs-title function_">next</span>(&#123; <span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;/&#x27;</span> &#125;)<br>      <span class="hljs-title class_">NProgress</span>.<span class="hljs-title function_">done</span>() <span class="hljs-comment">// if current page is dashboard will not trigger	afterEach hook, so manually handle it</span><br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      <span class="hljs-keyword">if</span> (store.<span class="hljs-property">getters</span>.<span class="hljs-property">roles</span>.<span class="hljs-property">length</span> === <span class="hljs-number">0</span>) &#123; <span class="hljs-comment">// 判断当前用户是否已拉取完user_info信息</span><br>        store.<span class="hljs-title function_">dispatch</span>(<span class="hljs-string">&#x27;GetUserInfo&#x27;</span>).<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> &#123; <span class="hljs-comment">// 拉取user_info</span><br>          <span class="hljs-keyword">const</span> roles = res.<span class="hljs-property">data</span>.<span class="hljs-property">roles</span> <span class="hljs-comment">// note: roles must be a array! such as: [&#x27;editor&#x27;,&#x27;develop&#x27;]</span><br>          store.<span class="hljs-title function_">dispatch</span>(<span class="hljs-string">&#x27;GenerateRoutes&#x27;</span>, &#123; roles &#125;).<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> &#123; <span class="hljs-comment">// 根据roles权限生成可访问的路由表</span><br>            router.<span class="hljs-title function_">addRoutes</span>(store.<span class="hljs-property">getters</span>.<span class="hljs-property">addRouters</span>) <span class="hljs-comment">// 动态添加可访问路由表</span><br>            <span class="hljs-title function_">next</span>(&#123; ...to, <span class="hljs-attr">replace</span>: <span class="hljs-literal">true</span> &#125;) <span class="hljs-comment">// hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record</span><br>          &#125;)<br>        &#125;).<span class="hljs-title function_">catch</span>(<span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> &#123;<br>          store.<span class="hljs-title function_">dispatch</span>(<span class="hljs-string">&#x27;FedLogOut&#x27;</span>).<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>            <span class="hljs-title class_">Message</span>.<span class="hljs-title function_">error</span>(err || <span class="hljs-string">&#x27;Verification failed, please login again&#x27;</span>)<br>            <span class="hljs-title function_">next</span>(&#123; <span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;/&#x27;</span> &#125;)<br>          &#125;)<br>        &#125;)<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-comment">// 没有动态改变权限的需求可直接next() 删除下方权限判断 ↓</span><br>        <span class="hljs-keyword">if</span> (<span class="hljs-title function_">hasPermission</span>(store.<span class="hljs-property">getters</span>.<span class="hljs-property">roles</span>, to.<span class="hljs-property">meta</span>.<span class="hljs-property">roles</span>)) &#123;<br>          <span class="hljs-title function_">next</span>()<span class="hljs-comment">//</span><br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>          <span class="hljs-title function_">next</span>(&#123; <span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;/401&#x27;</span>, <span class="hljs-attr">replace</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">query</span>: &#123; <span class="hljs-attr">noGoBack</span>: <span class="hljs-literal">true</span> &#125;&#125;)<br>        &#125;<br>        <span class="hljs-comment">// 可删 ↑</span><br>      &#125;<br>    &#125;<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-comment">/* has no token*/</span><br>    <span class="hljs-keyword">if</span> (whiteList.<span class="hljs-title function_">indexOf</span>(to.<span class="hljs-property">path</span>) !== -<span class="hljs-number">1</span>) &#123; <span class="hljs-comment">// 在免登录白名单，直接进入</span><br>      <span class="hljs-title function_">next</span>()<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      <span class="hljs-title function_">next</span>(<span class="hljs-string">&#x27;/login&#x27;</span>) <span class="hljs-comment">// 否则全部重定向到登录页</span><br>      <span class="hljs-title class_">NProgress</span>.<span class="hljs-title function_">done</span>() <span class="hljs-comment">// if current page is login will not trigger afterEach hook, so manually handle it</span><br>    &#125;<br>  &#125;<br>&#125;)<br><br>router.<span class="hljs-title function_">afterEach</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-title class_">NProgress</span>.<span class="hljs-title function_">done</span>() <span class="hljs-comment">// finish progress bar</span><br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>按需挂载，路由就需要知道用户的路由权限，也就是在用户登录进来的时候就要知道当前用户拥有哪些路由权限</p>
+<p>这种方式也存在了以下的缺点：</p>
+<ul>
+<li>全局路由守卫里，每次路由跳转都要做判断</li>
+<li>菜单信息写死在前端，要改个显示文字或权限信息，需要重新编译</li>
+<li>菜单跟路由耦合在一起，定义路由的时候还有添加菜单显示标题，图标之类的信息，而且路由不一定作为菜单显示，还要多加字段进行标识</li>
+</ul>
+<h3 id="菜单权限"><a href="#菜单权限" class="headerlink" title="菜单权限"></a>菜单权限</h3><p>菜单权限可以理解成将页面与理由进行解耦</p>
+<h4 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h4><p>菜单与路由分离，菜单由后端返回</p>
+<p>前端定义路由信息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js">&#123;<br>    <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;login&quot;</span>,<br>    <span class="hljs-attr">path</span>: <span class="hljs-string">&quot;/login&quot;</span>,<br>    <span class="hljs-attr">component</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">import</span>(<span class="hljs-string">&quot;@/pages/Login.vue&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>name</code>字段都不为空，需要根据此字段与后端返回菜单做关联，后端返回的菜单信息中必须要有<code>name</code>对应的字段，并且做唯一性校验</p>
+<p>全局路由守卫里做判断</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">hasPermission</span>(<span class="hljs-params">router, accessMenu</span>) &#123;<br>  <span class="hljs-keyword">if</span> (whiteList.<span class="hljs-title function_">indexOf</span>(router.<span class="hljs-property">path</span>) !== -<span class="hljs-number">1</span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>  &#125;<br>  <span class="hljs-keyword">let</span> menu = <span class="hljs-title class_">Util</span>.<span class="hljs-title function_">getMenuByName</span>(router.<span class="hljs-property">name</span>, accessMenu);<br>  <span class="hljs-keyword">if</span> (menu.<span class="hljs-property">name</span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>  &#125;<br>  <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br><br>&#125;<br><br><span class="hljs-title class_">Router</span>.<span class="hljs-title function_">beforeEach</span>(<span class="hljs-keyword">async</span> (to, <span class="hljs-keyword">from</span>, next) =&gt; &#123;<br>  <span class="hljs-keyword">if</span> (<span class="hljs-title function_">getToken</span>()) &#123;<br>    <span class="hljs-keyword">let</span> userInfo = store.<span class="hljs-property">state</span>.<span class="hljs-property">user</span>.<span class="hljs-property">userInfo</span>;<br>    <span class="hljs-keyword">if</span> (!userInfo.<span class="hljs-property">name</span>) &#123;<br>      <span class="hljs-keyword">try</span> &#123;<br>        <span class="hljs-keyword">await</span> store.<span class="hljs-title function_">dispatch</span>(<span class="hljs-string">&quot;GetUserInfo&quot;</span>)<br>        <span class="hljs-keyword">await</span> store.<span class="hljs-title function_">dispatch</span>(<span class="hljs-string">&#x27;updateAccessMenu&#x27;</span>)<br>        <span class="hljs-keyword">if</span> (to.<span class="hljs-property">path</span> === <span class="hljs-string">&#x27;/login&#x27;</span>) &#123;<br>          <span class="hljs-title function_">next</span>(&#123; <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;home_index&#x27;</span> &#125;)<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>          <span class="hljs-comment">//Util.toDefaultPage([...routers], to.name, router, next);</span><br>          <span class="hljs-title function_">next</span>(&#123; ...to, <span class="hljs-attr">replace</span>: <span class="hljs-literal">true</span> &#125;)<span class="hljs-comment">//菜单权限更新完成,重新进一次当前路由</span><br>        &#125;<br>      &#125;  <br>      <span class="hljs-keyword">catch</span> (e) &#123;<br>        <span class="hljs-keyword">if</span> (whiteList.<span class="hljs-title function_">indexOf</span>(to.<span class="hljs-property">path</span>) !== -<span class="hljs-number">1</span>) &#123; <span class="hljs-comment">// 在免登录白名单，直接进入</span><br>          <span class="hljs-title function_">next</span>()<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>          <span class="hljs-title function_">next</span>(<span class="hljs-string">&#x27;/login&#x27;</span>)<br>        &#125;<br>      &#125;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      <span class="hljs-keyword">if</span> (to.<span class="hljs-property">path</span> === <span class="hljs-string">&#x27;/login&#x27;</span>) &#123;<br>        <span class="hljs-title function_">next</span>(&#123; <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;home_index&#x27;</span> &#125;)<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">if</span> (<span class="hljs-title function_">hasPermission</span>(to, store.<span class="hljs-property">getters</span>.<span class="hljs-property">accessMenu</span>)) &#123;<br>          <span class="hljs-title class_">Util</span>.<span class="hljs-title function_">toDefaultPage</span>(store.<span class="hljs-property">getters</span>.<span class="hljs-property">accessMenu</span>,to, routes, next);<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>          <span class="hljs-title function_">next</span>(&#123; <span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;/403&#x27;</span>,<span class="hljs-attr">replace</span>:<span class="hljs-literal">true</span> &#125;)<br>        &#125;<br>      &#125;<br>    &#125;<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-keyword">if</span> (whiteList.<span class="hljs-title function_">indexOf</span>(to.<span class="hljs-property">path</span>) !== -<span class="hljs-number">1</span>) &#123; <span class="hljs-comment">// 在免登录白名单，直接进入</span><br>      <span class="hljs-title function_">next</span>()<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      <span class="hljs-title function_">next</span>(<span class="hljs-string">&#x27;/login&#x27;</span>)<br>    &#125;<br>  &#125;<br>  <span class="hljs-keyword">let</span> menu = <span class="hljs-title class_">Util</span>.<span class="hljs-title function_">getMenuByName</span>(to.<span class="hljs-property">name</span>, store.<span class="hljs-property">getters</span>.<span class="hljs-property">accessMenu</span>);<br>  <span class="hljs-title class_">Util</span>.<span class="hljs-title function_">title</span>(menu.<span class="hljs-property">title</span>);<br>&#125;);<br><br><span class="hljs-title class_">Router</span>.<span class="hljs-title function_">afterEach</span>(<span class="hljs-function">(<span class="hljs-params">to</span>) =&gt;</span> &#123;<br>  <span class="hljs-variable language_">window</span>.<span class="hljs-title function_">scrollTo</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<p>每次路由跳转的时候都要判断权限，这里的判断也很简单，因为菜单的<code>name</code>与路由的<code>name</code>是一一对应的，而后端返回的菜单就已经是经过权限过滤的</p>
+<p>如果根据路由<code>name</code>找不到对应的菜单，就表示用户有没权限访问</p>
+<p>如果路由很多，可以在应用初始化的时候，只挂载不需要权限控制的路由。取得后端返回的菜单后，根据菜单与路由的对应关系，筛选出可访问的路由，通过<code>addRoutes</code>动态挂载</p>
+<p>这种方式的缺点：</p>
+<ul>
+<li>菜单需要与路由做一一对应，前端添加了新功能，需要通过菜单管理功能添加新的菜单，如果菜单配置的不对会导致应用不能正常使用</li>
+<li>全局路由守卫里，每次路由跳转都要做判断</li>
+</ul>
+<h4 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h4><p>菜单和路由都由后端返回</p>
+<p>前端统一定义路由组件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> <span class="hljs-title function_">Home</span> = (<span class="hljs-params"></span>) =&gt; <span class="hljs-title function_">import</span>(<span class="hljs-string">&quot;../pages/Home.vue&quot;</span>);<br><span class="hljs-keyword">const</span> <span class="hljs-title function_">UserInfo</span> = (<span class="hljs-params"></span>) =&gt; <span class="hljs-title function_">import</span>(<span class="hljs-string">&quot;../pages/UserInfo.vue&quot;</span>);<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>    <span class="hljs-attr">home</span>: <span class="hljs-title class_">Home</span>,<br>    <span class="hljs-attr">userInfo</span>: <span class="hljs-title class_">UserInfo</span><br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>后端路由组件返回以下格式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js">[<br>    &#123;<br>        <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;home&quot;</span>,<br>        <span class="hljs-attr">path</span>: <span class="hljs-string">&quot;/&quot;</span>,<br>        <span class="hljs-attr">component</span>: <span class="hljs-string">&quot;home&quot;</span><br>    &#125;,<br>    &#123;<br>        <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;home&quot;</span>,<br>        <span class="hljs-attr">path</span>: <span class="hljs-string">&quot;/userinfo&quot;</span>,<br>        <span class="hljs-attr">component</span>: <span class="hljs-string">&quot;userInfo&quot;</span><br>    &#125;<br>]<br></code></pre></td></tr></table></figure>
+
+<p>在将后端返回路由通过<code>addRoutes</code>动态挂载之间，需要将数据处理一下，将<code>component</code>字段换为真正的组件</p>
+<p>如果有嵌套路由，后端功能设计的时候，要注意添加相应的字段，前端拿到数据也要做相应的处理</p>
+<p>这种方法也会存在缺点：</p>
+<ul>
+<li>全局路由守卫里，每次路由跳转都要做判断</li>
+<li>前后端的配合要求更高</li>
+</ul>
+<h3 id="按钮权限"><a href="#按钮权限" class="headerlink" title="按钮权限"></a>按钮权限</h3><h4 id="方案一-1"><a href="#方案一-1" class="headerlink" title="方案一"></a>方案一</h4><p>按钮权限也可以用<code>v-if</code>判断</p>
+<p>但是如果页面过多，每个页面页面都要获取用户权限<code>role</code>和路由表里的<code>meta.btnPermissions</code>，然后再做判断</p>
+<p>这种方式就不展开举例了</p>
+<h4 id="方案二-1"><a href="#方案二-1" class="headerlink" title="方案二"></a>方案二</h4><p>通过自定义指令进行按钮权限的判断</p>
+<p>首先配置路由</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs js">&#123;<br>    <span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;/permission&#x27;</span>,<br>    <span class="hljs-attr">component</span>: <span class="hljs-title class_">Layout</span>,<br>    <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;权限测试&#x27;</span>,<br>    <span class="hljs-attr">meta</span>: &#123;<br>        <span class="hljs-attr">btnPermissions</span>: [<span class="hljs-string">&#x27;admin&#x27;</span>, <span class="hljs-string">&#x27;supper&#x27;</span>, <span class="hljs-string">&#x27;normal&#x27;</span>]<br>    &#125;,<br>    <span class="hljs-comment">//页面需要的权限</span><br>    <span class="hljs-attr">children</span>: [&#123;<br>        <span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;supper&#x27;</span>,<br>        <span class="hljs-attr">component</span>: <span class="hljs-title function_">_import</span>(<span class="hljs-string">&#x27;system/supper&#x27;</span>),<br>        <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;权限测试页&#x27;</span>,<br>        <span class="hljs-attr">meta</span>: &#123;<br>            <span class="hljs-attr">btnPermissions</span>: [<span class="hljs-string">&#x27;admin&#x27;</span>, <span class="hljs-string">&#x27;supper&#x27;</span>]<br>        &#125; <span class="hljs-comment">//页面需要的权限</span><br>    &#125;,<br>    &#123;<br>        <span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;normal&#x27;</span>,<br>        <span class="hljs-attr">component</span>: <span class="hljs-title function_">_import</span>(<span class="hljs-string">&#x27;system/normal&#x27;</span>),<br>        <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;权限测试页&#x27;</span>,<br>        <span class="hljs-attr">meta</span>: &#123;<br>            <span class="hljs-attr">btnPermissions</span>: [<span class="hljs-string">&#x27;admin&#x27;</span>]<br>        &#125; <span class="hljs-comment">//页面需要的权限</span><br>    &#125;]<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>自定义权限鉴定指令</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> <span class="hljs-title class_">Vue</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span><br><span class="hljs-comment">/**权限指令**/</span><br><span class="hljs-keyword">const</span> has = <span class="hljs-title class_">Vue</span>.<span class="hljs-title function_">directive</span>(<span class="hljs-string">&#x27;has&#x27;</span>, &#123;<br>    <span class="hljs-attr">bind</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params">el, binding, vnode</span>) &#123;<br>        <span class="hljs-comment">// 获取页面按钮权限</span><br>        <span class="hljs-keyword">let</span> btnPermissionsArr = [];<br>        <span class="hljs-keyword">if</span>(binding.<span class="hljs-property">value</span>)&#123;<br>            <span class="hljs-comment">// 如果指令传值，获取指令参数，根据指令参数和当前登录人按钮权限做比较。</span><br>            btnPermissionsArr = <span class="hljs-title class_">Array</span>.<span class="hljs-title function_">of</span>(binding.<span class="hljs-property">value</span>);<br>        &#125;<span class="hljs-keyword">else</span>&#123;<br>            <span class="hljs-comment">// 否则获取路由中的参数，根据路由的btnPermissionsArr和当前登录人按钮权限做比较。</span><br>            btnPermissionsArr = vnode.<span class="hljs-property">context</span>.<span class="hljs-property">$route</span>.<span class="hljs-property">meta</span>.<span class="hljs-property">btnPermissions</span>;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (!<span class="hljs-title class_">Vue</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.$_has(btnPermissionsArr)) &#123;<br>            el.<span class="hljs-property">parentNode</span>.<span class="hljs-title function_">removeChild</span>(el);<br>        &#125;<br>    &#125;<br>&#125;);<br><span class="hljs-comment">// 权限检查方法</span><br><span class="hljs-title class_">Vue</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">$_has</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">value</span>) &#123;<br>    <span class="hljs-keyword">let</span> isExist = <span class="hljs-literal">false</span>;<br>    <span class="hljs-comment">// 获取用户按钮权限</span><br>    <span class="hljs-keyword">let</span> btnPermissionsStr = sessionStorage.<span class="hljs-title function_">getItem</span>(<span class="hljs-string">&quot;btnPermissions&quot;</span>);<br>    <span class="hljs-keyword">if</span> (btnPermissionsStr == <span class="hljs-literal">undefined</span> || btnPermissionsStr == <span class="hljs-literal">null</span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br>    <span class="hljs-keyword">if</span> (value.<span class="hljs-title function_">indexOf</span>(btnPermissionsStr) &gt; -<span class="hljs-number">1</span>) &#123;<br>        isExist = <span class="hljs-literal">true</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> isExist;<br>&#125;;<br><span class="hljs-keyword">export</span> &#123;has&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在使用的按钮中只需要引用<code>v-has</code>指令</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;el-button @click=<span class="hljs-string">&#x27;editClick&#x27;</span> type=<span class="hljs-string">&quot;primary&quot;</span> v-has&gt;编辑&lt;/el-button&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>关于权限如何选择哪种合适的方案，可以根据自己项目的方案项目，如考虑路由与菜单是否分离</p>
+<p>权限需要前后端结合，前端尽可能的去控制，更多的需要后台判断</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%A1%86%E6%9E%B6/" class="category-chain-item">框架</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/vue/">#vue</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>vue-权限管理</div>
+      <div>http://example.com/2018/08/10/vue/vue-权限管理/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 10, 2018</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/08/11/vue/vue/" title="什么是前段工程化">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">什么是前段工程化</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/08/07/vue/vue-%E8%B7%AF%E7%94%B1%E5%AE%88%E5%8D%AB/" title="vue-路由守卫">
+                        <span class="hidden-mobile">vue-路由守卫</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

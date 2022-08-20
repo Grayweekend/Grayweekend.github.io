@@ -1,0 +1,684 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前言 nodejs是事件驱动、非阻塞I&#x2F;O模型   阻塞：i&#x2F;o时进程休眠等待完成后进行下一步 非阻塞：i&#x2F;o时函数立即返回，进程不等待i&#x2F;o返回   i&#x2F;o完成后通知主程序，如何告诉呢？通过事件驱动  事件驱动  i&#x2F;o等异步操作结束后通知 内部实现是观察者模式  CPU密集和I&#x2F;O密集  CPU密集：压缩、解压、加密、解密">
+<meta property="og:type" content="article">
+<meta property="og:title" content="node-入门">
+<meta property="og:url" content="http://example.com/2019/05/05/nodejs/node-%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前言 nodejs是事件驱动、非阻塞I&#x2F;O模型   阻塞：i&#x2F;o时进程休眠等待完成后进行下一步 非阻塞：i&#x2F;o时函数立即返回，进程不等待i&#x2F;o返回   i&#x2F;o完成后通知主程序，如何告诉呢？通过事件驱动  事件驱动  i&#x2F;o等异步操作结束后通知 内部实现是观察者模式  CPU密集和I&#x2F;O密集  CPU密集：压缩、解压、加密、解密">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/347.png">
+<meta property="article:published_time" content="2019-05-05T10:22:19.000Z">
+<meta property="article:modified_time" content="2022-06-06T13:01:26.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="nodejs">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://poetries1.gitee.io/img-repo/2019/10/347.png">
+  
+  
+  
+  <title>node-入门 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="node-入门"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-05-05 18:22" pubdate>
+          May 5, 2019 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.6k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          14 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">node-入门</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>nodejs是事件驱动、非阻塞I&#x2F;O模型</p>
+</blockquote>
+<ul>
+<li>阻塞：i&#x2F;o时进程休眠等待完成后进行下一步</li>
+<li>非阻塞：i&#x2F;o时函数立即返回，进程不等待i&#x2F;o返回</li>
+</ul>
+<blockquote>
+<p>i&#x2F;o完成后通知主程序，如何告诉呢？通过事件驱动</p>
+</blockquote>
+<p><strong>事件驱动</strong></p>
+<ul>
+<li>i&#x2F;o等异步操作结束后通知</li>
+<li>内部实现是观察者模式</li>
+</ul>
+<p><strong>CPU密集和I&#x2F;O密集</strong></p>
+<ul>
+<li><code>CPU</code>密集：压缩、解压、加密、解密</li>
+<li><code>I/O</code>密集：文件操作、网络操作、数据库</li>
+</ul>
+<p><strong>web常见场景(web是一个I&#x2F;O密集)</strong></p>
+<ul>
+<li>静态资源读取</li>
+<li>数据库操作</li>
+<li>渲染页面</li>
+</ul>
+<p><strong>高并发应用之道</strong></p>
+<ul>
+<li>增加机器数</li>
+<li>增加每台机器CPU数-多核</li>
+</ul>
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/347.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>进程、线程</strong></p>
+<ul>
+<li>进程：一个运行的程序（进程包括线程，如何水分子里面还有分子原子）</li>
+<li>线程：进程内一个独立的，可调度的执行单元</li>
+<li>多线程：启动一个进程，在一个进程内启动多个线程，这样多个线程可以执行多个任务</li>
+</ul>
+<p><strong>Nodejs的单线程</strong></p>
+<ul>
+<li>单线程只是针对主进程，I&#x2F;O操作系统底层多线程调度</li>
+<li>单线程并不是单进程</li>
+</ul>
+<p><strong>Nodejs原理</strong></p>
+<ul>
+<li>Node是单线程的，只开一个进程，一个进程也只开一个线程。一个CPU上只开一个进程，一个进程里面只有一个线程</li>
+</ul>
+<p><strong>nodejs高性能的前提</strong></p>
+<ul>
+<li>高并发</li>
+<li><code>I/O</code>密集</li>
+</ul>
+<p><strong>常用场景</strong></p>
+<ul>
+<li><code>web Server</code></li>
+<li>本地代码构建 (<code>webpack/grunt/gulp</code>)</li>
+<li>使用工具的开发</li>
+</ul>
+<h2 id="二、nodejs与JavaScrip异同"><a href="#二、nodejs与JavaScrip异同" class="headerlink" title="二、nodejs与JavaScrip异同"></a>二、nodejs与JavaScrip异同</h2><ul>
+<li><code>ECMAScript</code></li>
+<li>语法</li>
+<li>内置对象、方法</li>
+</ul>
+<p><strong>顶层对象</strong></p>
+<ul>
+<li><code>JavaScript</code>：<code>window</code></li>
+<li><code>nodejs</code>: <code>global</code></li>
+<li>在ECMA部分node和JavaScript是一样的，比如数据类型的定义，语法结构、内置对象</li>
+</ul>
+<h2 id="三、模块"><a href="#三、模块" class="headerlink" title="三、模块"></a>三、模块</h2><ul>
+<li>在<code>node</code>中文件和模块是一一对应的，也就是一个文件一个模块。**file是每个模块下必有的一个属性，输出文件的绝对路径。<code>**dirname</code> 是文件夹名称绝对路径</li>
+<li>每个模块都有自己的作用域</li>
+<li>我们通过var声明的变量并非全局，而是该模块作用域下的</li>
+</ul>
+<p><strong>模块加载机制</strong></p>
+<ul>
+<li><code>require</code>加载模块</li>
+<li>1、首先按照加载模块的文件名称进行查找</li>
+<li>2、如果没有找到就会在文件模块文件名称后加载<code>.js</code>进行查找</li>
+<li>3、如果还没有找到，就在文件名称后加载<code>.json</code>后缀，进行查找</li>
+<li>4、如果还没找到，就会在文件名称后加上<code>.node</code>进行查找</li>
+<li>查找流程：<strong>文件名称-&gt;.js -&gt; .json-&gt;.node</strong></li>
+</ul>
+<p><strong>exports、module</strong></p>
+<ul>
+<li>保存当前模块有关的一些信息</li>
+<li><code>module.exports</code> 一般使用这个,把一个模块中的变量对外提供访问</li>
+<li>在模块作用域，还有一个内置的模块对象，<code>exports</code>其实就是<code>module.exports</code>,他们两个都是指向同一个对象</li>
+</ul>
+<h2 id="四、node目录的配置"><a href="#四、node目录的配置" class="headerlink" title="四、node目录的配置"></a>四、node目录的配置</h2><ul>
+<li><p>配置文件 :</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs actionscript"><span class="hljs-keyword">package</span>.json<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>dependencies : 当前项目所使用到的依赖模块</li>
+<li>安装方式: <code>npm install</code> 自动读取<code>package.json</code>自动安装</li>
+</ul>
+</li>
+<li><p><code>router</code>目录 用来存放路由文件</p>
+</li>
+<li><p><code>views</code>目录 用来存放<code>html</code>模板文件</p>
+</li>
+<li><p><code>module</code>目录 自己写的一些模块</p>
+</li>
+</ul>
+<h2 id="五、第一个node服务器"><a href="#五、第一个node服务器" class="headerlink" title="五、第一个node服务器"></a>五、第一个node服务器</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span>   安装好node就有的一个模块<br><span class="hljs-regexp">//</span>  用来创建http服务器的<br>const http = require(`http`);<br><br>http.createServer((request,response) =&gt; &#123;<br>    <span class="hljs-regexp">//</span>request 请求对象     浏览器 请求 服务器所有的内容保存在这个对象里<br>    <span class="hljs-regexp">//</span>response 响应对象     服务器响应浏览器 所有的方法<br>    response.writeHead(<span class="hljs-number">200</span> , &#123; <span class="hljs-string">&#x27;Content-Type&#x27;</span>:<span class="hljs-string">&#x27;text/html&#x27;</span> &#125; );<br>    <span class="hljs-regexp">//</span>  .end() 结束响应 同时发送一个 Hello Word<br>    response.end(<span class="hljs-string">&#x27;Hello Word&#x27;</span>)<br>&#125;).listen(<span class="hljs-number">233</span>);<br><span class="hljs-regexp">//</span>.listen(); 监听端口 <span class="hljs-number">233</span>  自定义的端口号<br><span class="hljs-regexp">//</span> 如果开启了node服务器  修改完之后的代码必须 重启才能生效<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%90%8E%E7%AB%AF/" class="category-chain-item">后端</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/nodejs/">#nodejs</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>node-入门</div>
+      <div>http://example.com/2019/05/05/nodejs/node-入门/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>May 5, 2019</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/05/14/nodejs/node-%E5%9F%BA%E7%A1%80%E7%AF%87/" title="node-基础总结">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">node-基础总结</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/04/07/%E6%95%B0%E6%8D%AE%E5%BA%93/MongoDB/" title="mongodb">
+                        <span class="hidden-mobile">mongodb</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

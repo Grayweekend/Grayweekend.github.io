@@ -1,0 +1,631 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="ESLint是一个Javascript静态检查工具，它可以帮你养成良好的编程习惯  1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283">
+<meta property="og:type" content="article">
+<meta property="og:title" content="eslint配置">
+<meta property="og:url" content="http://example.com/2018/11/09/%E5%B7%A5%E5%85%B7/eslint%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="ESLint是一个Javascript静态检查工具，它可以帮你养成良好的编程习惯  1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-11-09T06:55:18.000Z">
+<meta property="article:modified_time" content="2022-06-06T11:32:36.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="eslint">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>eslint配置 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="eslint配置"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-11-09 14:55" pubdate>
+          November 9, 2018 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          16k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          135 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">eslint配置</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p><code>ESLint</code>是一个<code>Javascript</code>静态检查工具，它可以帮你养成良好的编程习惯</p>
+</blockquote>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br><span class="line">511</span><br><span class="line">512</span><br><span class="line">513</span><br><span class="line">514</span><br><span class="line">515</span><br><span class="line">516</span><br><span class="line">517</span><br><span class="line">518</span><br><span class="line">519</span><br><span class="line">520</span><br><span class="line">521</span><br><span class="line">522</span><br><span class="line">523</span><br><span class="line">524</span><br><span class="line">525</span><br><span class="line">526</span><br><span class="line">527</span><br><span class="line">528</span><br><span class="line">529</span><br><span class="line">530</span><br><span class="line">531</span><br><span class="line">532</span><br><span class="line">533</span><br><span class="line">534</span><br><span class="line">535</span><br><span class="line">536</span><br><span class="line">537</span><br><span class="line">538</span><br><span class="line">539</span><br><span class="line">540</span><br><span class="line">541</span><br><span class="line">542</span><br><span class="line">543</span><br><span class="line">544</span><br><span class="line">545</span><br><span class="line">546</span><br><span class="line">547</span><br><span class="line">548</span><br><span class="line">549</span><br><span class="line">550</span><br><span class="line">551</span><br><span class="line">552</span><br><span class="line">553</span><br><span class="line">554</span><br><span class="line">555</span><br><span class="line">556</span><br><span class="line">557</span><br><span class="line">558</span><br><span class="line">559</span><br><span class="line">560</span><br><span class="line">561</span><br><span class="line">562</span><br><span class="line">563</span><br></pre></td><td class="code"><pre><code class="hljs awk">&#123;<br>    <span class="hljs-regexp">//</span> 环境定义了预定义的全局变量。<br>    <span class="hljs-string">&quot;env&quot;</span>: &#123;<br>        <span class="hljs-regexp">//</span>环境定义了预定义的全局变量。更多在官网查看<br>        <span class="hljs-string">&quot;browser&quot;</span>: true,<br>        <span class="hljs-string">&quot;node&quot;</span>: true,<br>        <span class="hljs-string">&quot;commonjs&quot;</span>: true,<br>        <span class="hljs-string">&quot;amd&quot;</span>: true,<br>        <span class="hljs-string">&quot;es6&quot;</span>: true,<br>        <span class="hljs-string">&quot;mocha&quot;</span>: true<br>    &#125;,<br>    <span class="hljs-regexp">//</span> JavaScript 语言选项<br>    <span class="hljs-string">&quot;parserOptions&quot;</span>: &#123;<br>        <span class="hljs-regexp">//</span> ECMAScript 版本<br>        <span class="hljs-string">&quot;ecmaVersion&quot;</span>: <span class="hljs-number">6</span>,<br>        <span class="hljs-string">&quot;sourceType&quot;</span>: <span class="hljs-string">&quot;module&quot;</span>, <span class="hljs-regexp">//</span>设置为 <span class="hljs-string">&quot;script&quot;</span> (默认) 或 <span class="hljs-string">&quot;module&quot;</span>（如果你的代码是 ECMAScript 模块)。<br>        <span class="hljs-regexp">//</span>想使用的额外的语言特性:<br>        <span class="hljs-string">&quot;ecmaFeatures&quot;</span>: &#123;<br>            <span class="hljs-regexp">//</span> 允许在全局作用域下使用 return 语句<br>            <span class="hljs-string">&quot;globalReturn&quot;</span>: true,<br>            <span class="hljs-regexp">//</span> impliedStric<br>            <span class="hljs-string">&quot;impliedStrict&quot;</span>: true,<br>            <span class="hljs-regexp">//</span> 启用 JSX<br>            <span class="hljs-string">&quot;jsx&quot;</span>: true,<br>            <span class="hljs-string">&quot;modules&quot;</span>: true<br>        &#125;<br>    &#125;,<br>    <span class="hljs-regexp">//</span>-----让eslint支持 JSX start<br>    <span class="hljs-string">&quot;plugins&quot;</span>: [<br>        <span class="hljs-string">&quot;react&quot;</span><br>    ],<br>    <span class="hljs-string">&quot;extends&quot;</span>: [<br>        <span class="hljs-string">&quot;eslint:recommended&quot;</span>,<br>        <span class="hljs-string">&quot;plugin:react/recommended&quot;</span><br>    ],<br>    <span class="hljs-regexp">//</span>-----让eslint支持 JSX end<br><br><br>    /**<br>     * <span class="hljs-string">&quot;off&quot;</span> 或 <span class="hljs-number">0</span> - 关闭规则<br>     * <span class="hljs-string">&quot;warn&quot;</span> 或 <span class="hljs-number">1</span> - 开启规则，使用警告级别的错误：warn (不会导致程序退出),<br>     * <span class="hljs-string">&quot;error&quot;</span> 或 <span class="hljs-number">2</span> - 开启规则，使用错误级别的错误：error (当被触发的时候，程序会退出)<br>     */<br>    <span class="hljs-string">&quot;rules&quot;</span>: &#123;<br><br>        <span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><br>        <span class="hljs-regexp">//</span> 可能的错误 <span class="hljs-regexp">//</span><br>        <span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><br><br>        <span class="hljs-regexp">//</span> 禁止条件表达式中出现赋值操作符<br>        <span class="hljs-string">&quot;no-cond-assign&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁用 console<br>        <span class="hljs-string">&quot;no-console&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁止在条件中使用常量表达式<br>        <span class="hljs-regexp">//</span> <span class="hljs-keyword">if</span> (false) &#123;<br>        <span class="hljs-regexp">//</span> doSomethingUnfinished();<br>        <span class="hljs-regexp">//</span> &#125; <span class="hljs-regexp">//</span>cuowu<br>        <span class="hljs-string">&quot;no-constant-condition&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止在正则表达式中使用控制字符 ：new RegExp(<span class="hljs-string">&quot;\x1f&quot;</span>)<br>        <span class="hljs-string">&quot;no-control-regex&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 数组和对象键值对最后一个逗号， never参数：不能带末尾的逗号, always参数：必须带末尾的逗号，<br>        <span class="hljs-regexp">//</span> always-multiline：多行模式必须带逗号，单行模式不能带逗号<br>        <span class="hljs-string">&quot;comma-dangle&quot;</span>: [<span class="hljs-number">1</span>, <span class="hljs-string">&quot;never&quot;</span>],<br>        <span class="hljs-regexp">//</span> 禁用 debugger<br>        <span class="hljs-string">&quot;no-debugger&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止 <span class="hljs-keyword">function</span> 定义中出现重名参数<br>        <span class="hljs-string">&quot;no-dupe-args&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止对象字面量中出现重复的 key<br>        <span class="hljs-string">&quot;no-dupe-keys&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止重复的 case 标签<br>        <span class="hljs-string">&quot;no-duplicate-case&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止空语句块<br>        <span class="hljs-string">&quot;no-empty&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止在正则表达式中使用空字符集 (<span class="hljs-regexp">/^abc[]/</span>)<br>        <span class="hljs-string">&quot;no-empty-character-class&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止对 catch 子句的参数重新赋值<br>        <span class="hljs-string">&quot;no-ex-assign&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止不必要的布尔转换<br>        <span class="hljs-string">&quot;no-extra-boolean-cast&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止不必要的括号 <span class="hljs-regexp">//</span>(a * b) + c;<span class="hljs-regexp">//</span>报错<br>        <span class="hljs-string">&quot;no-extra-parens&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁止不必要的分号<br>        <span class="hljs-string">&quot;no-extra-semi&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止对 <span class="hljs-keyword">function</span> 声明重新赋值<br>        <span class="hljs-string">&quot;no-func-assign&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止在嵌套的块中出现 <span class="hljs-keyword">function</span> 或 var 声明<br>        <span class="hljs-string">&quot;no-inner-declarations&quot;</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">&quot;functions&quot;</span>],<br>        <span class="hljs-regexp">//</span> 禁止 RegExp 构造函数中无效的正则表达式字符串<br>        <span class="hljs-string">&quot;no-invalid-regexp&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止在字符串和注释之外不规则的空白<br>        <span class="hljs-string">&quot;no-irregular-whitespace&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止在 <span class="hljs-keyword">in</span> 表达式中出现否定的左操作数<br>        <span class="hljs-string">&quot;no-negated-in-lhs&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止把全局对象 (Math 和 JSON) 作为函数调用 错误：var math = Math();<br>        <span class="hljs-string">&quot;no-obj-calls&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止直接使用 Object.prototypes 的内置属性<br>        <span class="hljs-string">&quot;no-prototype-builtins&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁止正则表达式字面量中出现多个空格<br>        <span class="hljs-string">&quot;no-regex-spaces&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁用稀疏数组<br>        <span class="hljs-string">&quot;no-sparse-arrays&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止出现令人困惑的多行表达式<br>        <span class="hljs-string">&quot;no-unexpected-multiline&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止在return、throw、<span class="hljs-keyword">continue</span> 和 <span class="hljs-keyword">break</span>语句之后出现不可达代码<br>        <span class="hljs-string">&quot;no-unreachable&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 要求使用 isNaN() 检查 NaN<br>        <span class="hljs-string">&quot;use-isnan&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 强制使用有效的 JSDoc 注释<br>        <span class="hljs-string">&quot;valid-jsdoc&quot;</span>: <span class="hljs-number">1</span>,<br>        <span class="hljs-regexp">//</span> 强制 typeof 表达式与有效的字符串进行比较<br>        <span class="hljs-regexp">//</span> typeof foo === <span class="hljs-string">&quot;undefimed&quot;</span> 错误<br>        <span class="hljs-string">&quot;valid-typeof&quot;</span>: <span class="hljs-number">2</span>,<br><br><br>        <span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><br>        <span class="hljs-regexp">//</span> 最佳实践 <span class="hljs-regexp">//</span><br>        <span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><br><br>        <span class="hljs-regexp">//</span> 定义对象的set存取器属性时，强制定义get<br>        <span class="hljs-string">&quot;accessor-pairs&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 强制数组方法的回调函数中有 return 语句<br>        <span class="hljs-string">&quot;array-callback-return&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 强制把变量的使用限制在其定义的作用域范围内<br>        <span class="hljs-string">&quot;block-scoped-var&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 限制圈复杂度，也就是类似<span class="hljs-keyword">if</span> <span class="hljs-keyword">else</span>能连续接多少个<br>        <span class="hljs-string">&quot;complexity&quot;</span>: [<span class="hljs-number">2</span>, <span class="hljs-number">9</span>],<br>        <span class="hljs-regexp">//</span> 要求 return 语句要么总是指定返回的值，要么不指定<br>        <span class="hljs-string">&quot;consistent-return&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 强制所有控制语句使用一致的括号风格<br>        <span class="hljs-string">&quot;curly&quot;</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">&quot;all&quot;</span>],<br>        <span class="hljs-regexp">//</span> switch 语句强制 default 分支，也可添加 <span class="hljs-regexp">//</span> no default 注释取消此次警告<br>        <span class="hljs-string">&quot;default-case&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 强制object.key 中 . 的位置，参数:<br>        <span class="hljs-regexp">//</span> property，<span class="hljs-string">&#x27;.&#x27;</span>号应与属性在同一行<br>        <span class="hljs-regexp">//</span> object, <span class="hljs-string">&#x27;.&#x27;</span> 号应与对象名在同一行<br>        <span class="hljs-string">&quot;dot-location&quot;</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">&quot;property&quot;</span>],<br>        <span class="hljs-regexp">//</span> 强制使用.号取属性<br>        <span class="hljs-regexp">//</span> 参数： allowKeywords：true 使用保留字做属性名时，只能使用.方式取属性<br>        <span class="hljs-regexp">//</span> false 使用保留字做属性名时, 只能使用[]方式取属性 e.g [<span class="hljs-number">2</span>, &#123;<span class="hljs-string">&quot;allowKeywords&quot;</span>: false&#125;]<br>        <span class="hljs-regexp">//</span> allowPattern: 当属性名匹配提供的正则表达式时，允许使用[]方式取值,否则只能用.号取值 e.g [<span class="hljs-number">2</span>, &#123;<span class="hljs-string">&quot;allowPattern&quot;</span>: <span class="hljs-string">&quot;^[a-z]+(_[a-z]+)+$&quot;</span>&#125;]<br>        <span class="hljs-string">&quot;dot-notation&quot;</span>: [<span class="hljs-number">2</span>, &#123;<br>            <span class="hljs-string">&quot;allowKeywords&quot;</span>: false<br>        &#125;],<br>        <span class="hljs-regexp">//</span> 使用 === 替代 == allow-null允许null和undefined==<br>        <span class="hljs-string">&quot;eqeqeq&quot;</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">&quot;allow-null&quot;</span>],<br>        <span class="hljs-regexp">//</span> 要求 <span class="hljs-keyword">for</span>-<span class="hljs-keyword">in</span> 循环中有一个 <span class="hljs-keyword">if</span> 语句<br>        <span class="hljs-string">&quot;guard-for-in&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁用 alert、confirm 和 prompt<br>        <span class="hljs-string">&quot;no-alert&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁用 arguments.caller 或 arguments.callee<br>        <span class="hljs-string">&quot;no-caller&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 不允许在 case 子句中使用词法声明<br>        <span class="hljs-string">&quot;no-case-declarations&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止除法操作符显式的出现在正则表达式开始的位置<br>        <span class="hljs-string">&quot;no-div-regex&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止 <span class="hljs-keyword">if</span> 语句中有 return 之后有 <span class="hljs-keyword">else</span><br>        <span class="hljs-string">&quot;no-else-return&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁止出现空函数.如果一个函数包含了一条注释，它将不会被认为有问题。<br>        <span class="hljs-string">&quot;no-empty-function&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止使用空解构模式no-empty-pattern<br>        <span class="hljs-string">&quot;no-empty-pattern&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止在没有类型检查操作符的情况下与 null 进行比较<br>        <span class="hljs-string">&quot;no-eq-null&quot;</span>: <span class="hljs-number">1</span>,<br>        <span class="hljs-regexp">//</span> 禁用 eval()<br>        <span class="hljs-string">&quot;no-eval&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止扩展原生类型<br>        <span class="hljs-string">&quot;no-extend-native&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止不必要的 .bind() 调用<br>        <span class="hljs-string">&quot;no-extra-bind&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁用不必要的标签<br>        <span class="hljs-string">&quot;no-extra-label:&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁止 case 语句落空<br>        <span class="hljs-string">&quot;no-fallthrough&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止数字字面量中使用前导和末尾小数点<br>        <span class="hljs-string">&quot;no-floating-decimal&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止使用短符号进行类型转换(!!fOO)<br>        <span class="hljs-string">&quot;no-implicit-coercion&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁止在全局范围内使用 var 和命名的 <span class="hljs-keyword">function</span> 声明<br>        <span class="hljs-string">&quot;no-implicit-globals&quot;</span>: <span class="hljs-number">1</span>,<br>        <span class="hljs-regexp">//</span> 禁止使用类似 eval() 的方法<br>        <span class="hljs-string">&quot;no-implied-eval&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止 this 关键字出现在类和类对象之外<br>        <span class="hljs-string">&quot;no-invalid-this&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁用 __iterator__ 属性<br>        <span class="hljs-string">&quot;no-iterator&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁用标签语句<br>        <span class="hljs-string">&quot;no-labels&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁用不必要的嵌套块<br>        <span class="hljs-string">&quot;no-lone-blocks&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止在循环中出现 <span class="hljs-keyword">function</span> 声明和表达式<br>        <span class="hljs-string">&quot;no-loop-func&quot;</span>: <span class="hljs-number">1</span>,<br>        <span class="hljs-regexp">//</span> 禁用魔术数字(<span class="hljs-number">3.14</span>什么的用常量代替)<br>        <span class="hljs-string">&quot;no-magic-numbers&quot;</span>: [<span class="hljs-number">1</span>, &#123;<br>            <span class="hljs-string">&quot;ignore&quot;</span>: [<span class="hljs-number">0</span>, -<span class="hljs-number">1</span>, <span class="hljs-number">1</span>]<br>        &#125;],<br>        <span class="hljs-regexp">//</span> 禁止使用多个空格<br>        <span class="hljs-string">&quot;no-multi-spaces&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止使用多行字符串，在 JavaScript 中，可以在新行之前使用斜线创建多行字符串<br>        <span class="hljs-string">&quot;no-multi-str&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止对原生对象赋值<br>        <span class="hljs-string">&quot;no-native-reassign&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止在非赋值或条件语句中使用 new 操作符<br>        <span class="hljs-string">&quot;no-new&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止对 Function 对象使用 new 操作符<br>        <span class="hljs-string">&quot;no-new-func&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁止对 String，Number 和 Boolean 使用 new 操作符<br>        <span class="hljs-string">&quot;no-new-wrappers&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁用八进制字面量<br>        <span class="hljs-string">&quot;no-octal&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止在字符串中使用八进制转义序列<br>        <span class="hljs-string">&quot;no-octal-escape&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 不允许对 <span class="hljs-keyword">function</span> 的参数进行重新赋值<br>        <span class="hljs-string">&quot;no-param-reassign&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁用 __proto__ 属性<br>        <span class="hljs-string">&quot;no-proto&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止使用 var 多次声明同一变量<br>        <span class="hljs-string">&quot;no-redeclare&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁用指定的通过 require 加载的模块<br>        <span class="hljs-string">&quot;no-return-assign&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁止使用 javascript: url<br>        <span class="hljs-string">&quot;no-script-url&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁止自我赋值<br>        <span class="hljs-string">&quot;no-self-assign&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止自身比较<br>        <span class="hljs-string">&quot;no-self-compare&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁用逗号操作符<br>        <span class="hljs-string">&quot;no-sequences&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止抛出非异常字面量<br>        <span class="hljs-string">&quot;no-throw-literal&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁用一成不变的循环条件<br>        <span class="hljs-string">&quot;no-unmodified-loop-condition&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止出现未使用过的表达式<br>        <span class="hljs-string">&quot;no-unused-expressions&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁用未使用过的标签<br>        <span class="hljs-string">&quot;no-unused-labels&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止不必要的 .call() 和 .apply()<br>        <span class="hljs-string">&quot;no-useless-call&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止不必要的字符串字面量或模板字面量的连接<br>        <span class="hljs-string">&quot;no-useless-concat&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁用不必要的转义字符<br>        <span class="hljs-string">&quot;no-useless-escape&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁用 void 操作符<br>        <span class="hljs-string">&quot;no-void&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁止在注释中使用特定的警告术语<br>        <span class="hljs-string">&quot;no-warning-comments&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁用 with 语句<br>        <span class="hljs-string">&quot;no-with&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 强制在parseInt()使用基数参数<br>        <span class="hljs-string">&quot;radix&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 要求所有的 var 声明出现在它们所在的作用域顶部<br>        <span class="hljs-string">&quot;vars-on-top&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 要求 IIFE 使用括号括起来<br>        <span class="hljs-string">&quot;wrap-iife&quot;</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">&quot;any&quot;</span>],<br>        <span class="hljs-regexp">//</span> 要求或禁止 “Yoda” 条件<br>        <span class="hljs-string">&quot;yoda&quot;</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">&quot;never&quot;</span>],<br>        <span class="hljs-regexp">//</span> 要求或禁止使用严格模式指令<br>        <span class="hljs-string">&quot;strict&quot;</span>: <span class="hljs-number">0</span>,<br><br><br>        <span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><br>        <span class="hljs-regexp">//</span> 变量声明 <span class="hljs-regexp">//</span><br>        <span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><br><br>        <span class="hljs-regexp">//</span> 要求或禁止 var 声明中的初始化(初值)<br>        <span class="hljs-string">&quot;init-declarations&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 不允许 catch 子句的参数与外层作用域中的变量同名<br>        <span class="hljs-string">&quot;no-catch-shadow&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁止删除变量<br>        <span class="hljs-string">&quot;no-delete-var&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 不允许标签与变量同名<br>        <span class="hljs-string">&quot;no-label-var&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁用特定的全局变量<br>        <span class="hljs-string">&quot;no-restricted-globals&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁止 var 声明 与外层作用域的变量同名<br>        <span class="hljs-string">&quot;no-shadow&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁止覆盖受限制的标识符<br>        <span class="hljs-string">&quot;no-shadow-restricted-names&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁用未声明的变量，除非它们在 <span class="hljs-regexp">/*global */</span> 注释中被提到<br>        <span class="hljs-string">&quot;no-undef&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止将变量初始化为 undefined<br>        <span class="hljs-string">&quot;no-undef-init&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止将 undefined 作为标识符<br>        <span class="hljs-string">&quot;no-undefined&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁止出现未使用过的变量<br>        <span class="hljs-string">&quot;no-unused-vars&quot;</span>: [<span class="hljs-number">2</span>, &#123;<br>            <span class="hljs-string">&quot;vars&quot;</span>: <span class="hljs-string">&quot;all&quot;</span>,<br>            <span class="hljs-string">&quot;args&quot;</span>: <span class="hljs-string">&quot;none&quot;</span><br>        &#125;],<br>        <span class="hljs-regexp">//</span> 不允许在变量定义之前使用它们<br>        <span class="hljs-string">&quot;no-use-before-define&quot;</span>: <span class="hljs-number">0</span>,<br><br>        <span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><br>        <span class="hljs-regexp">//</span> Node.js and CommonJS <span class="hljs-regexp">//</span><br>        <span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><br><br>        <span class="hljs-regexp">//</span> require return statements after callbacks<br>        <span class="hljs-string">&quot;callback-return&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 要求 require() 出现在顶层模块作用域中<br>        <span class="hljs-string">&quot;global-require&quot;</span>: <span class="hljs-number">1</span>,<br>        <span class="hljs-regexp">//</span> 要求回调函数中有容错处理<br>        <span class="hljs-string">&quot;handle-callback-err&quot;</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">&quot;^(err|error)$&quot;</span>],<br>        <span class="hljs-regexp">//</span> 禁止混合常规 var 声明和 require 调用<br>        <span class="hljs-string">&quot;no-mixed-requires&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁止调用 require 时使用 new 操作符<br>        <span class="hljs-string">&quot;no-new-require&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止对 __dirname 和 __filename进行字符串连接<br>        <span class="hljs-string">&quot;no-path-concat&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁用 process.env<br>        <span class="hljs-string">&quot;no-process-env&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁用 process.<span class="hljs-keyword">exit</span>()<br>        <span class="hljs-string">&quot;no-process-exit&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁用同步方法<br>        <span class="hljs-string">&quot;no-sync&quot;</span>: <span class="hljs-number">0</span>,<br><br>        <span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><br>        <span class="hljs-regexp">//</span> 风格指南 <span class="hljs-regexp">//</span><br>        <span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><br><br>        <span class="hljs-regexp">//</span> 指定数组的元素之间要以空格隔开(, 后面)， never参数：[ 之前和 ] 之后不能带空格，always参数：[ 之前和 ] 之后必须带空格<br>        <span class="hljs-string">&quot;array-bracket-spacing&quot;</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">&quot;never&quot;</span>],<br>        <span class="hljs-regexp">//</span> 禁止或强制在单行代码块中使用空格(禁用)<br>        <span class="hljs-string">&quot;block-spacing&quot;</span>: [<span class="hljs-number">1</span>, <span class="hljs-string">&quot;never&quot;</span>],<br>        <span class="hljs-regexp">//</span>强制使用一致的缩进 第二个参数为 <span class="hljs-string">&quot;tab&quot;</span> 时，会使用tab，<br>        <span class="hljs-regexp">//</span> <span class="hljs-keyword">if</span> <span class="hljs-keyword">while</span> <span class="hljs-keyword">function</span> 后面的&#123;必须与<span class="hljs-keyword">if</span>在同一行，java风格。<br>        <span class="hljs-string">&quot;brace-style&quot;</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">&quot;1tbs&quot;</span>, &#123;<br>            <span class="hljs-string">&quot;allowSingleLine&quot;</span>: true<br>        &#125;],<br>        <span class="hljs-regexp">//</span> 双峰驼命名格式<br>        <span class="hljs-string">&quot;camelcase&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 控制逗号前后的空格<br>        <span class="hljs-string">&quot;comma-spacing&quot;</span>: [<span class="hljs-number">2</span>, &#123;<br>            <span class="hljs-string">&quot;before&quot;</span>: false,<br>            <span class="hljs-string">&quot;after&quot;</span>: true<br>        &#125;],<br>        <span class="hljs-regexp">//</span> 控制逗号在行尾出现还是在行首出现 (默认行尾)<br>        <span class="hljs-regexp">//</span> http:<span class="hljs-regexp">//</span>eslint.org<span class="hljs-regexp">/docs/</span>rules/comma-style<br>        <span class="hljs-string">&quot;comma-style&quot;</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">&quot;last&quot;</span>],<br>        <span class="hljs-regexp">//</span><span class="hljs-string">&quot;SwitchCase&quot;</span> (默认：<span class="hljs-number">0</span>) 强制 switch 语句中的 case 子句的缩进水平<br>        <span class="hljs-regexp">//</span> 以方括号取对象属性时，[ 后面和 ] 前面是否需要空格, 可选参数 never, always<br>        <span class="hljs-string">&quot;computed-property-spacing&quot;</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">&quot;never&quot;</span>],<br>        <span class="hljs-regexp">//</span> 用于指统一在回调函数中指向this的变量名，箭头函数中的this已经可以指向外层调用者，应该没卵用了<br>        <span class="hljs-regexp">//</span> e.g [<span class="hljs-number">0</span>,<span class="hljs-string">&quot;that&quot;</span>] 指定只能 var that = this. that不能指向其他任何值，this也不能赋值给that以外的其他值<br>        <span class="hljs-string">&quot;consistent-this&quot;</span>: [<span class="hljs-number">1</span>, <span class="hljs-string">&quot;that&quot;</span>],<br>        <span class="hljs-regexp">//</span> 强制使用命名的 <span class="hljs-keyword">function</span> 表达式<br>        <span class="hljs-string">&quot;func-names&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 文件末尾强制换行<br>        <span class="hljs-string">&quot;eol-last&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-string">&quot;indent&quot;</span>: [<span class="hljs-number">2</span>, <span class="hljs-number">4</span>, &#123;<br>            <span class="hljs-string">&quot;SwitchCase&quot;</span>: <span class="hljs-number">1</span><br>        &#125;],<br>        <span class="hljs-regexp">//</span> 强制在对象字面量的属性中键和值之间使用一致的间距<br>        <span class="hljs-string">&quot;key-spacing&quot;</span>: [<span class="hljs-number">2</span>, &#123;<br>            <span class="hljs-string">&quot;beforeColon&quot;</span>: false,<br>            <span class="hljs-string">&quot;afterColon&quot;</span>: true<br>        &#125;],<br>        <span class="hljs-regexp">//</span> 强制使用一致的换行风格<br>        <span class="hljs-string">&quot;linebreak-style&quot;</span>: [<span class="hljs-number">1</span>, <span class="hljs-string">&quot;unix&quot;</span>],<br>        <span class="hljs-regexp">//</span> 要求在注释周围有空行 ( 要求在块级注释之前有一空行)<br>        <span class="hljs-string">&quot;lines-around-comment&quot;</span>: [<span class="hljs-number">1</span>, &#123;<br>            <span class="hljs-string">&quot;beforeBlockComment&quot;</span>: true<br>        &#125;],<br>        <span class="hljs-regexp">//</span> 强制一致地使用函数声明或函数表达式，方法定义风格，参数：<br>        <span class="hljs-regexp">//</span> declaration: 强制使用方法声明的方式，<span class="hljs-keyword">function</span> f()&#123;&#125; e.g [<span class="hljs-number">2</span>, <span class="hljs-string">&quot;declaration&quot;</span>]<br>        <span class="hljs-regexp">//</span> expression：强制使用方法表达式的方式，var f = <span class="hljs-keyword">function</span>() &#123;&#125; e.g [<span class="hljs-number">2</span>, <span class="hljs-string">&quot;expression&quot;</span>]<br>        <span class="hljs-regexp">//</span> allowArrowFunctions: declaration风格中允许箭头函数。 e.g [<span class="hljs-number">2</span>, <span class="hljs-string">&quot;declaration&quot;</span>, &#123; <span class="hljs-string">&quot;allowArrowFunctions&quot;</span>: true &#125;]<br>        <span class="hljs-string">&quot;func-style&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 强制回调函数最大嵌套深度 <span class="hljs-number">5</span>层<br>        <span class="hljs-string">&quot;max-nested-callbacks&quot;</span>: [<span class="hljs-number">1</span>, <span class="hljs-number">5</span>],<br>        <span class="hljs-regexp">//</span> 禁止使用指定的标识符<br>        <span class="hljs-string">&quot;id-blacklist&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 强制标识符的最新和最大长度<br>        <span class="hljs-string">&quot;id-length&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 要求标识符匹配一个指定的正则表达式<br>        <span class="hljs-string">&quot;id-match&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 强制在 JSX 属性中一致地使用双引号或单引号<br>        <span class="hljs-string">&quot;jsx-quotes&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 强制在关键字前后使用一致的空格 (前后腰需要)<br>        <span class="hljs-string">&quot;keyword-spacing&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 强制一行的最大长度<br>        <span class="hljs-string">&quot;max-len&quot;</span>: [<span class="hljs-number">1</span>, <span class="hljs-number">200</span>],<br>        <span class="hljs-regexp">//</span> 强制最大行数<br>        <span class="hljs-string">&quot;max-lines&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 强制 <span class="hljs-keyword">function</span> 定义中最多允许的参数数量<br>        <span class="hljs-string">&quot;max-params&quot;</span>: [<span class="hljs-number">1</span>, <span class="hljs-number">7</span>],<br>        <span class="hljs-regexp">//</span> 强制 <span class="hljs-keyword">function</span> 块最多允许的的语句数量<br>        <span class="hljs-string">&quot;max-statements&quot;</span>: [<span class="hljs-number">1</span>, <span class="hljs-number">200</span>],<br>        <span class="hljs-regexp">//</span> 强制每一行中所允许的最大语句数量<br>        <span class="hljs-string">&quot;max-statements-per-line&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 要求构造函数首字母大写 （要求调用 new 操作符时有首字母大小的函数，允许调用首字母大写的函数时没有 new 操作符。）<br>        <span class="hljs-string">&quot;new-cap&quot;</span>: [<span class="hljs-number">2</span>, &#123;<br>            <span class="hljs-string">&quot;newIsCap&quot;</span>: true,<br>            <span class="hljs-string">&quot;capIsNew&quot;</span>: false<br>        &#125;],<br>        <span class="hljs-regexp">//</span> 要求调用无参构造函数时有圆括号<br>        <span class="hljs-string">&quot;new-parens&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 要求或禁止 var 声明语句后有一行空行<br>        <span class="hljs-string">&quot;newline-after-var&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁止使用 Array 构造函数<br>        <span class="hljs-string">&quot;no-array-constructor&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁用按位运算符<br>        <span class="hljs-string">&quot;no-bitwise&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 要求 return 语句之前有一空行<br>        <span class="hljs-string">&quot;newline-before-return&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 要求方法链中每个调用都有一个换行符<br>        <span class="hljs-string">&quot;newline-per-chained-call&quot;</span>: <span class="hljs-number">1</span>,<br>        <span class="hljs-regexp">//</span> 禁用 <span class="hljs-keyword">continue</span> 语句<br>        <span class="hljs-string">&quot;no-continue&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁止在代码行后使用内联注释<br>        <span class="hljs-string">&quot;no-inline-comments&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁止 <span class="hljs-keyword">if</span> 作为唯一的语句出现在 <span class="hljs-keyword">else</span> 语句中<br>        <span class="hljs-string">&quot;no-lonely-if&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁止混合使用不同的操作符<br>        <span class="hljs-string">&quot;no-mixed-operators&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 不允许空格和 tab 混合缩进<br>        <span class="hljs-string">&quot;no-mixed-spaces-and-tabs&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 不允许多个空行<br>        <span class="hljs-string">&quot;no-multiple-empty-lines&quot;</span>: [<span class="hljs-number">2</span>, &#123;<br>            <span class="hljs-string">&quot;max&quot;</span>: <span class="hljs-number">2</span><br>        &#125;],<br>        <span class="hljs-regexp">//</span> 不允许否定的表达式<br>        <span class="hljs-string">&quot;no-negated-condition&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 不允许使用嵌套的三元表达式<br>        <span class="hljs-string">&quot;no-nested-ternary&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁止使用 Object 的构造函数<br>        <span class="hljs-string">&quot;no-new-object&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止使用一元操作符 ++ 和 --<br>        <span class="hljs-string">&quot;no-plusplus&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁止使用特定的语法<br>        <span class="hljs-string">&quot;no-restricted-syntax&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁止 <span class="hljs-keyword">function</span> 标识符和括号之间出现空格<br>        <span class="hljs-string">&quot;no-spaced-func&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 不允许使用三元操作符<br>        <span class="hljs-string">&quot;no-ternary&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁用行尾空格<br>        <span class="hljs-string">&quot;no-trailing-spaces&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止标识符中有悬空下划线_bar<br>        <span class="hljs-string">&quot;no-underscore-dangle&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁止可以在有更简单的可替代的表达式时使用三元操作符<br>        <span class="hljs-string">&quot;no-unneeded-ternary&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止属性前有空白<br>        <span class="hljs-string">&quot;no-whitespace-before-property&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 强制花括号内换行符的一致性<br>        <span class="hljs-string">&quot;object-curly-newline&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 强制在花括号中使用一致的空格<br>        <span class="hljs-string">&quot;object-curly-spacing&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 强制将对象的属性放在不同的行上<br>        <span class="hljs-string">&quot;object-property-newline&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 强制函数中的变量要么一起声明要么分开声明<br>        <span class="hljs-string">&quot;one-var&quot;</span>: [<span class="hljs-number">2</span>, &#123;<br>            <span class="hljs-string">&quot;initialized&quot;</span>: <span class="hljs-string">&quot;never&quot;</span><br>        &#125;],<br>        <span class="hljs-regexp">//</span> 要求或禁止在 var 声明周围换行<br>        <span class="hljs-string">&quot;one-var-declaration-per-line&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 要求或禁止在可能的情况下要求使用简化的赋值操作符<br>        <span class="hljs-string">&quot;operator-assignment&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 强制操作符使用一致的换行符<br>        <span class="hljs-string">&quot;operator-linebreak&quot;</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">&quot;after&quot;</span>, &#123;<br>            <span class="hljs-string">&quot;overrides&quot;</span>: &#123;<br>                <span class="hljs-string">&quot;?&quot;</span>: <span class="hljs-string">&quot;before&quot;</span>,<br>                <span class="hljs-string">&quot;:&quot;</span>: <span class="hljs-string">&quot;before&quot;</span><br>            &#125;<br>        &#125;],<br>        <span class="hljs-regexp">//</span> 要求或禁止块内填充<br>        <span class="hljs-string">&quot;padded-blocks&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 要求对象字面量属性名称用引号括起来<br>        <span class="hljs-string">&quot;quote-props&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 强制使用一致的反勾号、双引号或单引号<br>        <span class="hljs-string">&quot;quotes&quot;</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">&quot;double&quot;</span>, <span class="hljs-string">&quot;avoid-escape&quot;</span>],<br>        <span class="hljs-regexp">//</span> 要求使用 JSDoc 注释<br>        <span class="hljs-string">&quot;require-jsdoc&quot;</span>: <span class="hljs-number">1</span>,<br>        <span class="hljs-regexp">//</span> 要求或禁止使用分号而不是 ASI（这个才是控制行尾部分号的，）<br>        <span class="hljs-string">&quot;semi&quot;</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">&quot;always&quot;</span>],<br>        <span class="hljs-regexp">//</span> 强制分号之前和之后使用一致的空格<br>        <span class="hljs-string">&quot;semi-spacing&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 要求同一个声明块中的变量按顺序排列<br>        <span class="hljs-string">&quot;sort-vars&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 强制在块之前使用一致的空格<br>        <span class="hljs-string">&quot;space-before-blocks&quot;</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">&quot;always&quot;</span>],<br>        <span class="hljs-regexp">//</span> 强制在 <span class="hljs-keyword">function</span>的左括号之前使用一致的空格<br>        <span class="hljs-string">&quot;space-before-function-paren&quot;</span>: [<span class="hljs-number">0</span>, <span class="hljs-string">&quot;always&quot;</span>],<br>        <span class="hljs-regexp">//</span> 强制在圆括号内使用一致的空格<br>        <span class="hljs-string">&quot;space-in-parens&quot;</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">&quot;never&quot;</span>],<br>        <span class="hljs-regexp">//</span> 要求操作符周围有空格<br>        <span class="hljs-string">&quot;space-infix-ops&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 强制在一元操作符前后使用一致的空格<br>        <span class="hljs-string">&quot;space-unary-ops&quot;</span>: [<span class="hljs-number">2</span>, &#123;<br>            <span class="hljs-string">&quot;words&quot;</span>: true,<br>            <span class="hljs-string">&quot;nonwords&quot;</span>: false<br>        &#125;],<br>        <span class="hljs-regexp">//</span> 强制在注释中 <span class="hljs-regexp">//</span> 或 /* 使用一致的空格<br>        <span class="hljs-string">&quot;spaced-comment&quot;</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">&quot;always&quot;</span>, &#123;<br>            <span class="hljs-string">&quot;markers&quot;</span>: [<span class="hljs-string">&quot;global&quot;</span>, <span class="hljs-string">&quot;globals&quot;</span>, <span class="hljs-string">&quot;eslint&quot;</span>, <span class="hljs-string">&quot;eslint-disable&quot;</span>, <span class="hljs-string">&quot;*package&quot;</span>, <span class="hljs-string">&quot;!&quot;</span>]<br>        &#125;],<br>        <span class="hljs-regexp">//</span> 要求或禁止 Unicode BOM<br>        <span class="hljs-string">&quot;unicode-bom&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 要求正则表达式被括号括起来<br>        <span class="hljs-string">&quot;wrap-regex&quot;</span>: <span class="hljs-number">0</span>,<br><br>        <span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><br>        <span class="hljs-regexp">//</span> ES6.相关 <span class="hljs-regexp">//</span><br>        <span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><span class="hljs-regexp">//</span><br><br>        <span class="hljs-regexp">//</span> 要求箭头函数体使用大括号<br>        <span class="hljs-string">&quot;arrow-body-style&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 要求箭头函数的参数使用圆括号<br>        <span class="hljs-string">&quot;arrow-parens&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-string">&quot;arrow-spacing&quot;</span>: [<span class="hljs-number">2</span>, &#123;<br>            <span class="hljs-string">&quot;before&quot;</span>: true,<br>            <span class="hljs-string">&quot;after&quot;</span>: true<br>        &#125;],<br>        <span class="hljs-regexp">//</span> 强制在子类构造函数中用super()调用父类构造函数，TypeScrip的编译器也会提示<br>        <span class="hljs-string">&quot;constructor-super&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 强制 generator 函数中 * 号周围使用一致的空格<br>        <span class="hljs-string">&quot;generator-star-spacing&quot;</span>: [<span class="hljs-number">2</span>, &#123;<br>            <span class="hljs-string">&quot;before&quot;</span>: true,<br>            <span class="hljs-string">&quot;after&quot;</span>: true<br>        &#125;],<br>        <span class="hljs-regexp">//</span> 禁止修改类声明的变量<br>        <span class="hljs-string">&quot;no-class-assign&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 不允许箭头功能，在那里他们可以混淆的比较<br>        <span class="hljs-string">&quot;no-confusing-arrow&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁止修改 const 声明的变量<br>        <span class="hljs-string">&quot;no-const-assign&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止类成员中出现重复的名称<br>        <span class="hljs-string">&quot;no-dupe-class-members&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 不允许复制模块的进口<br>        <span class="hljs-string">&quot;no-duplicate-imports&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁止 Symbol 的构造函数<br>        <span class="hljs-string">&quot;no-new-symbol&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 允许指定模块加载时的进口<br>        <span class="hljs-string">&quot;no-restricted-imports&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 禁止在构造函数中，在调用 super() 之前使用 this 或 super<br>        <span class="hljs-string">&quot;no-this-before-super&quot;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-regexp">//</span> 禁止不必要的计算性能键对象的文字<br>        <span class="hljs-string">&quot;no-useless-computed-key&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 要求使用 let 或 const 而不是 var<br>        <span class="hljs-string">&quot;no-var&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 要求或禁止对象字面量中方法和属性使用简写语法<br>        <span class="hljs-string">&quot;object-shorthand&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 要求使用箭头函数作为回调<br>        <span class="hljs-string">&quot;prefer-arrow-callback&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 要求使用 const 声明那些声明后不再被修改的变量<br>        <span class="hljs-string">&quot;prefer-const&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 要求在合适的地方使用 Reflect 方法<br>        <span class="hljs-string">&quot;prefer-reflect&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 要求使用扩展运算符而非 .apply()<br>        <span class="hljs-string">&quot;prefer-spread&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 要求使用模板字面量而非字符串连接<br>        <span class="hljs-string">&quot;prefer-template&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> Suggest using the rest parameters instead of arguments<br>        <span class="hljs-string">&quot;prefer-rest-params&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 要求generator 函数内有 yield<br>        <span class="hljs-string">&quot;require-yield&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> enforce spacing between rest and spread operators and their expressions<br>        <span class="hljs-string">&quot;rest-spread-spacing&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 强制模块内的 import 排序<br>        <span class="hljs-string">&quot;sort-imports&quot;</span>: <span class="hljs-number">0</span>,<br>        <span class="hljs-regexp">//</span> 要求或禁止模板字符串中的嵌入表达式周围空格的使用<br>        <span class="hljs-string">&quot;template-curly-spacing&quot;</span>: <span class="hljs-number">1</span>,<br>        <span class="hljs-regexp">//</span> 强制在 yield* 表达式中 * 周围使用空格<br>        <span class="hljs-string">&quot;yield-star-spacing&quot;</span>: <span class="hljs-number">2</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>关闭段落校验</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/* eslint-disable */</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>关闭当前行校验</li>
+</ul>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">some</span> code // eslint-<span class="hljs-keyword">disable</span>-<span class="hljs-type">line</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>关闭下一行校验</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> eslint-disable-<span class="hljs-keyword">next</span>-line<br>some code<br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%89%8D%E7%AB%AF/" class="category-chain-item">前端</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/eslint/">#eslint</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>eslint配置</div>
+      <div>http://example.com/2018/11/09/工具/eslint配置/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>November 9, 2018</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/11/13/%E5%B7%A5%E5%85%B7/%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88/" title="版本管理是什么">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">版本管理是什么</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/11/02/%E5%B0%8F%E7%A8%8B%E5%BA%8F+uniapp/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%80%9F%E5%BA%A6%E6%8F%90%E5%8D%87/" title="小程序应用速度提升">
+                        <span class="hidden-mobile">小程序应用速度提升</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

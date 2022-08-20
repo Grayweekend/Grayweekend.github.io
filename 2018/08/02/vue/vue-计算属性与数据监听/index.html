@@ -1,0 +1,646 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、监听属性 我们在工作中常常需要监听某一个属性值的变化，这个时候我们就需要用到了监听属性watch  1.1 基础版监听 场景如下：输入框输入你的年龄，如果年龄在0-15岁提示信息：你还是个小孩，如果年龄在 15-25岁，提示信息：你已经是个少年，如果年龄在25岁以上，提示信息：你已经长大了  12345678910111213141516171819202122232425262728&lt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue-计算属性与数据监听">
+<meta property="og:url" content="http://example.com/2018/08/02/vue/vue-%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%9B%91%E5%90%AC/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、监听属性 我们在工作中常常需要监听某一个属性值的变化，这个时候我们就需要用到了监听属性watch  1.1 基础版监听 场景如下：输入框输入你的年龄，如果年龄在0-15岁提示信息：你还是个小孩，如果年龄在 15-25岁，提示信息：你已经是个少年，如果年龄在25岁以上，提示信息：你已经长大了  12345678910111213141516171819202122232425262728&lt;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-08-02T01:52:31.000Z">
+<meta property="article:modified_time" content="2022-06-06T10:48:30.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="vue">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>vue-计算属性与数据监听 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="vue-计算属性与数据监听"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-08-02 09:52" pubdate>
+          August 2, 2018 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.3k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          53 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">vue-计算属性与数据监听</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="一、监听属性"><a href="#一、监听属性" class="headerlink" title="一、监听属性"></a>一、监听属性</h2><blockquote>
+<p>我们在工作中常常需要监听某一个属性值的变化，这个时候我们就需要用到了监听属性<code>watch</code></p>
+</blockquote>
+<h3 id="1-1-基础版监听"><a href="#1-1-基础版监听" class="headerlink" title="1.1 基础版监听"></a>1.1 基础版监听</h3><blockquote>
+<p>场景如下：输入框输入你的年龄，如果年龄在0-15岁提示信息：你还是个小孩，如果年龄在 15-25岁，提示信息：你已经是个少年，如果年龄在25岁以上，提示信息：你已经长大了</p>
+</blockquote>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span></span><br><span class="language-xml"> <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;app&quot;</span>&gt;</span></span><br><span class="language-xml">  年齡：<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;number&quot;</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;age&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span></span><br><span class="language-xml">  提示信息：<span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span></span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">infoMsg</span>&#125;&#125;</span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span></span><br><span class="language-xml"> <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="language-javascript"><span class="language-xml"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml"> <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">  <span class="hljs-keyword">return</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">   <span class="hljs-attr">age</span>: <span class="hljs-string">&quot;&quot;</span>,</span></span><br><span class="language-javascript"><span class="language-xml">   <span class="hljs-attr">infoMsg</span>:<span class="hljs-string">&quot;&quot;</span></span></span><br><span class="language-javascript"><span class="language-xml">  &#125;</span></span><br><span class="language-javascript"><span class="language-xml"> &#125;,</span></span><br><span class="language-javascript"><span class="language-xml"> <span class="hljs-attr">watch</span>:&#123;</span></span><br><span class="language-javascript"><span class="language-xml">  <span class="hljs-attr">age</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params">val,oldval</span>)&#123;</span></span><br><span class="language-javascript"><span class="language-xml">   <span class="hljs-keyword">if</span>(val&gt;<span class="hljs-number">0</span> &amp;&amp; val&lt;<span class="hljs-number">15</span>)&#123;</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-variable language_">this</span>.<span class="hljs-property">infoMsg</span>=<span class="hljs-string">&quot;你还是个小孩&quot;</span></span></span><br><span class="language-javascript"><span class="language-xml">   &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(val&gt;<span class="hljs-number">15</span> &amp;&amp; val&lt;<span class="hljs-number">25</span>)&#123;</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-variable language_">this</span>.<span class="hljs-property">infoMsg</span>=<span class="hljs-string">&quot;你已经是个少年&quot;</span></span></span><br><span class="language-javascript"><span class="language-xml">   &#125;<span class="hljs-keyword">else</span>&#123;</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-variable language_">this</span>.<span class="hljs-property">infoMsg</span>=<span class="hljs-string">&quot;你已经长大了&quot;</span></span></span><br><span class="language-javascript"><span class="language-xml">   &#125;</span></span><br><span class="language-javascript"><span class="language-xml">  &#125;</span></span><br><span class="language-javascript"><span class="language-xml"> &#125;</span></span><br><span class="language-javascript"><span class="language-xml">&#125;</span></span><br><span class="language-javascript"><span class="language-xml"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+<h3 id="1-2-进阶版监听"><a href="#1-2-进阶版监听" class="headerlink" title="1.2 进阶版监听"></a>1.2 进阶版监听</h3><blockquote>
+<p>下面我们改变一下需求：基础规则不变，但是因为后台数据库的更改,我们需要提交一个这样的数据结构</p>
+</blockquote>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs dts">data() <span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-title class_">return</span> <span class="hljs-punctuation">&#123;</span><br><span class="hljs-symbol">   info:</span> <span class="hljs-punctuation">&#123;</span><br><span class="hljs-symbol">    age:</span> <span class="hljs-string">&quot;&quot;</span><br>   <span class="hljs-punctuation">&#125;</span>,<br><span class="hljs-symbol">   infoMsg:</span> <span class="hljs-string">&quot;&quot;</span><br>  <span class="hljs-punctuation">&#125;;</span><br> <span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>由于我们监听的是对象<code>info</code>中的属性<code>age</code>值的变化，所以我们需要使用到的是深度监听，具体代码如下</li>
+</ul>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span></span><br><span class="language-xml"> <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;app&quot;</span>&gt;</span></span><br><span class="language-xml">  年齡：<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;number&quot;</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;info.age&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span></span><br><span class="language-xml">  提示信息：<span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span></span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">infoMsg</span>&#125;&#125;</span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span></span><br><span class="language-xml"> <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="language-javascript"><span class="language-xml"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml"> <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">  <span class="hljs-keyword">return</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">   <span class="hljs-attr">info</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">age</span>: <span class="hljs-string">&quot;&quot;</span></span></span><br><span class="language-javascript"><span class="language-xml">   &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">   <span class="hljs-attr">infoMsg</span>: <span class="hljs-string">&quot;&quot;</span></span></span><br><span class="language-javascript"><span class="language-xml">  &#125;;</span></span><br><span class="language-javascript"><span class="language-xml"> &#125;,</span></span><br><span class="language-javascript"><span class="language-xml"> <span class="hljs-attr">watch</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">  <span class="hljs-attr">info</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">   <span class="hljs-attr">handler</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">val, oldval</span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-keyword">var</span> that = <span class="hljs-variable language_">this</span>;</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-keyword">if</span> (val.<span class="hljs-property">age</span> &gt; <span class="hljs-number">0</span> &amp;&amp; val.<span class="hljs-property">age</span> &lt; <span class="hljs-number">15</span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">     that.<span class="hljs-property">infoMsg</span> = <span class="hljs-string">&quot;你还是个小孩&quot;</span>;</span></span><br><span class="language-javascript"><span class="language-xml">    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (val.<span class="hljs-property">age</span> &gt; <span class="hljs-number">15</span> &amp;&amp; val.<span class="hljs-property">age</span> &lt; <span class="hljs-number">25</span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">     that.<span class="hljs-property">infoMsg</span> = <span class="hljs-string">&quot;你已经是个少年&quot;</span>;</span></span><br><span class="language-javascript"><span class="language-xml">    &#125; <span class="hljs-keyword">else</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">     that.<span class="hljs-property">infoMsg</span> = <span class="hljs-string">&quot;你已经长大了&quot;</span>;</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;</span></span><br><span class="language-javascript"><span class="language-xml">   &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">   <span class="hljs-attr">deep</span>: <span class="hljs-literal">true</span></span></span><br><span class="language-javascript"><span class="language-xml">  &#125;</span></span><br><span class="language-javascript"><span class="language-xml"> &#125;</span></span><br><span class="language-javascript"><span class="language-xml">&#125;;</span></span><br><span class="language-javascript"><span class="language-xml"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>这里的<code>function</code>不能使用箭头函数替代，如果使用箭头函数的话，<code>this</code>的指向会是全局</li>
+<li>你会注意到这里多加入一个属性是<code>deep</code>，它的含义表示是否开启深度监听，如果开启值为<code>true</code>，反之为<code>false</code></li>
+</ul>
+<h3 id="1-3-高级版监听"><a href="#1-3-高级版监听" class="headerlink" title="1.3 高级版监听"></a>1.3 高级版监听</h3><figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span></span><br><span class="language-xml"> <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;app&quot;</span>&gt;</span></span><br><span class="language-xml">  年齡：<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;number&quot;</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;info.age&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span></span><br><span class="language-xml">  提示信息：<span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span></span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">infoMsg</span>&#125;&#125;</span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span></span><br><span class="language-xml"> <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="language-javascript"><span class="language-xml"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml"> <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">  <span class="hljs-keyword">return</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">   <span class="hljs-attr">info</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">age</span>: <span class="hljs-string">&quot;&quot;</span>,</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;&quot;</span>,</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">hobit</span>: <span class="hljs-string">&quot;&quot;</span></span></span><br><span class="language-javascript"><span class="language-xml">   &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">   <span class="hljs-attr">infoMsg</span>: <span class="hljs-string">&quot;&quot;</span></span></span><br><span class="language-javascript"><span class="language-xml">  &#125;;</span></span><br><span class="language-javascript"><span class="language-xml"> &#125;,</span></span><br><span class="language-javascript"><span class="language-xml"> <span class="hljs-attr">computed</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">  <span class="hljs-attr">ageval</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">   <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">info</span>.<span class="hljs-property">age</span>;</span></span><br><span class="language-javascript"><span class="language-xml">  &#125;</span></span><br><span class="language-javascript"><span class="language-xml"> &#125;,</span></span><br><span class="language-javascript"><span class="language-xml"> <span class="hljs-attr">watch</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">  <span class="hljs-attr">ageval</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">   <span class="hljs-attr">handler</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">val, oldval</span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-keyword">var</span> that = <span class="hljs-variable language_">this</span>;</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-keyword">if</span> (val &gt; <span class="hljs-number">0</span> &amp;&amp; val &lt; <span class="hljs-number">15</span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">     that.<span class="hljs-property">infoMsg</span> = <span class="hljs-string">&quot;你还是个小孩&quot;</span>;</span></span><br><span class="language-javascript"><span class="language-xml">    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (val &gt; <span class="hljs-number">15</span> &amp;&amp; val &lt; <span class="hljs-number">25</span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">     that.<span class="hljs-property">infoMsg</span> = <span class="hljs-string">&quot;你已经是个少年&quot;</span>;</span></span><br><span class="language-javascript"><span class="language-xml">    &#125; <span class="hljs-keyword">else</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">     that.<span class="hljs-property">infoMsg</span> = <span class="hljs-string">&quot;你已经长大了&quot;</span>;</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;</span></span><br><span class="language-javascript"><span class="language-xml">   &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">   <span class="hljs-attr">deep</span>: <span class="hljs-literal">true</span></span></span><br><span class="language-javascript"><span class="language-xml">  &#125;</span></span><br><span class="language-javascript"><span class="language-xml"> &#125;</span></span><br><span class="language-javascript"><span class="language-xml">&#125;;</span></span><br><span class="language-javascript"><span class="language-xml"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这次我们监听的是计算属性<code>ageval</code>，而计算属性返回的则是<code>info</code>对象中<code>age</code>的值，与第二次的代码进行比较我们可以发现两次代码中监听的一个是对象<code>info</code>，一个是<code>info</code>对象中<code>age</code>的值</p>
+</blockquote>
+<h2 id="二、计算属性"><a href="#二、计算属性" class="headerlink" title="二、计算属性"></a>二、计算属性</h2><h3 id="2-1-什么是计算属性"><a href="#2-1-什么是计算属性" class="headerlink" title="2.1 什么是计算属性"></a>2.1 什么是计算属性</h3><blockquote>
+<p>模板内的表达式非常便利，但是设计它们的初衷是用于简单运算的。在模板中放入太多的逻辑会让模板过重且难以维护。例如</p>
+</blockquote>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;example&quot;</span>&gt;</span></span><br><span class="language-xml">  </span><span class="hljs-template-variable">&#123;&#123; <span class="hljs-name">message.split</span>(<span class="hljs-name">&#x27;&#x27;</span>).reverse().join(<span class="hljs-name">&#x27;&#x27;</span>) &#125;&#125;</span><span class="language-xml"></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>遇到复杂逻辑时应该使用Vue特带的计算属性<code>computed</code>来进行处理</p>
+</blockquote>
+<h3 id="2-2-计算属性的用法"><a href="#2-2-计算属性的用法" class="headerlink" title="2.2 计算属性的用法"></a>2.2 计算属性的用法</h3><blockquote>
+<p>在一个计算属性里可以完成各种复杂的逻辑，包括运算、函数调用等，只要最终返回一个结果就可以</p>
+</blockquote>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs xquery"><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;example&quot;</span>&gt;</span></span><br><span class="language-xml">  </span><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Original message: &quot;</span><span class="language-xquery">&#123;&#123; message &#125;</span><span class="language-xml">&#125;&quot;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><span class="language-xml"></span><br><span class="language-xml">  </span><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Computed reversed message: &quot;</span><span class="language-xquery">&#123;&#123; reversedMessage &#125;</span><span class="language-xml">&#125;&quot;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><span class="language-xml">　<span class="hljs-comment">&lt;!--我们把复杂处理放在了计算属性里面了--&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>var vm = new Vue(&#123;<br>    el: <span class="hljs-string">&#x27;#example&#x27;</span>,<br>    data: &#123;<br>        message: <span class="hljs-string">&#x27;Hello&#x27;</span><br>    &#125;,<br>    computed: &#123;<br>        reversedMessage: <span class="hljs-keyword">function</span> () &#123;<br>            // `this` 指向 vm 实例<br>            <span class="hljs-keyword">return</span> this.message.split(<span class="hljs-string">&#x27;&#x27;</span>)<span class="hljs-built_in">.reverse</span>().join(<span class="hljs-string">&#x27;&#x27;</span>)<br>        &#125;<br>    &#125;<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>计算属性还可以依赖多个Vue 实例的数据，只要其中任一数据变化，计算属性就会重新执行，视图也会更新</p>
+</blockquote>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs axapta">&lt;<span class="hljs-keyword">div</span> id=<span class="hljs-string">&quot;app&quot;</span>&gt;<br>    &lt;button @click=<span class="hljs-string">&quot;add()&quot;</span>&gt;补充货物<span class="hljs-number">1</span>&lt;/button&gt;<br>    &lt;<span class="hljs-keyword">div</span>&gt;总价为：&#123;&#123;price&#125;&#125;&lt;/<span class="hljs-keyword">div</span>&gt;<br>&lt;/<span class="hljs-keyword">div</span>&gt;<br><span class="hljs-built_in">var</span> app = <span class="hljs-keyword">new</span> Vue(&#123;        <br>       el: <span class="hljs-string">&#x27;#app&#x27;</span>, <br>   data: &#123;<br>       package1: &#123;<br>           <span class="hljs-keyword">count</span>: <span class="hljs-number">5</span>,<br>           price: <span class="hljs-number">5</span><br>       &#125;,<br>       package2: &#123;<br>           <span class="hljs-keyword">count</span>: <span class="hljs-number">10</span>,<br>           price: <span class="hljs-number">10</span><br>       &#125;<br>    &#125;,<br>    computed: &#123;<br>     price: function()&#123;<br>         <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.package1.<span class="hljs-keyword">count</span>*<span class="hljs-keyword">this</span>.package1.price+<span class="hljs-keyword">this</span>.package2.<span class="hljs-keyword">count</span>*<span class="hljs-keyword">this</span>.package2.price　　<span class="hljs-comment">//总价随着货物或价格的改变会重新计算</span><br>     &#125;<br>    &#125;,<br>    methods: &#123;   <span class="hljs-comment">//对象的方法</span><br>        add: function()&#123;<br>            <span class="hljs-keyword">this</span>.package1.<span class="hljs-keyword">count</span>++<br>        &#125;<br>    &#125;<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>每一个计算属性都包含一个<code>getter</code> 和一个<code>setter</code> ，我们上面的两个示例都是计算属性的默认用法， 只是利用了<code>getter</code> 来读取</li>
+<li>在你需要时，也可以提供一个<code>setter</code> 函数， 当手动修改计算属性的值就像修改一个普通数据那样时，就会触发<code>setter</code> 函数，执行一些自定义的操作，例如</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">var</span> vm = new Vue(&#123;<br>    el: <span class="hljs-string">&#x27;#demo&#x27;</span>,<br>    <span class="hljs-keyword">data</span>: &#123;<br>        firstName: <span class="hljs-string">&#x27;Foo&#x27;</span>,<br>        lastName: <span class="hljs-string">&#x27;Bar&#x27;</span><br>    &#125;,<br>    computed: &#123;<br>        fullName: &#123;<br>            <span class="hljs-comment">// getter</span><br>            <span class="hljs-keyword">get</span>: function () &#123;<br>                <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.firstName + <span class="hljs-string">&#x27; &#x27;</span> + <span class="hljs-keyword">this</span>.lastName<br>            &#125;,<br>            <span class="hljs-comment">// setter</span><br>            <span class="hljs-keyword">set</span>: function (newValue) &#123;<br>                <span class="hljs-keyword">var</span> names = newValue.split(<span class="hljs-string">&#x27; &#x27;</span>);<br>                <span class="hljs-keyword">this</span>.firstName = names[<span class="hljs-number">0</span>];<br>                <span class="hljs-keyword">this</span>.lastName = names[names.length - <span class="hljs-number">1</span>];<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;);<br><span class="hljs-comment">//现在再运行 vm.fullName = &#x27;John Doe&#x27; 时，setter 会被调用，vm.firstName 和 vm.lastName 也会相应地被更新。</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>绝大多数情况下，我们只会用默认的<code>getter</code> 方法来读取一个计算属性，在业务中很少用到<code>setter</code>,所以在声明一个计算属性时，可以直接使用默认的写法，不必将<code>getter</code> 和<code>setter</code>都声明</p>
+</blockquote>
+<h3 id="2-3-计算属性缓存"><a href="#2-3-计算属性缓存" class="headerlink" title="2.3 计算属性缓存"></a>2.3 计算属性缓存</h3><blockquote>
+<p>除了使用计算属性外，我们也可以通过在表达式中调用方法来达到同样的效果</p>
+</blockquote>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs axapta">&lt;<span class="hljs-keyword">div</span>&gt;&#123;&#123;reverseTitle()&#125;&#125;&lt;/<span class="hljs-keyword">div</span>&gt;<br><span class="hljs-comment">// 在组件中</span><br>methods: &#123;<br>  reverseTitle: function () &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.title.split(<span class="hljs-string">&#x27;&#x27;</span>).<span class="hljs-keyword">reverse</span>().<span class="hljs-keyword">join</span>(<span class="hljs-string">&#x27;&#x27;</span>)<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>我们可以将同一函数定义为一个方法而不是一个计算属性，两种方式的最终结果确实是完全相同的。只是一个使用<code>reverseTitle()</code>取值，一个使用<code>reverseTitle</code>取值。</li>
+<li>然而，不同的是计算属性是基于它们的依赖进行缓存的。计算属性只有在它的相关依赖发生改变时才会重新求值。</li>
+<li>这就意味着只要 <code>title</code>还没有发生改变，多次访问<code>reverseTitle</code>计算属性会立即返回之前的计算结果，而不必再次执行函数。</li>
+</ul>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">reverseTitle</span>&#125;&#125;</span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">reverseTitle1</span>()&#125;&#125;</span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;add()&quot;</span>&gt;</span>补充货物1<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>总价为：</span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">price</span>&#125;&#125;</span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">computed</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-attr">reverseTitle</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;</span></span><br><span class="language-javascript"><span class="language-xml">          <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">title</span>.<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;&#x27;</span>).<span class="hljs-title function_">reverse</span>().<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;&#x27;</span>)　　<span class="hljs-comment">//而使用计算属性，只要title没变，页面渲染是不会重新进这里来计算的，而是使用了缓存。</span></span></span><br><span class="language-javascript"><span class="language-xml">      &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-attr">price</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;</span></span><br><span class="language-javascript"><span class="language-xml">         <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">package1</span>.<span class="hljs-property">count</span>*<span class="hljs-variable language_">this</span>.<span class="hljs-property">package1</span>.<span class="hljs-property">price</span>+<span class="hljs-variable language_">this</span>.<span class="hljs-property">package2</span>.<span class="hljs-property">count</span>*<span class="hljs-variable language_">this</span>.<span class="hljs-property">package2</span>.<span class="hljs-property">price</span></span></span><br><span class="language-javascript"><span class="language-xml">      &#125;</span></span><br><span class="language-javascript"><span class="language-xml">     &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">methods</span>: &#123;   <span class="hljs-comment">//对象的方法</span></span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">add</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-variable language_">this</span>.<span class="hljs-property">package1</span>.<span class="hljs-property">count</span>++</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">reverseTitle1</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">title</span>.<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;&#x27;</span>).<span class="hljs-title function_">reverse</span>().<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;&#x27;</span>)　　<span class="hljs-comment">//点击补充货物，也会进这个方法，再次计算。不是刷新，而是只要页面渲染，就会进方法里重新计算。</span></span></span><br><span class="language-javascript"><span class="language-xml">    &#125;</span></span><br><span class="language-javascript"><span class="language-xml"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>相比之下，每当触发重新渲染时，调用方法将总会再次执行函数。</li>
+<li>我们为什么需要缓存？假设我们有一个性能开销比较大的的计算属性 A，它需要遍历一个巨大的数组并做大量的计算。然后我们可能有其他的计算属性依赖于 A</li>
+<li>如果没有缓存，我们将不可避免的多次执行 A 的<code>getter</code>！如果你不希望有缓存，请用方法来替代</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%A1%86%E6%9E%B6/" class="category-chain-item">框架</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/vue/">#vue</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>vue-计算属性与数据监听</div>
+      <div>http://example.com/2018/08/02/vue/vue-计算属性与数据监听/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 2, 2018</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/08/05/vue/vue-%E8%B7%AF%E7%94%B1/" title="vue-路由">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">vue-路由</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/07/31/vue/vue-%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86/" title="vue-核心知识总结">
+                        <span class="hidden-mobile">vue-核心知识总结</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

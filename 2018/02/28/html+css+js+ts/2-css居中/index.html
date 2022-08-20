@@ -1,0 +1,613 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="水平居中方案 方案一：text-align + inline-block 12345678910111213&lt;div id&#x3D;&quot;parent1&quot;&gt;	&lt;div class&#x3D;&quot;child&quot;&gt;水平居中&lt;&#x2F;div&gt;&lt;&#x2F;div&gt;#parent1&amp;#123;	text-align: center;	background:#d">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css-居中">
+<meta property="og:url" content="http://example.com/2018/02/28/html+css+js+ts/2-css%E5%B1%85%E4%B8%AD/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="水平居中方案 方案一：text-align + inline-block 12345678910111213&lt;div id&#x3D;&quot;parent1&quot;&gt;	&lt;div class&#x3D;&quot;child&quot;&gt;水平居中&lt;&#x2F;div&gt;&lt;&#x2F;div&gt;#parent1&amp;#123;	text-align: center;	background:#d">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-02-28T14:46:19.000Z">
+<meta property="article:modified_time" content="2022-06-04T06:27:42.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="css">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>css-居中 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="css-居中"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-02-28 22:46" pubdate>
+          February 28, 2018 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.7k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          31 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">css-居中</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="水平居中方案"><a href="#水平居中方案" class="headerlink" title="水平居中方案"></a>水平居中方案</h3><hr>
+<h4 id="方案一：text-align-inline-block"><a href="#方案一：text-align-inline-block" class="headerlink" title="方案一：text-align + inline-block"></a>方案一：<code>text-align + inline-block</code></h4><hr>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs applescript">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;parent1&quot;</span>&gt;<br>	&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">&quot;child&quot;</span>&gt;水平居中&lt;/<span class="hljs-keyword">div</span>&gt;<br>&lt;/<span class="hljs-keyword">div</span>&gt;<br><span class="hljs-comment">#parent1&#123;</span><br>	<span class="hljs-built_in">text</span>-align: center;<br>	background:<span class="hljs-comment">#ddd;</span><br>	margin-bottom:<span class="hljs-number">20</span>px;<br>&#125;<br><span class="hljs-comment">#parent1 .child&#123;</span><br>	display: inline-block;<br>	background:<span class="hljs-comment">#666;</span><br>	color:<span class="hljs-comment">#fff;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="方案二：margin：0-auto"><a href="#方案二：margin：0-auto" class="headerlink" title="方案二：margin：0 auto"></a>方案二：<code>margin：0 auto</code></h4><hr>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs stylus">&lt;<span class="hljs-selector-tag">div</span> id=<span class="hljs-string">&quot;parent2&quot;</span>&gt;<br>	&lt;<span class="hljs-selector-tag">div</span> class=<span class="hljs-string">&quot;child&quot;</span>&gt;水平居中&lt;/div&gt;<br>&lt;/div&gt;<br>#parent2&#123;<br>	<span class="hljs-attribute">text-align</span>: center;<br>	<span class="hljs-attribute">background</span>:<span class="hljs-number">#ddd</span>;<br>	<span class="hljs-attribute">margin-bottom</span>:<span class="hljs-number">20px</span>;<br>&#125;<br><span class="hljs-selector-id">#parent2</span> .child&#123;<br>	<span class="hljs-attribute">display</span>: table;<br>	<span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span> auto;<br>	<span class="hljs-attribute">background</span>:<span class="hljs-number">#666</span>;<br>	<span class="hljs-attribute">color</span>:<span class="hljs-number">#fff</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="方案三：absolute-transform"><a href="#方案三：absolute-transform" class="headerlink" title="方案三：absolute+transform)"></a>方案三：<code>absolute+transform)</code></h4><hr>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs stylus">&lt;<span class="hljs-selector-tag">div</span> id=<span class="hljs-string">&quot;parent3&quot;</span>&gt;<br>	&lt;<span class="hljs-selector-tag">div</span> class=<span class="hljs-string">&quot;child&quot;</span>&gt;水平居中&lt;/div&gt;<br>&lt;/div&gt;<br>#parent3&#123;<br>	<span class="hljs-attribute">position</span>: relative;<br>	<span class="hljs-attribute">background</span>:<span class="hljs-number">#ddd</span>;<br>	<span class="hljs-attribute">margin-bottom</span>:<span class="hljs-number">20px</span>;<br>&#125;<br><span class="hljs-selector-id">#parent3</span> .child&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">50%</span>;<br>	<span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(-<span class="hljs-number">50%</span>);<br>	<span class="hljs-attribute">background</span>:<span class="hljs-number">#666</span>;<br>	<span class="hljs-attribute">color</span>:<span class="hljs-number">#fff</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="方案四：justify-content"><a href="#方案四：justify-content" class="headerlink" title="方案四：justify-content"></a>方案四：<code>justify-content</code></h4><hr>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs stylus">&lt;<span class="hljs-selector-tag">div</span> id=<span class="hljs-string">&quot;parent4&quot;</span>&gt;<br>	&lt;<span class="hljs-selector-tag">div</span> class=<span class="hljs-string">&quot;child&quot;</span>&gt;水平居中&lt;/div&gt;<br>&lt;/div&gt;<br>#parent4&#123;<br>	<span class="hljs-attribute">display</span>: flex;<br>	<span class="hljs-attribute">justify-content</span>: center;<br>	<span class="hljs-attribute">background</span>:<span class="hljs-number">#ddd</span>;<br>	<span class="hljs-attribute">margin-bottom</span>:<span class="hljs-number">20px</span>;<br>&#125;<br><span class="hljs-selector-id">#parent4</span> .child&#123;<br>	<span class="hljs-attribute">margin</span>:<span class="hljs-number">0</span> auto;<br>	<span class="hljs-attribute">background</span>:<span class="hljs-number">#666</span>;<br>	<span class="hljs-attribute">color</span>:<span class="hljs-number">#fff</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="垂直居中方案"><a href="#垂直居中方案" class="headerlink" title="垂直居中方案"></a>垂直居中方案</h3><hr>
+<h4 id="方案一：-利用-line-height-实现垂直居中"><a href="#方案一：-利用-line-height-实现垂直居中" class="headerlink" title="方案一： 利用 line-height 实现垂直居中"></a>方案一： 利用 line-height 实现垂直居中</h4><hr>
+<ul>
+<li>这种方法适用于单行文本垂直居中,如果文本内容太长，出现了换行，换行后的内容会溢出</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs stylus">&lt;<span class="hljs-selector-tag">div</span> id=<span class="hljs-string">&quot;example1&quot;</span>&gt;<br>    单行文字垂直居中<br>&lt;/div&gt;<br><span class="hljs-selector-id">#example1</span> &#123;<br>    <span class="hljs-attribute">height</span>: <span class="hljs-number">100px</span>;<br>    <span class="hljs-attribute">line-height</span>: <span class="hljs-number">100px</span>;<br>    <span class="hljs-attribute">background</span>: <span class="hljs-number">#161616</span>;<br>    <span class="hljs-attribute">color</span>: <span class="hljs-number">#fff</span>;<br>    <span class="hljs-attribute">width</span>: <span class="hljs-number">200px</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="方案二-利用-display-table-实现垂直居中"><a href="#方案二-利用-display-table-实现垂直居中" class="headerlink" title="方案二 利用 display: table 实现垂直居中"></a>方案二 利用 display: table 实现垂直居中</h4><hr>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs stylus">&lt;<span class="hljs-selector-tag">div</span> id=<span class="hljs-string">&quot;example2&quot;</span>&gt;<br>    &lt;<span class="hljs-selector-tag">div</span> class=<span class="hljs-string">&quot;inner&quot;</span>&gt;块区域垂直居中&lt;/div&gt;<br>&lt;/div&gt;<br><span class="hljs-selector-id">#example2</span> &#123;<br>    <span class="hljs-attribute">height</span>: <span class="hljs-number">100px</span>;<br>    <span class="hljs-attribute">background</span>: <span class="hljs-number">#161616</span>;<br>    <span class="hljs-attribute">color</span>: <span class="hljs-number">#fff</span>;<br>    <span class="hljs-attribute">width</span>: <span class="hljs-number">400px</span>;<br>    <span class="hljs-attribute">overflow</span>: hidden;<br>    <span class="hljs-attribute">display</span>: table;<br>			<span class="hljs-attribute">margin-bottom</span>:<span class="hljs-number">20px</span>;<br>&#125;<br><span class="hljs-selector-id">#example2</span> .inner&#123;<br>    <span class="hljs-attribute">display</span>: table-cell;<br>    <span class="hljs-attribute">vertical-align</span>: middle;<br>    <span class="hljs-attribute">height</span>: <span class="hljs-number">50px</span>;<br>    <span class="hljs-attribute">background</span>:<span class="hljs-number">#999</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="方案三-margin-填充-这种方法需要知道内外容器的大小"><a href="#方案三-margin-填充-这种方法需要知道内外容器的大小" class="headerlink" title="方案三 margin 填充 这种方法需要知道内外容器的大小"></a>方案三 margin 填充 这种方法需要知道内外容器的大小</h4><hr>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs stylus">&lt;<span class="hljs-selector-tag">div</span> id=<span class="hljs-string">&quot;example3&quot;</span>&gt;<br>    &lt;<span class="hljs-selector-tag">div</span> class=<span class="hljs-string">&quot;inner&quot;</span>&gt;块区域垂直居中&lt;/div&gt;<br>&lt;/div&gt;<br><span class="hljs-selector-id">#example3</span> &#123;<br>    <span class="hljs-attribute">height</span>: <span class="hljs-number">100px</span>;<br>    <span class="hljs-attribute">background</span>: <span class="hljs-number">#161616</span>;<br>    <span class="hljs-attribute">color</span>: <span class="hljs-number">#fff</span>;<br>    <span class="hljs-attribute">width</span>: <span class="hljs-number">400px</span>;<br>    <span class="hljs-attribute">overflow</span>: hidden;<br>			<span class="hljs-attribute">margin-bottom</span>:<span class="hljs-number">20px</span>;<br>&#125;<br><span class="hljs-selector-id">#example3</span> .inner&#123;<br>    <span class="hljs-attribute">margin-left</span>: auto;<br>    <span class="hljs-attribute">margin-right</span>: auto;<br>    <span class="hljs-attribute">margin-top</span>: <span class="hljs-built_in">calc</span>((<span class="hljs-number">100px</span> - <span class="hljs-number">50px</span>)/<span class="hljs-number">2</span>);<br>    <span class="hljs-attribute">height</span>: <span class="hljs-number">50px</span>;<br>    <span class="hljs-attribute">background</span>:<span class="hljs-number">#999</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="方案四：经典-absolute-布局上下文垂直居中"><a href="#方案四：经典-absolute-布局上下文垂直居中" class="headerlink" title="方案四：经典 absolute 布局上下文垂直居中"></a>方案四：经典 absolute 布局上下文垂直居中</h4><hr>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs stylus">&lt;<span class="hljs-selector-tag">div</span> id=<span class="hljs-string">&quot;example4&quot;</span>&gt;<br>    &lt;<span class="hljs-selector-tag">div</span> class=<span class="hljs-string">&quot;inner&quot;</span>&gt;块区域垂直居中&lt;/div&gt;<br>&lt;/div&gt;<br><span class="hljs-selector-id">#example4</span> &#123;<br>    <span class="hljs-attribute">width</span>: <span class="hljs-number">400px</span>;<br>    <span class="hljs-attribute">height</span>: <span class="hljs-number">100px</span>;<br>    <span class="hljs-attribute">background</span>: <span class="hljs-number">#161616</span>;<br>    <span class="hljs-attribute">color</span>: <span class="hljs-number">#fff</span>;<br>    <span class="hljs-attribute">position</span>: relative;<br>		<span class="hljs-attribute">margin-bottom</span>:<span class="hljs-number">20px</span>;<br>&#125;<br><span class="hljs-selector-id">#example4</span> .inner&#123;<br>    <span class="hljs-attribute">height</span>: <span class="hljs-number">50px</span>;<br>    <span class="hljs-attribute">width</span>: <span class="hljs-number">200px</span>;<br>    <span class="hljs-attribute">position</span>: absolute;<br>    <span class="hljs-attribute">left</span>: <span class="hljs-number">50%</span>;<br>    <span class="hljs-attribute">top</span>: <span class="hljs-number">50%</span>;<br>    <span class="hljs-attribute">margin-top</span>: -<span class="hljs-number">25px</span>;<br>    <span class="hljs-attribute">margin-left</span>: -<span class="hljs-number">100px</span>;<br>    <span class="hljs-attribute">background</span>:<span class="hljs-number">#999</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="方案五：absolute-transform"><a href="#方案五：absolute-transform" class="headerlink" title="方案五：absolute+transform"></a>方案五：absolute+transform</h4><hr>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs stylus">&lt;<span class="hljs-selector-tag">div</span> id=<span class="hljs-string">&quot;example5&quot;</span>&gt;<br>    &lt;<span class="hljs-selector-tag">div</span> class=<span class="hljs-string">&quot;inner&quot;</span>&gt;块区域垂直居中&lt;/div&gt;<br>&lt;/div&gt;<br><span class="hljs-selector-id">#example5</span> &#123;<br>    <span class="hljs-attribute">width</span>: <span class="hljs-number">400px</span>;<br>    <span class="hljs-attribute">height</span>: <span class="hljs-number">100px</span>;<br>    <span class="hljs-attribute">background</span>: <span class="hljs-number">#161616</span>;<br>    <span class="hljs-attribute">color</span>: <span class="hljs-number">#fff</span>;<br>    <span class="hljs-attribute">position</span>: relative;<br>	<span class="hljs-attribute">margin-bottom</span>:<span class="hljs-number">20px</span>;<br>&#125;<br><span class="hljs-selector-id">#example5</span> .inner&#123;<br>    <span class="hljs-attribute">position</span>: absolute;<br>    <span class="hljs-attribute">left</span>: <span class="hljs-number">50%</span>;<br>    <span class="hljs-attribute">top</span>: <span class="hljs-number">50%</span>;<br>    <span class="hljs-attribute">background</span>: <span class="hljs-number">#999</span>;<br>    <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(-<span class="hljs-number">50%</span>) <span class="hljs-built_in">translateY</span>(-<span class="hljs-number">50%</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="方案六-利用margin：auto-居中"><a href="#方案六-利用margin：auto-居中" class="headerlink" title="方案六 利用margin：auto 居中"></a>方案六 利用margin：auto 居中</h4><hr>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs stylus">&lt;<span class="hljs-selector-tag">div</span> id=<span class="hljs-string">&quot;expample6&quot;</span>&gt;<br>    &lt;<span class="hljs-selector-tag">div</span> class=<span class="hljs-string">&quot;inner&quot;</span>&gt;Content here&lt;/div&gt;<br>&lt;/div&gt;<br><span class="hljs-selector-id">#expample6</span> &#123;<br>    <span class="hljs-attribute">width</span>: <span class="hljs-number">400px</span>;<br>    <span class="hljs-attribute">height</span>: <span class="hljs-number">100px</span>;<br>    <span class="hljs-attribute">background</span>: <span class="hljs-number">#eee</span>;<br>    <span class="hljs-attribute">position</span>: relative;<br>		<span class="hljs-attribute">margin-bottom</span>:<span class="hljs-number">20px</span>;<br>&#125;<br><br><span class="hljs-selector-id">#expample6</span> <span class="hljs-selector-class">.inner</span> &#123;<br>    <span class="hljs-attribute">position</span>: absolute;<br>    <span class="hljs-attribute">top</span>: <span class="hljs-number">0</span>;<br>    <span class="hljs-attribute">bottom</span>: <span class="hljs-number">0</span>;<br>    <span class="hljs-attribute">left</span>: <span class="hljs-number">0</span>;<br>    <span class="hljs-attribute">right</span>: <span class="hljs-number">0</span>;<br>    <span class="hljs-attribute">margin</span>: auto;<br>    <span class="hljs-attribute">height</span>: <span class="hljs-number">50px</span>;<br>    <span class="hljs-attribute">width</span>: <span class="hljs-number">70%</span>;<br>    <span class="hljs-attribute">background</span>: <span class="hljs-number">#aaa</span>;<br>    <span class="hljs-attribute">color</span>:<span class="hljs-number">#222</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="方案七-利用-Flex布局-居中"><a href="#方案七-利用-Flex布局-居中" class="headerlink" title="方案七 利用 Flex布局 居中"></a>方案七 利用 Flex布局 居中</h4><hr>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs stylus">&lt;<span class="hljs-selector-tag">div</span> id=<span class="hljs-string">&quot;expample7&quot;</span>&gt;<br>    &lt;<span class="hljs-selector-tag">div</span> class=<span class="hljs-string">&quot;inner&quot;</span>&gt;Content here&lt;/div&gt;<br>&lt;/div&gt;<br><span class="hljs-selector-id">#expample7</span> &#123;<br>    <span class="hljs-attribute">width</span>: <span class="hljs-number">400px</span>;<br>    <span class="hljs-attribute">height</span>: <span class="hljs-number">100px</span>;<br>    <span class="hljs-attribute">background</span>: <span class="hljs-number">#eee</span>;<br>    <span class="hljs-attribute">display</span>: flex;<br>    <span class="hljs-attribute">justify-content</span>: center;<br>    <span class="hljs-attribute">align-items</span>: center;<br>&#125;<br><br><span class="hljs-selector-id">#expample7</span> <span class="hljs-selector-class">.inner</span> &#123;<br>    <span class="hljs-attribute">height</span>: <span class="hljs-number">50px</span>;<br>    <span class="hljs-attribute">width</span>: <span class="hljs-number">70%</span>;<br>    <span class="hljs-attribute">background</span>: <span class="hljs-number">#aaa</span>;<br>    <span class="hljs-attribute">color</span>:<span class="hljs-number">#222</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%89%8D%E7%AB%AF/" class="category-chain-item">前端</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/css/">#css</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>css-居中</div>
+      <div>http://example.com/2018/02/28/html+css+js+ts/2-css居中/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>February 28, 2018</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/03/01/html+css+js+ts/2-css-%E5%AE%9E%E7%94%A8%E7%9A%8460%E4%B8%AACSS%E4%BB%A3%E7%A0%81%E7%89%87%E6%AE%B5/" title="css-60个常见案例">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">css-60个常见案例</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/02/25/html+css+js+ts/2-css-%E5%9F%BA%E7%A1%80%EF%BC%882%EF%BC%89/" title="css-基础（2）">
+                        <span class="hidden-mobile">css-基础（2）</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,674 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、什么是SPASPA（single-page application），翻译过来就是单页应用SPA是一种网络应用程序或网站的模型，它通过动态重写当前页面来与用户交互，这种方法避免了页面之间切换打断用户体验在单页应用中，所有必要的代码（HTML、JavaScript和CSS）都通过单个页面的加载而检索，或者根据需要（通常是为响应用户操作）动态装载适当的资源并添加到页面页面在任何时间点都不会重新加">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue-SPA">
+<meta property="og:url" content="http://example.com/2018/07/09/vue/vue-SPA/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、什么是SPASPA（single-page application），翻译过来就是单页应用SPA是一种网络应用程序或网站的模型，它通过动态重写当前页面来与用户交互，这种方法避免了页面之间切换打断用户体验在单页应用中，所有必要的代码（HTML、JavaScript和CSS）都通过单个页面的加载而检索，或者根据需要（通常是为响应用户操作）动态装载适当的资源并添加到页面页面在任何时间点都不会重新加">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://static.vue-js.com/cf6aa320-3ac6-11eb-85f6-6fac77c0c9b3.png">
+<meta property="og:image" content="https://static.vue-js.com/df14a5a0-3ac6-11eb-85f6-6fac77c0c9b3.png">
+<meta property="og:image" content="https://static.vue-js.com/eeb13aa0-3ac6-11eb-85f6-6fac77c0c9b3.png">
+<meta property="og:image" content="https://static.vue-js.com/fc95bf60-3ac6-11eb-ab90-d9ae814b240d.png">
+<meta property="og:image" content="https://static.vue-js.com/25be6630-3ac7-11eb-ab90-d9ae814b240d.png">
+<meta property="article:published_time" content="2018-07-09T01:55:48.000Z">
+<meta property="article:modified_time" content="2022-06-06T10:40:04.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="vue">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://static.vue-js.com/cf6aa320-3ac6-11eb-85f6-6fac77c0c9b3.png">
+  
+  
+  
+  <title>vue-SPA - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="vue-SPA"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-07-09 09:55" pubdate>
+          July 9, 2018 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.9k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          25 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">vue-SPA</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><img src="https://static.vue-js.com/cf6aa320-3ac6-11eb-85f6-6fac77c0c9b3.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="一、什么是SPA"><a href="#一、什么是SPA" class="headerlink" title="一、什么是SPA"></a>一、什么是SPA</h2><p>SPA（single-page application），翻译过来就是单页应用<code>SPA</code>是一种网络应用程序或网站的模型，它通过动态重写当前页面来与用户交互，这种方法避免了页面之间切换打断用户体验在单页应用中，所有必要的代码（<code>HTML</code>、<code>JavaScript</code>和<code>CSS</code>）都通过单个页面的加载而检索，或者根据需要（通常是为响应用户操作）动态装载适当的资源并添加到页面页面在任何时间点都不会重新加载，也不会将控制转移到其他页面。如下图</p>
+<p><img src="https://static.vue-js.com/df14a5a0-3ac6-11eb-85f6-6fac77c0c9b3.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>我们熟知的JS框架如<code>react</code>,<code>vue</code>,<code>angular</code>,<code>ember</code>都属于<code>SPA</code></p>
+<h2 id="二、SPA和MPA的区别"><a href="#二、SPA和MPA的区别" class="headerlink" title="二、SPA和MPA的区别"></a>二、SPA和MPA的区别</h2><p>上面大家已经对单页面有所了解了，下面来讲讲多页应用MPA（MultiPage-page application），翻译过来就是多页应用在<code>MPA</code>中，每个页面都是一个主页面，都是独立的当我们在访问另一个页面的时候，都需要重新加载<code>html</code>、<code>css</code>、<code>js</code>文件，公共文件则根据需求按需加载如下图</p>
+<p><img src="https://static.vue-js.com/eeb13aa0-3ac6-11eb-85f6-6fac77c0c9b3.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h4 id="单页应用与多页应用的区别"><a href="#单页应用与多页应用的区别" class="headerlink" title="单页应用与多页应用的区别"></a>单页应用与多页应用的区别</h4><table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">单页面应用（SPA）</th>
+<th align="left">多页面应用（MPA）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">组成</td>
+<td align="left">一个主页面和多个页面片段</td>
+<td align="left">多个主页面</td>
+</tr>
+<tr>
+<td align="left">刷新方式</td>
+<td align="left">局部刷新</td>
+<td align="left">整页刷新</td>
+</tr>
+<tr>
+<td align="left">url模式</td>
+<td align="left">哈希模式</td>
+<td align="left">历史模式</td>
+</tr>
+<tr>
+<td align="left">SEO搜索引擎优化</td>
+<td align="left">难实现，可使用SSR方式改善</td>
+<td align="left">容易实现</td>
+</tr>
+<tr>
+<td align="left">数据传递</td>
+<td align="left">容易</td>
+<td align="left">通过url、cookie、localStorage等传递</td>
+</tr>
+<tr>
+<td align="left">页面切换</td>
+<td align="left">速度快，用户体验良好</td>
+<td align="left">切换加载资源，速度慢，用户体验差</td>
+</tr>
+<tr>
+<td align="left">维护成本</td>
+<td align="left">相对容易</td>
+<td align="left">相对复杂</td>
+</tr>
+</tbody></table>
+<h4 id="单页应用优缺点"><a href="#单页应用优缺点" class="headerlink" title="单页应用优缺点"></a>单页应用优缺点</h4><p>优点：</p>
+<ul>
+<li>具有桌面应用的即时性、网站的可移植性和可访问性</li>
+<li>用户体验好、快，内容的改变不需要重新加载整个页面</li>
+<li>良好的前后端分离，分工更明确</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>不利于搜索引擎的抓取</li>
+<li>首次渲染速度相对较慢</li>
+</ul>
+<h2 id="三、实现一个SPA"><a href="#三、实现一个SPA" class="headerlink" title="三、实现一个SPA"></a>三、实现一个SPA</h2><h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><ol>
+<li>监听地址栏中<code>hash</code>变化驱动界面变化</li>
+<li>用<code>pushsate</code>记录浏览器的历史，驱动界面发送变化</li>
+</ol>
+<p><img src="https://static.vue-js.com/fc95bf60-3ac6-11eb-ab90-d9ae814b240d.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><h5 id="hash-模式"><a href="#hash-模式" class="headerlink" title="hash 模式"></a><code>hash</code> 模式</h5><p>核心通过监听<code>url</code>中的<code>hash</code>来进行路由跳转</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 定义 Router  </span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Router</span> &#123;  <br>    <span class="hljs-title function_">constructor</span> () &#123;  <br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">routes</span> = &#123;&#125;; <span class="hljs-comment">// 存放路由path及callback  </span><br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">currentUrl</span> = <span class="hljs-string">&#x27;&#x27;</span>;  <br>          <br>        <span class="hljs-comment">// 监听路由change调用相对应的路由回调  </span><br>        <span class="hljs-variable language_">window</span>.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;load&#x27;</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">refresh</span>, <span class="hljs-literal">false</span>);  <br>        <span class="hljs-variable language_">window</span>.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;hashchange&#x27;</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">refresh</span>, <span class="hljs-literal">false</span>);  <br>    &#125;  <br>      <br>    <span class="hljs-title function_">route</span>(<span class="hljs-params">path, callback</span>)&#123;  <br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">routes</span>[path] = callback;  <br>    &#125;  <br>      <br>    <span class="hljs-title function_">push</span>(<span class="hljs-params">path</span>) &#123;  <br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">routes</span>[path] &amp;&amp; <span class="hljs-variable language_">this</span>.<span class="hljs-property">routes</span>[path]()  <br>    &#125;  <br>&#125;  <br>  <br><span class="hljs-comment">// 使用 router  </span><br><span class="hljs-variable language_">window</span>.<span class="hljs-property">miniRouter</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Router</span>();  <br>miniRouter.<span class="hljs-title function_">route</span>(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;page1&#x27;</span>))  <br>miniRouter.<span class="hljs-title function_">route</span>(<span class="hljs-string">&#x27;/page2&#x27;</span>, <span class="hljs-function">() =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;page2&#x27;</span>))  <br>  <br>miniRouter.<span class="hljs-title function_">push</span>(<span class="hljs-string">&#x27;/&#x27;</span>) <span class="hljs-comment">// page1  </span><br>miniRouter.<span class="hljs-title function_">push</span>(<span class="hljs-string">&#x27;/page2&#x27;</span>) <span class="hljs-comment">// page2  </span><br></code></pre></td></tr></table></figure>
+
+<h5 id="history模式"><a href="#history模式" class="headerlink" title="history模式"></a>history模式</h5><p><code>history</code> 模式核心借用 <code>HTML5 history api</code>，<code>api</code> 提供了丰富的 <code>router</code> 相关属性先了解一个几个相关的api</p>
+<ul>
+<li><code>history.pushState</code> 浏览器历史纪录添加记录</li>
+<li><code>history.replaceState</code>修改浏览器历史纪录中当前纪录</li>
+<li><code>history.popState</code> 当 <code>history</code> 发生变化时触发</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 定义 Router  </span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Router</span> &#123;  <br>    <span class="hljs-title function_">constructor</span> () &#123;  <br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">routes</span> = &#123;&#125;;  <br>        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">listerPopState</span>()  <br>    &#125;  <br>      <br>    <span class="hljs-title function_">init</span>(<span class="hljs-params">path</span>) &#123;  <br>        history.<span class="hljs-title function_">replaceState</span>(&#123;<span class="hljs-attr">path</span>: path&#125;, <span class="hljs-literal">null</span>, path);  <br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">routes</span>[path] &amp;&amp; <span class="hljs-variable language_">this</span>.<span class="hljs-property">routes</span>[path]();  <br>    &#125;  <br>      <br>    <span class="hljs-title function_">route</span>(<span class="hljs-params">path, callback</span>)&#123;  <br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">routes</span>[path] = callback;  <br>    &#125;  <br>      <br>    <span class="hljs-title function_">push</span>(<span class="hljs-params">path</span>) &#123;  <br>        history.<span class="hljs-title function_">pushState</span>(&#123;<span class="hljs-attr">path</span>: path&#125;, <span class="hljs-literal">null</span>, path);  <br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">routes</span>[path] &amp;&amp; <span class="hljs-variable language_">this</span>.<span class="hljs-property">routes</span>[path]();  <br>    &#125;  <br>      <br>    listerPopState () &#123;  <br>        <span class="hljs-variable language_">window</span>.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;popstate&#x27;</span> , <span class="hljs-function"><span class="hljs-params">e</span> =&gt;</span> &#123;  <br>            <span class="hljs-keyword">const</span> path = e.<span class="hljs-property">state</span> &amp;&amp; e.<span class="hljs-property">state</span>.<span class="hljs-property">path</span>;  <br>            <span class="hljs-variable language_">this</span>.<span class="hljs-property">routers</span>[path] &amp;&amp; <span class="hljs-variable language_">this</span>.<span class="hljs-property">routers</span>[path]()  <br>        &#125;)  <br>    &#125;  <br>&#125;  <br>  <br><span class="hljs-comment">// 使用 Router  </span><br>  <br><span class="hljs-variable language_">window</span>.<span class="hljs-property">miniRouter</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Router</span>();  <br>miniRouter.<span class="hljs-title function_">route</span>(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-function">()=&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;page1&#x27;</span>))  <br>miniRouter.<span class="hljs-title function_">route</span>(<span class="hljs-string">&#x27;/page2&#x27;</span>, <span class="hljs-function">()=&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;page2&#x27;</span>))  <br>  <br><span class="hljs-comment">// 跳转  </span><br>miniRouter.<span class="hljs-title function_">push</span>(<span class="hljs-string">&#x27;/page2&#x27;</span>)  <span class="hljs-comment">// page2  </span><br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="四、题外话：如何给SPA做SEO"><a href="#四、题外话：如何给SPA做SEO" class="headerlink" title="四、题外话：如何给SPA做SEO"></a>四、题外话：如何给SPA做SEO</h3><p>下面给出基于<code>Vue</code>的<code>SPA</code>如何实现<code>SEO</code>的三种方式</p>
+<ol>
+<li><strong>SSR服务端渲染</strong></li>
+</ol>
+<p>将组件或页面通过服务器生成html，再返回给浏览器，如<code>nuxt.js</code></p>
+<ol>
+<li><strong>静态化</strong></li>
+</ol>
+<p>目前主流的静态化主要有两种：（1）一种是通过程序将动态页面抓取并保存为静态页面，这样的页面的实际存在于服务器的硬盘中（2）另外一种是通过WEB服务器的 <code>URL Rewrite</code>的方式，它的原理是通过web服务器内部模块按一定规则将外部的URL请求转化为内部的文件地址，一句话来说就是把外部请求的静态地址转化为实际的动态页面地址，而静态页面实际是不存在的。这两种方法都达到了实现URL静态化的效果</p>
+<ol>
+<li><strong>使用<code>Phantomjs</code>针对爬虫处理</strong></li>
+</ol>
+<p>原理是通过<code>Nginx</code>配置，判断访问来源是否为爬虫，如果是则搜索引擎的爬虫请求会转发到一个<code>node server</code>，再通过<code>PhantomJS</code>来解析完整的<code>HTML</code>，返回给爬虫。下面是大致流程图</p>
+<p><img src="https://static.vue-js.com/25be6630-3ac7-11eb-ab90-d9ae814b240d.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%A1%86%E6%9E%B6/" class="category-chain-item">框架</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/vue/">#vue</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>vue-SPA</div>
+      <div>http://example.com/2018/07/09/vue/vue-SPA/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>July 9, 2018</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/07/11/vue/vue-v-if%E4%B8%8Ev-for%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E5%BB%BA%E8%AE%AE%E4%B8%80%E8%B5%B7%E7%94%A8/" title="vue-v-if与v-for为什么不建议一起用">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">vue-v-if与v-for为什么不建议一起用</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/07/05/vue/vue-slot%E6%8F%92%E6%A7%BD/" title="vue-slot插槽">
+                        <span class="hidden-mobile">vue-slot插槽</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

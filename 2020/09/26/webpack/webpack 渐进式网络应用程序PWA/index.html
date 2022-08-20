@@ -1,0 +1,648 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="多个独立的构建可以组成一个应用程序，这些独立的构建之间不应该存在依赖关系，因此可以单独开发和部署它们。这通常被称作微前端，但并不仅限于此。Webpack5 模块联邦可以让 Webpack 达到了线上 Runtime 的效果，让代码直接在项目间利用 CDN 直接共享，不再需要本地安装 Npm 包、构建再发布了！我们知道 Webpack 可以通过 DLL 或者 Externals 做代码共享时 Com">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack (PWA)">
+<meta property="og:url" content="http://example.com/2020/09/26/webpack/webpack%20%E6%B8%90%E8%BF%9B%E5%BC%8F%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8FPWA/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="多个独立的构建可以组成一个应用程序，这些独立的构建之间不应该存在依赖关系，因此可以单独开发和部署它们。这通常被称作微前端，但并不仅限于此。Webpack5 模块联邦可以让 Webpack 达到了线上 Runtime 的效果，让代码直接在项目间利用 CDN 直接共享，不再需要本地安装 Npm 包、构建再发布了！我们知道 Webpack 可以通过 DLL 或者 Externals 做代码共享时 Com">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-09-26T03:07:19.000Z">
+<meta property="article:modified_time" content="2022-06-06T14:47:18.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="webpack">
+<meta property="article:tag" content="前端">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>webpack (PWA) - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="webpack (PWA)"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-09-26 11:07" pubdate>
+          September 26, 2020 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.6k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          39 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">webpack (PWA)</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>多个独立的构建可以组成一个应用程序，这些独立的构建之间不应该存在依赖关系，因此可以单独开发和部署它们。<br>这通常被称作微前端，但并不仅限于此。<br>Webpack5 模块联邦可以让 Webpack 达到了线上 Runtime 的效果，让代码直接在项目间利用 CDN 直接共享，不再需要本地安装 Npm 包、构建再发布了！<br>我们知道 Webpack 可以通过 DLL 或者 Externals 做代码共享时 Common Chunk，但不同应用和项目间这个任务就变得困难了，我们几乎无法在项目之间做到按需热插拔。</p>
+<p>早期NPM方式共享模块   代码的共享是将依赖作为library安装到我们的项目里进行webpack打包并且构建上线<br>对于项目 Home 与 Search，需要共享一个模块时，最常见的办法就是将其抽成通用依赖并分别安装在各自项目中。虽然 Monorepo 可以一定程度解决重复安装和修改困难的问题，但依然需要走本地编译。</p>
+<p>真正 Runtime 的方式可能是 UMD 方式共享代码模块，即将模块用 Webpack UMD模式打包，并输出到其他项目中。这是非常普遍的模块共享方式：<br>对于项目 Home 与 Search，直接利用 UMD 包复用一个模块。但这种技术方案问题也很明显，就是包体积无法达到本地编译时的优化效果，且库之间容易冲突。</p>
+<p>微前端：micro-frontends (MFE) 也是最近比较火的模块共享管理方式，微前端就是要解决多项目并存问题，多项目并存的最大问题就是模块共享，模块之间是不能有冲突。  对于微前端我们还要考虑样式冲突，声明周期管理冲突等问题，我们先不考虑这些   想把问题聚焦在资源加载的方式上   微前端一般有两种打包方式：1.子应用独立打包，模块实现解耦，但这种方式无法抽取公共的依赖，2.整体应用打一个打包 很好的解决我们上面第一种方式的问题，但是打包效率速度实在是太慢了。不具备水平的扩展能力。<br>由于微前端还要考虑样式冲突、生命周期管理，所以本文只聚焦在资源加载方式上。微前端一般有两种打包方式：</p>
+<ol>
+<li>子应用独立打包，模块更解耦，但无法抽取公共依赖等。</li>
+<li>整体应用一起打包，很好解决上面的问题，但打包速度实在是太慢了，不具备水平扩展能力。</li>
+</ol>
+<p>终于提到本文的主角了，模块联邦方式作为 Webpack5 内置核心特性之一的 FederatedModule：<br>这个方案是直接将一个应用的包应用于另一个应用，同时具备整体应用一起打包的公共依赖抽取能力。  比如：我们直接可以在Search应用里直接使用已经发布到线上的Home应用的组件。</p>
+<p><strong>应用案例</strong><br>本案例模拟三个应用： Nav 、 Search 及 Home 。每个应用都是独立的，又通过模块邦联系到了一起。<br>比如Home需要使用Nav组件共享出来的header，Search可能要使用Header和Home组件构建出来的HomeList。<br>模块联邦将他们共享的模块暴露出来进行引用。<br>1、Nav 导航<br>src&#x2F;header.js</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">const</span> Header = () =&gt; &#123;<br> <span class="hljs-keyword">const</span> header = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">&#x27;h1&#x27;</span>)<br> header.textContent = <span class="hljs-string">&#x27;公共头部内容&#x27;</span><br> <span class="hljs-keyword">return</span> header<br>&#125;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Header<br></code></pre></td></tr></table></figure>
+<p>src&#x2F;index.js</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs stylus">import Header from <span class="hljs-string">&#x27;./Header&#x27;</span><br>const <span class="hljs-selector-tag">div</span> = document<span class="hljs-selector-class">.createElement</span>(<span class="hljs-string">&#x27;div&#x27;</span>)<br><span class="hljs-selector-tag">div</span><span class="hljs-selector-class">.appendChild</span>(<span class="hljs-built_in">Header</span>())<br>document<span class="hljs-selector-class">.body</span><span class="hljs-selector-class">.appendChild</span>(div)<br></code></pre></td></tr></table></figure>
+<p>webpack.config.js</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs awk">const HtmlWebpackPlugin = require(<span class="hljs-string">&#x27;html-webpack-plugin&#x27;</span>)<br>const &#123;<br> ModuleFederationPlugin<br>&#125; = require(<span class="hljs-string">&#x27;webpack&#x27;</span>).container<br>module.exports = &#123;<br> mode: <span class="hljs-string">&#x27;production&#x27;</span>,<br> entry: <span class="hljs-string">&#x27;./src/index.js&#x27;</span>,<br> plugins: [<br>  new HtmlWebpackPlugin(),<br>  new ModuleFederationPlugin(&#123;<br>   <span class="hljs-regexp">//</span> 模块联邦名字<br>   name: <span class="hljs-string">&#x27;nav&#x27;</span>,<br>   <span class="hljs-regexp">//</span> 外部访问的资源名字<br>   filename: <span class="hljs-string">&#x27;remoteEntry.js&#x27;</span>,<br>   <span class="hljs-regexp">//</span> 引用的外部资源列表<br>   remotes: &#123;&#125;,<br>   <span class="hljs-regexp">//</span> 暴露给外部资源列表<br>   exposes: &#123;<br>    <span class="hljs-string">&#x27;./Header&#x27;</span>: <span class="hljs-string">&#x27;./src/Header.js&#x27;</span>,   <span class="hljs-regexp">//</span> 暴露 Header组件  key：可以定义成.<span class="hljs-regexp">/Header 这个./</span>Header并不代表是我当前引用下的某个路径   而是将来在别人用的时候基于这个路径来拼接url，值是正真的我们本地项目的应用<br>  &#125;,<br>   <span class="hljs-regexp">//</span> 共享模块，如lodash<br>   shared: &#123;&#125;,   <span class="hljs-regexp">//</span> 如果我们的 header模块里有共享的第三方模块比如：lodash等，我们可以把他放到这里在打包的时候可以把第三方的共享的模块打到单独的一个包里。<br> &#125;),<br>]<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>应用 webpack 运行服务：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-selector-attr">[felix]</span> <span class="hljs-selector-tag">nav</span> $ npx webpack serve <span class="hljs-attr">--port</span> <span class="hljs-number">3003</span><br></code></pre></td></tr></table></figure>
+
+<p>2、Home 首页<br>src&#x2F;HomeList</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">const</span> HomeList = (num) =&gt; &#123;<br> let <span class="hljs-built_in">str</span> = <span class="hljs-string">&#x27;&lt;ul&gt;&#x27;</span><br> <span class="hljs-keyword">for</span> (let i = <span class="hljs-number">0</span>; i &lt; num; i++) &#123;<br>  <span class="hljs-built_in">str</span> += <span class="hljs-string">&#x27;&lt;li&gt;item &#x27;</span> + i + <span class="hljs-string">&#x27;&lt;/li&gt;&#x27;</span><br>&#125;<br> <span class="hljs-built_in">str</span> += <span class="hljs-string">&#x27;&lt;/ul&gt;&#x27;</span><br> <span class="hljs-keyword">return</span> <span class="hljs-built_in">str</span><br>&#125;<br>export <span class="hljs-literal">default</span> HomeList<br></code></pre></td></tr></table></figure>
+<p>src&#x2F;index.js</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs livescript"><span class="hljs-keyword">import</span> HomeList <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./HomeList&#x27;</span><br>remotes: &#123;<br>    nav<br>	(<span class="hljs-string">&#x27;nav/Header&#x27;</span>)：remotes: &#123; nav &#125;Header    exposes: &#123;./Header<span class="hljs-string">&#x27;:&#x27;</span><span class="hljs-string">&#x27;&#125;</span><br><span class="hljs-string">import(&#x27;</span>nav<span class="hljs-regexp">/Header&#x27;).then((Header) =&gt; &#123;  /</span>/引用模块联邦的组件  这样导入别人组件的时候需要通过异步的方式因为 网络共享或者是模块载入 是由延迟的，所以要通过promise的方式（异步模块加载的形式）去引用它。<br> <span class="hljs-keyword">const</span> body = document.createElement(<span class="hljs-string">&#x27;div&#x27;</span>)<br> body.appendChild(Header.<span class="hljs-keyword">default</span>())<br> document.body.appendChild(body)<br> document.body.innerHTML += HomeList(<span class="hljs-number">5</span>)<br>&#125;)<br></code></pre></td></tr></table></figure>
+<p>webpack.config.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> <span class="hljs-title class_">HtmlWebpackPlugin</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;html-webpack-plugin&#x27;</span>)<br><span class="hljs-keyword">const</span> &#123;<br> <span class="hljs-title class_">ModuleFederationPlugin</span><br>&#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;webpack&#x27;</span>).<span class="hljs-property">container</span><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123;<br> <span class="hljs-attr">mode</span>: <span class="hljs-string">&#x27;production&#x27;</span>,<br> <span class="hljs-attr">entry</span>: <span class="hljs-string">&#x27;./src/index.js&#x27;</span>,<br> <span class="hljs-attr">plugins</span>: [<br>  <span class="hljs-keyword">new</span> <span class="hljs-title class_">HtmlWebpackPlugin</span>(),<br>  <span class="hljs-keyword">new</span> <span class="hljs-title class_">ModuleFederationPlugin</span>(&#123;<br>   <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;home&quot;</span>,<br>   <span class="hljs-attr">filename</span>: <span class="hljs-string">&quot;remoteEntry.js&quot;</span>,<br>   <span class="hljs-attr">remotes</span>: &#123;<br>    <span class="hljs-attr">nav</span>: <span class="hljs-string">&quot;nav@http://localhost:3003/remoteEntry.js&quot;</span>,    <span class="hljs-comment">// 引用第三方或别人写好的应用的路径。远端的服务路径</span><br>  &#125;,<br>   <span class="hljs-attr">exposes</span>: &#123;<br>    <span class="hljs-string">&#x27;./HomeList&#x27;</span>: <span class="hljs-string">&#x27;./src/HomeList.js&#x27;</span>,<br>  &#125;,<br>   <span class="hljs-attr">shared</span>: &#123;&#125;,<br> &#125;),<br>]<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>应用 webpack 运行服务：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-selector-attr">[felix]</span> <span class="hljs-selector-tag">nav</span> $ npx webpack serve <span class="hljs-attr">--port</span> <span class="hljs-number">3001</span><br></code></pre></td></tr></table></figure>
+
+<p>3、search 搜索<br>src&#x2F;index</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">all</span>([<span class="hljs-title function_">import</span>(<span class="hljs-string">&#x27;nav/Header&#x27;</span>), <span class="hljs-title function_">import</span>(<span class="hljs-string">&#x27;home/HomeList&#x27;</span>)])<br>.<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">[&#123;</span></span><br><span class="hljs-params"><span class="hljs-function">  <span class="hljs-keyword">default</span>: Header</span></span><br><span class="hljs-params"><span class="hljs-function">&#125;, &#123;</span></span><br><span class="hljs-params"><span class="hljs-function">  <span class="hljs-keyword">default</span>: HomeList</span></span><br><span class="hljs-params"><span class="hljs-function">&#125;]</span>) =&gt;</span> &#123;<br>  <span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-title function_">appendChild</span>(<span class="hljs-title class_">Header</span>())<br>  <span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-property">innerHTML</span> += <span class="hljs-title class_">HomeList</span>(<span class="hljs-number">4</span>)<br>&#125;)<br></code></pre></td></tr></table></figure>
+<p>webpack.config.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> <span class="hljs-title class_">HtmlWebpackPlugin</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;html-webpack-plugin&#x27;</span>)<br><span class="hljs-keyword">const</span> &#123;<br> <span class="hljs-title class_">ModuleFederationPlugin</span><br>&#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;webpack&#x27;</span>).<span class="hljs-property">container</span><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123;<br> <span class="hljs-attr">mode</span>: <span class="hljs-string">&#x27;production&#x27;</span>,<br> <span class="hljs-attr">entry</span>: <span class="hljs-string">&#x27;./src/index.js&#x27;</span>,<br> <span class="hljs-attr">plugins</span>: [<br>  <span class="hljs-keyword">new</span> <span class="hljs-title class_">HtmlWebpackPlugin</span>(),<br>  <span class="hljs-keyword">new</span> <span class="hljs-title class_">ModuleFederationPlugin</span>(&#123;<br>   <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;search&#x27;</span>,<br>   <span class="hljs-attr">filename</span>: <span class="hljs-string">&#x27;remoteEntry.js&#x27;</span>,<br>   <span class="hljs-attr">remotes</span>: &#123;<br>    <span class="hljs-attr">nav</span>: <span class="hljs-string">&quot;nav@http://localhost:3003/remoteEntry.js&quot;</span>,<br>    <span class="hljs-attr">home</span>: <span class="hljs-string">&quot;home@http://localhost:3001/remoteEntry.js&quot;</span><br>  &#125;,<br>   <span class="hljs-attr">exposes</span>: &#123;&#125;,<br>   <span class="hljs-attr">shared</span>: &#123;&#125;,<br> &#125;),<br>]<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>应用 webpack 运行服务：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-selector-attr">[felix]</span> <span class="hljs-selector-tag">nav</span> $ npx webpack serve <span class="hljs-attr">--port</span> <span class="hljs-number">3002</span><br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/" class="category-chain-item">前端工程化</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/webpack/">#webpack</a>
+      
+        <a href="/tags/%E5%89%8D%E7%AB%AF/">#前端</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>webpack (PWA)</div>
+      <div>http://example.com/2020/09/26/webpack/webpack 渐进式网络应用程序PWA/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>September 26, 2020</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/09/30/webpack/webpack%20%E7%83%AD%E5%8A%A0%E8%BD%BD%E5%8E%9F%E7%90%86/" title="webpack 热加载原理">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">webpack 热加载原理</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/09/22/webpack/webpack%20loader-plugin%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%8C%E7%BC%96%E5%86%99/" title="webpack loader-plugin区别，自定义">
+                        <span class="hidden-mobile">webpack loader-plugin区别，自定义</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

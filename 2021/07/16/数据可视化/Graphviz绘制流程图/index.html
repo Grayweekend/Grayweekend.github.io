@@ -1,0 +1,706 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、初识Graphviz1.1 简介 GraphViz是一个开源的图像可视化的软件，是贝尔实验室开发的一个开源的工具包，它使用一个特定的DSL(领域特定语言): dot作为脚本语言，然后使用布局引擎来解析此脚本，并完成自动布局。graphviz提供丰富的导出格式，如常用的图片格式，SVG，PDF格式等  1.2 环境搭建结合sublime Text插件实时编译预览  使用shift+command">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Graphviz绘制流程图">
+<meta property="og:url" content="http://example.com/2021/07/16/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/Graphviz%E7%BB%98%E5%88%B6%E6%B5%81%E7%A8%8B%E5%9B%BE/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、初识Graphviz1.1 简介 GraphViz是一个开源的图像可视化的软件，是贝尔实验室开发的一个开源的工具包，它使用一个特定的DSL(领域特定语言): dot作为脚本语言，然后使用布局引擎来解析此脚本，并完成自动布局。graphviz提供丰富的导出格式，如常用的图片格式，SVG，PDF格式等  1.2 环境搭建结合sublime Text插件实时编译预览  使用shift+command">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/208.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1124873-67688cd634d43522.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/209.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/210.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/211.jpg">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/212.jpg">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/213.jpg">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/214.jpg">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/215.jpg">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/216.jpg">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/217.jpg">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/218.jpg">
+<meta property="og:image" content="http://img2.tuicool.com/yEze6z.png%21web">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/219.jpg">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/220.jpg">
+<meta property="article:published_time" content="2021-07-16T15:08:47.000Z">
+<meta property="article:modified_time" content="2022-06-07T00:40:36.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Graphviz">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://poetries1.gitee.io/img-repo/2019/10/208.png">
+  
+  
+  
+  <title>Graphviz绘制流程图 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Graphviz绘制流程图"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-07-16 23:08" pubdate>
+          July 16, 2021 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.2k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          69 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Graphviz绘制流程图</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="一、初识Graphviz"><a href="#一、初识Graphviz" class="headerlink" title="一、初识Graphviz"></a>一、初识Graphviz</h2><h3 id="1-1-简介"><a href="#1-1-简介" class="headerlink" title="1.1 简介"></a>1.1 简介</h3><blockquote>
+<p><code>GraphViz</code>是一个开源的图像可视化的软件，是贝尔实验室开发的一个开源的工具包，它使用一个特定的<code>DSL</code>(领域特定语言): <code>dot</code>作为脚本语言，然后使用布局引擎来解析此脚本，并完成自动布局。<code>graphviz</code>提供丰富的导出格式，如常用的图片格式，<code>SVG</code>，<code>PDF</code>格式等</p>
+</blockquote>
+<h3 id="1-2-环境搭建"><a href="#1-2-环境搭建" class="headerlink" title="1.2 环境搭建"></a>1.2 环境搭建</h3><p><strong>结合sublime Text插件实时编译预览</strong></p>
+<blockquote>
+<p>使用<code>shift+command+p</code>，输入搜索选中<code>Package Control: Install Package</code>,然后输入<code>GraphViz</code>,然后安装<code>GraphVizPreview</code>即可，安装完成后，只要全选中代码，然后按<code>shift+command+g</code>就可以预览了。</p>
+</blockquote>
+<ul>
+<li>其实也可以直接用<code>brew</code>安装<code>GraphViz</code>,但是每次要敲命令行，太麻烦了</li>
+</ul>
+<p><strong><code>mac</code>下执行</strong></p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">brew </span><span class="hljs-keyword">install </span>graphviz<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>终端编译代码 <code>dot test.dot -T png -o test.png</code></p>
+</blockquote>
+<h2 id="二、使用"><a href="#二、使用" class="headerlink" title="二、使用"></a>二、使用</h2><blockquote>
+<p><code>Graphviz</code> 支持两类图：无向图（<code>graph</code>,用“ <code>- -</code> ”表示节点之间）和 有向图（<code>digraph</code>,用“ <code>-&gt;</code>” 表示节点之间）。graphviz包含3中元素，图，顶点和边。<strong>每个元素都可以具有各自的属性，用来定义字体，样式，颜色，形状等</strong></p>
+</blockquote>
+<p><strong><code>GraphViz</code>中包含多种布局</strong></p>
+<ul>
+<li><code>dot</code> 默认布局，用于有向图</li>
+<li><code>neato</code> 基于<code>spring-model</code>算法(<code>force-based</code>)</li>
+<li><code>twopo</code> 径向布局</li>
+<li><code>circo</code> 圆形布局</li>
+<li><code>fdp</code> 用于无向图</li>
+</ul>
+<h3 id="2-1-第一个graphviz图"><a href="#2-1-第一个graphviz图" class="headerlink" title="2.1 第一个graphviz图"></a>2.1 第一个graphviz图</h3><blockquote>
+<p>语法介绍 <a target="_blank" rel="noopener" href="http://graphs.grevian.org/reference">http://graphs.grevian.org/reference</a></p>
+</blockquote>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs abnf">digraph abc&#123;<br>  a<span class="hljs-comment">;</span><br>  b<span class="hljs-comment">;</span><br>  c<span class="hljs-comment">;</span><br>  d<span class="hljs-comment">;</span><br> <br>  a -&gt; b<span class="hljs-comment">;</span><br>  b -&gt; d<span class="hljs-comment">;</span><br>  c -&gt; d<span class="hljs-comment">;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/208.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>定义顶点和边的样式</strong></p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs abnf">digraph abc&#123;<br>  node [shape<span class="hljs-operator">=</span><span class="hljs-string">&quot;record&quot;</span>]<span class="hljs-comment">;</span><br>  edge [style<span class="hljs-operator">=</span><span class="hljs-string">&quot;dashed&quot;</span>]<span class="hljs-comment">;</span><br>  a<span class="hljs-comment">;</span><br>  b<span class="hljs-comment">;</span><br>  c<span class="hljs-comment">;</span><br>  d<span class="hljs-comment">;</span><br> <br>  a -&gt; b<span class="hljs-comment">;</span><br>  b -&gt; d<span class="hljs-comment">;</span><br>  c -&gt; d<span class="hljs-comment">;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/1124873-67688cd634d43522.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<blockquote>
+<p>进一步修改顶点和边样式,将顶点<code>a</code>的颜色改为淡绿色，并将<code>c</code>到<code>d</code>的边改为红色</p>
+</blockquote>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs css">digraph abc&#123;<br>  node <span class="hljs-selector-attr">[shape=<span class="hljs-string">&quot;record&quot;</span>]</span>;<br>  edge <span class="hljs-selector-attr">[style=<span class="hljs-string">&quot;dashed&quot;</span>]</span>;<br> <br>  <span class="hljs-selector-tag">a</span> <span class="hljs-selector-attr">[style=<span class="hljs-string">&quot;filled&quot;</span>, color=<span class="hljs-string">&quot;black&quot;</span>, fillcolor=<span class="hljs-string">&quot;chartreuse&quot;</span>]</span>;<br>  <span class="hljs-selector-tag">b</span>;<br>  c;<br>  d;<br> <br>  <span class="hljs-selector-tag">a</span> -&gt; <span class="hljs-selector-tag">b</span>;<br>  <span class="hljs-selector-tag">b</span> -&gt; d;<br>  c -&gt; d <span class="hljs-selector-attr">[color=<span class="hljs-string">&quot;red&quot;</span>]</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/209.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>其他例子</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs routeros">digraph demo&#123;<br>  <span class="hljs-attribute">label</span>=<span class="hljs-string">&quot;儿茶酚胺合成代谢路径&quot;</span>;<br><br>  酪氨酸 -&gt; L多巴 -&gt; 多巴胺 -&gt; 去甲肾上腺素 -&gt; 肾上腺素;<br><br>  下丘脑 -&gt; 多巴胺;<br>  交感神经元 -&gt; 去甲肾上腺素;<br>  肾上腺髓质 -&gt; 去甲肾上腺素,肾上腺素;<br><br>  酪氨酸 [<span class="hljs-attribute">label</span>=<span class="hljs-string">&quot;酪氨酸&quot;</span>,color=green];<br>  多巴胺 [<span class="hljs-attribute">label</span>=<span class="hljs-string">&quot;多巴胺&quot;</span>, <span class="hljs-attribute">color</span>=red];<br>  肾上腺素 [<span class="hljs-attribute">label</span>=<span class="hljs-string">&quot;肾上腺素&quot;</span>, <span class="hljs-attribute">color</span>=red];<br><br>  下丘脑 [<span class="hljs-attribute">shape</span>=box];<br>  交感神经元 [<span class="hljs-attribute">shape</span>=box];<br>  肾上腺髓质 [<span class="hljs-attribute">shape</span>=box];<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/210.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="2-2-带标签"><a href="#2-2-带标签" class="headerlink" title="2.2 带标签"></a>2.2 带标签</h3><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs maxima">digraph &#123;<br><br>    player[<span class="hljs-built_in">label</span> = <span class="hljs-string">&quot;player&quot;</span>, <span class="hljs-built_in">color</span> = Blue, fontcolor = Red, fontsize = <span class="hljs-number">24</span>, shape = <span class="hljs-built_in">box</span>];<br>    game[<span class="hljs-built_in">label</span> = <span class="hljs-string">&quot;game&quot;</span>, <span class="hljs-built_in">color</span> = Red, fontcolor = Blue, fontsize = <span class="hljs-number">24</span>, shape = <span class="hljs-built_in">ellipse</span>];<br><br>    player -&gt; game[<span class="hljs-built_in">label</span> = <span class="hljs-string">&quot;play&quot;</span>]<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/211.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="2-3-子视图"><a href="#2-3-子视图" class="headerlink" title="2.3 子视图"></a>2.3 子视图</h3><figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs xl">digraph &#123;<br><br>    label = visitNet<br><br>    rankdir = LR<br><br>    node[<span class="hljs-built_in">color</span> = Red, fontsize = <span class="hljs-number">24</span>, shape = box]<br>    edge[<span class="hljs-built_in">color</span> = Blue, style = <span class="hljs-string">&quot;dashed&quot;</span>]<br><br>    user[style = <span class="hljs-string">&quot;filled&quot;</span>, <span class="hljs-built_in">color</span> = <span class="hljs-string">&quot;yellow&quot;</span>, fillcolor = <span class="hljs-string">&quot;chartreuse&quot;</span>]<br>    subgraph cluster_cd&#123;<br>        label = <span class="hljs-string">&quot;server and browser&quot;</span><br>        bgcolor = green;<br><br>        <span class="hljs-function"><span class="hljs-title">browser</span> -&gt;</span> server<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-title">user</span> -&gt;</span> computer;<br>    <span class="hljs-function"><span class="hljs-title">computer</span> -&gt;</span> browser;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/212.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="2-4-结构视图"><a href="#2-4-结构视图" class="headerlink" title="2.4 结构视图"></a>2.4 结构视图</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs css">digraph &#123;<br><br>    node<span class="hljs-selector-attr">[shape = record]</span>;<br>    struct1<span class="hljs-selector-attr">[label = <span class="hljs-string">&quot;&lt;f0&gt; left|&lt;f1&gt; mid&amp;#92; dle|&lt;f2&gt; right&quot;</span>]</span>;<br>    struct2<span class="hljs-selector-attr">[label = <span class="hljs-string">&quot;&lt;f0&gt; one|&lt;f1&gt; two&quot;</span>]</span>;<br>    struct3<span class="hljs-selector-attr">[label = <span class="hljs-string">&quot;hello&amp;#92;nworld | &#123;b|&#123;c|&lt;here&gt; d|e&#125;|f&#125;|g|h&quot;</span>]</span>;<br>    struct1:f1 -&gt; struct2:f0;<br>    struct1:f2 -&gt; struct3:here;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/213.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="2-5-树形结构"><a href="#2-5-树形结构" class="headerlink" title="2.5 树形结构"></a>2.5 树形结构</h3><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs abnf">digraph tree &#123;<br>  <br>  fontname <span class="hljs-operator">=</span> <span class="hljs-string">&quot;PingFang-SC-Light&quot;</span><br>  fontsize <span class="hljs-operator">=</span> <span class="hljs-number">24</span><br><br>  node[shape <span class="hljs-operator">=</span> <span class="hljs-string">&quot;plaintext&quot;</span>]<br><br>  <span class="hljs-number">1</span> -&gt; <span class="hljs-number">2</span><span class="hljs-comment">;</span><br>  <span class="hljs-number">1</span> -&gt; <span class="hljs-number">3</span><span class="hljs-comment">;</span><br>  <span class="hljs-number">2</span> -&gt; <span class="hljs-number">4</span><span class="hljs-comment">;</span><br>  <span class="hljs-number">2</span> -&gt; <span class="hljs-number">5</span><span class="hljs-comment">;</span><br>  <span class="hljs-number">3</span> -&gt; <span class="hljs-number">6</span><span class="hljs-comment">;</span><br>  <span class="hljs-number">3</span> -&gt; <span class="hljs-number">7</span><span class="hljs-comment">;</span><br>  <span class="hljs-number">4</span> -&gt; <span class="hljs-number">8</span><span class="hljs-comment">;</span><br>  <span class="hljs-number">4</span> -&gt; <span class="hljs-number">9</span><span class="hljs-comment">;</span><br>  <span class="hljs-number">5</span> -&gt; <span class="hljs-number">10</span><span class="hljs-comment">;</span><br>  <span class="hljs-number">5</span> -&gt; <span class="hljs-number">11</span><span class="hljs-comment">;</span><br>  <span class="hljs-number">6</span> -&gt; <span class="hljs-number">12</span><span class="hljs-comment">;</span><br>  <span class="hljs-number">6</span> -&gt; <span class="hljs-number">13</span><span class="hljs-comment">;</span><br>  <span class="hljs-number">7</span> -&gt; <span class="hljs-number">14</span><span class="hljs-comment">;</span><br>  <span class="hljs-number">7</span> -&gt; <span class="hljs-number">15</span><span class="hljs-comment">;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/214.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="2-6-时序图"><a href="#2-6-时序图" class="headerlink" title="2.6 时序图"></a>2.6 时序图</h3><figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs xl">digraph <span class="hljs-built_in">time</span> &#123;<br><br>    rankdir = <span class="hljs-string">&quot;LR&quot;</span>;<br>    node[shape = <span class="hljs-string">&quot;point&quot;</span>, width = <span class="hljs-number">0</span>, height = <span class="hljs-number">0</span>];<br>    edge[arrowhead = <span class="hljs-string">&quot;none&quot;</span>, style = <span class="hljs-string">&quot;dashed&quot;</span>];<br><br>    &#123;<br>        rank = <span class="hljs-string">&quot;same&quot;</span><br>        edge[style = <span class="hljs-string">&quot;solided&quot;</span>];<br>        APP[shape = <span class="hljs-string">&quot;plaintext&quot;</span>];<br>        APP -&gt; <span class="hljs-function"><span class="hljs-title">step00</span> -&gt;</span> <span class="hljs-function"><span class="hljs-title">step01</span> -&gt;</span> <span class="hljs-function"><span class="hljs-title">step02</span> -&gt;</span> <span class="hljs-function"><span class="hljs-title">step03</span> -&gt;</span> <span class="hljs-function"><span class="hljs-title">step04</span> -&gt;</span> step05;<br>    &#125;<br>    <br>    &#123;<br>        rank=<span class="hljs-string">&quot;same&quot;</span>;<br>        edge[style=<span class="hljs-string">&quot;solided&quot;</span>];<br>        SDK[shape=<span class="hljs-string">&quot;plaintext&quot;</span>];<br>        SDK -&gt; <span class="hljs-function"><span class="hljs-title">step10</span> -&gt;</span> <span class="hljs-function"><span class="hljs-title">step11</span> -&gt;</span> <span class="hljs-function"><span class="hljs-title">step12</span> -&gt;</span> <span class="hljs-function"><span class="hljs-title">step13</span> -&gt;</span> <span class="hljs-function"><span class="hljs-title">step14</span> -&gt;</span> step15;<br>    &#125;<br>    &#123;<br>        rank=<span class="hljs-string">&quot;same&quot;</span>;<br>        edge[style=<span class="hljs-string">&quot;solided&quot;</span>];<br>        AliPay[shape=<span class="hljs-string">&quot;plaintext&quot;</span>];<br>        A<span class="hljs-function"><span class="hljs-title">liPay</span> -&gt;</span> <span class="hljs-function"><span class="hljs-title">step20</span> -&gt;</span> <span class="hljs-function"><span class="hljs-title">step21</span> -&gt;</span> <span class="hljs-function"><span class="hljs-title">step22</span> -&gt;</span> <span class="hljs-function"><span class="hljs-title">step23</span> -&gt;</span> <span class="hljs-function"><span class="hljs-title">step24</span> -&gt;</span> step25;<br>    &#125;<br>    &#123;<br>        rank=<span class="hljs-string">&quot;same&quot;</span>;<br>        edge[style=<span class="hljs-string">&quot;solided&quot;</span>];<br>        Server[shape=<span class="hljs-string">&quot;plaintext&quot;</span>];<br>        S<span class="hljs-function"><span class="hljs-title">erver</span> -&gt;</span> <span class="hljs-function"><span class="hljs-title">step30</span> -&gt;</span> <span class="hljs-function"><span class="hljs-title">step31</span> -&gt;</span> <span class="hljs-function"><span class="hljs-title">step32</span> -&gt;</span> <span class="hljs-function"><span class="hljs-title">step33</span> -&gt;</span> <span class="hljs-function"><span class="hljs-title">step34</span> -&gt;</span> step35;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-title">step00</span> -&gt;</span> step10 [label=<span class="hljs-string">&quot;sends order info&quot;</span>, arrowhead=<span class="hljs-string">&quot;normal&quot;</span>];<br>    <span class="hljs-function"><span class="hljs-title">step11</span> -&gt;</span> step21 [label=<span class="hljs-string">&quot;open AliPay&quot;</span>, arrowhead=<span class="hljs-string">&quot;normal&quot;</span>];<br>    <span class="hljs-function"><span class="hljs-title">step22</span> -&gt;</span> step12 [label=<span class="hljs-string">&quot;pay success&quot;</span>, arrowhead=<span class="hljs-string">&quot;normal&quot;</span>];<br>    <span class="hljs-function"><span class="hljs-title">step13</span> -&gt;</span> step03 [label=<span class="hljs-string">&quot;pay success&quot;</span>, arrowhead=<span class="hljs-string">&quot;normal&quot;</span>];<br>    <span class="hljs-function"><span class="hljs-title">step24</span> -&gt;</span> step34 [label=<span class="hljs-string">&quot;pay success&quot;</span>, arrowhead=<span class="hljs-string">&quot;normal&quot;</span>];<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/215.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="2-7-一个hash表的数据结构"><a href="#2-7-一个hash表的数据结构" class="headerlink" title="2.7 一个hash表的数据结构"></a>2.7 一个hash表的数据结构</h3><blockquote>
+<p><code>hash</code>表内容</p>
+</blockquote>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">struct</span> st_hash_type &#123;<br>    <span class="hljs-built_in">int</span> (*compare) ();<br>    <span class="hljs-built_in">int</span> (*hash) ();<br>&#125;;<br> <br><span class="hljs-keyword">struct</span> st_table_entry &#123;<br>    unsigned <span class="hljs-built_in">int</span> hash;<br>    <span class="hljs-built_in">char</span> *key;<br>    <span class="hljs-built_in">char</span> *<span class="hljs-keyword">record</span>;<br>    st_table_entry *next;<br>&#125;;<br> <br><span class="hljs-keyword">struct</span> st_table &#123;<br>    <span class="hljs-keyword">struct</span> st_hash_type *type;<br>    <span class="hljs-built_in">int</span> num_bins;<br><span class="hljs-comment">/* slot count */</span><br>    <span class="hljs-built_in">int</span> num_entries;<br><span class="hljs-comment">/* total number of entries */</span><br>    <span class="hljs-keyword">struct</span> st_table_entry **bins;<br><span class="hljs-comment">/* slot */</span><br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>脚本如下：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs routeros">digraph st2&#123;<br>  fontname = <span class="hljs-string">&quot;Verdana&quot;</span>;<br>  fontsize = 10;<br>  <span class="hljs-attribute">rankdir</span>=TB;<br> <br>  node [fontname = <span class="hljs-string">&quot;Verdana&quot;</span>, fontsize = 10, <span class="hljs-attribute">color</span>=<span class="hljs-string">&quot;skyblue&quot;</span>, <span class="hljs-attribute">shape</span>=<span class="hljs-string">&quot;record&quot;</span>];<br> <br>  edge [fontname = <span class="hljs-string">&quot;Verdana&quot;</span>, fontsize = 10, <span class="hljs-attribute">color</span>=<span class="hljs-string">&quot;crimson&quot;</span>, <span class="hljs-attribute">style</span>=<span class="hljs-string">&quot;solid&quot;</span>];<br> <br>  st_hash_type [<span class="hljs-attribute">label</span>=<span class="hljs-string">&quot;&#123;&lt;head&gt;st_hash_type|(*compare)|(*hash)&#125;&quot;</span>];<br>  st_table_entry [<span class="hljs-attribute">label</span>=<span class="hljs-string">&quot;&#123;&lt;head&gt;st_table_entry|hash|key|record|&lt;next&gt;next&#125;&quot;</span>];<br>  st_table [<span class="hljs-attribute">label</span>=<span class="hljs-string">&quot;&#123;st_table|&lt;type&gt;type|num_bins|num_entries|&lt;bins&gt;bins&#125;&quot;</span>];<br> <br>  st_table:bins -&gt; st_table_entry:head;<br>  st_table:type -&gt; st_hash_type:head;<br>  st_table_entry:next -&gt; st_table_entry:head [<span class="hljs-attribute">style</span>=<span class="hljs-string">&quot;dashed&quot;</span>, <span class="hljs-attribute">color</span>=<span class="hljs-string">&quot;forestgreen&quot;</span>];<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/216.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="2-8-模块的生命周期图"><a href="#2-8-模块的生命周期图" class="headerlink" title="2.8 模块的生命周期图"></a>2.8 模块的生命周期图</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs routeros">digraph module_lc&#123;<br>  <span class="hljs-attribute">rankdir</span>=TB;<br>  fontname = <span class="hljs-string">&quot;Microsoft YaHei&quot;</span>;<br>  fontsize = 12;<br> <br>  node [fontname = <span class="hljs-string">&quot;Microsoft YaHei&quot;</span>, fontsize = 12, shape = <span class="hljs-string">&quot;Mrecord&quot;</span>, <span class="hljs-attribute">color</span>=<span class="hljs-string">&quot;skyblue&quot;</span>, <span class="hljs-attribute">style</span>=<span class="hljs-string">&quot;filled&quot;</span>];<br>  edge [fontname = <span class="hljs-string">&quot;Microsoft YaHei&quot;</span>, fontsize = 12, <span class="hljs-attribute">color</span>=<span class="hljs-string">&quot;darkgreen&quot;</span> ];<br> <br>  installed [<span class="hljs-attribute">label</span>=<span class="hljs-string">&quot;已安装状态&quot;</span>];<br>  resolved [<span class="hljs-attribute">label</span>=<span class="hljs-string">&quot;已就绪状态&quot;</span>];<br>  uninstalled [<span class="hljs-attribute">label</span>=<span class="hljs-string">&quot;已卸载状态&quot;</span>];<br>  starting [<span class="hljs-attribute">label</span>=<span class="hljs-string">&quot;正在启动&quot;</span>];<br>  active [<span class="hljs-attribute">label</span>=<span class="hljs-string">&quot;已激活(运行)状态&quot;</span>];<br>  stopping [<span class="hljs-attribute">label</span>=<span class="hljs-string">&quot;正在停止&quot;</span>];<br>  start [<span class="hljs-attribute">label</span>=<span class="hljs-string">&quot;&quot;</span>, <span class="hljs-attribute">shape</span>=<span class="hljs-string">&quot;circle&quot;</span>, <span class="hljs-attribute">width</span>=0.5, <span class="hljs-attribute">fixedsize</span>=<span class="hljs-literal">true</span>, <span class="hljs-attribute">style</span>=<span class="hljs-string">&quot;filled&quot;</span>, <span class="hljs-attribute">color</span>=<span class="hljs-string">&quot;black&quot;</span>];<br> <br>  start -&gt; installed [<span class="hljs-attribute">label</span>=<span class="hljs-string">&quot;安装&quot;</span>];<br>  installed -&gt; uninstalled [<span class="hljs-attribute">label</span>=<span class="hljs-string">&quot;卸载&quot;</span>];<br>  installed -&gt; resolved [<span class="hljs-attribute">label</span>=<span class="hljs-string">&quot;准备&quot;</span>];<br>  installed -&gt; installed [<span class="hljs-attribute">label</span>=<span class="hljs-string">&quot;更新&quot;</span>];<br>  resolved -&gt; installed [<span class="hljs-attribute">label</span>=<span class="hljs-string">&quot;更新&quot;</span>];<br>  resolved -&gt; uninstalled [<span class="hljs-attribute">label</span>=<span class="hljs-string">&quot;卸载&quot;</span>];<br>  resolved -&gt; starting [<span class="hljs-attribute">label</span>=<span class="hljs-string">&quot;启动&quot;</span>];<br>  starting -&gt; active [<span class="hljs-attribute">label</span>=<span class="hljs-string">&quot;&quot;</span>];<br>  active -&gt; stopping [<span class="hljs-attribute">label</span>=<span class="hljs-string">&quot;停止&quot;</span>];<br>  stopping -&gt; resolved [<span class="hljs-attribute">label</span>=<span class="hljs-string">&quot;&quot;</span>];<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/217.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="2-9-简单的UML类图"><a href="#2-9-简单的UML类图" class="headerlink" title="2.9 简单的UML类图"></a>2.9 简单的UML类图</h3><figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs prolog">digraph <span class="hljs-symbol">G</span>&#123;<br> <br>  fontname = <span class="hljs-string">&quot;Courier New&quot;</span><br>  fontsize = <span class="hljs-number">10</span><br> <br>  node [ fontname = <span class="hljs-string">&quot;Courier New&quot;</span>, fontsize = <span class="hljs-number">10</span>, shape = <span class="hljs-string">&quot;record&quot;</span> ];<br>  edge [ fontname = <span class="hljs-string">&quot;Courier New&quot;</span>, fontsize = <span class="hljs-number">10</span> ];<br> <br>  <span class="hljs-symbol">Animal</span> [ label = <span class="hljs-string">&quot;&#123;Animal |+ name : String\\l+ age : int\\l|+ die() : void\\l&#125;&quot;</span> ];<br> <br>      subgraph clusterAnimalImpl&#123;<br>          bgcolor=<span class="hljs-string">&quot;yellow&quot;</span><br>          <span class="hljs-symbol">Dog</span> [ label = <span class="hljs-string">&quot;&#123;Dog||+ bark() : void\\l&#125;&quot;</span> ];<br>          <span class="hljs-symbol">Cat</span> [ label = <span class="hljs-string">&quot;&#123;Cat||+ meow() : void\\l&#125;&quot;</span> ];<br>      &#125;;<br> <br>  edge [ arrowhead = <span class="hljs-string">&quot;empty&quot;</span> ];<br> <br>  <span class="hljs-symbol">Dog</span>-&gt;<span class="hljs-symbol">Animal</span>;<br>  <span class="hljs-symbol">Cat</span>-&gt;<span class="hljs-symbol">Animal</span>;<br>  <span class="hljs-symbol">Dog</span>-&gt;<span class="hljs-symbol">Cat</span> [arrowhead=<span class="hljs-string">&quot;none&quot;</span>, label=<span class="hljs-string">&quot;0..*&quot;</span>];<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/218.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="2-10-有限状态机"><a href="#2-10-有限状态机" class="headerlink" title="2.10 有限状态机"></a>2.10 有限状态机</h3><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">digraph </span>finite_state_machine &#123;<br>    rankdir=LR;<br>    size=<span class="hljs-string">&quot;8,5&quot;</span><br>    node [<span class="hljs-keyword">shape </span>= circle];<br>    <span class="hljs-built_in">S0</span> -&gt; <span class="hljs-built_in">S1</span> [ label = <span class="hljs-string">&quot;Lift Nozzle&quot;</span> ]<br>    <span class="hljs-built_in">S1</span> -&gt; <span class="hljs-built_in">S0</span> [ label = <span class="hljs-string">&quot;Replace Nozzle&quot;</span> ]<br>    <span class="hljs-built_in">S1</span> -&gt; <span class="hljs-built_in">S2</span> [ label = <span class="hljs-string">&quot;Authorize Pump&quot;</span> ]<br>    <span class="hljs-built_in">S2</span> -&gt; <span class="hljs-built_in">S0</span> [ label = <span class="hljs-string">&quot;Replace Nozzle&quot;</span> ]<br>    <span class="hljs-built_in">S2</span> -&gt; <span class="hljs-built_in">S3</span> [ label = <span class="hljs-string">&quot;Pull Trigger&quot;</span> ]<br>    <span class="hljs-built_in">S3</span> -&gt; <span class="hljs-built_in">S2</span> [ label = <span class="hljs-string">&quot;Release Trigger&quot;</span> ]<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="http://img2.tuicool.com/yEze6z.png%21web" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="三、语法"><a href="#三、语法" class="headerlink" title="三、语法"></a>三、语法</h2><blockquote>
+<p>完整列表 <a target="_blank" rel="noopener" href="http://graphviz.org/doc/info/attrs.html">http://graphviz.org/doc/info/attrs.html</a></p>
+</blockquote>
+<h3 id="3-1-图像属性"><a href="#3-1-图像属性" class="headerlink" title="3.1 图像属性"></a>3.1 图像属性</h3><ul>
+<li><code>label=&quot;My Graph&quot;;</code> 给图像设置标签</li>
+<li><code>rankdir=LR</code>; 将图片由原来的从上到下布局变成从左到右布局</li>
+<li><code>&#123;rank=same; a, b, c &#125;</code> 将一组元素放到同一个<code>level</code></li>
+<li><code>splines=&quot;line&quot;</code>; 让边框变为直线，没有曲线和锐角</li>
+<li><code>K=0.6</code>; 用来在布局中影响<code>spring</code>属性，<code>spring</code>属性可以用于将节点往外推，这个在<code>twopi</code>和<code>sfdp</code>布局中很有用。</li>
+</ul>
+<h3 id="3-2-交点属性"><a href="#3-2-交点属性" class="headerlink" title="3.2 交点属性"></a>3.2 交点属性</h3><ul>
+<li><code>[label=&quot;Some Label&quot;]</code> 给交点打标签</li>
+<li><code>[color=&quot;red&quot;]</code> 给交点上色</li>
+<li><code>[fillcolor=&quot;blue&quot;]</code> 设置交点的填充色</li>
+</ul>
+<h3 id="3-3-边的属性"><a href="#3-3-边的属性" class="headerlink" title="3.3 边的属性"></a>3.3 边的属性</h3><ul>
+<li><code>[label=&quot;Some Label&quot;]</code> 给边设置标签 (设置路径权重的时候很有用)</li>
+<li><code>[color=&quot;red&quot;]</code> # 给交点上色 (标示路径的时候很有用)</li>
+<li><code>[penwidth=2.0]</code> # 给边适配厚度，标示路径的时候很有用。</li>
+</ul>
+<h3 id="3-4-尺寸-背景颜色"><a href="#3-4-尺寸-背景颜色" class="headerlink" title="3.4 尺寸, 背景颜色"></a>3.4 尺寸, 背景颜色</h3><ul>
+<li><code>fixedsize=true</code>;</li>
+<li><code>size=&quot;1,1&quot;</code>;</li>
+<li><code>resolution=72</code>;</li>
+<li><code>bgcolor=&quot;#C6CFD532&quot;</code>;</li>
+</ul>
+<h2 id="四、一些技巧"><a href="#四、一些技巧" class="headerlink" title="四、一些技巧"></a>四、一些技巧</h2><h3 id="4-1-插入图片"><a href="#4-1-插入图片" class="headerlink" title="4.1 插入图片"></a>4.1 插入图片</h3><figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xl">digraph &#123;<br><br>    c[shape = none, image = <span class="hljs-string">&quot;./pic.png&quot;</span>]<br>    <span class="hljs-function"><span class="hljs-title">a</span> -&gt;</span> <span class="hljs-function"><span class="hljs-title">b</span> -&gt;</span> c;<br>    <span class="hljs-function"><span class="hljs-title">c</span> -&gt;</span> d;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/219.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<blockquote>
+<p>注：需要用命令行<code>dot test.dot -T png -o test.png</code>生成，前提是用<code>brew</code>安装了<code>GraphViz</code></p>
+</blockquote>
+<h3 id="4-2-统一节点和连线"><a href="#4-2-统一节点和连线" class="headerlink" title="4.2 统一节点和连线"></a>4.2 统一节点和连线</h3><figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs xl">digraph &#123;<br><br>    node[<span class="hljs-built_in">color</span> = Red, fontsize = <span class="hljs-number">24</span>, shape = box]<br>    edge[<span class="hljs-built_in">color</span> = Blue, style = <span class="hljs-string">&quot;dashed&quot;</span>]<br><br>    c[shape = none, image = <span class="hljs-string">&quot;./pic.png&quot;</span>]<br>    <span class="hljs-function"><span class="hljs-title">a</span> -&gt;</span> <span class="hljs-function"><span class="hljs-title">b</span> -&gt;</span> c;<br>    <span class="hljs-function"><span class="hljs-title">c</span> -&gt;</span> d;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/220.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" class="category-chain-item">数据可视化</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Graphviz/">#Graphviz</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Graphviz绘制流程图</div>
+      <div>http://example.com/2021/07/16/数据可视化/Graphviz绘制流程图/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>July 16, 2021</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/07/25/html+css+js+ts/5-Ts-interface%E4%B8%8Etype%E5%8C%BA%E5%88%AB/" title="TS-interface与type区别">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">TS-interface与type区别</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/06/23/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/echart%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" title="echart使用小结">
+                        <span class="hidden-mobile">echart使用小结</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

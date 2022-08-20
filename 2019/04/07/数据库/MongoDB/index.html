@@ -1,0 +1,751 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、环境搭建1.1 mongodb简介 MongoDB旨在为WEB应用提供可扩展的高性能数据存储解决方案 MongoDB 将数据存储为一个文档，数据结构由键值(key&#x3D;&gt;value)对组成。MongoDB 文档类似于 JSON对象。字段值可以包含其他文档，数组及文档数组   主要特点  高可扩展性 分布式存储 低成本 结构灵活  1.2 window下mongodb环境搭建 下载安装包或压缩">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mongodb">
+<meta property="og:url" content="http://example.com/2019/04/07/%E6%95%B0%E6%8D%AE%E5%BA%93/MongoDB/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、环境搭建1.1 mongodb简介 MongoDB旨在为WEB应用提供可扩展的高性能数据存储解决方案 MongoDB 将数据存储为一个文档，数据结构由键值(key&#x3D;&gt;value)对组成。MongoDB 文档类似于 JSON对象。字段值可以包含其他文档，数组及文档数组   主要特点  高可扩展性 分布式存储 低成本 结构灵活  1.2 window下mongodb环境搭建 下载安装包或压缩">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://www.runoob.com/wp-content/uploads/2013/10/crud-annotated-document.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/12/182.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/12/183.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/12/184.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/349.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/350.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/351.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/352.png">
+<meta property="og:image" content="http://www.runoob.com/wp-content/uploads/2013/10/Figure-1-Mapping-Table-to-Collection-1.png">
+<meta property="article:published_time" content="2019-04-07T12:31:27.000Z">
+<meta property="article:modified_time" content="2022-06-06T12:17:48.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="mongodb">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://www.runoob.com/wp-content/uploads/2013/10/crud-annotated-document.png">
+  
+  
+  
+  <title>mongodb - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="mongodb"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-04-07 20:31" pubdate>
+          April 7, 2019 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.6k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          55 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">mongodb</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="一、环境搭建"><a href="#一、环境搭建" class="headerlink" title="一、环境搭建"></a>一、环境搭建</h1><h2 id="1-1-mongodb简介"><a href="#1-1-mongodb简介" class="headerlink" title="1.1 mongodb简介"></a>1.1 mongodb简介</h2><ul>
+<li><code>MongoDB</code>旨在为WEB应用提供可扩展的高性能数据存储解决方案</li>
+<li><code>MongoDB</code> 将数据存储为一个文档，数据结构由键值(<code>key=&gt;value</code>)对组成。<code>MongoDB</code> 文档类似于 <code>JSON</code>对象。字段值可以包含其他文档，数组及文档数组</li>
+</ul>
+<p><img src="http://www.runoob.com/wp-content/uploads/2013/10/crud-annotated-document.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>主要特点</strong></p>
+<ul>
+<li>高可扩展性</li>
+<li>分布式存储</li>
+<li>低成本</li>
+<li>结构灵活</li>
+</ul>
+<h2 id="1-2-window下mongodb环境搭建"><a href="#1-2-window下mongodb环境搭建" class="headerlink" title="1.2 window下mongodb环境搭建"></a>1.2 window下mongodb环境搭建</h2><ul>
+<li>下载安装包或压缩包</li>
+<li>添加<code>db</code>存储和日志存储文件夹</li>
+<li>添加服务、配置环境变量、启动<code>Mongo</code></li>
+</ul>
+<blockquote>
+<p>配置演示</p>
+</blockquote>
+<ul>
+<li>在任意目录创建几个文件夹</li>
+</ul>
+<p><img src="https://poetries1.gitee.io/img-repo/2019/12/182.png" srcset="/img/loading.gif" lazyload alt="img"><br><img src="https://poetries1.gitee.io/img-repo/2019/12/183.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>通过命令行启动服务</strong></p>
+<blockquote>
+<p>配置环境变量</p>
+</blockquote>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs livescript"><span class="hljs-comment">#  --dbpath指定数据存储位置</span><br>C:<span class="hljs-string">\Program</span> Files<span class="hljs-string">\MongoDB\Server\3.4\bin\mongod</span> --dbpath d:<span class="hljs-string">\mongodb\data</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://poetries1.gitee.io/img-repo/2019/12/184.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>通配置启动服务</strong></p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># 配置d:\mongodb\etc\mongodb.conf</span><br><br><span class="hljs-comment">#数据库路径</span><br><span class="hljs-attr">dbpath</span>=d:\mongodb\data\<br><br><span class="hljs-comment">#日志输出文件路径</span><br><span class="hljs-attr">logpath</span>=d:\mongodb\logs\mongodb.log<br><br><span class="hljs-comment">#错误日志采用追加模式，配置这个选项后mongodb的日志会追加到现有的日志文件，而不是从新创建一个新文件</span><br><span class="hljs-attr">logappend</span>=<span class="hljs-literal">true</span><br><br><span class="hljs-comment">#启用日志文件，默认启用</span><br><span class="hljs-attr">journal</span>=<span class="hljs-literal">true</span><br><br><span class="hljs-comment">#这个选项可以过滤掉一些无用的日志信息，若需要调试使用请设置为false</span><br><span class="hljs-attr">quiet</span>=<span class="hljs-literal">true</span><br><br><span class="hljs-comment">#端口号 默认为27017</span><br><span class="hljs-attr">port</span>=<span class="hljs-number">27017</span><br><br><span class="hljs-comment">#指定存储引擎（默认先不加此引擎，如果报错了，大家在加进去）</span><br><span class="hljs-attr">storageEngine</span>=mmapv1<br><br><span class="hljs-comment">#http配置 开启这个服务才可以在网页中访问 端口28017</span><br><span class="hljs-attr">httpinterface</span>=<span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>启动方式</li>
+</ul>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs livescript">C:<span class="hljs-string">\Program</span> Files<span class="hljs-string">\MongoDB\Server\3.4\bin\mongod</span> --config d:<span class="hljs-string">\mongodb\data</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/349.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>更加简洁的启动方式</strong></p>
+<blockquote>
+<p>安装到<code>window</code>的服务里面，打开Windows看一下</p>
+</blockquote>
+<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dsconfig"><span class="hljs-string">C</span>:\<span class="hljs-string">Program</span> <span class="hljs-string">Files</span>\<span class="hljs-string">MongoDB</span>\<span class="hljs-string">Server</span>\<span class="hljs-string">3</span>.<span class="hljs-string">4</span>\<span class="hljs-string">bin</span>\<span class="hljs-string">mongod</span> <span class="hljs-built_in">--config</span> <span class="hljs-string">d</span>:\<span class="hljs-string">mongodb</span>\<span class="hljs-string">data</span> <span class="hljs-built_in">--install</span> <span class="hljs-built_in">--serviceName</span> <span class="hljs-string">&quot;MongoDB&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/350.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>使用MongoVue连接数据库</strong></p>
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/351.png" srcset="/img/loading.gif" lazyload alt="img"><br><img src="https://poetries1.gitee.io/img-repo/2019/10/352.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="1-3-linux下mongodb环境搭建"><a href="#1-3-linux下mongodb环境搭建" class="headerlink" title="1.3 linux下mongodb环境搭建"></a>1.3 linux下mongodb环境搭建</h2><ul>
+<li>下载安装包或压缩包</li>
+<li>添加<code>db</code>存储和日志存储文件夹</li>
+<li>添加服务、配置环境变量、启动<code>Mongo</code></li>
+</ul>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-comment"># 远程登录服务器</span><br><span class="hljs-attribute">ssh</span> root@<span class="hljs-number">123.142.25.365</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>上传本地的安装包</p>
+</blockquote>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs gradle"># 上传文件夹，传文件不需要r<br>scp <span class="hljs-regexp">/mongodb/</span>... -r root@<span class="hljs-number">123.142</span>.<span class="hljs-number">25.365</span>:/home<br><br># 传到服务器的<span class="hljs-regexp">/home/</span><br># 在指定的目录创建启动需要的文件<br><br>$ cd <span class="hljs-regexp">/home/</span><br>$ mkdir etc logs data<br>$ touch logs<span class="hljs-regexp">/mongodb.log etc/m</span>ongo.conf<br># <span class="hljs-regexp">/home/</span>etc/mongo.conf配置<br><br>dbpath=<span class="hljs-regexp">/home/m</span>ongodb/data<br>logpath=<span class="hljs-regexp">/mongodb/</span>logs/mongodb.log<br>logappend=<span class="hljs-keyword">true</span><br>journal=<span class="hljs-keyword">true</span><br>quiet=<span class="hljs-keyword">true</span><br>port=<span class="hljs-number">2701</span><br># 启动服务<br>mongod -f <span class="hljs-regexp">/home/m</span>ongodb<span class="hljs-regexp">/etc/m</span>ongo.conf<br># 创建软连接<br><br>ln -s <span class="hljs-regexp">/home/m</span>ongodb<span class="hljs-regexp">/bin/m</span>ongo <span class="hljs-regexp">/usr/</span>local<span class="hljs-regexp">/bin/m</span>ongo<br><br>ln -s <span class="hljs-regexp">/home/m</span>ongodb<span class="hljs-regexp">/bin/m</span>ongod <span class="hljs-regexp">/usr/</span>local<span class="hljs-regexp">/bin/m</span>ongod<br></code></pre></td></tr></table></figure>
+
+<h1 id="二、基本概念"><a href="#二、基本概念" class="headerlink" title="二、基本概念"></a>二、基本概念</h1><h2 id="2-1-数据库对比"><a href="#2-1-数据库对比" class="headerlink" title="2.1 数据库对比"></a>2.1 数据库对比</h2><table>
+<thead>
+<tr>
+<th align="left">SQL术语&#x2F;概念</th>
+<th align="left">MongoDB术语&#x2F;概念</th>
+<th align="left">解析&#x2F;说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>database</code></td>
+<td align="left"><code>database</code></td>
+<td align="left">数据库</td>
+</tr>
+<tr>
+<td align="left"><code>table</code></td>
+<td align="left"><code>collection</code></td>
+<td align="left">数据表&#x2F;集合</td>
+</tr>
+<tr>
+<td align="left"><code>row</code></td>
+<td align="left"><code>document</code></td>
+<td align="left">数据记录&#x2F;文档</td>
+</tr>
+<tr>
+<td align="left"><code>column</code></td>
+<td align="left"><code>field</code></td>
+<td align="left">数据记录行&#x2F;文档</td>
+</tr>
+<tr>
+<td align="left"><code>index</code></td>
+<td align="left"><code>index</code></td>
+<td align="left">索引</td>
+</tr>
+<tr>
+<td align="left"><code>table</code></td>
+<td align="left"><code>joins</code></td>
+<td align="left">表连接，<code>MongoDB</code>不支持</td>
+</tr>
+<tr>
+<td align="left"><code>primary key</code></td>
+<td align="left"><code>primary key</code></td>
+<td align="left">主键,<code>MongoDB</code>自动将<code>_id</code>字段设置为主键</td>
+</tr>
+</tbody></table>
+<p><img src="http://www.runoob.com/wp-content/uploads/2013/10/Figure-1-Mapping-Table-to-Collection-1.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="2-2-数据库"><a href="#2-2-数据库" class="headerlink" title="2.2 数据库"></a>2.2 数据库</h2><ul>
+<li>一个<code>mongodb</code>中可以建立多个数据库</li>
+<li><code>MongoDB</code>的默认数据库为”<code>db</code>“，该数据库存储在<code>data</code>目录中</li>
+<li><code>&quot;show dbs&quot;</code> 命令可以显示所有数据的列表</li>
+<li>执行 <code>&quot;db&quot;</code> 命令可以显示当前数据库对象或集合</li>
+<li><code>&quot;use&quot;</code>命令，可以连接到一个指定的数据库</li>
+</ul>
+<h2 id="2-3-文档"><a href="#2-3-文档" class="headerlink" title="2.3 文档"></a>2.3 文档</h2><ul>
+<li>文档是一组键值(<code>key-value</code>)对(即<code>BSON</code>)</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><span class="hljs-attr">&quot;site&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;www.runoob.com&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;菜鸟教程&quot;</span><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="2-4-插入文档"><a href="#2-4-插入文档" class="headerlink" title="2.4 插入文档"></a>2.4 插入文档</h2><ul>
+<li><p>切换数据库</p>
+<ul>
+<li><code>use</code> 数据库名(没有就创建)</li>
+</ul>
+</li>
+<li><p>&#96;&#96;&#96;<br>db.createCollection(“user”)</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><br><span class="hljs-bullet">  -</span> 创建集合相当于创建表名<br><span class="hljs-bullet">  -</span> 或者这样创建<br><span class="hljs-bullet">    -</span> <span class="hljs-code">`db.user.inert(&#123;id:123&#125;)`</span><br><br><span class="hljs-section">## 2.5 插入数据表</span><br><br><span class="hljs-strong">**1. 手动插入**</span><br><br></code></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="切换创建数据库"><a href="#切换创建数据库" class="headerlink" title="切换创建数据库"></a>切换创建数据库</h1><p>use demo </p>
+<h1 id="goods相当于数据表"><a href="#goods相当于数据表" class="headerlink" title="goods相当于数据表"></a>goods相当于数据表</h1><p>db.goods.insert({“prodictId”:”10001”,”productName”:”aaa”,”slaePrice”:246,”productImage”:”1.jpg”})</p>
+<h1 id="创建数据表，暂时不需插入数据"><a href="#创建数据表，暂时不需插入数据" class="headerlink" title="创建数据表，暂时不需插入数据"></a>创建数据表，暂时不需插入数据</h1><p>db.createCollection(“goods”)</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><br><span class="hljs-strong">**2. 客户端插入**</span><br><br><span class="hljs-quote">&gt; 利用`mongodbVue`导入</span><br><br><span class="hljs-section"># 三、常用操作</span><br><br><span class="hljs-section">## 3.1 创建用户</span><br><br><span class="hljs-strong">**1. 创建管理员**</span><br><br><span class="hljs-bullet">-</span> 开启服务<br><br></code></pre></td></tr></table></figure>
+<h1 id="–auth进行授权，需要认证才可以"><a href="#–auth进行授权，需要认证才可以" class="headerlink" title="–auth进行授权，需要认证才可以"></a>–auth进行授权，需要认证才可以</h1><p>mongod -f d:&#x2F;mongodb&#x2F;etc&#x2F;mongodb.conf –auth</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><br><span class="hljs-strong">**2. 通过非授权的方式启动服务**</span><br><br></code></pre></td></tr></table></figure>
+<h1 id="创建admin数据库"><a href="#创建admin数据库" class="headerlink" title="创建admin数据库"></a>创建admin数据库</h1><p>use admin </p>
+<h1 id="给admin数据库创建账号"><a href="#给admin数据库创建账号" class="headerlink" title="给admin数据库创建账号"></a>给admin数据库创建账号</h1><p>db.createUser({user:”admin”,pwd:”admin”,roles:[“root”]}) # 3.4<br>db.addUser # 2.x</p>
+<h1 id="创建成功需要认证"><a href="#创建成功需要认证" class="headerlink" title="创建成功需要认证"></a>创建成功需要认证</h1><p>db.auth(“admin”,”admin”) # 账号、密码</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs awk"><br>![img](https:<span class="hljs-regexp">//</span>poetries1.gitee.io<span class="hljs-regexp">/img-repo/</span><span class="hljs-number">2019</span><span class="hljs-regexp">/10/</span><span class="hljs-number">353</span>.png)<br><br>**<span class="hljs-number">3</span>. 给使用的数据库添加用户**<br><br><span class="hljs-number">1</span>. 创建用户<br><br>![img](https:<span class="hljs-regexp">//</span>poetries1.gitee.io<span class="hljs-regexp">/img-repo/</span><span class="hljs-number">2019</span><span class="hljs-regexp">/10/</span><span class="hljs-number">354</span>.png)<br><br><span class="hljs-number">1</span>. 然后在授权登录试一下<br><br><span class="hljs-comment">## 3.2 MongoDB 创建数据库</span><br><br>- `MongoDB` 创建数据库的语法格式如下<br>- 如果数据库不存在，则创建数据库，否则切换到指定数据库<br><br></code></pre></td></tr></table></figure>
+<p>use DATABASE_NAME</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><br><span class="hljs-bullet">-</span> 查看所有数据库<br><span class="hljs-bullet">  -</span> <span class="hljs-code">`show dbs`</span><br><span class="hljs-bullet">-</span> 我们刚创建的数据库 runoob 并不在数据库的列表中， 要显示它，我们需要向 runoob 数据库插入一些数据<br><br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>db.runoob.insert({“name”:”poetries”})<br>WriteResult({ “nInserted” : 1 })<br>show dbs</p>
+</blockquote>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br>## <span class="hljs-number">3.3</span> MongoDB 删除数据库<br><br>- `MongoDB`删除数据库的语法格式如下<br>- 删除当前数据库，默认为 `test`，你可以使用 `db` 命令查看当前数据库名<br><br></code></pre></td></tr></table></figure>
+<p>db.dropDatabase()</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs clean"><br>## <span class="hljs-number">3.4</span> 删除集合<br><br></code></pre></td></tr></table></figure>
+<p>db.collection.drop()</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br>## <span class="hljs-number">3.5</span> MongoDB 插入文档<br><br>&gt; 文档的数据结构和`JSON`基本一样<br><br>## <span class="hljs-number">3.6</span> 插入文档<br><br>- `MongoDB` 使用 `insert()`或 `save()` 方法向集合中插入文档，语法如下<br><br></code></pre></td></tr></table></figure>
+<p>db.COLLECTION_NAME.insert(document)</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br>- 以下文档可以存储在 `MongoDB` 的 `runoob`数据库 的 `col` 集合中<br><br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>db.col.insert({title: ‘MongoDB 学习’,<br>    description: ‘MongoDB 是一个 Nosql 数据库’,<br>    by: ‘poetries’,<br>    url: ‘<a target="_blank" rel="noopener" href="http://blog.poetries.top&/#39;">http://blog.poetries.top&#39;</a>,<br>    tags: [‘mongodb’, ‘database’, ‘NoSQL’],<br>    likes: 100<br>})</p>
+</blockquote>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br>- 以上实例中 `col` 是我们的集合名，如果该集合不在该数据库中， `MongoDB` 会自动创建该集合并插入文档。<br>- 查看已插入文档<br><br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>db.col.find()<br>db.col.find().pretty() #格式化方式查看</p>
+</blockquote>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs scss"><br>## <span class="hljs-number">3.7</span> MongoDB 更新文档<br><br>- `MongoDB` 使用 `<span class="hljs-built_in">update</span>()` 和 `<span class="hljs-built_in">save</span>()` 方法来更新集合中的文档<br><br>## <span class="hljs-number">3.7</span> <span class="hljs-built_in">update</span>() 方法<br><br>&gt; `<span class="hljs-built_in">update</span>()` 方法用于更新已存在的文档。语法格式如下<br><br>- 通过 `<span class="hljs-built_in">update</span>()`方法来更新标题(`title`):<br><br></code></pre></td></tr></table></figure>
+<p>db.col.update({‘title’:’MongoDB 学习’},{$set:{‘title’:’MongoDB’}})</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs elixir"><br><span class="hljs-comment"># 四、常用查询语句</span><br><br>| mongo                                                       | sql                                                          | 说明                                 |<br>| <span class="hljs-symbol">:----------------------------------------------------------</span> | <span class="hljs-symbol">:-----------------------------------------------------------</span> | <span class="hljs-symbol">:-----------------------------------</span> |<br>| `db.users.find()`                                           | `select * from users`                                        | 从`user`表中查询所有数据             |<br>| `db.users.find(&#123;“username” : “joe”, “age” : <span class="hljs-number">27</span>&#125;)`           | `select * from users where “username” = “joe” <span class="hljs-keyword">and</span> age = <span class="hljs-number">27</span>`  | 查找`username = joe`且`age = <span class="hljs-number">27</span>`的人 |<br>| `db.users.find(&#123;&#125;, &#123;“username” : <span class="hljs-number">1</span>, “email” : <span class="hljs-number">1</span>&#125;)`          | `select username, email from users`                          | 查找`username`,`email`这`<span class="hljs-number">2</span>`个子项    |<br>| `db.users.find(&#123;“age” : &#123;“<span class="hljs-variable">$gt</span>” : <span class="hljs-number">18</span>&#125;&#125;)`                     | `select * from users where age &gt;<span class="hljs-number">18</span>`                          | 查找`age &gt; <span class="hljs-number">18</span>`的会员                 |<br>| `db.users.find(&#123;“age” : &#123;“<span class="hljs-variable">$gte</span>” : <span class="hljs-number">18</span>&#125;&#125;)`                    | `select * from users where age &gt;=<span class="hljs-number">18</span>`                         | 查找`age &gt;= <span class="hljs-number">18</span>`的人                  |<br>| `db.users.find(&#123;“age” : &#123;“<span class="hljs-variable">$lt</span>” : <span class="hljs-number">18</span>&#125;&#125;)`                     | `select * from users where age &lt;<span class="hljs-number">18</span>`                          | 查找`age &lt; <span class="hljs-number">18</span>`的人                   |<br>| `db.users.find(&#123;“age” : &#123;“<span class="hljs-variable">$lte</span>” : <span class="hljs-number">18</span>&#125;&#125;)`                    | `select * from users where age &lt;=<span class="hljs-number">18</span>`                         | 查找`age &lt;= <span class="hljs-number">18</span>`的人                  |<br>| `db.users.find(&#123;“username” : &#123;“<span class="hljs-variable">$ne</span>” : “joe”&#125;&#125;)`             | `select * from users where username &lt;&gt; “joe”`                | 查找 `username != joe`的会员         |<br>| `db.users.find(&#123;“ticket_no” : &#123;“<span class="hljs-variable">$in</span>” : [<span class="hljs-number">725</span>, <span class="hljs-number">542</span>, <span class="hljs-number">390</span>]&#125;&#125;)`  | `select * from users where ticket_no <span class="hljs-keyword">in</span> (<span class="hljs-number">725</span>, <span class="hljs-number">542</span>, <span class="hljs-number">390</span>)`     | 符合`tickt_no`在此范围的结果         |<br>| `db.users.find(&#123;“ticket_no” : &#123;“<span class="hljs-variable">$nin</span>” : [<span class="hljs-number">725</span>, <span class="hljs-number">542</span>, <span class="hljs-number">390</span>]&#125;&#125;)` | `select * from users where ticket_no <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> (<span class="hljs-number">725</span>, <span class="hljs-number">542</span>, <span class="hljs-number">390</span>)` | 符合`tickt_no`不在此范围的结果       |<br>| `db.users.find(&#123;“name” : /joey^/&#125;)`                         | `select * from users where name like “joey%”`                | 查找前`<span class="hljs-number">4</span>`个字符为`joey`的人          |<br><br><span class="hljs-comment"># 五、MongoDB链接</span><br><br><span class="hljs-comment">## 5.1 MongoDB链接express</span><br><br></code></pre></td></tr></table></figure>
+<p>const express &#x3D; require(‘express’);<br>const mongoose &#x3D; require(‘mongoose’);<br>const app &#x3D; express();</p>
+<p>&#x2F;&#x2F; 连接mongo 并且使用React这个集合，没有就会新建<br>const DB_URL &#x3D; ‘mongodb:&#x2F;&#x2F;127.0.0.1:27017&#x2F;react’;<br>mongoose.connect(DB_URL);<br>mongoose.connection.on(‘connected’,()&#x3D;&gt;{<br>    console.log(‘mongo connect success’);<br>})</p>
+<p>&#x2F;&#x2F; 类似于MySQL的表 mongo里有文档、字段的概念</p>
+<p>const User &#x3D; mongoose.model(‘user’,new mongoose.Schema({<br>    user:{type:String,require:true},<br>    age:{type:Number,require:true}<br>}))</p>
+<p>&#x2F;&#x2F;新增数据<br>&#x2F;&#x2F; User.create({<br>&#x2F;&#x2F;     user:’小胡’,<br>&#x2F;&#x2F;     age:18<br>&#x2F;&#x2F; },(err,doc)&#x3D;&gt;{<br>&#x2F;&#x2F;     if(!err) {<br>&#x2F;&#x2F;         console.log(doc)<br>&#x2F;&#x2F;     } else {<br>&#x2F;&#x2F;         console.log(err)<br>&#x2F;&#x2F;     }<br>&#x2F;&#x2F; })</p>
+<p>&#x2F;&#x2F; 删除数据 {}过滤对象<br>&#x2F;&#x2F; User.remove({age:22},(err,doc)&#x3D;&gt;{<br>&#x2F;&#x2F;     console.log(doc)<br>&#x2F;&#x2F; })<br>&#x2F;&#x2F; 更新<br>User.update({‘user’:’小明’},{‘$set’:{age:30}},(err,doc)&#x3D;&gt;{<br>    console.log(doc)<br>})<br>app.get(‘&#x2F;‘,(req,res)&#x3D;&gt;{<br>    res.send(‘<h1>Hello word!</h1>‘)<br>})<br>app.get(‘&#x2F;data’,(req,res)&#x3D;&gt;{<br>    &#x2F;&#x2F; findOne 只返回一条，返回对象直接使用，而不是返回数组<br>    User.findOne({‘user’:’小明’},(err,doc)&#x3D;&gt;{<br>        res.json(doc)<br>    })<br>})</p>
+<p>app.listen(9000,()&#x3D;&gt;{<br>    console.log(‘Node app listen 9000’)<br>})<br>&#96;&#96;&#96;</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="category-chain-item">数据库</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/mongodb/">#mongodb</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>mongodb</div>
+      <div>http://example.com/2019/04/07/数据库/MongoDB/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>April 7, 2019</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/05/05/nodejs/node-%E5%85%A5%E9%97%A8/" title="node-入门">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">node-入门</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/03/15/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/" title="mysql">
+                        <span class="hidden-mobile">mysql</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

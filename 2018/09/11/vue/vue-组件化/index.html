@@ -1,0 +1,729 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="组件化 vue组件系统提供了一种抽象，让我们可以使用独立可复用的组件来构建大型应用，任意类型的应用界 面都可以抽象为一个组件树。组件化能提高开发效率，方便重复使用，简化调试步骤，提升项目可维护 性，便于多人协同开发。   组件通信常用方式1. props 父给子传值  1234&#x2F;&#x2F; childprops: &amp;#123; msg: String &amp;#125;&#x2F;&#x2F; parent&lt;HelloWor">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue-组件化">
+<meta property="og:url" content="http://example.com/2018/09/11/vue/vue-%E7%BB%84%E4%BB%B6%E5%8C%96/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="组件化 vue组件系统提供了一种抽象，让我们可以使用独立可复用的组件来构建大型应用，任意类型的应用界 面都可以抽象为一个组件树。组件化能提高开发效率，方便重复使用，简化调试步骤，提升项目可维护 性，便于多人协同开发。   组件通信常用方式1. props 父给子传值  1234&#x2F;&#x2F; childprops: &amp;#123; msg: String &amp;#125;&#x2F;&#x2F; parent&lt;HelloWor">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://blog.poetries.top/img/static/images/20210313133919.png">
+<meta property="article:published_time" content="2018-09-11T14:41:28.000Z">
+<meta property="article:modified_time" content="2022-06-06T11:14:16.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="vue">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blog.poetries.top/img/static/images/20210313133919.png">
+  
+  
+  
+  <title>vue-组件化 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="vue-组件化"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-09-11 22:41" pubdate>
+          September 11, 2018 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          16k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          132 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">vue-组件化</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="组件化"><a href="#组件化" class="headerlink" title="组件化"></a>组件化</h2><blockquote>
+<p>vue组件系统提供了一种抽象，让我们可以使用独立可复用的组件来构建大型应用，任意类型的应用界 面都可以抽象为一个组件树。组件化能提高开发效率，方便重复使用，简化调试步骤，提升项目可维护 性，便于多人协同开发。</p>
+</blockquote>
+<p><img src="https://blog.poetries.top/img/static/images/20210313133919.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="组件通信常用方式"><a href="#组件通信常用方式" class="headerlink" title="组件通信常用方式"></a>组件通信常用方式</h2><h3 id="1-props"><a href="#1-props" class="headerlink" title="1. props"></a><strong>1. props</strong></h3><blockquote>
+<p>父给子传值</p>
+</blockquote>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> child<br>props: &#123; msg: String &#125;<br><span class="hljs-regexp">//</span> parent<br>&lt;HelloWorld msg=<span class="hljs-string">&quot;Welcome to Your Vue.js App&quot;</span>/&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-自定义事件"><a href="#2-自定义事件" class="headerlink" title="2. 自定义事件"></a>2. 自定义事件</h3><blockquote>
+<p>子给父传值</p>
+</blockquote>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> child this.<span class="hljs-variable">$emit</span>(<span class="hljs-string">&#x27;add&#x27;</span>, good)<br><span class="hljs-regexp">//</span> parent<br>&lt;Cart @add=<span class="hljs-string">&quot;cartAdd($event)&quot;</span>&gt;&lt;/Cart&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-事件总线"><a href="#3-事件总线" class="headerlink" title="3. 事件总线"></a>3. 事件总线</h3><blockquote>
+<p>任意两个组件之间传值常用事件总线 或 vuex的方式。</p>
+</blockquote>
+<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs delphi">  <span class="hljs-comment">// Bus:事件派发、监听和回调管理 class Bus &#123;</span><br><span class="hljs-function"><span class="hljs-keyword">constructor</span><span class="hljs-params">()</span><span class="hljs-comment">&#123; this.callbacks = &#123;&#125;</span></span><br><span class="hljs-function">  &#125;</span><br><span class="hljs-function">  $<span class="hljs-title">on</span><span class="hljs-params">(<span class="hljs-keyword">name</span>, fn)</span><span class="hljs-comment">&#123;</span></span><br><span class="hljs-comment"><span class="hljs-function">this.callbacks[name] = this.callbacks[name] || []</span></span><br><span class="hljs-comment"><span class="hljs-function">this.callbacks[name].push(fn) &#125;</span></span><br><span class="hljs-function">$<span class="hljs-title">emit</span><span class="hljs-params">(<span class="hljs-keyword">name</span>, args)</span><span class="hljs-comment">&#123; if(this.callbacks[name])&#123;</span></span><br><span class="hljs-comment"><span class="hljs-function">this.callbacks[name].forEach(cb =&gt; cb(args)) &#125;</span></span><br><span class="hljs-function">&#125; &#125;</span><br><span class="hljs-function"><span class="hljs-comment">// main.js</span></span><br><span class="hljs-function"><span class="hljs-title">Vue</span>.<span class="hljs-title">prototype</span>.$<span class="hljs-title">bus</span> = <span class="hljs-title">new</span> <span class="hljs-title">Bus</span><span class="hljs-params">()</span></span><br><span class="hljs-function"><span class="hljs-comment">// child1</span></span><br><span class="hljs-function"><span class="hljs-title">this</span>.$<span class="hljs-title">bus</span>.$<span class="hljs-title">on</span><span class="hljs-params">(<span class="hljs-string">&#x27;foo&#x27;</span>, handle)</span> <span class="hljs-comment">// child2 this.$bus.$emit(&#x27;foo&#x27;)</span></span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>实践中通常用Vue代替Bus，因为Vue已经实现了相应接口</p>
+</blockquote>
+<h3 id="4-vuex"><a href="#4-vuex" class="headerlink" title="4. vuex"></a><strong>4. vuex</strong></h3><blockquote>
+<p>创建唯一的全局数据管理者store，通过它管理数据并通知组件状态变更。</p>
+</blockquote>
+<h3 id="5-parent-x2F-root"><a href="#5-parent-x2F-root" class="headerlink" title="5. $parent&#x2F;$root"></a>5. <strong>$parent&#x2F;$root</strong></h3><blockquote>
+<p>兄弟组件之间通信可通过共同祖辈搭桥，<code>$parent</code>或<code>$root</code>。</p>
+</blockquote>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> brother1<br>this.<span class="hljs-variable">$parent</span>.<span class="hljs-variable">$on</span>(<span class="hljs-string">&#x27;foo&#x27;</span>, handle)<br><span class="hljs-regexp">//</span> brother2 <br>this.<span class="hljs-variable">$parent</span>.<span class="hljs-variable">$emit</span>(<span class="hljs-string">&#x27;foo&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<h3 id="6-children"><a href="#6-children" class="headerlink" title="6. $children"></a>6. <strong>$children</strong></h3><blockquote>
+<p>父组件可以通过<code>$children</code>访问子组件实现父子通信。</p>
+</blockquote>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-comment">// parent </span><br>this.<span class="hljs-variable">$children</span><span class="hljs-selector-attr">[0]</span><span class="hljs-selector-class">.xx</span> = <span class="hljs-string">&#x27;xxx&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="7-attrs-x2F-listeners"><a href="#7-attrs-x2F-listeners" class="headerlink" title="7. $attrs&#x2F;$listeners"></a>7. <strong>$attrs&#x2F;$listeners</strong></h3><blockquote>
+<p>包含了父作用域中不作为 <strong>prop</strong> 被识别 (且获取) 的特性绑定 ( class 和 style 除外)。当一个组件没有 声明任何 prop 时，这里会包含所有父作用域的绑定 ( class 和 style 除外)，并且可以通过 <code>v- bind=&quot;$attrs&quot;</code> 传入内部组件——在创建高级别的组件时非常有用。</p>
+</blockquote>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="language-xml">// child:并未在props中声明foo </span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span></span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">$attrs.foo</span>&#125;&#125;</span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml">// parent</span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">HelloWorld</span> <span class="hljs-attr">foo</span>=<span class="hljs-string">&quot;foo&quot;</span>/&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+<h3 id="8-refs"><a href="#8-refs" class="headerlink" title="8. refs"></a>8. <strong>refs</strong></h3><blockquote>
+<p>获取子节点引用</p>
+</blockquote>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-comment">// parent</span><br>&lt;HelloWorld ref=<span class="hljs-string">&quot;hw&quot;</span>/&gt;<br><span class="hljs-function"><span class="hljs-title">mounted</span><span class="hljs-params">()</span></span> &#123; <br>  this.<span class="hljs-variable">$refs</span><span class="hljs-selector-class">.hw</span><span class="hljs-selector-class">.xx</span> = <span class="hljs-string">&#x27;xxx&#x27;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="9-provide-x2F-inject"><a href="#9-provide-x2F-inject" class="headerlink" title="9. provide&#x2F;inject"></a>9. <strong>provide&#x2F;inject</strong></h3><blockquote>
+<p>能够实现祖先和后代之间传值</p>
+</blockquote>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-comment">// ancestor</span><br><span class="hljs-function"><span class="hljs-title">provide</span><span class="hljs-params">()</span></span> &#123;<br>  return &#123;foo: <span class="hljs-string">&#x27;foo&#x27;</span>&#125;<br>&#125;<br><span class="hljs-comment">// descendant</span><br>inject: <span class="hljs-selector-attr">[<span class="hljs-string">&#x27;foo&#x27;</span>]</span><br></code></pre></td></tr></table></figure>
+
+<p>实例</p>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="language-xml">// index.vue</span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>组件通信<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-comment">&lt;!-- props, 自定义事件 --&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">Child1</span> <span class="hljs-attr">msg</span>=<span class="hljs-string">&quot;some msg from parent&quot;</span> @<span class="hljs-attr">some-event</span>=<span class="hljs-string">&quot;onSomeEvent&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">Child1</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-comment">&lt;!-- 事件总线 --&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">Child2</span> <span class="hljs-attr">msg</span>=<span class="hljs-string">&quot;other msg&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">Child2</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="language-javascript"><span class="language-xml">  <span class="hljs-keyword">import</span> <span class="hljs-title class_">Child1</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@/components/communication/Child1.vue&#x27;</span></span></span><br><span class="language-javascript"><span class="language-xml">  <span class="hljs-keyword">import</span> <span class="hljs-title class_">Child2</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@/components/communication/Child2.vue&#x27;</span></span></span><br><span class="language-javascript"><span class="language-xml">  </span></span><br><span class="language-javascript"><span class="language-xml">  <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">components</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-title class_">Child1</span>, <span class="hljs-title class_">Child2</span>,</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-comment">// Child3: () =&gt; import(&#x27;./Child3.vue&#x27;)</span></span></span><br><span class="language-javascript"><span class="language-xml">    &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">methods</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-title function_">onSomeEvent</span>(<span class="hljs-params">msg</span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Communition:&#x27;</span>, msg);</span></span><br><span class="language-javascript"><span class="language-xml">      &#125;</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">    mounted () &#123;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-comment">// $children持有所有自定义组件</span></span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-comment">// 它不保证顺序</span></span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">$children</span>);</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">  &#125;</span></span><br><span class="language-javascript"><span class="language-xml"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">scoped</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span></span><br><span class="language-xml">// child1.vue</span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;$emit(&#x27;some-event&#x27;, &#x27;msg from child1&#x27;)&quot;</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span>child1<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span></span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">msg</span>&#125;&#125;</span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="language-javascript"><span class="language-xml">  <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">props</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-attr">msg</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">type</span>: <span class="hljs-title class_">String</span>,</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">default</span>: <span class="hljs-string">&#x27;&#x27;</span></span></span><br><span class="language-javascript"><span class="language-xml">      &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">    mounted () &#123;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-comment">// this.$bus.$on(&#x27;event-from-child2&#x27;, msg =&gt; &#123;</span></span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-comment">//   console.log(&#x27;Child1:&#x27;, msg);</span></span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-comment">// &#125;);</span></span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-variable language_">this</span>.<span class="hljs-property">$parent</span>.$on(<span class="hljs-string">&#x27;event-from-child2&#x27;</span>, <span class="hljs-function"><span class="hljs-params">msg</span> =&gt;</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Child1:&#x27;</span>, msg);</span></span><br><span class="language-javascript"><span class="language-xml">      &#125;);</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">  &#125;</span></span><br><span class="language-javascript"><span class="language-xml"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">scoped</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span></span><br><span class="language-xml">// child2.vue</span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-comment">&lt;!-- 展开$attrs对象 --&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">h3</span> <span class="hljs-attr">v-bind</span>=<span class="hljs-string">&quot;$attrs&quot;</span>&gt;</span>child2<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;sendToChild1&quot;</span>&gt;</span>给child1发送消息<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-comment">&lt;!-- $attrs --&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span></span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">$attrs.msg</span>&#125;&#125;</span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-comment">&lt;!-- inject --&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span></span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">foo</span>&#125;&#125;</span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="language-javascript"><span class="language-xml">  <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">inheritAttrs</span>: <span class="hljs-literal">false</span>,</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">inject</span>: [<span class="hljs-string">&#x27;foo&#x27;</span>],</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">methods</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-title function_">sendToChild1</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-comment">// 利用事件总线发送事件</span></span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-comment">// this.$bus.$emit(&#x27;event-from-child2&#x27;, &#x27;some msg from child2&#x27;)</span></span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-variable language_">this</span>.<span class="hljs-property">$parent</span>.$emit(<span class="hljs-string">&#x27;event-from-child2&#x27;</span>, <span class="hljs-string">&#x27;some msg from child2&#x27;</span>)</span></span><br><span class="language-javascript"><span class="language-xml">      &#125;</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">  &#125;</span></span><br><span class="language-javascript"><span class="language-xml"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">scoped</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+<h2 id="插槽"><a href="#插槽" class="headerlink" title="插槽"></a>插槽</h2><blockquote>
+<p>插槽语法是Vue 实现的内容分发 API，用于复合组件开发。该技术在通用组件库开发中有大量应用</p>
+</blockquote>
+<h3 id="1-匿名插槽"><a href="#1-匿名插槽" class="headerlink" title="1. 匿名插槽"></a>1. 匿名插槽</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml">// comp1<br><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">slot</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">slot</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>// parent<br><span class="hljs-tag">&lt;<span class="hljs-name">comp</span>&gt;</span>hello<span class="hljs-tag">&lt;/<span class="hljs-name">comp</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="2-具名插槽"><a href="#2-具名插槽" class="headerlink" title="2. 具名插槽"></a>2. 具名插槽</h3><blockquote>
+<p>将内容分发到子组件指定位置</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs xml">// comp2<br><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">slot</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">slot</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">slot</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;content&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">slot</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>// parent<br><span class="hljs-tag">&lt;<span class="hljs-name">Comp2</span>&gt;</span><br><span class="hljs-comment">&lt;!-- 默认插槽用default做参数 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">template</span> <span class="hljs-attr">v-slot:default</span>&gt;</span>具名插槽<span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span> <span class="hljs-comment">&lt;!-- 具名插槽用插槽名做参数 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">template</span> <span class="hljs-attr">v-slot:content</span>&gt;</span>内容...<span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">Comp2</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="3-作用域插槽"><a href="#3-作用域插槽" class="headerlink" title="3. 作用域插槽"></a>3. 作用域插槽</h3><blockquote>
+<p>分发内容要用到子组件中的数据</p>
+</blockquote>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="language-xml">// comp3</span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">slot</span> <span class="hljs-attr">:foo</span>=<span class="hljs-string">&quot;foo&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">slot</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">// parent</span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Comp3</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-comment">&lt;!-- 把v-slot的值指定为作用域上下文对象 --&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">template</span> <span class="hljs-attr">v-slot:default</span>=<span class="hljs-string">&quot;slotProps&quot;</span>&gt;</span> 来自子组件数据:</span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">slotProps.foo</span>&#125;&#125;</span><span class="language-xml"> <span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">Comp3</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+<p>范例</p>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="language-xml">// 子组件 Layout.vue</span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;header&quot;</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">slot</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;header&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">slot</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;body&quot;</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">slot</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">slot</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;footer&quot;</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">slot</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;footer&quot;</span> <span class="hljs-attr">:fc</span>=<span class="hljs-string">&quot;footerContent&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">slot</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="language-javascript"><span class="language-xml">  <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-keyword">return</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">remark</span>: [</span></span><br><span class="language-javascript"><span class="language-xml">          <span class="hljs-string">&#x27;好好学习，天天向上&#x27;</span>,</span></span><br><span class="language-javascript"><span class="language-xml">          <span class="hljs-string">&#x27;学习永远不晚&#x27;</span>,</span></span><br><span class="language-javascript"><span class="language-xml">          <span class="hljs-string">&#x27;学习知识要善于思考,思考,再思考&#x27;</span>,</span></span><br><span class="language-javascript"><span class="language-xml">          <span class="hljs-string">&#x27;学习的敌人是自己的满足,要认真学习一点东西,必须从不自满开始&#x27;</span>,</span></span><br><span class="language-javascript"><span class="language-xml">          <span class="hljs-string">&#x27;构成我们学习最大障碍的是已知的东西,而不是未知的东西&#x27;</span>,</span></span><br><span class="language-javascript"><span class="language-xml">          <span class="hljs-string">&#x27;在今天和明天之间,有一段很长的时间;趁你还有精神的时候,学习迅速办事&#x27;</span>,</span></span><br><span class="language-javascript"><span class="language-xml">          <span class="hljs-string">&#x27;三人行必有我师焉；择其善者而从之，其不善者而改之&#x27;</span></span></span><br><span class="language-javascript"><span class="language-xml">        ]</span></span><br><span class="language-javascript"><span class="language-xml">      &#125;</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">computed</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-title function_">footerContent</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">remark</span>[<span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">getDay</span>() - <span class="hljs-number">1</span>] </span></span><br><span class="language-javascript"><span class="language-xml">      &#125;</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">  &#125;</span></span><br><span class="language-javascript"><span class="language-xml"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">scoped</span>&gt;</span><span class="language-css"></span></span><br><span class="language-css"><span class="language-xml"><span class="hljs-selector-class">.header</span> &#123;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">background-color</span>: <span class="hljs-built_in">rgb</span>(<span class="hljs-number">252</span>, <span class="hljs-number">175</span>, <span class="hljs-number">175</span>);</span></span><br><span class="language-css"><span class="language-xml">&#125;</span></span><br><span class="language-css"><span class="language-xml"><span class="hljs-selector-class">.body</span> &#123;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">display</span>: flex;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">background-color</span>: <span class="hljs-built_in">rgb</span>(<span class="hljs-number">144</span>, <span class="hljs-number">250</span>, <span class="hljs-number">134</span>);</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">min-height</span>: <span class="hljs-number">100px</span>;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">align-items</span>: center;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">justify-content</span>: center;</span></span><br><span class="language-css"><span class="language-xml">&#125;</span></span><br><span class="language-css"><span class="language-xml"><span class="hljs-selector-class">.footer</span> &#123;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">background-color</span>: <span class="hljs-built_in">rgb</span>(<span class="hljs-number">114</span>, <span class="hljs-number">116</span>, <span class="hljs-number">255</span>);</span></span><br><span class="language-css"><span class="language-xml">&#125;</span></span><br><span class="language-css"><span class="language-xml"></span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span></span><br><span class="language-xml">//父组件 index.vue</span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>插槽<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-comment">&lt;!-- 插槽 --&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">Layout</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-comment">&lt;!-- 具名插槽 --&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">template</span> <span class="hljs-attr">v-slot:header</span>&gt;</span>全栈工程师<span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-comment">&lt;!-- 匿名插槽 --&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span>content...<span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-comment">&lt;!-- 作用域插槽 --&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">template</span> <span class="hljs-attr">v-slot:footer</span>=<span class="hljs-string">&quot;&#123;fc&#125;&quot;</span>&gt;</span></span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">fc</span>&#125;&#125;</span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">Layout</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="language-javascript"><span class="language-xml">  <span class="hljs-keyword">import</span> <span class="hljs-title class_">Layout</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@/components/slots/Layout.vue&#x27;</span></span></span><br><span class="language-javascript"><span class="language-xml">  </span></span><br><span class="language-javascript"><span class="language-xml">  <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">components</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-title class_">Layout</span></span></span><br><span class="language-javascript"><span class="language-xml">    &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">  &#125;</span></span><br><span class="language-javascript"><span class="language-xml"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">scoped</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+<h2 id="组件化实战"><a href="#组件化实战" class="headerlink" title="组件化实战"></a>组件化实战</h2><h3 id="通用表单组件"><a href="#通用表单组件" class="headerlink" title="通用表单组件"></a>通用表单组件</h3><blockquote>
+<p>收集数据、校验数据并提交。</p>
+</blockquote>
+<ul>
+<li>实现KForm 指定数据、校验规则</li>
+<li>KformItem<ul>
+<li>label标签添加</li>
+<li>执行校验</li>
+<li>显示错误信息</li>
+</ul>
+</li>
+<li>KInput<ul>
+<li>维护数据</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">el-form</span> <span class="hljs-attr">:model</span>=<span class="hljs-string">&quot;userInfo&quot;</span> <span class="hljs-attr">:rules</span>=<span class="hljs-string">&quot;rules&quot;</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;loginForm&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">el-form-item</span> <span class="hljs-attr">label</span>=<span class="hljs-string">&quot;用户名&quot;</span> <span class="hljs-attr">prop</span>=<span class="hljs-string">&quot;name&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">el-input</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;userInfo.name&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">el-input</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">el-form-item</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">el-form-item</span> <span class="hljs-attr">label</span>=<span class="hljs-string">&quot;密码&quot;</span> <span class="hljs-attr">prop</span>=<span class="hljs-string">&quot;password&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">el-input</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;userInfo.password&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;password&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">el-input</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">el-form-item</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">el-form-item</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">el-button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;login&quot;</span>&gt;</span>登录<span class="hljs-tag">&lt;/<span class="hljs-name">el-button</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">el-form-item</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">el-form</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;</span><br><span class="language-javascript">  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">    <span class="hljs-keyword">return</span> &#123;</span><br><span class="language-javascript">      <span class="hljs-attr">userInfo</span>: &#123;</span><br><span class="language-javascript">        <span class="hljs-attr">username</span>: <span class="hljs-string">&quot;&quot;</span>,</span><br><span class="language-javascript">        <span class="hljs-attr">password</span>: <span class="hljs-string">&quot;&quot;</span></span><br><span class="language-javascript">      &#125;,</span><br><span class="language-javascript">      <span class="hljs-attr">rules</span>: &#123;</span><br><span class="language-javascript">        <span class="hljs-attr">username</span>: [&#123; <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">message</span>: <span class="hljs-string">&quot;请输入用户名称&quot;</span> &#125;],</span><br><span class="language-javascript">        <span class="hljs-attr">password</span>: [&#123; <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">message</span>: <span class="hljs-string">&quot;请输入密码&quot;</span> &#125;]</span><br><span class="language-javascript">      &#125;</span><br><span class="language-javascript">    &#125;;</span><br><span class="language-javascript">  &#125;,</span><br><span class="language-javascript">  <span class="hljs-attr">methods</span>: &#123;</span><br><span class="language-javascript">    <span class="hljs-title function_">login</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">      <span class="hljs-variable language_">this</span>.<span class="hljs-property">$refs</span>[<span class="hljs-string">&quot;loginForm&quot;</span>].<span class="hljs-title function_">validate</span>(<span class="hljs-function"><span class="hljs-params">valid</span> =&gt;</span> &#123;</span><br><span class="language-javascript">        <span class="hljs-keyword">if</span> (valid) &#123;</span><br><span class="language-javascript">          <span class="hljs-title function_">alert</span>(<span class="hljs-string">&quot;submit&quot;</span>);</span><br><span class="language-javascript">        &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="language-javascript">          <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;error submit!&quot;</span>);</span><br><span class="language-javascript">          <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;</span><br><span class="language-javascript">        &#125;</span><br><span class="language-javascript">      &#125;);</span><br><span class="language-javascript">    &#125;</span><br><span class="language-javascript">  &#125;</span><br><span class="language-javascript">&#125;;</span><br><span class="language-javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">scoped</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>1.</strong> KInput</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs xml">// 创建components/form/KInput.vue<br><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- 管理数据：实现双绑 --&gt;</span><br>    <span class="hljs-comment">&lt;!-- :value, @input --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">:type</span>=<span class="hljs-string">&quot;type&quot;</span> <span class="hljs-attr">:value</span>=<span class="hljs-string">&quot;value&quot;</span> @<span class="hljs-attr">input</span>=<span class="hljs-string">&quot;onInput&quot;</span></span><br><span class="hljs-tag">      <span class="hljs-attr">v-bind</span>=<span class="hljs-string">&quot;$attrs&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">  <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;</span><br><span class="language-javascript">    <span class="hljs-attr">inheritAttrs</span>: <span class="hljs-literal">false</span> , <span class="hljs-comment">// 关闭特性继承</span></span><br><span class="language-javascript">    <span class="hljs-attr">props</span>: &#123;</span><br><span class="language-javascript">      <span class="hljs-attr">value</span>: &#123;</span><br><span class="language-javascript">        <span class="hljs-attr">type</span>: <span class="hljs-title class_">String</span>,</span><br><span class="language-javascript">        <span class="hljs-attr">default</span>: <span class="hljs-string">&#x27;&#x27;</span></span><br><span class="language-javascript">      &#125;,</span><br><span class="language-javascript">      <span class="hljs-attr">type</span>: &#123;</span><br><span class="language-javascript">        <span class="hljs-attr">type</span>: <span class="hljs-title class_">String</span>,</span><br><span class="language-javascript">        <span class="hljs-attr">default</span>: <span class="hljs-string">&#x27;text&#x27;</span></span><br><span class="language-javascript">      &#125;</span><br><span class="language-javascript">    &#125;,</span><br><span class="language-javascript">    <span class="hljs-attr">methods</span>: &#123;</span><br><span class="language-javascript">      <span class="hljs-title function_">onInput</span>(<span class="hljs-params">e</span>) &#123;</span><br><span class="language-javascript">        <span class="hljs-variable language_">this</span>.$emit(<span class="hljs-string">&#x27;input&#x27;</span>, e.<span class="hljs-property">target</span>.<span class="hljs-property">value</span>)</span><br><span class="language-javascript"></span><br><span class="language-javascript">        <span class="hljs-comment">// 值发生变化的时候就是需要校验的时候</span></span><br><span class="language-javascript">        <span class="hljs-variable language_">this</span>.<span class="hljs-property">$parent</span>.$emit(<span class="hljs-string">&#x27;validate&#x27;</span>)</span><br><span class="language-javascript">      &#125;</span><br><span class="language-javascript">    &#125;,</span><br><span class="language-javascript">  &#125;</span><br><span class="language-javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">scoped</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>使用<strong>KInput</strong></li>
+</ol>
+<p>创建components&#x2F;form&#x2F;index.vue，添加如下代码:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs javascript">&lt;template&gt;<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span>KForm表单<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">hr</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">k-input</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;model.username&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">k-input</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">k-input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;password&quot;</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;model.password&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">k-input</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span></span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-attr">components</span>: &#123;<br>  <span class="hljs-title class_">KInput</span><br>&#125;, <br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>   <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">model</span>: &#123; <span class="hljs-attr">username</span>: <span class="hljs-string">&quot;tom&quot;</span>, <span class="hljs-attr">password</span>: <span class="hljs-string">&quot;&quot;</span> &#125;,<br>    &#125;; <br>  &#125;<br>&#125;;<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>实现<strong>KFormItem</strong></li>
+</ol>
+<p>创建components&#x2F;form&#x2F;KFormItem.vue</p>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-comment">&lt;!-- label标签 --&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">v-if</span>=<span class="hljs-string">&quot;label&quot;</span>&gt;</span></span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">label</span>&#125;&#125;</span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-comment">&lt;!-- 容器，放插槽 --&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">slot</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">slot</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-comment">&lt;!-- 错误信息展示 --&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">v-if</span>=<span class="hljs-string">&quot;error&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;error&quot;</span>&gt;</span></span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">error</span>&#125;&#125;</span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="language-javascript"><span class="language-xml">  <span class="hljs-keyword">import</span> <span class="hljs-title class_">Schema</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;async-validator&#x27;</span></span></span><br><span class="language-javascript"><span class="language-xml"></span></span><br><span class="language-javascript"><span class="language-xml">  <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">inject</span>: [<span class="hljs-string">&#x27;form&#x27;</span>],</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-keyword">return</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">error</span>: <span class="hljs-string">&#x27;&#x27;</span></span></span><br><span class="language-javascript"><span class="language-xml">      &#125;</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">props</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-attr">label</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">type</span>: <span class="hljs-title class_">String</span>,</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">default</span>: <span class="hljs-string">&#x27;&#x27;</span></span></span><br><span class="language-javascript"><span class="language-xml">      &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-attr">prop</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">type</span>: <span class="hljs-title class_">String</span>,</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">default</span>: <span class="hljs-string">&#x27;&#x27;</span></span></span><br><span class="language-javascript"><span class="language-xml">      &#125;</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">    mounted () &#123;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-comment">// 监听校验事件</span></span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-variable language_">this</span>.$on(<span class="hljs-string">&#x27;validate&#x27;</span>, <span class="hljs-function">() =&gt;</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">validate</span>()</span></span><br><span class="language-javascript"><span class="language-xml">      &#125;)</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">methods</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-title function_">validate</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-comment">// 执行校验</span></span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-comment">// 1.获取值和校验规则</span></span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-keyword">const</span> rules = <span class="hljs-variable language_">this</span>.<span class="hljs-property">form</span>.<span class="hljs-property">rules</span>[<span class="hljs-variable language_">this</span>.<span class="hljs-property">prop</span>]</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-keyword">const</span> value = <span class="hljs-variable language_">this</span>.<span class="hljs-property">form</span>.<span class="hljs-property">model</span>[<span class="hljs-variable language_">this</span>.<span class="hljs-property">prop</span>]</span></span><br><span class="language-javascript"><span class="language-xml"></span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-comment">// 2.执行校验：使用官方也使用的async-validator</span></span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-comment">// 创建描述对象</span></span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-keyword">const</span> descriptor = &#123;[<span class="hljs-variable language_">this</span>.<span class="hljs-property">prop</span>]:rules&#125;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-comment">// 创建校验器</span></span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-keyword">const</span> validator = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Schema</span>(descriptor)</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-comment">// 执行校验</span></span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-keyword">return</span> validator.<span class="hljs-title function_">validate</span>(&#123;[<span class="hljs-variable language_">this</span>.<span class="hljs-property">prop</span>]:value&#125;, <span class="hljs-function"><span class="hljs-params">errors</span> =&gt;</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">          <span class="hljs-comment">// 如果errors存在，则说明校验失败</span></span></span><br><span class="language-javascript"><span class="language-xml">          <span class="hljs-keyword">if</span> (errors) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">            <span class="hljs-variable language_">this</span>.<span class="hljs-property">error</span> = errors[<span class="hljs-number">0</span>].<span class="hljs-property">message</span></span></span><br><span class="language-javascript"><span class="language-xml">          &#125; <span class="hljs-keyword">else</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">            <span class="hljs-variable language_">this</span>.<span class="hljs-property">error</span> = <span class="hljs-string">&#x27;&#x27;</span></span></span><br><span class="language-javascript"><span class="language-xml">          &#125;</span></span><br><span class="language-javascript"><span class="language-xml">        &#125;)</span></span><br><span class="language-javascript"><span class="language-xml">      &#125;</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">  &#125;</span></span><br><span class="language-javascript"><span class="language-xml"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">scoped</span>&gt;</span><span class="language-css"></span></span><br><span class="language-css"><span class="language-xml"><span class="hljs-selector-class">.error</span>&#123;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">color</span>: red</span></span><br><span class="language-css"><span class="language-xml">&#125;</span></span><br><span class="language-css"><span class="language-xml"></span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>使用<strong>KFormItem</strong></li>
+</ol>
+<p>components&#x2F;form&#x2F;index.vue，添加基础代码:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span>KForm表单<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">hr</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">k-form-item</span> <span class="hljs-attr">label</span>=<span class="hljs-string">&quot;用户名&quot;</span> <span class="hljs-attr">prop</span>=<span class="hljs-string">&quot;username&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">k-input</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;model.username&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">k-input</span>&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-name">k-form-item</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">k-form-item</span> <span class="hljs-attr">label</span>=<span class="hljs-string">&quot;确认密码&quot;</span> <span class="hljs-attr">prop</span>=<span class="hljs-string">&quot;password&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">k-input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;password&quot;</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;model.password&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">k-input</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">k-form-item</span>&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>实现<strong>KForm</strong></li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- 容器：存放所有表单项 --&gt;</span><br>    <span class="hljs-comment">&lt;!-- 存储值载体：保存大家数据和校验规则 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">slot</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">slot</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript"><span class="hljs-comment">// 我们平时写的组件是一个组件配置对象</span></span><br><span class="language-javascript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;</span><br><span class="language-javascript">  <span class="hljs-title function_">provide</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">    <span class="hljs-keyword">return</span> &#123;</span><br><span class="language-javascript">      <span class="hljs-comment">// 直接把当前组件实例传递下去</span></span><br><span class="language-javascript">      <span class="hljs-comment">// 传递下去的对象是响应式的则还可以响应式</span></span><br><span class="language-javascript">      <span class="hljs-attr">form</span>: <span class="hljs-variable language_">this</span></span><br><span class="language-javascript">    &#125;;</span><br><span class="language-javascript">  &#125;,</span><br><span class="language-javascript">  <span class="hljs-attr">props</span>: &#123;</span><br><span class="language-javascript">    <span class="hljs-comment">// 数据模型</span></span><br><span class="language-javascript">    <span class="hljs-attr">model</span>: &#123;</span><br><span class="language-javascript">      <span class="hljs-attr">type</span>: <span class="hljs-title class_">Object</span>,</span><br><span class="language-javascript">      <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span></span><br><span class="language-javascript">    &#125;,</span><br><span class="language-javascript">    <span class="hljs-attr">rules</span>: <span class="hljs-title class_">Object</span></span><br><span class="language-javascript">  &#125;,</span><br><span class="language-javascript">  <span class="hljs-attr">methods</span>: &#123;</span><br><span class="language-javascript">    <span class="hljs-title function_">validate</span>(<span class="hljs-params">cb</span>) &#123;</span><br><span class="language-javascript">      <span class="hljs-comment">// 遍历肚子里面的所有FormItem，执行他们的validate方法</span></span><br><span class="language-javascript">      <span class="hljs-comment">// 全部通过才算通过</span></span><br><span class="language-javascript">      <span class="hljs-comment">// tasks是校验结果的Promise组成的数组</span></span><br><span class="language-javascript">      <span class="hljs-keyword">const</span> tasks = <span class="hljs-variable language_">this</span>.<span class="hljs-property">$children</span></span><br><span class="language-javascript">        .<span class="hljs-title function_">filter</span>(<span class="hljs-function"><span class="hljs-params">item</span> =&gt;</span> item.<span class="hljs-property">prop</span>)</span><br><span class="language-javascript">        .<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">item</span> =&gt;</span> item.<span class="hljs-title function_">validate</span>());</span><br><span class="language-javascript">      <span class="hljs-comment">// 统一判断</span></span><br><span class="language-javascript">      <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">all</span>(tasks)</span><br><span class="language-javascript">        .<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">cb</span>(<span class="hljs-literal">true</span>))</span><br><span class="language-javascript">        .<span class="hljs-title function_">catch</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">cb</span>(<span class="hljs-literal">false</span>));</span><br><span class="language-javascript">    &#125;</span><br><span class="language-javascript">  &#125;</span><br><span class="language-javascript">&#125;;</span><br><span class="language-javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">scoped</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>使用<strong>KForm</strong></li>
+</ol>
+<p>components&#x2F;form&#x2F;index.vue，添加基础代码:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs xml">&lt; template &gt; <span class="hljs-tag">&lt;<span class="hljs-name">div</span> &gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">h3</span> &gt;</span> KForm表单 &lt; /h3&gt;<br><span class="hljs-tag">&lt;<span class="hljs-name">hr</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">k-form</span> <span class="hljs-attr">:model</span>=<span class="hljs-string">&quot;model&quot;</span> <span class="hljs-attr">:rules</span>=<span class="hljs-string">&quot;rules&quot;</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;loginForm&quot;</span>&gt;</span><br>...<br>&lt;/k - form &gt; <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>&lt;/template &gt; <span class="hljs-tag">&lt;<span class="hljs-name">script</span> &gt;</span><span class="language-javascript"> <span class="hljs-keyword">import</span> <span class="hljs-title class_">KForm</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./KForm&quot;</span>;</span><br><span class="language-javascript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;</span><br><span class="language-javascript">        <span class="hljs-attr">components</span>:</span><br><span class="language-javascript">        &#123;</span><br><span class="language-javascript">            <span class="hljs-title class_">KForm</span>,</span><br><span class="language-javascript">        &#125;,</span><br><span class="language-javascript">        <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">            <span class="hljs-keyword">return</span> &#123;</span><br><span class="language-javascript">                <span class="hljs-attr">rules</span>: &#123;</span><br><span class="language-javascript">                    <span class="hljs-attr">username</span>: [&#123;</span><br><span class="language-javascript">                        <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span>,</span><br><span class="language-javascript">                        <span class="hljs-attr">message</span>: <span class="hljs-string">&quot;请输入用户名&quot;</span></span><br><span class="language-javascript">                    &#125;],</span><br><span class="language-javascript">                    <span class="hljs-attr">password</span>: [&#123;</span><br><span class="language-javascript">                        <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span>,</span><br><span class="language-javascript">                        <span class="hljs-attr">message</span>: <span class="hljs-string">&quot;请输入密码&quot;</span></span><br><span class="language-javascript">                    &#125;]</span><br><span class="language-javascript">                &#125;</span><br><span class="language-javascript">            &#125;;</span><br><span class="language-javascript">        &#125;,</span><br><span class="language-javascript">        <span class="hljs-attr">methods</span>: &#123;</span><br><span class="language-javascript">            <span class="hljs-title function_">submitForm</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">                <span class="hljs-variable language_">this</span>.<span class="hljs-property">$refs</span>[<span class="hljs-string">&#x27;loginForm&#x27;</span>].<span class="hljs-title function_">validate</span>(valid = &gt;&#123;</span><br><span class="language-javascript">                    <span class="hljs-keyword">if</span> (valid) &#123;</span><br><span class="language-javascript">                        <span class="hljs-title function_">alert</span>(<span class="hljs-string">&quot;请求登录!&quot;</span>);</span><br><span class="language-javascript">                    &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="language-javascript">                        <span class="hljs-title function_">alert</span>(<span class="hljs-string">&quot;校验失败!&quot;</span>);</span><br><span class="language-javascript">                    &#125;</span><br><span class="language-javascript">                &#125;);</span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">        &#125;</span><br><span class="language-javascript">    &#125;; &lt; <span class="hljs-regexp">/script&gt;/</span></span><br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>数据校验</li>
+</ol>
+<p>Input通知校验</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs awk">onInput(e) &#123; <span class="hljs-regexp">//</span> ...<br>    <span class="hljs-regexp">//</span> <span class="hljs-variable">$parent</span>指FormItem<br>    this.<span class="hljs-variable">$parent</span>.<span class="hljs-variable">$emit</span>(<span class="hljs-string">&#x27;validate&#x27;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>FormItem监听校验通知，获取规则并执行校验</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">inject: [<span class="hljs-string">&#x27;form&#x27;</span>],<br><span class="hljs-comment">// 注入 mounted()&#123;// 监听校验事件</span><br><span class="hljs-keyword">this</span>.$on(<span class="hljs-string">&#x27;validate&#x27;</span>, () = &gt;&#123;<br>    <span class="hljs-keyword">this</span>.validate()<br>&#125;)<br>&#125;,<br>methods: &#123;<br>    validate() &#123;<br>        <span class="hljs-comment">// 获取对应FormItem校验规则 console.log(this.form.rules[this.prop]);</span><br>    &#125;<br>&#125;,<br><span class="hljs-keyword">import</span> Schema from <span class="hljs-string">&quot;async-validator&quot;</span>;<br><br>validate() &#123;<br>    <span class="hljs-comment">// 获取对应FormItem校验规则</span><br>    <span class="hljs-keyword">const</span> rules = <span class="hljs-keyword">this</span>.form.rules[<span class="hljs-keyword">this</span>.prop];<br>    <span class="hljs-comment">// 获取校验值</span><br>    <span class="hljs-keyword">const</span> value = <span class="hljs-keyword">this</span>.form.model[<span class="hljs-keyword">this</span>.prop];<br>    <span class="hljs-comment">// 校验</span><br>    <span class="hljs-keyword">const</span> schema = new Schema(descriptor);<br>    <span class="hljs-comment">// 返回Promise，没有触发catch就说明验证通过</span><br>    <span class="hljs-keyword">return</span> schema.validate(&#123; [<span class="hljs-keyword">this</span>.prop] : value<br>    &#125;,<br>    errors = &gt;&#123;<br>        <span class="hljs-keyword">if</span> (errors) &#123;<br>            <span class="hljs-comment">// 将错误信息显示</span><br>            <span class="hljs-keyword">this</span>.error = errors[<span class="hljs-number">0</span>].message;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-comment">// 校验通过 this.error = &quot;&quot;;</span><br>        &#125;<br>    &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>表单全局验证，为<code>Form</code>提供<code>validate</code>方法</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xquery"><span class="hljs-keyword">validate</span>(cb) &#123;<br>    // 调用所有含有prop属性的子组件的<span class="hljs-keyword">validate</span>方法并得到Promise数组 const tasks = this.<span class="hljs-variable">$children</span><br>    <span class="hljs-built_in">.filter</span>(<span class="hljs-type">item</span> = &gt;<span class="hljs-type">item</span>.prop).<span class="hljs-keyword">map</span>(<span class="hljs-type">item</span> = &gt;<span class="hljs-type">item</span>.<span class="hljs-keyword">validate</span>());<br>    // 所有任务必须全部成功才算校验通过，任一失败则校验失败<br>    Promise.all(tasks).<span class="hljs-keyword">then</span>(() = &gt;cb<span class="hljs-built_in">(true</span>)).<span class="hljs-keyword">catch</span>(() = &gt;cb<span class="hljs-built_in">(false</span>))<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="实现弹窗组件"><a href="#实现弹窗组件" class="headerlink" title="实现弹窗组件"></a>实现弹窗组件</h3><blockquote>
+<p>弹窗这类组件的特点是它们在当前<strong>vue</strong>实例之外独立存在，通常挂载于body;它们是通过JS动态创建的，不需要在任何组件中声明。常⻅使用姿势</p>
+</blockquote>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs n1ql">this.$<span class="hljs-keyword">create</span>(Notice, &#123;<br>    <span class="hljs-built_in">title</span>: <span class="hljs-string">&#x27;喊你来搬砖&#x27;</span>,<br>    message: <span class="hljs-string">&#x27;提示信息&#x27;</span>,<br>    duration: <span class="hljs-number">1000</span><br>&#125;).<span class="hljs-keyword">show</span>();<br></code></pre></td></tr></table></figure>
+
+<p>create函数</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs awk">import Vue from <span class="hljs-string">&quot;vue&quot;</span>;<br><span class="hljs-regexp">//</span> 创建函数接收要创建组件定义<br><span class="hljs-keyword">function</span> create(Component, props) &#123;<br>    <span class="hljs-regexp">//</span> 创建一个Vue新实例 const vm = new Vue(&#123;<br>    render(h) &#123;<br>        <span class="hljs-regexp">//</span> render函数将传入组件配置对象转换为虚拟dom console.log(h(Component, &#123; props &#125;)); return h(Component, &#123; props &#125;);<br>    &#125;<br>&#125;).<span class="hljs-variable">$mount</span>(); <span class="hljs-regexp">//</span>执行挂载函数，但未指定挂载目标，表示只执行初始化工作<br><br>  <span class="hljs-regexp">//</span> 将生成dom元素追加至<br>  body document.body.appendChild(vm.<span class="hljs-variable">$el</span>);<br><br>  <span class="hljs-regexp">//</span> 给组件实例添加销毁方法<br>  const comp = vm.<span class="hljs-variable">$children</span>[<span class="hljs-number">0</span>];<br>  comp.remove = () = &gt;&#123;<br>      document.body.removeChild(vm.<span class="hljs-variable">$el</span>);<br>      vm.<span class="hljs-variable">$destroy</span>();<br>  &#125;;<br>  return comp;<br>&#125;<br><span class="hljs-regexp">//</span> 暴露调用接口<br>export default create<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>另一种创建组件实例的方式: <code>Vue.extend(Component)</code></p>
+</blockquote>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs awk">const Ctor = Vue.extend(Component) <br>const comp = new Ctor(&#123;<br>    propsData: props<br>&#125;) <br>comp.<span class="hljs-variable">$mount</span>();<br><br>document.body.appendChild(comp.<span class="hljs-variable">$el</span>) <br><br>comp.remove = () = &gt;&#123;<br>    <span class="hljs-regexp">//</span> 移除dom document.body.removeChild(comp.<span class="hljs-variable">$el</span>) <span class="hljs-regexp">//</span> 销毁组件<br>    comp.<span class="hljs-variable">$destroy</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="通知组件"><a href="#通知组件" class="headerlink" title="通知组件"></a>通知组件</h3><p>建通知组件，Notice.vue</p>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;box&quot;</span> <span class="hljs-attr">v-if</span>=<span class="hljs-string">&quot;isShow&quot;</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span></span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">title</span>&#125;&#125;</span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;box-content&quot;</span>&gt;</span></span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">message</span>&#125;&#125;</span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="language-javascript"><span class="language-xml"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">  <span class="hljs-attr">props</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">title</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-attr">type</span>: <span class="hljs-title class_">String</span>,</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-attr">default</span>: <span class="hljs-string">&quot;&quot;</span></span></span><br><span class="language-javascript"><span class="language-xml">    &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">message</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-attr">type</span>: <span class="hljs-title class_">String</span>,</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-attr">default</span>: <span class="hljs-string">&quot;&quot;</span></span></span><br><span class="language-javascript"><span class="language-xml">    &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">duration</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-attr">type</span>: <span class="hljs-title class_">Number</span>,</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-attr">default</span>: <span class="hljs-number">2000</span></span></span><br><span class="language-javascript"><span class="language-xml">    &#125;</span></span><br><span class="language-javascript"><span class="language-xml">  &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-keyword">return</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-attr">isShow</span>: <span class="hljs-literal">false</span></span></span><br><span class="language-javascript"><span class="language-xml">    &#125;;</span></span><br><span class="language-javascript"><span class="language-xml">  &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">  <span class="hljs-attr">methods</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-title function_">show</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-variable language_">this</span>.<span class="hljs-property">isShow</span> = <span class="hljs-literal">true</span>;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-built_in">setTimeout</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">hide</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">duration</span>);</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-title function_">hide</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-variable language_">this</span>.<span class="hljs-property">isShow</span> = <span class="hljs-literal">false</span>;</span></span><br><span class="language-javascript"><span class="language-xml">      <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">remove</span>();</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;</span></span><br><span class="language-javascript"><span class="language-xml">  &#125;</span></span><br><span class="language-javascript"><span class="language-xml">&#125;;</span></span><br><span class="language-javascript"><span class="language-xml"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="language-css"><span class="language-xml"><span class="hljs-selector-class">.box</span> &#123;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">position</span>: fixed;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">top</span>: <span class="hljs-number">16px</span>;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">left</span>: <span class="hljs-number">0</span>;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">text-align</span>: center;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">pointer-events</span>: none;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">background-color</span>: <span class="hljs-number">#fff</span>;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">border</span>: grey <span class="hljs-number">3px</span> solid;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">box-sizing</span>: border-box;</span></span><br><span class="language-css"><span class="language-xml">&#125;</span></span><br><span class="language-css"><span class="language-xml"><span class="hljs-selector-class">.box-content</span> &#123;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">width</span>: <span class="hljs-number">200px</span>;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">margin</span>: <span class="hljs-number">10px</span> auto;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">14px</span>;  </span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">padding</span>: <span class="hljs-number">8px</span> <span class="hljs-number">16px</span>;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">background</span>: <span class="hljs-number">#fff</span>;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">3px</span>;</span></span><br><span class="language-css"><span class="language-xml">  <span class="hljs-attribute">margin-bottom</span>: <span class="hljs-number">8px</span>;</span></span><br><span class="language-css"><span class="language-xml">&#125;</span></span><br><span class="language-css"><span class="language-xml"></span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>使用插件进一步封装便于使用，<code>create.js</code></p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">Notice</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@/components/Notice.vue&#x27;</span> <span class="hljs-comment">//...</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-title function_">install</span>(<span class="hljs-params">Vue</span>) &#123;<br>      <span class="hljs-title class_">Vue</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">$notice</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">options</span>) &#123;<br>          <span class="hljs-keyword">return</span> <span class="hljs-title function_">create</span>(<span class="hljs-title class_">Notice</span>, options)<br>      &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%A1%86%E6%9E%B6/" class="category-chain-item">框架</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/vue/">#vue</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>vue-组件化</div>
+      <div>http://example.com/2018/09/11/vue/vue-组件化/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>September 11, 2018</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/09/15/vue/vue-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1/" title="vue-组件通信">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">vue-组件通信</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/09/10/vue/vue-%E7%BB%84%E4%BB%B6%E5%92%8C%E6%8F%92%E4%BB%B6%E7%9A%84%E5%8C%BA%E5%88%AB/" title="vue-组件和插件的区别">
+                        <span class="hidden-mobile">vue-组件和插件的区别</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

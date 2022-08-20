@@ -1,0 +1,791 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、Koa框架介绍以及Koa环境搭建1.1 Koa 框架介绍 Node.js 是一个异步的世界，官方 API 支持的都是 callback 形式的异步编程模型，这 会带来许多问题，例如:   callback 嵌套问题 异步函数中可能同步调用 callback 返回 数据，带来不一致性。为了解决以上问题 Koa 出现了  Koa – 基于 Node.js 平台的下一代 web 开发框架  koa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="node-koa2总结">
+<meta property="og:url" content="http://example.com/2019/06/27/nodejs/nodejs-koa2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、Koa框架介绍以及Koa环境搭建1.1 Koa 框架介绍 Node.js 是一个异步的世界，官方 API 支持的都是 callback 形式的异步编程模型，这 会带来许多问题，例如:   callback 嵌套问题 异步函数中可能同步调用 callback 返回 数据，带来不一致性。为了解决以上问题 Koa 出现了  Koa – 基于 Node.js 平台的下一代 web 开发框架  koa">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/494.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/495.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/496.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/497.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/498.gif">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/499.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/500.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/501.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/502.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/503.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/504.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/505.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/506.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/507.png">
+<meta property="og:image" content="https://poetries1.gitee.io/img-repo/2019/10/508.png">
+<meta property="article:published_time" content="2019-06-27T01:27:18.000Z">
+<meta property="article:modified_time" content="2022-06-06T13:06:04.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="nodejs">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://poetries1.gitee.io/img-repo/2019/10/494.png">
+  
+  
+  
+  <title>node-koa2总结 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="node-koa2总结"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-06-27 09:27" pubdate>
+          June 27, 2019 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.7k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          48 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">node-koa2总结</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="一、Koa框架介绍以及Koa环境搭建"><a href="#一、Koa框架介绍以及Koa环境搭建" class="headerlink" title="一、Koa框架介绍以及Koa环境搭建"></a>一、Koa框架介绍以及Koa环境搭建</h1><h2 id="1-1-Koa-框架介绍"><a href="#1-1-Koa-框架介绍" class="headerlink" title="1.1 Koa 框架介绍"></a>1.1 Koa 框架介绍</h2><blockquote>
+<p><code>Node.js</code> 是一个异步的世界，官方 <code>API</code> 支持的都是 <code>callback</code> 形式的异步编程模型，这 会带来许多问题，例如:</p>
+</blockquote>
+<ol>
+<li><code>callback</code> 嵌套问题</li>
+<li>异步函数中可能同步调用 callback 返回 数据，带来不一致性。为了解决以上问题 <code>Koa</code> 出现了</li>
+</ol>
+<p><strong>Koa – 基于 Node.js 平台的下一代 web 开发框架</strong></p>
+<blockquote>
+<p><code>koa</code> 是由 <code>Express</code> 原班人马打造的，致力于成为一个更小、更富有表现力、更健壮的 Web 框架。 使用 <code>koa</code> 编写 <code>web</code> 应用，可以免除重复繁琐的回调函数嵌套， 并极大地提 升错误处理的效率。<code>koa</code>不在内核方法中绑定任何中间件， 它仅仅提供了一个轻量优雅的 函数库，使得编写 Web 应用变得得心应手。开发思路和 express 差不多，最大的特点就是 可以避免异步嵌套</p>
+</blockquote>
+<h2 id="1-2-Koa2-x-框架的安装使用"><a href="#1-2-Koa2-x-框架的安装使用" class="headerlink" title="1.2 Koa2.x 框架的安装使用"></a>1.2 Koa2.x 框架的安装使用</h2><p><strong>1. 安装 Node.js 8.x 以上的版本</strong></p>
+<blockquote>
+<p>开发 <code>Koa2</code> 之前，<code>Node.js</code> 是有要求的，它要求 <code>Node.js</code> 版本高于 <code>V7.6</code>。因为 <code>node.js 7.6</code>版本 开始完全支持 <code>async/await</code>，所以才能完全你支持我们的 Koa2&#96;</p>
+</blockquote>
+<p><strong>2. 安装 Koa</strong></p>
+<blockquote>
+<p>安装 <code>Koa</code> 框架和我们以前安装其他模块是一样的</p>
+</blockquote>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs brainfuck"><span class="hljs-comment">npm install</span> <span class="hljs-literal">--</span><span class="hljs-comment">save koa / cnpm install</span> <span class="hljs-literal">--</span><span class="hljs-comment">save koa</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>--save</code> 参数，表示自动修改 <code>package.json</code> 文件，自动添加依赖项</p>
+</blockquote>
+<p><strong>简单使用</strong></p>
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/494.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h1 id="二、koa-路由-get传值、动态路由"><a href="#二、koa-路由-get传值、动态路由" class="headerlink" title="二、koa 路由 get传值、动态路由"></a>二、koa 路由 get传值、动态路由</h1><h2 id="2-1-Koa-路由"><a href="#2-1-Koa-路由" class="headerlink" title="2.1 Koa 路由"></a>2.1 Koa 路由</h2><ul>
+<li>路由(<code>Routing</code>)是由一个 <code>URI</code>(或者叫路径)和一个特定的 <code>HTTP</code> 方法(<code>GET</code>、<code>POST</code>等)<br>组成的，涉及到应用如何响应客户端对某个网站节点的访问</li>
+<li>通俗的讲:路由就是根据不同的 <code>URL</code> 地址，加载不同的页面实现不同的功能</li>
+<li><code>Koa</code> 中的路由和 <code>Express</code> 有所不同，在 <code>Express</code> 中直接引入 <code>Express</code> 就可以配置路由，但是在 <code>Koa</code>中我们需要安装对应的 <code>koa-router</code> 路由模块来实现</li>
+</ul>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">npm install <span class="hljs-comment">--save koa-router</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/495.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="2-2-Koa-路由-get-传值"><a href="#2-2-Koa-路由-get-传值" class="headerlink" title="2.2 Koa 路由 get 传值"></a>2.2 Koa 路由 get 传值</h2><blockquote>
+<p>在 <code>koa2</code> 中 <code>GET</code> 传值通过 <code>request</code> 接收，但是接收的方法有两种:<code>query</code> 和 <code>querystring</code></p>
+</blockquote>
+<ul>
+<li><code>query</code>:返回的是格式化好的参数对象。</li>
+<li><code>querystring</code>:返回的是请求字符串</li>
+</ul>
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/496.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="2-3-Koa-动态路由"><a href="#2-3-Koa-动态路由" class="headerlink" title="2.3 Koa 动态路由"></a>2.3 Koa 动态路由</h2><p><img src="https://poetries1.gitee.io/img-repo/2019/10/497.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h1 id="三、koa-中间件及执行流程"><a href="#三、koa-中间件及执行流程" class="headerlink" title="三、koa 中间件及执行流程"></a>三、koa 中间件及执行流程</h1><h2 id="3-1-koa中间件的洋葱图执行流程"><a href="#3-1-koa中间件的洋葱图执行流程" class="headerlink" title="3.1 koa中间件的洋葱图执行流程"></a>3.1 koa中间件的洋葱图执行流程</h2><p><img src="https://poetries1.gitee.io/img-repo/2019/10/498.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="3-2-koa-中间件"><a href="#3-2-koa-中间件" class="headerlink" title="3.2 koa 中间件"></a>3.2 koa 中间件</h2><h3 id="3-2-1-什么是-Koa-的中间件"><a href="#3-2-1-什么是-Koa-的中间件" class="headerlink" title="3.2.1 什么是 Koa 的中间件"></a>3.2.1 什么是 Koa 的中间件</h3><ul>
+<li>通俗的讲:中间件就是匹配路由之前或者匹配路由完成做的一系列的操作，我们就可以<br>把它叫做中间件</li>
+<li>在<code>express</code>中间件(<code>Middleware</code>)是一个函数，它可以访问请求对象(request object (req)), 响应对象(<code>response object (res)</code>), 和 <code>web</code> 应用中处理请求-响应循环流程中的中间件，一 般被命名为 next 的变量。在 <code>Koa</code> 中中间件和 <code>express</code> 有点类似。</li>
+</ul>
+<p><strong>中间件的功能包括</strong></p>
+<ul>
+<li>执行任何代码</li>
+<li>修改请求和响应对象</li>
+<li>终结请求-响应循环</li>
+<li>调用堆栈中的下一个中间件</li>
+</ul>
+<blockquote>
+<p>如果我的 <code>get</code>、<code>post</code> 回调函数中，没有 <code>next</code> 参数，那么就匹配上第一个路由，就不会往下匹 配了。如果想往下匹配的话，那么需要写 <code>next()</code></p>
+</blockquote>
+<h3 id="3-2-2-Koa-应用可使用如下几种中间件"><a href="#3-2-2-Koa-应用可使用如下几种中间件" class="headerlink" title="3.2.2 Koa 应用可使用如下几种中间件"></a>3.2.2 Koa 应用可使用如下几种中间件</h3><p><strong>1. 应用级中间件</strong></p>
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/499.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>2. 路由中间件</strong></p>
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/500.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>3. 错误处理中间件</strong></p>
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/501.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>4. 第三方中间件</strong></p>
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/502.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="3-2-3-Koa-中间件的执行顺序"><a href="#3-2-3-Koa-中间件的执行顺序" class="headerlink" title="3.2.3 Koa 中间件的执行顺序"></a>3.2.3 Koa 中间件的执行顺序</h3><blockquote>
+<p><code>Koa</code> 的中间件和 <code>Express</code> 不同，<code>Koa</code> 选择了洋葱圈模型</p>
+</blockquote>
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/503.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h1 id="四、koa-ejs模板引擎使用-以及ejs配置全局数据"><a href="#四、koa-ejs模板引擎使用-以及ejs配置全局数据" class="headerlink" title="四、koa ejs模板引擎使用 以及ejs配置全局数据"></a>四、koa ejs模板引擎使用 以及ejs配置全局数据</h1><p><strong>1. 安装 koa-views 和 ejs</strong></p>
+<ul>
+<li>安装 <code>koa-views npm install --save koa-views / cnpm install --save koa-views</code></li>
+<li>安装 <code>ejs npm install ejs --save / cnpm install ejs --save</code></li>
+</ul>
+<p><strong>2. 引入 koa-views 配置中间件</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">const</span> <span class="hljs-variable constant_">views</span> = <span class="hljs-keyword">require</span>(<span class="hljs-string">&#x27;koa-views&#x27;</span>);<br><br>app.<span class="hljs-keyword">use</span>(<span class="hljs-title function_ invoke__">views</span>(<span class="hljs-string">&#x27;views&#x27;</span>, &#123; <span class="hljs-attr">map</span>: &#123;<span class="hljs-attr">html</span>: <span class="hljs-string">&#x27;ejs&#x27;</span> &#125;&#125;));<br></code></pre></td></tr></table></figure>
+
+<p><strong>3. Koa 中使用 ejs</strong></p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs livescript">router.get(<span class="hljs-string">&#x27;/add&#x27;</span>,<span class="hljs-keyword">async</span> (ctx)=&gt;&#123; <br>    <span class="hljs-keyword">let</span> title = <span class="hljs-string">&#x27;hello koa2&#x27;</span> <br>    <br>    <span class="hljs-keyword">await</span> ctx.render(index<span class="hljs-string">&#x27;,&#123; title &#125;)</span><br><span class="hljs-string">&#125;)</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>4. Ejs 引入模板</strong></p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mel">&lt;%- include header.ejs %&gt;<br></code></pre></td></tr></table></figure>
+
+<p><strong>5. Ejs 绑定数据</strong></p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gcode">&lt;<span class="hljs-meta">%</span>=h<span class="hljs-meta">%</span>&gt;<br></code></pre></td></tr></table></figure>
+
+<p><strong>6. Ejs 绑定 html 数据</strong></p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gcode">&lt;<span class="hljs-meta">%</span>-h<span class="hljs-meta">%</span>&gt;<br></code></pre></td></tr></table></figure>
+
+<p><strong>7. Ejs 模板判断语句</strong></p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs applescript">&lt;% <span class="hljs-keyword">if</span>(<span class="hljs-literal">true</span>)&#123; %&gt;<br>    &lt;<span class="hljs-keyword">div</span>&gt;<span class="hljs-literal">true</span>&lt;/<span class="hljs-keyword">div</span>&gt;<br>&lt;%&#125; <span class="hljs-keyword">else</span>&#123; %&gt;<br>    &lt;<span class="hljs-keyword">div</span>&gt;<span class="hljs-literal">false</span>&lt;/<span class="hljs-keyword">div</span>&gt;<br>&lt;%&#125; %&gt;<br></code></pre></td></tr></table></figure>
+
+<p><strong>8. Ejs 模板中循环数据</strong></p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs gcode">&lt;<span class="hljs-meta">%</span>for<span class="hljs-comment">(var i=0;i&lt;list.length;i++)</span> &#123; <span class="hljs-meta">%</span>&gt;<br>    &lt;li&gt;&lt;<span class="hljs-meta">%</span>=list[i] <span class="hljs-meta">%</span>&gt;&lt;/li&gt;<br>&lt;<span class="hljs-meta">%</span>&#125;<span class="hljs-meta">%</span>&gt;<br></code></pre></td></tr></table></figure>
+
+<h1 id="五、koa-post-提交数据-koa-bodyparser-中间件的使用"><a href="#五、koa-post-提交数据-koa-bodyparser-中间件的使用" class="headerlink" title="五、koa post 提交数据 koa-bodyparser 中间件的使用"></a>五、koa post 提交数据 koa-bodyparser 中间件的使用</h1><h2 id="5-1-原生-Nodejs-获取-post-提交数据"><a href="#5-1-原生-Nodejs-获取-post-提交数据" class="headerlink" title="5.1 原生 Nodejs 获取 post 提交数据"></a>5.1 原生 Nodejs 获取 post 提交数据</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">parsePostData</span>(<span class="hljs-params">ctx</span>)&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve,reject</span>)=&gt;</span>&#123;<br>        <span class="hljs-keyword">try</span>&#123;<br>            <span class="hljs-keyword">let</span> postdata=<span class="hljs-string">&quot;&quot;</span>;<br>            ctx.<span class="hljs-property">req</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;data&#x27;</span>,<span class="hljs-function">(<span class="hljs-params">data</span>)=&gt;</span>&#123;<br>                postdata += data<br>            &#125;)<br>            ctx.<span class="hljs-property">req</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;end&quot;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>                <span class="hljs-title function_">resolve</span>(postdata);<br>            &#125;)<br>        &#125;<span class="hljs-keyword">catch</span>(error)&#123;<br>            <span class="hljs-title function_">reject</span>(error);<br>        &#125;<br>      &#125;<br>    &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="5-2-Koa-中-koa-bodyparser-中间件的使用"><a href="#5-2-Koa-中-koa-bodyparser-中间件的使用" class="headerlink" title="5.2 Koa 中 koa-bodyparser 中间件的使用"></a>5.2 Koa 中 koa-bodyparser 中间件的使用</h2><p><strong>1. 安装 koa-bodyparser</strong></p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">npm install <span class="hljs-comment">--save koa-bodyparser</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>2. 安装 引入配置中间件</strong></p>
+<figure class="highlight zephir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs zephir"><span class="hljs-keyword">var</span> Koa = <span class="hljs-keyword">require</span>(<span class="hljs-string">&#x27;koa&#x27;</span>);<br><span class="hljs-keyword">var</span> bodyParser = <span class="hljs-keyword">require</span>(<span class="hljs-string">&#x27;koa-bodyparser&#x27;</span>);<br><br><span class="hljs-keyword">var</span> app = <span class="hljs-keyword">new</span> Koa();<br><br>app.<span class="hljs-keyword">use</span>(bodyParser());<br>app.<span class="hljs-keyword">use</span>(async ctx =&gt; &#123;<br>    ctx.body = ctx.request.body;<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p><strong>3. 使用</strong></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">ctx<span class="hljs-selector-class">.request</span><span class="hljs-selector-class">.body</span> <span class="hljs-comment">// 获取 post 提交的数据</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="六、koa-static静态资源中间件"><a href="#六、koa-static静态资源中间件" class="headerlink" title="六、koa-static静态资源中间件"></a>六、koa-static静态资源中间件</h1><p><strong>1. 安装 koa-static</strong></p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs livescript"><span class="hljs-built_in">npm</span> install --save koa-<span class="hljs-keyword">static</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>2. 引入配置中间件</strong></p>
+<figure class="highlight zephir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs zephir"><span class="hljs-keyword">const</span> <span class="hljs-keyword">static</span> = <span class="hljs-keyword">require</span>(<span class="hljs-string">&#x27;koa-static&#x27;</span>);<br><br>app.<span class="hljs-keyword">use</span>(<span class="hljs-keyword">static</span>(<br>    path.join( __dirname, <span class="hljs-string">&#x27;public&#x27;</span>)<br>))<br></code></pre></td></tr></table></figure>
+
+<h1 id="七、koa-art-template高性能模板引擎的使用"><a href="#七、koa-art-template高性能模板引擎的使用" class="headerlink" title="七、koa art-template高性能模板引擎的使用"></a>七、koa art-template高性能模板引擎的使用</h1><h2 id="7-1-常见模板引擎的性能对比"><a href="#7-1-常见模板引擎的性能对比" class="headerlink" title="7.1 常见模板引擎的性能对比"></a>7.1 常见模板引擎的性能对比</h2><blockquote>
+<p>适用于 <code>koa</code> 的模板引擎选择非常多，比如 <code>jade</code>、<code>ejs</code>、<code>nunjucks</code>、<code>art-template</code> 等</p>
+</blockquote>
+<ul>
+<li><code>art-template</code> 是一个简约、超快的模板引擎</li>
+<li>它采用作用域预声明的技术来优化模板渲染速度，从而获得接近 JavaScript 极限的运行 性能，并且同时支持 NodeJS 和浏览器。</li>
+<li><code>art-template</code> 支持 <code>ejs</code> 的语法，也可以用自己的类似 <code>angular</code> 数据绑定的语法</li>
+<li>中文文档: <a target="_blank" rel="noopener" href="http://aui.github.io/art-template/zh-cn/docs">http://aui.github.io/art-template/zh-cn/docs</a></li>
+</ul>
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/504.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/505.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="7-2-在-Koa-中使用-art-template-模板引擎"><a href="#7-2-在-Koa-中使用-art-template-模板引擎" class="headerlink" title="7.2 在 Koa 中使用 art-template 模板引擎"></a>7.2 在 Koa 中使用 art-template 模板引擎</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs php">npm install --save art-template <br>npm install --save koa-art-template<br><span class="hljs-keyword">const</span> <span class="hljs-variable constant_">Koa</span> = <span class="hljs-keyword">require</span>(<span class="hljs-string">&#x27;koa&#x27;</span>);<br><span class="hljs-keyword">const</span> <span class="hljs-variable constant_">render</span> = <span class="hljs-keyword">require</span>(<span class="hljs-string">&#x27;koa-art-template&#x27;</span>);<br><br><span class="hljs-keyword">const</span> <span class="hljs-variable constant_">app</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Koa</span>();<br><br><span class="hljs-title function_ invoke__">render</span>(app, &#123;<br>    <span class="hljs-attr">root</span>: path.<span class="hljs-title function_ invoke__">join</span>(__dirname, <span class="hljs-string">&#x27;view&#x27;</span>),<br>    <span class="hljs-attr">extname</span>: <span class="hljs-string">&#x27;.art&#x27;</span>,<br>    <span class="hljs-attr">debug</span>: process.env.NODE_ENV !== <span class="hljs-string">&#x27;production&#x27;</span><br>&#125;);<br>app.<span class="hljs-keyword">use</span>(async <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">ctx</span>) </span>&#123;<br>    await ctx.<span class="hljs-title function_ invoke__">render</span>(<span class="hljs-string">&#x27;user&#x27;</span>);<br>&#125;);<br>app.<span class="hljs-title function_ invoke__">listen</span>(<span class="hljs-number">8080</span>);<br></code></pre></td></tr></table></figure>
+
+<h2 id="7-3-art-template-模板引擎语法"><a href="#7-3-art-template-模板引擎语法" class="headerlink" title="7.3 art-template 模板引擎语法"></a>7.3 art-template 模板引擎语法</h2><blockquote>
+<p>参考:<a target="_blank" rel="noopener" href="http://aui.github.io/art-template/zh-cn/docs/syntax.html">http://aui.github.io/art-template/zh-cn/docs/syntax.html</a></p>
+</blockquote>
+<h1 id="八、koa-Cookie的使用"><a href="#八、koa-Cookie的使用" class="headerlink" title="八、koa Cookie的使用"></a>八、koa Cookie的使用</h1><h2 id="8-1-Koa-Cookie-的使用"><a href="#8-1-Koa-Cookie-的使用" class="headerlink" title="8.1 Koa Cookie 的使用"></a>8.1 Koa Cookie 的使用</h2><p><strong>1. Koa 中设置 Cookie 的值</strong></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">ctx.cookies.<span class="hljs-keyword">set</span>(<span class="hljs-type">name</span>, <span class="hljs-keyword">value</span>, [<span class="hljs-keyword">options</span>])<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>通过 <code>options</code> 设置 <code>cookie name</code> 的 <code>value</code></p>
+</blockquote>
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/506.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>2. Koa 中获取 Cookie 的值</strong></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">ctx.cookies.<span class="hljs-built_in">get</span>(<span class="hljs-string">&#x27;name&#x27;</span>);<br></code></pre></td></tr></table></figure>
+
+<h2 id="8-2-Koa-中设置中文-Cookie"><a href="#8-2-Koa-中设置中文-Cookie" class="headerlink" title="8.2 Koa 中设置中文 Cookie"></a>8.2 Koa 中设置中文 Cookie</h2><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">console.log(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Buffer(&#x27;<span class="hljs-params">hello</span>, <span class="hljs-params">world</span>!&#x27;)</span>.<span class="hljs-keyword">to</span><span class="hljs-constructor">String(&#x27;<span class="hljs-params">base64</span>&#x27;)</span>);<span class="hljs-comment">// 转换成 base64 字符 串:aGVsbG8sIHdvcmxkIQ==</span><br><br>console.log(<span class="hljs-keyword">new</span> <span class="hljs-constructor">Buffer(&#x27;<span class="hljs-params">aGVsbG8sIHdvcmxkIQ</span><span class="hljs-operator">==</span>&#x27;, &#x27;<span class="hljs-params">base64</span>&#x27;)</span>.<span class="hljs-keyword">to</span><span class="hljs-constructor">String()</span>);<span class="hljs-comment">// 还原 base 64 字符串:hello, world!</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="九、koa-Session-的使用"><a href="#九、koa-Session-的使用" class="headerlink" title="九、koa Session 的使用"></a>九、koa Session 的使用</h1><h2 id="9-1-Session-简单介绍"><a href="#9-1-Session-简单介绍" class="headerlink" title="9.1 Session 简单介绍"></a>9.1 Session 简单介绍</h2><blockquote>
+<p><code>session</code> 是另一种记录客户状态的机制，不同的是 <code>Cookie</code> 保存在客户端浏览器中，而 <code>session</code> 保存在服务器上</p>
+</blockquote>
+<h2 id="9-2-Session-的工作流程"><a href="#9-2-Session-的工作流程" class="headerlink" title="9.2 Session 的工作流程"></a>9.2 Session 的工作流程</h2><blockquote>
+<p>当浏览器访问服务器并发送第一次请求时，服务器端会创建一个 <code>session</code> 对象，生 成一个类似于 <code>key</code>,<code>value</code> 的键值对， 然后将<code>key(cookie)</code>返回到浏览器(客户)端，浏览 器下次再访问时，携带 <code>key(cookie)</code>，找到对应的 <code>session(value)</code>。 客户的信息都保存 在 <code>session</code> 中</p>
+</blockquote>
+<h2 id="9-3-koa-session-的使用"><a href="#9-3-koa-session-的使用" class="headerlink" title="9.3 koa-session 的使用"></a>9.3 koa-session 的使用</h2><p><strong>1. 安装 express-session</strong></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">npm install koa-<span class="hljs-keyword">session</span> <span class="hljs-comment">--save</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>2. 引入 express-session</strong></p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">const session</span> = require(<span class="hljs-string">&#x27;koa-session&#x27;</span>);<br></code></pre></td></tr></table></figure>
+
+<p><strong>3. 设置官方文档提供的中间件</strong></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">app.keys = [<span class="hljs-string">&#x27;some secret hurr&#x27;</span>];<br>const CONFIG = &#123;<br>    key: <span class="hljs-string">&#x27;koa:sess&#x27;</span>, //cookie key (<span class="hljs-keyword">default</span> <span class="hljs-keyword">is</span> koa:sess)<br>    maxAge: <span class="hljs-number">86400000</span>, // cookie 的过期时间 maxAge <span class="hljs-keyword">in</span> ms (<span class="hljs-keyword">default</span> <span class="hljs-keyword">is</span> <span class="hljs-number">1</span> days)<br>    overwrite: <span class="hljs-keyword">true</span>, //是否可以 overwrite (默认 <span class="hljs-keyword">default</span> <span class="hljs-keyword">true</span>)<br>    httpOnly: <span class="hljs-keyword">true</span>, //cookie 是否只有服务器端可以访问 httpOnly <span class="hljs-keyword">or</span> <span class="hljs-keyword">not</span> (<span class="hljs-keyword">default</span> <span class="hljs-keyword">true</span>)<br>    signed: <span class="hljs-keyword">true</span>, //签名默认 <span class="hljs-keyword">true</span><br>    rolling:<span class="hljs-keyword">false</span>, //在每次请求时强行设置cookie，这将重置cookie过期时间(默认:<span class="hljs-keyword">false</span>)<br>    renew: <span class="hljs-keyword">false</span>, //(<span class="hljs-type">boolean</span>) renew <span class="hljs-keyword">session</span> <span class="hljs-keyword">when</span> <span class="hljs-keyword">session</span> <span class="hljs-keyword">is</span> nearly expired<br>&#125;<br>app.use(<span class="hljs-keyword">session</span>(CONFIG, app));<br></code></pre></td></tr></table></figure>
+
+<p><strong>4. 使用</strong></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span>设置值 <br>ctx.session.username = <span class="hljs-string">&quot;张三&quot;</span>;<br><br><span class="hljs-regexp">//</span> 获取值 <br>ctx.session.username<br></code></pre></td></tr></table></figure>
+
+<h2 id="9-4-Cookie-和-Session-区别"><a href="#9-4-Cookie-和-Session-区别" class="headerlink" title="9.4 Cookie 和 Session 区别"></a>9.4 Cookie 和 Session 区别</h2><ul>
+<li><code>cookie</code> 数据存放在客户的浏览器上，<code>session</code> 数据放在服务器上</li>
+<li><code>cookie</code> 不是很安全，别人可以分析存放在本地的 <code>COOKIE</code> 并进行 <code>COOKIE</code> 欺骗 考虑到安全应当使用 <code>session</code></li>
+<li><code>session</code>会在一定时间内保存在服务器上。当访问增多，会比较占用你服务器的性能 考虑到减轻服务器性能方面，应当使用 <code>COOKIE</code></li>
+<li>单个 <code>cookie</code> 保存的数据不能超过 <code>4K</code>，很多浏览器都限制一个站点最多保存 <code>20</code> 个 <code>cookie</code></li>
+</ul>
+<h1 id="十、Koa-操作-Mongodb-数据库"><a href="#十、Koa-操作-Mongodb-数据库" class="headerlink" title="十、Koa 操作 Mongodb 数据库"></a>十、Koa 操作 Mongodb 数据库</h1><blockquote>
+<p>官方文档:<a target="_blank" rel="noopener" href="http://mongodb.github.io/node-mongodb-native/">http://mongodb.github.io/node-mongodb-native/</a></p>
+</blockquote>
+<h1 id="十一、Koa-应用生成器以及-Koa-路由模-块化"><a href="#十一、Koa-应用生成器以及-Koa-路由模-块化" class="headerlink" title="十一、Koa 应用生成器以及 Koa 路由模 块化"></a>十一、Koa 应用生成器以及 Koa 路由模 块化</h1><h2 id="11-1-koa-应用生成器"><a href="#11-1-koa-应用生成器" class="headerlink" title="11.1 koa 应用生成器"></a>11.1 koa 应用生成器</h2><blockquote>
+<p>通过应用 <code>koa</code> 脚手架生成工具 可以快速创建一个基于 <code>koa2</code> 的应用的骨架</p>
+</blockquote>
+<p><strong>1. 全局安装</strong></p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">npm <span class="hljs-keyword">install</span> koa-generator -g<br></code></pre></td></tr></table></figure>
+
+<p><strong>2. 创建项目</strong></p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey">koa ko<span class="hljs-built_in">a_demo</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>3. 安装依赖</strong></p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey">cd ko<span class="hljs-built_in">a_demo</span><br><br>npm install<br></code></pre></td></tr></table></figure>
+
+<p><strong>4. 启动项目</strong></p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs coffeescript"><span class="hljs-built_in">npm</span> start<br></code></pre></td></tr></table></figure>
+
+<h2 id="11-2-koa-搭建模块化路由-x2F-层级路由"><a href="#11-2-koa-搭建模块化路由-x2F-层级路由" class="headerlink" title="11.2 koa 搭建模块化路由&#x2F;层级路由"></a>11.2 koa 搭建模块化路由&#x2F;层级路由</h2><ol>
+<li>在目录下面新建一个文件夹 <code>routes</code></li>
+<li>在 <code>routes</code> 里面配置对应的子页面</li>
+<li>比如在 <code>routes</code> 新建 <code>index.js</code></li>
+</ol>
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/507.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol>
+<li>然后在主应用中加载子路由模块:</li>
+</ol>
+<p><img src="https://poetries1.gitee.io/img-repo/2019/10/508.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%90%8E%E7%AB%AF/" class="category-chain-item">后端</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%90%8E%E7%AB%AF/%E6%A1%86%E6%9E%B6/" class="category-chain-item">框架</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/nodejs/">#nodejs</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>node-koa2总结</div>
+      <div>http://example.com/2019/06/27/nodejs/nodejs-koa2/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>June 27, 2019</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/07/20/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/" title="进程和线程">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">进程和线程</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/06/07/nodejs/express/" title="node-express框架总结">
+                        <span class="hidden-mobile">node-express框架总结</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

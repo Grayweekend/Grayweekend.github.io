@@ -1,0 +1,616 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、基础用法取当天时间，以YYYY年MM月DD日形式显示 1var now&#x3D;moment().format(&quot;YYYY年MM月DD日&quot;);  任意时间戳格式化，以YYYY-MM-DD HH:mm:ss形式显示 1var t1&#x3D;moment(1411641720000).format(&amp;#x27;YYYY-MM-DD HH:mm:ss&amp;#x27;);  获取前一天日期，格式以YY">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js-moment.js">
+<meta property="og:url" content="http://example.com/2018/01/16/html+css+js+ts/3-js%E7%AC%AC%E4%B8%89%E6%96%B9%E5%8C%85moment/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、基础用法取当天时间，以YYYY年MM月DD日形式显示 1var now&#x3D;moment().format(&quot;YYYY年MM月DD日&quot;);  任意时间戳格式化，以YYYY-MM-DD HH:mm:ss形式显示 1var t1&#x3D;moment(1411641720000).format(&amp;#x27;YYYY-MM-DD HH:mm:ss&amp;#x27;);  获取前一天日期，格式以YY">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-01-16T10:16:57.000Z">
+<meta property="article:modified_time" content="2022-06-04T07:20:58.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>js-moment.js - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="js-moment.js"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-01-16 18:16" pubdate>
+          January 16, 2018 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.3k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          45 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">js-moment.js</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="一、基础用法"><a href="#一、基础用法" class="headerlink" title="一、基础用法"></a>一、基础用法</h2><p><strong>取当天时间，以YYYY年MM月DD日形式显示</strong></p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">var now<span class="hljs-operator">=</span>moment().format(<span class="hljs-string">&quot;YYYY年MM月DD日&quot;</span>)<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>任意时间戳格式化，以<code>YYYY-MM-DD HH:mm:ss</code>形式显示</strong></p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs actionscript"><span class="hljs-keyword">var</span> t1=moment(<span class="hljs-number">1411641720000</span>).format(<span class="hljs-string">&#x27;YYYY-MM-DD HH:mm:ss&#x27;</span>);<br></code></pre></td></tr></table></figure>
+
+<p><strong>获取前一天日期，格式以<code>YYYY-MM-DD</code>形式显示</strong></p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">var</span> t11=moment().<span class="hljs-built_in">day</span>(<span class="hljs-number">0</span>).format(<span class="hljs-string">&#x27;YYYY-MM-DD&#x27;</span>);<br></code></pre></td></tr></table></figure>
+
+<p><strong>获取本周五日期，格式以<code>YYYY-MM-DD</code>形式显示</strong></p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">var</span> t12=moment().<span class="hljs-built_in">weekday</span>(<span class="hljs-number">5</span>).format(<span class="hljs-string">&#x27;YYYY-MM-DD&#x27;</span>);<br></code></pre></td></tr></table></figure>
+
+<p><strong>获取上周五日期，格式以<code>YYYY-MM-DD</code>形式显示</strong></p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">var</span> t13=moment().<span class="hljs-built_in">weekday</span>(<span class="hljs-number">-3</span>).format(<span class="hljs-string">&#x27;YYYY-MM-DD&#x27;</span>);<br></code></pre></td></tr></table></figure>
+
+<p><strong>获取当前年份、月份、日期</strong></p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">var</span> t14=moment().<span class="hljs-built_in">year</span>()<br><span class="hljs-keyword">var</span> t15=moment().<span class="hljs-built_in">month</span>()<span class="hljs-comment">//此处月份从0开始，当前月要+1</span><br><span class="hljs-keyword">var</span> t16=moment().<span class="hljs-built_in">date</span>();<br></code></pre></td></tr></table></figure>
+
+<p><strong>获取上个月今天的日期，格式以YYYY-MM-DD显示</strong></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">var <span class="hljs-attribute">t18</span>=moment().subtract(1, <span class="hljs-string">&#x27;months&#x27;</span>).format(<span class="hljs-string">&#x27;YYYY-MM-DD&#x27;</span>);<br></code></pre></td></tr></table></figure>
+
+<p><strong>获取上个月日期，格式以YYYY-MM显示</strong></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-selector-tag">var</span> t19=<span class="hljs-built_in">moment</span>()<span class="hljs-selector-class">.subtract</span>(<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;months&#x27;</span>)<span class="hljs-selector-class">.format</span>(<span class="hljs-string">&#x27;YYYY-MM&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p><strong>获取前一天日期，格式以YYYY-MM-DD显示</strong></p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs actionscript"><span class="hljs-keyword">var</span> t20 = moment().subtract(<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;days&#x27;</span>).format(<span class="hljs-string">&#x27;YYYY-MM-DD&#x27;</span>);<br></code></pre></td></tr></table></figure>
+
+<p><strong>获取两个小时之后的时间</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">var</span> t22=moment().<span class="hljs-keyword">add</span>(<span class="hljs-number">2</span>,<span class="hljs-string">&#x27;hours&#x27;</span>).format(<span class="hljs-string">&#x27;YYYY-MM-DD HH:mm:ss&#x27;</span>);<br></code></pre></td></tr></table></figure>
+
+<p><strong>获取五天前的日期</strong></p>
+<ul>
+<li>例如:今天<code>2018-7-23</code>，获取到的时间是<code>2018-7-18</code></li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">var <span class="hljs-attribute">t23</span>=moment().subtract(5, <span class="hljs-string">&#x27;days&#x27;</span>).format(<span class="hljs-string">&#x27;YYYY-MM-DD&#x27;</span>);<br></code></pre></td></tr></table></figure>
+
+<h2 id="二、更多示例"><a href="#二、更多示例" class="headerlink" title="二、更多示例"></a>二、更多示例</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-meta">&#x27;use strict&#x27;</span><br><span class="hljs-keyword">let</span> moment = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;moment&#x27;</span>);<br><span class="hljs-comment">//获取当前时间</span><br><span class="hljs-keyword">var</span> now = <span class="hljs-title function_">moment</span>().<span class="hljs-title function_">toDate</span>();<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(now)<br> <br><span class="hljs-comment">//格式化当前时间</span><br>now = <span class="hljs-title function_">moment</span>().<span class="hljs-title function_">format</span>(<span class="hljs-string">&#x27;YYYY-MM-DD&#x27;</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(now);<br> <br><span class="hljs-comment">//其它几种格式化方法</span><br>now = <span class="hljs-title function_">moment</span>().<span class="hljs-title function_">format</span>(<span class="hljs-string">&#x27;L&#x27;</span>) <span class="hljs-comment">// 10/22/2016 </span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(now);<br> <br>now = <span class="hljs-title function_">moment</span>().<span class="hljs-title function_">format</span>(<span class="hljs-string">&#x27;LL&#x27;</span>) <span class="hljs-comment">// October 22, 2016</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(now);<br> <br><span class="hljs-comment">//格式化当前时间</span><br>now = <span class="hljs-title function_">moment</span>().<span class="hljs-title function_">format</span>(<span class="hljs-string">&#x27;YYYY-MM-DD:HH:MM:SS&#x27;</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(now);<br> <br><span class="hljs-comment">//获取这个月初时间</span><br><span class="hljs-keyword">let</span> startMonth = <span class="hljs-title function_">moment</span>().<span class="hljs-title function_">startOf</span>(<span class="hljs-string">&#x27;month&#x27;</span>).<span class="hljs-title function_">toDate</span>();<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(startMonth);<br> <br><span class="hljs-comment">//获取今天开始的时间</span><br><span class="hljs-keyword">let</span> dayOfStart = <span class="hljs-title function_">moment</span>().<span class="hljs-title function_">startOf</span>(<span class="hljs-string">&#x27;day&#x27;</span>).<span class="hljs-title function_">toDate</span>();<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(dayOfStart);<br> <br><span class="hljs-comment">//获取今天结束的时间</span><br><span class="hljs-keyword">let</span> dayOfEnd = <span class="hljs-title function_">moment</span>().<span class="hljs-title function_">endOf</span>(<span class="hljs-string">&#x27;day&#x27;</span>).<span class="hljs-title function_">toDate</span>();<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(dayOfEnd);<br> <br> <br><span class="hljs-comment">//获取＋n小时</span><br><span class="hljs-keyword">let</span> lateHour = <span class="hljs-title function_">moment</span>().<span class="hljs-title function_">add</span>(<span class="hljs-number">2</span>,<span class="hljs-string">&#x27;hour&#x27;</span>).<span class="hljs-title function_">toDate</span>();<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(lateHour);<br> <br><span class="hljs-comment">//获取＋n小时</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;//获取-n小时&#x27;</span>)<br><span class="hljs-keyword">let</span> beforeHour = <span class="hljs-title function_">moment</span>().<span class="hljs-title function_">subtract</span>(<span class="hljs-number">2</span>,<span class="hljs-string">&#x27;hour&#x27;</span>).<span class="hljs-title function_">toDate</span>();<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(beforeHour);<br> <br> <br><span class="hljs-comment">//获取＋n天</span><br><span class="hljs-keyword">let</span> lateDay = <span class="hljs-title function_">moment</span>().<span class="hljs-title function_">add</span>(+<span class="hljs-number">5</span>,<span class="hljs-string">&#x27;day&#x27;</span>).<span class="hljs-title function_">toDate</span>();<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(lateDay);<br> <br><span class="hljs-comment">//获取-n天</span><br><span class="hljs-keyword">let</span> beforeDay = <span class="hljs-title function_">moment</span>().<span class="hljs-title function_">add</span>(-<span class="hljs-number">5</span>,<span class="hljs-string">&#x27;day&#x27;</span>).<span class="hljs-title function_">toDate</span>();<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(beforeDay);<br><span class="hljs-comment">//也可以表示为</span><br>beforeDay = <span class="hljs-title function_">moment</span>().<span class="hljs-title function_">subtract</span>(<span class="hljs-number">5</span>,<span class="hljs-string">&#x27;day&#x27;</span>).<span class="hljs-title function_">toDate</span>();<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(beforeDay);<br> <br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;//获取＋n月&#x27;</span>)<br><span class="hljs-keyword">let</span> lateMonth = <span class="hljs-title function_">moment</span>().<span class="hljs-title function_">add</span>(<span class="hljs-number">2</span>,<span class="hljs-string">&#x27;month&#x27;</span>).<span class="hljs-title function_">toDate</span>();<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(lateHour);<br> <br><span class="hljs-comment">//获取＋n月</span><br><span class="hljs-keyword">let</span> beforeMonth = <span class="hljs-title function_">moment</span>().<span class="hljs-title function_">subtract</span>(<span class="hljs-number">2</span>,<span class="hljs-string">&#x27;month&#x27;</span>).<span class="hljs-title function_">toDate</span>();<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(lateHour);<br> <br> <br> <br><span class="hljs-comment">//获取星期</span><br><span class="hljs-keyword">let</span> week = <span class="hljs-title function_">moment</span>().<span class="hljs-title function_">format</span>(<span class="hljs-string">&#x27;dddd&#x27;</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(week);<br> <br><span class="hljs-comment">//获取到现在的年限 如果不满一年显示出具体几个月</span><br><span class="hljs-keyword">let</span> years = <span class="hljs-title function_">moment</span>(<span class="hljs-string">&#x27;2020-12-31&#x27;</span>).<span class="hljs-title function_">fromNow</span>();<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(years);<br></code></pre></td></tr></table></figure>
+
+<h2 id="三、综合"><a href="#三、综合" class="headerlink" title="三、综合"></a>三、综合</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs stylus">import moment from <span class="hljs-string">&#x27;moment&#x27;</span><br><br>DATE_TODAY: <span class="hljs-built_in">moment</span>()<span class="hljs-selector-class">.format</span>(<span class="hljs-string">&#x27;YYYY-MM-DD&#x27;</span>),<span class="hljs-comment">//今天</span><br>DATE_YESTERDAY: <span class="hljs-built_in">moment</span>()<span class="hljs-selector-class">.subtract</span>(<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;days&#x27;</span>)<span class="hljs-selector-class">.format</span>(<span class="hljs-string">&#x27;YYYY-MM-DD&#x27;</span>), <span class="hljs-comment">// 昨天</span><br>DATE_1_WEEK_BEFORE: <span class="hljs-built_in">moment</span>()<span class="hljs-selector-class">.subtract</span>(<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;weeks&#x27;</span>)<span class="hljs-selector-class">.format</span>(<span class="hljs-string">&#x27;YYYY-MM-DD&#x27;</span>),<span class="hljs-comment">// 一周前</span><br>DATE_2_WEEKS_BEFORE: <span class="hljs-built_in">moment</span>()<span class="hljs-selector-class">.subtract</span>(<span class="hljs-number">2</span>, <span class="hljs-string">&#x27;weeks&#x27;</span>)<span class="hljs-selector-class">.format</span>(<span class="hljs-string">&#x27;YYYY-MM-DD&#x27;</span>),<span class="hljs-comment">// 两周前</span><br>DATE_3_WEEKS_BEFORE: <span class="hljs-built_in">moment</span>()<span class="hljs-selector-class">.subtract</span>(<span class="hljs-number">3</span>, <span class="hljs-string">&#x27;weeks&#x27;</span>)<span class="hljs-selector-class">.format</span>(<span class="hljs-string">&#x27;YYYY-MM-DD&#x27;</span>),<span class="hljs-comment">// </span><br>DATE_1_MONTH_BEFORE: <span class="hljs-built_in">moment</span>()<span class="hljs-selector-class">.subtract</span>(<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;months&#x27;</span>)<span class="hljs-selector-class">.format</span>(<span class="hljs-string">&#x27;YYYY-MM-DD&#x27;</span>),<br>DATE_2_MONTH_BEFORE: <span class="hljs-built_in">moment</span>()<span class="hljs-selector-class">.subtract</span>(<span class="hljs-number">2</span>, <span class="hljs-string">&#x27;months&#x27;</span>)<span class="hljs-selector-class">.format</span>(<span class="hljs-string">&#x27;YYYY-MM-DD&#x27;</span>),<br>DATE_3_MONTHS_BEFORE: <span class="hljs-built_in">moment</span>()<span class="hljs-selector-class">.subtract</span>(<span class="hljs-number">3</span>, <span class="hljs-string">&#x27;months&#x27;</span>)<span class="hljs-selector-class">.format</span>(<span class="hljs-string">&#x27;YYYY-MM-DD&#x27;</span>),<br>DATE_1_YEAR_BEFORE: <span class="hljs-built_in">moment</span>()<span class="hljs-selector-class">.subtract</span>(<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;years&#x27;</span>)<span class="hljs-selector-class">.format</span>(<span class="hljs-string">&#x27;YYYY-MM-DD&#x27;</span>),<br><br>DATE_3_MONTHS_AFTER: <span class="hljs-built_in">moment</span>()<span class="hljs-selector-class">.add</span>(<span class="hljs-number">3</span>, <span class="hljs-string">&#x27;months&#x27;</span>)<span class="hljs-selector-class">.format</span>(<span class="hljs-string">&#x27;YYYY-MM-DD&#x27;</span>),<br>DATE_1_YEAR_AFTER: <span class="hljs-built_in">moment</span>()<span class="hljs-selector-class">.add</span>(<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;year&#x27;</span>)<span class="hljs-selector-class">.format</span>(<span class="hljs-string">&#x27;YYYY-MM-DD&#x27;</span>),<br><br>DATE_FIRST_DAY_OF_MONTH: <span class="hljs-built_in">moment</span>()<span class="hljs-selector-class">.startOf</span>(<span class="hljs-string">&#x27;month&#x27;</span>)<span class="hljs-selector-class">.format</span>(<span class="hljs-string">&#x27;YYYY-MM-DD&#x27;</span>),<br>DATE_LAST_DAY_OF_MONTH: <span class="hljs-built_in">moment</span>()<span class="hljs-selector-class">.endOf</span>(<span class="hljs-string">&#x27;month&#x27;</span>)<span class="hljs-selector-class">.format</span>(<span class="hljs-string">&#x27;YYYY-MM-DD&#x27;</span>),<br><br>DATE_7_DAYS_BEFORE: <span class="hljs-built_in">moment</span>()<span class="hljs-selector-class">.subtract</span>(<span class="hljs-number">7</span>, <span class="hljs-string">&#x27;days&#x27;</span>)<span class="hljs-selector-class">.format</span>(<span class="hljs-string">&#x27;YYYY-MM-DD&#x27;</span>),<br>DATE_30_DAYS_BEFORE: <span class="hljs-built_in">moment</span>()<span class="hljs-selector-class">.subtract</span>(<span class="hljs-number">30</span>, <span class="hljs-string">&#x27;days&#x27;</span>)<span class="hljs-selector-class">.format</span>(<span class="hljs-string">&#x27;YYYY-MM-DD&#x27;</span>),<br>DATE_90_DAYS_BEFORE: <span class="hljs-built_in">moment</span>()<span class="hljs-selector-class">.subtract</span>(<span class="hljs-number">90</span>, <span class="hljs-string">&#x27;days&#x27;</span>)<span class="hljs-selector-class">.format</span>(<span class="hljs-string">&#x27;YYYY-MM-DD&#x27;</span>),<br>DATE_100_DAYS_BEFORE: <span class="hljs-built_in">moment</span>()<span class="hljs-selector-class">.subtract</span>(<span class="hljs-number">100</span>, <span class="hljs-string">&#x27;days&#x27;</span>)<span class="hljs-selector-class">.format</span>(<span class="hljs-string">&#x27;YYYY-MM-DD&#x27;</span>),<br><span class="hljs-comment">// 最近一个小时时间戳</span><br>new <span class="hljs-built_in">Date</span>(<span class="hljs-built_in">moment</span>()<span class="hljs-selector-class">.add</span>(<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;h&#x27;</span>)<span class="hljs-selector-class">.format</span>(<span class="hljs-string">&#x27;YYYY-MM-DD hh:mm:ss&#x27;</span>))<span class="hljs-selector-class">.getTime</span>()<br><br><span class="hljs-comment">// 格式化时间戳为日期 2018-12-06:12:21</span><br><span class="hljs-function"><span class="hljs-title">moment</span><span class="hljs-params">(时间戳 * <span class="hljs-number">1000</span>)</span></span><span class="hljs-selector-class">.format</span>(<span class="hljs-string">&#x27;YY-MM-DD:HH:mm:ss&#x27;</span>)<br><br><span class="hljs-comment">// 计算时间当前时间和最近一小时时间差 差分钟</span><br>const oneHourBefore = new <span class="hljs-built_in">Date</span>(<span class="hljs-built_in">moment</span>()<span class="hljs-selector-class">.add</span>(<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;h&#x27;</span>)<span class="hljs-selector-class">.format</span>(<span class="hljs-string">&#x27;YYYY-MM-DD hh:mm:ss&#x27;</span>))<span class="hljs-selector-class">.getTime</span>()<br>const currTime = Date<span class="hljs-selector-class">.now</span>()<br>const minute = <span class="hljs-built_in">moment</span>(currTime)<span class="hljs-selector-class">.diff</span>(oneHourBefore), <span class="hljs-string">&#x27;minute&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<h2 id="四、其他"><a href="#四、其他" class="headerlink" title="四、其他"></a>四、其他</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/** </span><br><span class="hljs-comment"> * [getTimeList description] 生成时间列表 </span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span>  &#123;[type]&#125; hours [description] 小时 </span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span>  &#123;[type]&#125; step  [description] 分段 </span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> &#123;[type]&#125;       [description] 时间段列表 </span><br><span class="hljs-comment"> */</span>  <br>function <span class="hljs-title function_">getTimeList</span><span class="hljs-params">(hours, step)</span>&#123;  <br>    <span class="hljs-type">var</span> <span class="hljs-variable">minutes</span> <span class="hljs-operator">=</span> <span class="hljs-number">60</span>  <br>    <span class="hljs-type">var</span> <span class="hljs-variable">timeArr</span> <span class="hljs-operator">=</span> []  <br>    hours = <span class="hljs-type">hours</span>  <br>    <span class="hljs-variable">step</span> <span class="hljs-operator">=</span> step   <br>  <br>    <span class="hljs-title function_">for</span><span class="hljs-params">(<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; hours; i++)</span>&#123;  <br>        <span class="hljs-type">var</span> <span class="hljs-variable">str</span> <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;&#x27;</span>  <br>        <span class="hljs-keyword">if</span>(i &lt; <span class="hljs-number">10</span>) &#123;  <br>            str = <span class="hljs-number">0</span> + <span class="hljs-string">&#x27;&#x27;</span> + i  <br>        &#125; <span class="hljs-keyword">else</span> &#123;  <br>            str = <span class="hljs-string">&#x27;&#x27;</span> + i  <br>        &#125;  <br>  <br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">var</span> <span class="hljs-variable">j</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; j &lt; minutes; j++) &#123;  <br>            <span class="hljs-keyword">if</span>(j % step == <span class="hljs-number">0</span>)&#123;  <br>                <span class="hljs-type">var</span> <span class="hljs-variable">s</span> <span class="hljs-operator">=</span> j &lt; <span class="hljs-number">10</span> ? <span class="hljs-string">&#x27;:&#x27;</span> + <span class="hljs-number">0</span> + <span class="hljs-string">&#x27;&#x27;</span> + j : <span class="hljs-string">&#x27;:&#x27;</span> +  j;  <br>                s = str + s  <br>                timeArr.push(s)  <br>            &#125;  <br>        &#125;  <br>    &#125;  <br>  <br>    <span class="hljs-keyword">return</span> timeArr;  <br>  <br>&#125;  <br>getTimeList(<span class="hljs-number">12</span>, <span class="hljs-number">15</span>)<br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%89%8D%E7%AB%AF/" class="category-chain-item">前端</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/javascript/">#javascript</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>js-moment.js</div>
+      <div>http://example.com/2018/01/16/html+css+js+ts/3-js第三方包moment/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>January 16, 2018</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/01/17/html+css+js+ts/3-js%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81%E5%8E%9F%E7%90%86/" title="js-防抖节流原理">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">js-防抖节流原理</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/01/15/html+css+js+ts/1-html%E4%B8%8Exml%E7%9A%84%E5%8C%BA%E5%88%AB/" title="html与xml的区别">
+                        <span class="hidden-mobile">html与xml的区别</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

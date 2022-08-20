@@ -1,0 +1,690 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="排序算法：一种能将一串数据依照特定的排序方式进行排列的一种算法。排序算法性能：取决于时间和空间复杂度，其次还得考虑稳定性，及其适应的场景。稳定性：让原本有相等键值的记录维持相对次序。也就是若一个排序算法是稳定的，当有俩个相等键值的记录R和S，且原本的序列中R在S前，那么排序后的列表中R应该也在S之前。  1-冒泡排序原理俩俩比较相邻记录的排序码，若发生逆序，则交换；有俩种方式进行冒泡，一种是先把小">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图解前端性能优化">
+<meta property="og:url" content="http://example.com/2020/06/28/%E7%AE%97%E6%B3%95+%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/7%E7%A7%8D%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="排序算法：一种能将一串数据依照特定的排序方式进行排列的一种算法。排序算法性能：取决于时间和空间复杂度，其次还得考虑稳定性，及其适应的场景。稳定性：让原本有相等键值的记录维持相对次序。也就是若一个排序算法是稳定的，当有俩个相等键值的记录R和S，且原本的序列中R在S前，那么排序后的列表中R应该也在S之前。  1-冒泡排序原理俩俩比较相邻记录的排序码，若发生逆序，则交换；有俩种方式进行冒泡，一种是先把小">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://images.cnitblog.com/blog/441348/201301/18154959-d81ff153bc6647e49d6296303d6e6484.jpg">
+<meta property="og:image" content="http://images.cnitblog.com/blog/441348/201301/18160646-f229ab053232408fbf80b9f2d1737e28.jpg">
+<meta property="article:published_time" content="2020-06-28T08:34:23.000Z">
+<meta property="article:modified_time" content="2022-04-28T05:07:44.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://images.cnitblog.com/blog/441348/201301/18154959-d81ff153bc6647e49d6296303d6e6484.jpg">
+  
+  
+  
+  <title>图解前端性能优化 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="图解前端性能优化"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-06-28 16:34" pubdate>
+          June 28, 2020 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.9k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          66 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">图解前端性能优化</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><strong>排序算法</strong>：一种能将一串数据依照特定的排序方式进行排列的一种算法。<br><strong>排序算法性能</strong>：取决于时间和空间复杂度，其次还得考虑稳定性，及其适应的场景。<br><strong>稳定性</strong>：让原本有相等键值的记录维持相对次序。也就是若一个排序算法是稳定的，当有俩个相等键值的记录R和S，且原本的序列中R在S前，那么排序后的列表中R应该也在S之前。</p>
+<hr>
+<h3 id="1-冒泡排序"><a href="#1-冒泡排序" class="headerlink" title="1-冒泡排序"></a><strong>1-冒泡排序</strong></h3><p><strong>原理</strong><br>俩俩比较相邻记录的排序码，若发生逆序，则交换；有俩种方式进行冒泡，一种是先把小的冒泡到前边去，另一种是把大的元素冒泡到后边。冒泡法大家都较熟悉。其原理为从a[0]开始，依次将其和后面的元素比较,若a[0]&gt;a[i]，则交换它们，一直比较到a[n]。同理对a<a target="_blank" rel="noopener" href="http://images.cnitblog.com/blog/441348/201301/18154959-d81ff153bc6647e49d6296303d6e6484.jpg">1</a>,a<a target="_blank" rel="noopener" href="http://images.cnitblog.com/blog/441348/201301/18160646-f229ab053232408fbf80b9f2d1737e28.jpg">2</a>,…a[n-1]处理，即完成排序</p>
+<p><strong>冒泡排序的基本概念：</strong></p>
+<p>依次比较相邻的两个数，将小数放在前面，大数放在后面。即在第一趟：首先比较第1个和第2个数，将小数放前，大数放后。然后比较第2个数和第3个数，将小数放前，大数放后，如此继续，直至比较最后两个数，将小数放前，大数放后。至此第一趟结束，将最大的数放到了最后。在第二趟：仍从第一对数开始比较（因为可能由于第2个数和第3个数的交换，使得第1个数不再小于第2个数），将小数放前，大数放后，一直比较到倒数第二个数（倒数第一的位置上已经是最大的），第二趟结束，在倒数第二的位置上得到一个新的最大数（其实在整个数列中是第二大的数）。如此下去，重复以上过程，直至最终完成排序。由于在排序过程中总是小数往前放，大数往后放，相当于气泡往上升，所以称作冒泡排序。</p>
+<p><strong>实现：</strong></p>
+<p>外循环变量设为i，内循环变量设为j。假如有10个数需要进行排序，则外循环重复9次，内循环依次重复9，8，…，1次。每次进行比较的两个元素都是与内循环j有关的，它们可以分别用a[j]和a[j+1]标识，i的值依次为1,2,…,9，对于每一个i,j的值依次为1,2,…10-i。</p>
+<p>图示：<br><img src="http://images.cnitblog.com/blog/441348/201301/18154959-d81ff153bc6647e49d6296303d6e6484.jpg" srcset="/img/loading.gif" lazyload alt="此处输入图片的描述"></p>
+<p><strong>性能</strong><br>时间复杂度为O(N^2)，空间复杂度为O(1)。排序是稳定的，排序比较次数与初始序列无关，但交换次数与初始序列有关。</p>
+<p><strong>优化</strong><br>若初始序列就是排序好的，对于冒泡排序仍然还要比较O(N^2)次，但无交换次数。可根据这个进行优化，设置一个flag，当在一趟序列中没有发生交换，则该序列已排序好，但优化后排序的时间复杂度没有发生量级的改变</p>
+<p><strong>代码</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">sort</span><span class="hljs-params">(<span class="hljs-type">int</span> *a,<span class="hljs-type">int</span> len)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> i,j,t;<br>    <br>    <span class="hljs-keyword">for</span>( i = <span class="hljs-number">0</span>;i&lt;len<span class="hljs-number">-1</span>;++i)<br>    &#123;<br>        <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>;j&lt;len<span class="hljs-number">-1</span>-i;++j) 或者 j=i+<span class="hljs-number">1</span>;j&lt;len;++j<br>        &#123;<br>            <span class="hljs-keyword">if</span>(a[j] &gt;a[j+<span class="hljs-number">1</span>])<br>            &#123;<br>                t  = a[j];<br>                a[j] = a[j+<span class="hljs-number">1</span>];<br>                a[j+<span class="hljs-number">1</span>] = t;<br>            &#125;<br>        &#125;<br>    &#125;<br>        <br>&#125;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> a[<span class="hljs-number">6</span>] = &#123;<span class="hljs-number">10</span>,<span class="hljs-number">2</span>,<span class="hljs-number">8</span>,<span class="hljs-number">-8</span>,<span class="hljs-number">11</span>,<span class="hljs-number">0</span>&#125;;<br>    <span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;<br>    <span class="hljs-built_in">sort</span>(a,<span class="hljs-number">6</span>);<br>    <br>    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i&lt;<span class="hljs-number">6</span>;++i)<br>    &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>,a[i]);<br>    &#125;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>冒泡法原理简单，但其缺点是交换次数多，效率低。下面介绍一种源自冒泡法但更有效率的方法“选择法”。</p>
+<hr>
+<h3 id="2-选择排序"><a href="#2-选择排序" class="headerlink" title="2-选择排序"></a><strong>2-选择排序</strong></h3><p><strong>原理</strong><br>每次从未排序的序列中找到最小值，记录并最后存放到已排序序列的末尾.选择法循环过程与冒泡法一致，它还定义了记号k&#x3D;i,然后依次把a[k]同后面元素比较，若a[k]&gt;a[j],则使k&#x3D;j.最后看看k&#x3D;i是否还成立，不成立则交换a[k],a[i],这样就比冒泡法省下许多无用的交换，提高了效率。</p>
+<p><strong>性能</strong><br>时间复杂度为O(N^2)，空间复杂度为O(1)，排序是不稳定的（把最小值交换到已排序的末尾导致的），每次都能确定一个元素所在的最终位置，比较次数与初始序列无关。</p>
+<p><strong>代码</strong></p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-comment">//直接选择排序</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;stdio.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">sort</span><span class="hljs-params">(<span class="hljs-type">int</span> *a,<span class="hljs-type">int</span> len)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> i,j,min,t;<br><br>	<span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>;i&lt;len<span class="hljs-number">-1</span>;++i)<br>	&#123;<br>		<span class="hljs-keyword">for</span>(min=i,j=i+<span class="hljs-number">1</span>;j&lt;len;++j)<br>		&#123;<br>			<span class="hljs-keyword">if</span>(a[min]&gt;a[j])<br>				min = j;<br><br>		&#125;<br><br>		<span class="hljs-keyword">if</span>(min!=i)<br>		&#123;<br>			t = a[i];<br>			a[i] = a[min];<br>			a[min] = t;<br>		&#125;<br>	&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> a[<span class="hljs-number">6</span>] = &#123;<span class="hljs-number">4</span>,<span class="hljs-number">0</span>,<span class="hljs-number">3</span>,<span class="hljs-number">2</span>,<span class="hljs-number">5</span>,<span class="hljs-number">1</span>&#125;;<br><br>	<span class="hljs-built_in">sort</span>(a,<span class="hljs-number">6</span>);<span class="hljs-comment">//a代表数组的首地址</span><br><br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;<span class="hljs-number">6</span>;++i)<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>,a[i]);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>选择法比冒泡法效率更高，但说到高效率，非“快速法”莫属，现在就让我们来了解它。</p>
+<hr>
+<h3 id="3-快速排序"><a href="#3-快速排序" class="headerlink" title="3-快速排序"></a><strong>3-快速排序</strong></h3><p><strong>原理</strong><br>基本思想：</p>
+<p>快速排序是对冒泡排序的一种改进。由C. A. R. Hoare在1962年提出。它的基本思想是：通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部分的所有数据都要小，然后再按此方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，以此达到整个数据变成有序序列。</p>
+<p><strong>实现：</strong><br>设要排序的数组是A[0]……A[N-1]，首先任意选取一个数据（通常选用第一个数据）作为关键数据，然后将所有比它小的数都放到它前面，所有比它大的数都放到它后面，这个过程称为一趟快速排序。值得注意的是，快速排序不是一种稳定的排序算法，也就是说，多个相同的值的相对位置也许会在算法结束时产生变动。</p>
+<p><strong>一趟快速排序的算法是：</strong><br>1）设置两个变量i、j，排序开始的时候：i&#x3D;0，j&#x3D;N-1；<br>2）以第一个数组元素作为关键数据，赋值给key，即 key&#x3D;A[0]；<br>3）从j开始向前搜索，即由后开始向前搜索（j – ），找到第一个小于key的值A[j]，A[i]与A[j]交换；<br>4）从i开始向后搜索，即由前开始向后搜索（i ++ ），找到第一个大于key的A[i]，A[i]与A[j]交换；<br>5）重复第3、4、5步，直到 I&#x3D;J； (3,4步是在程序中没找到时候j&#x3D;j-1，i&#x3D;i+1，直至找到为止。找到并交换的时候i， j指针位置不变。另外当i&#x3D;j这过程一定正好是i+或j-完成的最后令循环结束。）</p>
+<p>图示：<br><img src="http://images.cnitblog.com/blog/441348/201301/18160646-f229ab053232408fbf80b9f2d1737e28.jpg" srcset="/img/loading.gif" lazyload alt="此处输入图片的描述"></p>
+<p><strong>举例说明：</strong></p>
+<p>如无序数组[6 2 4 1 5 9]</p>
+<ul>
+<li>a),先把第一项[6]取出来,<ul>
+<li>用[6]依次与其余项进行比较,</li>
+<li>如果比[6]小就放[6]前边,2 4 1 5都比[6]小,所以全部放到[6]前边</li>
+<li>如果比[6]大就放[6]后边,9比[6]大,放到[6]后边,&#x2F;&#x2F;6出列后大喝一声,比我小的站前边,比我大的站后边,行动吧!霸气十足~</li>
+</ul>
+</li>
+</ul>
+<p><strong>一趟排完后变成下边这样:</strong></p>
+<ul>
+<li>排序前 6 2 4 1 5 9</li>
+<li>排序后 2 4 1 5 6 9</li>
+</ul>
+<p>b),对前半拉[2 4 1 5]继续进行快速排序</p>
+<p><strong>重复步骤a)后变成下边这样:</strong></p>
+<ul>
+<li>排序前 2 4 1 5</li>
+<li>排序后 1 2 4 5</li>
+</ul>
+<p><strong>前半拉排序完成,总的排序也完成:</strong></p>
+<ul>
+<li>排序前:[6 2 4 1 5 9]</li>
+<li>排序后:[1 2 4 5 6 9]</li>
+</ul>
+<p><strong>性能</strong><br>快排的平均时间复杂度为O(NlogN），空间复杂度为O(logN)，但最坏情况下，时间复杂度为O(N^2)，空间复杂度为O(N)；且排序是不稳定的，但每次都能确定一个元素所在序列中的最终位置，复杂度与初始序列有关。</p>
+<p>优化<br>当初始序列是非递减序列时，快排性能下降到最坏情况，主要因为基准每次都是从最左边取得，这时每次只能排好一个元素。<br>所以快排的优化思路如下：</p>
+<p>优化基准，不每次都从左边取，可以进行三路划分，分别取最左边，中间和最右边的中间值，再交换到最左边进行排序；或者进行随机取得待排序数组中的某一个元素，再交换到最左边，进行排序。<br>在规模较小情况下，采用直接插入排序<br>代码</p>
+<hr>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-comment">//快速排序</span><br><br>#<span class="hljs-keyword">include</span>&lt;stdio.h&gt;<br><br><span class="hljs-built_in">int</span> <span class="hljs-constructor">FindPos(<span class="hljs-params">int</span> <span class="hljs-operator">*</span> <span class="hljs-params">a</span>, <span class="hljs-params">int</span> <span class="hljs-params">low</span>, <span class="hljs-params">int</span> <span class="hljs-params">high</span>)</span><br>&#123;<br>	<span class="hljs-built_in">int</span> <span class="hljs-keyword">val</span> = a<span class="hljs-literal">[<span class="hljs-identifier">low</span>]</span>;<br><br>	<span class="hljs-keyword">while</span> (low &lt; high)<br>	&#123;<br>		<span class="hljs-keyword">while</span> (low&lt;high<span class="hljs-operator">  &amp;&amp; </span>a<span class="hljs-literal">[<span class="hljs-identifier">high</span>]</span>&gt;=<span class="hljs-keyword">val</span>)<br>			--high;<br>		a<span class="hljs-literal">[<span class="hljs-identifier">low</span>]</span> = a<span class="hljs-literal">[<span class="hljs-identifier">high</span>]</span>;<br><br>		<span class="hljs-keyword">while</span> (low&lt;high<span class="hljs-operator"> &amp;&amp; </span>a<span class="hljs-literal">[<span class="hljs-identifier">low</span>]</span>&lt;=<span class="hljs-keyword">val</span>)<br>			++low;<br>		a<span class="hljs-literal">[<span class="hljs-identifier">high</span>]</span> = a<span class="hljs-literal">[<span class="hljs-identifier">low</span>]</span>;<br>	&#125;<span class="hljs-comment">//终止while循环之后low和high一定是相等的</span><br><br>	a<span class="hljs-literal">[<span class="hljs-identifier">low</span>]</span> = <span class="hljs-keyword">val</span>; <br><br>	return high; <span class="hljs-comment">//high可以改为low, 但不能改为val 也不能改为a[low]  也不能改为a[high]</span><br>&#125;<br><br>void <span class="hljs-constructor">QuickSort(<span class="hljs-params">int</span> <span class="hljs-operator">*</span><span class="hljs-params">a</span>,<span class="hljs-params">int</span> <span class="hljs-params">low</span>,<span class="hljs-params">int</span> <span class="hljs-params">high</span>)</span><br>&#123;<br>	<span class="hljs-built_in">int</span> pos;<br><br>	<span class="hljs-keyword">if</span>(low&lt;high)<br>	&#123;<br>		pos = <span class="hljs-constructor">FindPos(<span class="hljs-params">a</span>,<span class="hljs-params">low</span>,<span class="hljs-params">high</span>)</span>;<span class="hljs-comment">//找到a数组下标low-high  </span><br>		<span class="hljs-constructor">QuickSort(<span class="hljs-params">a</span>,<span class="hljs-params">low</span>,<span class="hljs-params">pos</span>-1)</span>;<span class="hljs-comment">//把元素劈成两半  左半边</span><br>		<span class="hljs-constructor">QuickSort(<span class="hljs-params">a</span>,<span class="hljs-params">pos</span>+1,<span class="hljs-params">high</span>)</span>;<span class="hljs-comment">//右半边</span><br><br>	&#125;<br>&#125;<br><br>void main<span class="hljs-literal">()</span><br>&#123;<br>	<span class="hljs-built_in">int</span> i;<br>	<span class="hljs-built_in">int</span> a<span class="hljs-literal">[<span class="hljs-number">6</span>]</span> = &#123;<span class="hljs-number">2</span>,<span class="hljs-number">1</span>,<span class="hljs-number">3</span>,<span class="hljs-number">0</span>,<span class="hljs-number">5</span>,<span class="hljs-number">4</span>&#125;;<br><br>	<span class="hljs-constructor">QuickSort(<span class="hljs-params">a</span>,0,5)</span>;<span class="hljs-comment">//0表示第一个元素下标 5表示最后一个元素的下标</span><br>	<br>	<span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>;i&lt;<span class="hljs-number">6</span>;++i)<br>		printf(<span class="hljs-string">&quot;%d\n&quot;</span>,a<span class="hljs-literal">[<span class="hljs-identifier">i</span>]</span>);<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="4-插入排序"><a href="#4-插入排序" class="headerlink" title="4-插入排序"></a><strong>4-插入排序</strong></h3><p><strong>原理</strong><br>依次选择一个待排序的数据，插入到前边已排好序的序列中。</p>
+<p><strong>性能</strong><br>时间复杂度为O(N^2)，空间复杂度为O(1)。算法是稳定的，比较次数和交换次数都与初始序列有关。</p>
+<p><strong>优化</strong><br>直接插入排序每次往前插入时，是按顺序依次往前找，可在这里进行优化，往前找合适的插入位置时采用二分查找的方式，即折半插入。<br>折半插入排序相对直接插入排序而言：平均性能更快，时间复杂度降至O(NlogN)，排序是稳定的，但排序的比较次数与初始序列无关，总是需要foor(log(i))+1次排序比较。</p>
+<p><strong>使用场景</strong><br>当数据基本有序时，采用插入排序可以明显减少数据交换和数据移动次数，进而提升排序效率</p>
+<p><strong>代码：</strong></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-type">void</span> insert_sort(<span class="hljs-type">int</span> *a,<span class="hljs-type">int</span> n) <br><br>&#123; <br>    <br>    <span class="hljs-type">int</span> i,j,<span class="hljs-keyword">temp</span>; <br>    <br>    <span class="hljs-keyword">for</span>(i=<span class="hljs-number">1</span>;i&lt;n;i++) <br>    &#123; <br>    <br>        <span class="hljs-keyword">temp</span>=a[i]; <span class="hljs-comment">/*temp为要插入的元素*/</span> <br>        <br>        j=i<span class="hljs-number">-1</span>; <br>        <br>        <span class="hljs-keyword">while</span>(j&gt;=<span class="hljs-number">0</span>&amp;&amp;<span class="hljs-keyword">temp</span>&lt;a[j]) <br>        &#123; <br>            <span class="hljs-comment">/*从a[i-1]开始找比a[i]小的数，同时把数组元素向后移*/</span> <br>            <br>            a[j+<span class="hljs-number">1</span>]=a[j]; <br>            <br>            j<span class="hljs-comment">--; </span><br>    <br>        &#125; <br>    <br>         a[j+<span class="hljs-number">1</span>]=<span class="hljs-keyword">temp</span>; <span class="hljs-comment">/*插入*/</span> <br>    <br>    &#125; <br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="5-希尔排序"><a href="#5-希尔排序" class="headerlink" title="5-希尔排序"></a><strong>5-希尔排序</strong></h3><p><strong>原理</strong></p>
+<p>Shell法是一个叫 shell 的美国人与1969年发明的。它首先把相距k(k&gt;&#x3D;1)的那几个元素排好序，再缩小k值（一般取其一半），再排序，直到k&#x3D;1时完成排序</p>
+<p>插入排序的改进版，是基于插入排序的以下俩点性质而提出的改进方法：</p>
+<ul>
+<li>插入排序对几乎已排好序的数据操作时，效率很高，可以达到线性排序的效率。</li>
+<li>但插入排序在每次往前插入时只能将数据移动一位，效率比较低。</li>
+</ul>
+<p><strong>性能</strong><br>开始时，gap取值较大，子序列中的元素较少，排序速度快，克服了直接插入排序的缺点；其次，gap值逐渐变小后，虽然子序列的元素逐渐变多，但大多元素已基本有序，所以继承了直接插入排序的优点，能以近线性的速度排好序。</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-keyword">void</span> shell_sort(<span class="hljs-keyword">int</span> *a,<span class="hljs-keyword">int</span> n) <br><br>&#123; <br><br>    <span class="hljs-keyword">int</span> i,j,k,x; <br>    <br>    k=n<span class="hljs-regexp">/2; /</span>*间距值*/ <br>    <br>    <span class="hljs-keyword">while</span>(k&gt;=<span class="hljs-number">1</span>) <br>    &#123; <br>    <br>        <span class="hljs-keyword">for</span>(i=k;i&lt;n;i++)<br>        &#123; <br>        <br>                x=a[i]; <br>                <br>                j=i-k; <br>                <br>                <span class="hljs-keyword">while</span>(j&gt;=<span class="hljs-number">0</span>&amp;&amp;x&lt;a[j]) <br>                &#123; <br>                    <br>                    a[j+k]=a[j]; <br>                    <br>                    j-=k; <br>                &#125; <br>                <br>                   a[j+k]=x;    <br>                <br>        &#125; <br>                <br>                k<span class="hljs-regexp">/=2; /</span>*缩小间距值*/ <br>        <br>    &#125; <br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="6-归并排序"><a href="#6-归并排序" class="headerlink" title="6-归并排序"></a><strong>6-归并排序</strong></h3><p><strong>原理</strong></p>
+<p><strong>分而治之思想：</strong></p>
+<ul>
+<li>Divide：将n个元素平均划分为各含n&#x2F;2个元素的子序列；</li>
+<li>Conquer：递归的解决俩个规模为n&#x2F;2的子问题；</li>
+<li>Combine：合并俩个已排序的子序列。</li>
+</ul>
+<p><strong>性能</strong><br>时间复杂度总是为O(NlogN)，空间复杂度也总为为O(N)，算法与初始序列无关，排序是稳定的。</p>
+<p><strong>优化</strong><br><strong>优化思路：</strong></p>
+<ul>
+<li>在规模较小时，合并排序可采用直接插入；</li>
+<li>在写法上，可以在生成辅助数组时，俩头小，中间大，这时不需要再在后边加俩个while循环进行判断，只需一次比完</li>
+</ul>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-comment">//归并排序</span><br>void merge(<span class="hljs-built_in">int</span> arr<span class="hljs-literal">[]</span>,<span class="hljs-built_in">int</span> temp_arr<span class="hljs-literal">[]</span>,<span class="hljs-built_in">int</span> left,<span class="hljs-built_in">int</span> mid, <span class="hljs-built_in">int</span> right)&#123;<br>    <span class="hljs-comment">//简单归并：先复制到temp_arr，再进行归并</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-built_in">int</span> i = left; i &lt;= right; i++)&#123;<br>        temp_arr<span class="hljs-literal">[<span class="hljs-identifier">i</span>]</span> = arr<span class="hljs-literal">[<span class="hljs-identifier">i</span>]</span>;<br>    &#125;<br>    <span class="hljs-built_in">int</span> pa = left, pb = mid + <span class="hljs-number">1</span>;<br>    <span class="hljs-built_in">int</span> index = left;<br>    <span class="hljs-keyword">while</span> (pa &lt;= mid<span class="hljs-operator"> &amp;&amp; </span>pb &lt;= right)&#123;<br>        <span class="hljs-keyword">if</span> (temp_arr<span class="hljs-literal">[<span class="hljs-identifier">pa</span>]</span> &lt;= temp_arr<span class="hljs-literal">[<span class="hljs-identifier">pb</span>]</span>)&#123;<br>            arr<span class="hljs-literal">[<span class="hljs-identifier">index</span><span class="hljs-operator">++</span>]</span> = temp_arr<span class="hljs-literal">[<span class="hljs-identifier">pa</span><span class="hljs-operator">++</span>]</span>;<br>        &#125;<br>        <span class="hljs-keyword">else</span>&#123;<br>            arr<span class="hljs-literal">[<span class="hljs-identifier">index</span><span class="hljs-operator">++</span>]</span> = temp_arr<span class="hljs-literal">[<span class="hljs-identifier">pb</span><span class="hljs-operator">++</span>]</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">while</span>(pa &lt;= mid)&#123;<br>        arr<span class="hljs-literal">[<span class="hljs-identifier">index</span><span class="hljs-operator">++</span>]</span> = temp_arr<span class="hljs-literal">[<span class="hljs-identifier">pa</span><span class="hljs-operator">++</span>]</span>;<br>    &#125;<br>    <span class="hljs-keyword">while</span> (pb &lt;= right)&#123;<br>        arr<span class="hljs-literal">[<span class="hljs-identifier">index</span><span class="hljs-operator">++</span>]</span> = temp_arr<span class="hljs-literal">[<span class="hljs-identifier">pb</span><span class="hljs-operator">++</span>]</span>;<br>    &#125;<br>&#125;<br>void merge<span class="hljs-constructor">_improve(<span class="hljs-params">int</span> <span class="hljs-params">arr</span>[], <span class="hljs-params">int</span> <span class="hljs-params">temp_arr</span>[], <span class="hljs-params">int</span> <span class="hljs-params">left</span>, <span class="hljs-params">int</span> <span class="hljs-params">mid</span>, <span class="hljs-params">int</span> <span class="hljs-params">right</span>)</span>&#123;<br>    <span class="hljs-comment">//优化归并：复制时，俩头小，中间大，一次比较完</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-built_in">int</span> i = left; i &lt;= mid; i++)&#123;<br>        temp_arr<span class="hljs-literal">[<span class="hljs-identifier">i</span>]</span> = arr<span class="hljs-literal">[<span class="hljs-identifier">i</span>]</span>;<br>    &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-built_in">int</span> i = mid + <span class="hljs-number">1</span>; i &lt;= right; i++)&#123;<br>        temp_arr<span class="hljs-literal">[<span class="hljs-identifier">i</span>]</span> = arr<span class="hljs-literal">[<span class="hljs-identifier">right</span> + <span class="hljs-identifier">mid</span> + <span class="hljs-number">1</span> - <span class="hljs-identifier">i</span>]</span>;<br>    &#125;<br>    <span class="hljs-built_in">int</span> pa = left, pb = right, p = left;<br>    <span class="hljs-keyword">while</span> (p &lt;= right)&#123;<br>        <span class="hljs-keyword">if</span> (temp_arr<span class="hljs-literal">[<span class="hljs-identifier">pa</span>]</span> &lt;= temp_arr<span class="hljs-literal">[<span class="hljs-identifier">pb</span>]</span>)&#123;<br>            arr<span class="hljs-literal">[<span class="hljs-identifier">p</span><span class="hljs-operator">++</span>]</span> = temp_arr<span class="hljs-literal">[<span class="hljs-identifier">pa</span><span class="hljs-operator">++</span>]</span>;<br>        &#125;<span class="hljs-keyword">else</span>&#123;<br>            arr<span class="hljs-literal">[<span class="hljs-identifier">p</span><span class="hljs-operator">++</span>]</span> = temp_arr<span class="hljs-literal">[<span class="hljs-identifier">pb</span>--]</span>;<br>        &#125;<br>    &#125;<br>&#125;<br>void merge<span class="hljs-constructor">_sort(<span class="hljs-params">int</span> <span class="hljs-params">arr</span>[],<span class="hljs-params">int</span> <span class="hljs-params">temp_arr</span>[], <span class="hljs-params">int</span> <span class="hljs-params">left</span>, <span class="hljs-params">int</span> <span class="hljs-params">right</span>)</span>&#123;<br>    <span class="hljs-keyword">if</span> (left &lt; right)&#123;<br>        <span class="hljs-built_in">int</span> mid = (left + right)<span class="hljs-operator"> / </span><span class="hljs-number">2</span>;<br>        merge<span class="hljs-constructor">_sort(<span class="hljs-params">arr</span>,<span class="hljs-params">temp_arr</span>,0, <span class="hljs-params">mid</span>)</span>;<br>        merge<span class="hljs-constructor">_sort(<span class="hljs-params">arr</span>, <span class="hljs-params">temp_arr</span>,<span class="hljs-params">mid</span> + 1, <span class="hljs-params">right</span>)</span>;<br>        merge(arr,temp_arr,left,mid,right);<br>    &#125;<br>&#125;<br><br>void merge<span class="hljs-constructor">_sort(<span class="hljs-params">int</span> <span class="hljs-params">arr</span>[], <span class="hljs-params">int</span> <span class="hljs-params">len</span>)</span>&#123;<br>    <span class="hljs-built_in">int</span> *temp_arr = (<span class="hljs-built_in">int</span>*)malloc(sizeof(<span class="hljs-built_in">int</span>)*len);<br>    merge<span class="hljs-constructor">_sort(<span class="hljs-params">arr</span>,<span class="hljs-params">temp_arr</span>, 0, <span class="hljs-params">len</span> - 1)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="7-堆排序"><a href="#7-堆排序" class="headerlink" title="7-堆排序"></a><strong>7-堆排序</strong></h3><p><strong>原理</strong></p>
+<p><strong>堆的性质：</strong></p>
+<ul>
+<li>是一棵完全二叉树</li>
+<li>每个节点的值都大于或等于其子节点的值，为最大堆；反之为最小堆。</li>
+</ul>
+<p><strong>堆排序思想：</strong></p>
+<ul>
+<li>将待排序的序列构造成一个最大堆，此时序列的最大值为根节点</li>
+<li>依次将根节点与待排序序列的最后一个元素交换</li>
+<li>再维护从根节点到该元素的前一个节点为最大堆，如此往复，最终得到一个递增序列</li>
+</ul>
+<p><strong>性能</strong><br>时间复杂度为O(NlogN)，空间复杂度为O(1)，因为利用的排序空间仍然是初始的序列，并未开辟新空间。算法是不稳定的，与初始序列无关。</p>
+<p><strong>使用场景</strong><br>想知道最大值或最小值时，比如优先级队列，作业调度等场景。</p>
+<p><strong>代码</strong></p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 将数组arr构建大根堆</span><br><span class="hljs-comment">     * @param arr 待调整的数组</span><br><span class="hljs-comment">     * @param i   待调整的数组元素的下标</span><br><span class="hljs-comment">     * @param len 数组的长度</span><br><span class="hljs-comment">     */</span><br>    void heap<span class="hljs-constructor">_adjust(<span class="hljs-params">int</span> <span class="hljs-params">arr</span>[], <span class="hljs-params">int</span> <span class="hljs-params">i</span>, <span class="hljs-params">int</span> <span class="hljs-params">len</span>)</span><br>    &#123;<br>        <span class="hljs-built_in">int</span> child;<br>        <span class="hljs-built_in">int</span> temp;<br>    <br>        <span class="hljs-keyword">for</span> (; <span class="hljs-number">2</span><span class="hljs-operator"> * </span>i + <span class="hljs-number">1</span> &lt; len; i = child)<br>        &#123;<br>            child = <span class="hljs-number">2</span><span class="hljs-operator"> * </span>i + <span class="hljs-number">1</span>;  <span class="hljs-comment">// 子结点的位置 = 2 * 父结点的位置 + 1</span><br>            <span class="hljs-comment">// 得到子结点中键值较大的结点</span><br>            <span class="hljs-keyword">if</span> (child &lt; len - <span class="hljs-number">1</span><span class="hljs-operator"> &amp;&amp; </span>arr<span class="hljs-literal">[<span class="hljs-identifier">child</span> + <span class="hljs-number">1</span>]</span> &gt; arr<span class="hljs-literal">[<span class="hljs-identifier">child</span>]</span>)<br>                child ++;<br>            <span class="hljs-comment">// 如果较大的子结点大于父结点那么把较大的子结点往上移动，替换它的父结点</span><br>            <span class="hljs-keyword">if</span> (arr<span class="hljs-literal">[<span class="hljs-identifier">i</span>]</span> &lt; arr<span class="hljs-literal">[<span class="hljs-identifier">child</span>]</span>)<br>            &#123;<br>                temp = arr<span class="hljs-literal">[<span class="hljs-identifier">i</span>]</span>;<br>                arr<span class="hljs-literal">[<span class="hljs-identifier">i</span>]</span> = arr<span class="hljs-literal">[<span class="hljs-identifier">child</span>]</span>;<br>                arr<span class="hljs-literal">[<span class="hljs-identifier">child</span>]</span> = temp;<br>            &#125;<br>            <span class="hljs-keyword">else</span><br>                break;<br>        &#125;<br>    &#125;<br>    <br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 堆排序算法</span><br><span class="hljs-comment">     */</span><br>    void heap<span class="hljs-constructor">_sort(<span class="hljs-params">int</span> <span class="hljs-params">arr</span>[], <span class="hljs-params">int</span> <span class="hljs-params">len</span>)</span><br>    &#123;<br>        <span class="hljs-built_in">int</span> i;<br>        <span class="hljs-comment">// 调整序列的前半部分元素，调整完之后第一个元素是序列的最大的元素</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-built_in">int</span> i = len<span class="hljs-operator"> / </span><span class="hljs-number">2</span> - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--)<br>        &#123;<br>            heap<span class="hljs-constructor">_adjust(<span class="hljs-params">arr</span>, <span class="hljs-params">i</span>, <span class="hljs-params">len</span>)</span>;<br>        &#125;<br>    <br>        <span class="hljs-keyword">for</span> (i = len - <span class="hljs-number">1</span>; i &gt; <span class="hljs-number">0</span>; i--)<br>        &#123;<br>            <span class="hljs-comment">// 将第1个元素与当前最后一个元素交换，保证当前的最后一个位置的元素都是现在的这个序列中最大的</span><br>            <span class="hljs-built_in">int</span> temp = arr<span class="hljs-literal">[<span class="hljs-number">0</span>]</span>;<br>            arr<span class="hljs-literal">[<span class="hljs-number">0</span>]</span> = arr<span class="hljs-literal">[<span class="hljs-identifier">i</span>]</span>;<br>            arr<span class="hljs-literal">[<span class="hljs-identifier">i</span>]</span> = temp;<br>            <span class="hljs-comment">// 不断缩小调整heap的范围，每一次调整完毕保证第一个元素是当前序列的最大值</span><br>            heap<span class="hljs-constructor">_adjust(<span class="hljs-params">arr</span>, 0, <span class="hljs-params">i</span>)</span>;<br>        &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%AE%97%E6%B3%95/" class="category-chain-item">算法</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%AE%97%E6%B3%95/">#算法</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>图解前端性能优化</div>
+      <div>http://example.com/2020/06/28/算法+计算机基础/7种常用的排序算法总结/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>June 28, 2020</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/07/04/python/opencv%E8%BF%9B%E9%98%B6%E7%AF%87/" title="opencv进阶">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">opencv进阶</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/05/03/python/python%E5%9F%BA%E7%A1%80/" title="python基础总结">
+                        <span class="hidden-mobile">python基础总结</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

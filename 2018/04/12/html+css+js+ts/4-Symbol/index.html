@@ -1,0 +1,679 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、简介 ES6新加入了一种原始数据类型Symbol，表示独一无二的值，这是js的第七种数据类型，前六种是：Undefined、Null、布尔值（Boolean）、字符串（String）、数值（Number）、对象（Object）   对象的属性名现在可以有两种类型，一种是原来就有的字符串，另一种就是新增的Symbol类型。凡是属性名属于Symbol类型，就都是独一无二的，可以保证不会与其他属性名">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES6 Symbol">
+<meta property="og:url" content="http://example.com/2018/04/12/html+css+js+ts/4-Symbol/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、简介 ES6新加入了一种原始数据类型Symbol，表示独一无二的值，这是js的第七种数据类型，前六种是：Undefined、Null、布尔值（Boolean）、字符串（String）、数值（Number）、对象（Object）   对象的属性名现在可以有两种类型，一种是原来就有的字符串，另一种就是新增的Symbol类型。凡是属性名属于Symbol类型，就都是独一无二的，可以保证不会与其他属性名">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-04-12T13:42:25.000Z">
+<meta property="article:modified_time" content="2022-06-06T05:10:46.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="es6">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>ES6 Symbol - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="ES6 Symbol"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-04-12 21:42" pubdate>
+          April 12, 2018 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.8k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          33 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">ES6 Symbol</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h2><blockquote>
+<p><code>ES6</code>新加入了一种原始数据类型<code>Symbol</code>，表示独一无二的值，这是<code>js</code>的第七种数据类型，前六种是：<code>Undefined</code>、<code>Null</code>、布尔值（<code>Boolean</code>）、字符串（<code>String</code>）、数值（<code>Number</code>）、对象（<code>Object</code>）</p>
+</blockquote>
+<ul>
+<li>对象的属性名现在可以有两种类型，一种是原来就有的字符串，另一种就是新增的<code>Symbol</code>类型。凡是属性名属于<code>Symbol</code>类型，就都是独一无二的，可以保证不会与其他属性名产生冲突</li>
+</ul>
+<h3 id="1-1-定义"><a href="#1-1-定义" class="headerlink" title="1.1 定义"></a>1.1 定义</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">Symbol</span><span class="hljs-params">([description])</span></span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>参数 <code>description</code> 是一个可选参数，是一个字符串，可以用于调试，但不能访问<code>Symbol</code> 自身</p>
+</blockquote>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">var</span> sym1 = <span class="hljs-built_in">Symbol</span>();<br><span class="hljs-keyword">var</span> sym2 = <span class="hljs-built_in">Symbol</span>(<span class="hljs-string">&#x27;foo&#x27;</span>);<br><span class="hljs-keyword">var</span> sym3 = <span class="hljs-built_in">Symbol</span>(<span class="hljs-string">&#x27;foo&#x27;</span>);<br></code></pre></td></tr></table></figure>
+
+<h3 id="1-2-值唯一性"><a href="#1-2-值唯一性" class="headerlink" title="1.2 值唯一性"></a>1.2 值唯一性</h3><blockquote>
+<p>每一个 <code>Symbol()</code>返回的值都是唯一的。一个<code>Symbol</code> 值能作为对象属性的标识符，这是改数据类型仅有的目的</p>
+</blockquote>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">Symbol(<span class="hljs-string">&quot;yuan&quot;</span>) <span class="hljs-operator">=</span><span class="hljs-operator">=</span><span class="hljs-operator">=</span> Symbol(<span class="hljs-string">&quot;yuan&quot;</span>)<span class="hljs-comment">; // false</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="1-3-不可以使用-new-操作符"><a href="#1-3-不可以使用-new-操作符" class="headerlink" title="1.3 不可以使用 new 操作符"></a>1.3 不可以使用 new 操作符</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">var</span> sym = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Symbol</span>(); <span class="hljs-comment">// TypeError报错</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="1-4-结合-Object-函数"><a href="#1-4-结合-Object-函数" class="headerlink" title="1.4 结合 Object() 函数"></a>1.4 结合 Object() 函数</h3><blockquote>
+<p>结合 <code>Object()</code> 函数，创建一个 <code>Symbol</code> 包装器对象</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> sym = <span class="hljs-title class_">Symbol</span>();<br><span class="hljs-keyword">typeof</span> sym;  <span class="hljs-comment">// &quot;symbol“”</span><br><span class="hljs-keyword">var</span> symobj = <span class="hljs-title class_">Object</span>(sym);<br><span class="hljs-keyword">typeof</span> symobj; <span class="hljs-comment">// &quot;object&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="1-5-全局共享-Symbol"><a href="#1-5-全局共享-Symbol" class="headerlink" title="1.5 全局共享 Symbol"></a>1.5 全局共享 Symbol</h3><blockquote>
+<p>使用<code>Symbol.for()</code> 方法会根据给定的键 <code>key</code>，来从运行时的 <code>symbol</code> 注册表中找到对应的 <code>symbol</code>，如果找到了，则返回它，否则，新建一个与该键关联的 <code>symbol</code>，并放入全局 <code>symbol</code> 注册表中</p>
+</blockquote>
+<h3 id="1-6-在对象中查找-Symbol-属性"><a href="#1-6-在对象中查找-Symbol-属性" class="headerlink" title="1.6 在对象中查找 Symbol 属性"></a>1.6 在对象中查找 Symbol 属性</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> obj = &#123;&#125;;<br><span class="hljs-keyword">var</span> a = <span class="hljs-title class_">Symbol</span>(<span class="hljs-string">&quot;a&quot;</span>);<br><span class="hljs-keyword">var</span> b = <span class="hljs-title class_">Symbol</span>.<span class="hljs-title function_">for</span>(<span class="hljs-string">&quot;b&quot;</span>);<br><br>obj[a] = <span class="hljs-string">&quot;localSymbol&quot;</span>;<br>obj[b] = <span class="hljs-string">&quot;globalSymbol&quot;</span>;<br><br><span class="hljs-keyword">var</span> objectSymbols = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">getOwnPropertySymbols</span>(obj);<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(objectSymbols)         <span class="hljs-comment">// [Symbol(a), Symbol(b)]</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="二、静态属性"><a href="#二、静态属性" class="headerlink" title="二、静态属性"></a>二、静态属性</h2><h3 id="2-1-length-属性"><a href="#2-1-length-属性" class="headerlink" title="2.1 length 属性"></a>2.1 length 属性</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> Symbol 的长度属性值为<span class="hljs-number">0</span>.<br>Symbol.length <span class="hljs-regexp">//</span> <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="2-2-迭代-Symbols"><a href="#2-2-迭代-Symbols" class="headerlink" title="2.2 迭代 Symbols"></a>2.2 迭代 Symbols</h3><blockquote>
+<p><code>Symbol.iterator</code> 该方法为每一个对象定义了默认的迭代器。该迭代器可以被 <code>for.. of</code> 循环使用。</p>
+</blockquote>
+<figure class="highlight qml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs qml"><span class="hljs-comment">// 自定义迭代器</span><br><span class="hljs-keyword">var</span> myIterator = &#123;&#125;;<br>myIterator[<span class="hljs-built_in">Symbol</span>.iterator] = <span class="hljs-function"><span class="hljs-keyword">function</span>* (<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-keyword">yield</span> <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">yield</span> <span class="hljs-number">2</span>;<br>    <span class="hljs-keyword">yield</span> <span class="hljs-number">3</span>;<br>&#125;;<br>[...myIterator] <span class="hljs-comment">// [1, 2, 3]</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>Symbols</code> 与 <code>for... in</code> 迭代</p>
+</blockquote>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs abnf">var obj <span class="hljs-operator">=</span> &#123;&#125;<span class="hljs-comment">;</span><br>obj[Symbol(<span class="hljs-string">&quot;a&quot;</span>)] <span class="hljs-operator">=</span> <span class="hljs-string">&quot;a&quot;</span><span class="hljs-comment">;</span><br>obj[Symbol.for(<span class="hljs-string">&quot;b&quot;</span>)] <span class="hljs-operator">=</span> <span class="hljs-string">&quot;b&quot;</span><span class="hljs-comment">;</span><br>obj[<span class="hljs-string">&quot;c&quot;</span>] <span class="hljs-operator">=</span> <span class="hljs-string">&quot;c&quot;</span><span class="hljs-comment">;</span><br>obj.d <span class="hljs-operator">=</span> <span class="hljs-string">&quot;d&quot;</span><span class="hljs-comment">;</span><br><br>for (var i in obj) &#123;<br>   console.log(i)<span class="hljs-comment">; </span><br>&#125;<br>// <span class="hljs-string">&quot;c&quot;</span><br>// <span class="hljs-string">&quot;d&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="2-3-Symbol的正则表达式"><a href="#2-3-Symbol的正则表达式" class="headerlink" title="2.3 Symbol的正则表达式"></a>2.3 Symbol的正则表达式</h3><blockquote>
+<p>用于标识对象是否具有正则表达式的行为。<code>Symbol.match</code>:对象是否具有指定的匹配的正则表达式</p>
+</blockquote>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-string">&quot;/bar/&quot;</span>.startsWith(<span class="hljs-regexp">/bar/</span>); <br><span class="hljs-regexp">//</span> Throws TypeError, 因为 <span class="hljs-regexp">/bar/</span> 是一个正则表达式<br><span class="hljs-regexp">//</span> 且 Symbol.match 没有修改。<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果你将 <code>Symbol.match</code> 置为 <code>false</code>，使用 <code>match</code> 属性的表达式检查会认为该象不是正则表达式对象。<code>startsWith</code> 和 <code>endsWith</code> 方法将不会抛出 <code>TypeError</code></p>
+</blockquote>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">var re = <span class="hljs-string">/foo/</span>;<br>re[Symbol.match] = <span class="hljs-literal">false</span>;<br><br><span class="hljs-string">&quot;/foo/&quot;</span><span class="hljs-string">.startsWith</span><span class="hljs-params">(re)</span>; <span class="hljs-string">//</span> <span class="hljs-literal">true</span><br><span class="hljs-string">&quot;/baz/&quot;</span><span class="hljs-string">.endsWith</span><span class="hljs-params">(re)</span>;   <span class="hljs-string">//</span> <span class="hljs-literal">false</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>Symbol.replace</strong></p>
+<blockquote>
+<p>这个属性指定了当一个字符串替换所匹配字符串时所调用的方法。<code>String.prototype.replace()</code> 方法会调用此方法。</p>
+</blockquote>
+<p><strong>Symbol.search</strong></p>
+<blockquote>
+<p>指定了一个搜索方法，这个方法接受用户输入的正则表达式，返回该正则表达式在字符串中匹配到的下标，这个方法由以下的方法来调用 <code>String.prototype.search()</code></p>
+</blockquote>
+<p><strong>Symbol.split</strong></p>
+<blockquote>
+<p>指向 一个正则表达式的索引处分割字符串的方法。 这个方法通过<code>String.prototype.split()</code> 调用</p>
+</blockquote>
+<h3 id="2-4-其他属性"><a href="#2-4-其他属性" class="headerlink" title="2.4 其他属性"></a>2.4 其他属性</h3><p><strong>Symbol.hasInstance</strong></p>
+<blockquote>
+<p>一个确定一个构造器对象识别的对象是否为它的实例的方法</p>
+</blockquote>
+<p><strong>Symbol.toStringTag</strong></p>
+<blockquote>
+<p>用于对象的默认描述的字符串值。使用<code>Object.prototype.toString().</code></p>
+</blockquote>
+<h2 id="三、静态方法"><a href="#三、静态方法" class="headerlink" title="三、静态方法"></a>三、静态方法</h2><h3 id="3-1-Symbol-for-key"><a href="#3-1-Symbol-for-key" class="headerlink" title="3.1 Symbol.for(key)"></a>3.1 Symbol.for(key)</h3><blockquote>
+<p>根据给定的键 <code>key</code>， 从运行时的 <code>symbol</code> 注册表中找到对应的 <code>symbol</code>，如果找到了，则返回它，否则，新建一个与该键关联的 <code>symbol</code>，并放入全局 <code>symbol</code> 注册表</p>
+</blockquote>
+<ul>
+<li>这里的参数<code>key</code>，是一个字符串，作为 <code>symbol</code> 注册表中与某 <code>symbol</code> 关联的键</li>
+<li>和 <code>Symbol()</code> 不同的是，用<code>Symbol.for()</code> 方法创建的 <code>symbol</code> 会被放入一个全局 symbol 注册表中</li>
+<li><code>Symbol.for()</code> 并不是每次都会创建一个新的 symbol，它会首先检查给定的 <code>key</code> 是否已经在注册表中了，如果是，则会直接返回上次存储的那个。否则，会再新建一个</li>
+</ul>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs abnf">Symbol.for(<span class="hljs-string">&quot;foo&quot;</span>)<span class="hljs-comment">; // 创建一个 symbol 并放入 symbol 注册表中，键为 &quot;foo&quot;</span><br>Symbol.for(<span class="hljs-string">&quot;foo&quot;</span>)<span class="hljs-comment">; // 从 symbol 注册表中读取键为&quot;foo&quot;的 symbol</span><br><br>Symbol.for(<span class="hljs-string">&quot;bar&quot;</span>) <span class="hljs-operator">=</span><span class="hljs-operator">=</span><span class="hljs-operator">=</span> Symbol.for(<span class="hljs-string">&quot;bar&quot;</span>)<span class="hljs-comment">; // true，证明了上面说的</span><br>Symbol(<span class="hljs-string">&quot;bar&quot;</span>) <span class="hljs-operator">=</span><span class="hljs-operator">=</span><span class="hljs-operator">=</span> Symbol(<span class="hljs-string">&quot;bar&quot;</span>)<span class="hljs-comment">; // false，Symbol() 函数每次都会返回新的一个 symbol</span><br><br>var sym <span class="hljs-operator">=</span> Symbol.for(<span class="hljs-string">&quot;mario&quot;</span>)<span class="hljs-comment">;</span><br>sym.toString()<span class="hljs-comment">; </span><br>// <span class="hljs-string">&quot;Symbol(mario)&quot;</span>，mario 既是该 symbol 在 symbol 注册表中的键名，又是该 symbol 自身的描述字符串<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-2-Symbol-keyFor-sym"><a href="#3-2-Symbol-keyFor-sym" class="headerlink" title="3.2 Symbol.keyFor(sym)"></a>3.2 Symbol.keyFor(sym)</h3><ul>
+<li>该方法用来获取 <code>symbol</code> 注册表中与某个 <code>symbol</code> 关联的键。</li>
+<li>参数 <code>sym</code> 是指存储在 <code>symbol</code> 注册表中的某个 <code>symbol</code></li>
+</ul>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-comment">// 创建一个 symbol 并放入 Symbol 注册表，key 为 &quot;foo&quot;</span><br>var globalSym = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Symbol</span>.</span></span><span class="hljs-keyword">for</span>(<span class="hljs-string">&quot;foo&quot;</span>); <br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Symbol</span>.</span></span>key<span class="hljs-constructor">For(<span class="hljs-params">globalSym</span>)</span>; <span class="hljs-comment">// &quot;foo&quot;</span><br><br><span class="hljs-comment">// 创建一个 symbol，但不放入 symbol 注册表中</span><br>var localSym = <span class="hljs-constructor">Symbol()</span>; <br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Symbol</span>.</span></span>key<span class="hljs-constructor">For(<span class="hljs-params">localSym</span>)</span>; <span class="hljs-comment">// undefined，所以是找不到 key 的</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="四、遍历"><a href="#四、遍历" class="headerlink" title="四、遍历"></a>四、遍历</h2><blockquote>
+<p><code>Symbol</code>定义的属性不会出现在下面循环中</p>
+</blockquote>
+<ul>
+<li><code>for in</code>:可获取原型属性，不可获取不可枚举属性</li>
+<li><code>for of</code>:不可遍历对象，可遍历数组</li>
+<li><code>Object.keys</code>：原型属性和不可枚举属性都不能获取</li>
+<li><code>Object.getOwnPropertyByNames</code>：不可获取原型属性，可获取不可枚举属性</li>
+<li><code>JSON.stringify</code>：原型属性和不可枚举属性都不能获取</li>
+<li><code>Reflect.ownKeys</code>：可获取不可枚举和<code>Symbol</code>，不可获取原型</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> p = &#123;<span class="hljs-attr">w</span>:<span class="hljs-number">2</span>&#125;;<br><span class="hljs-keyword">var</span> obj = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">create</span>(p);<br>obj.<span class="hljs-property">a</span> = <span class="hljs-number">1</span>;<br><span class="hljs-title class_">Object</span>.<span class="hljs-title function_">defineProperty</span>(obj,<span class="hljs-string">&quot;b&quot;</span>,&#123;<br>    <span class="hljs-attr">value</span>:<span class="hljs-number">123</span><br>&#125;)<br><span class="hljs-keyword">var</span> a = <span class="hljs-title class_">Symbol</span>(<span class="hljs-string">&#x27;a&#x27;</span>);<br><span class="hljs-keyword">var</span> b = <span class="hljs-title class_">Symbol</span>(<span class="hljs-string">&#x27;b&#x27;</span>);<br><br>obj[a] = <span class="hljs-string">&#x27;Hello&#x27;</span>;<br>obj[b] = <span class="hljs-string">&#x27;World&#x27;</span>;<br><br><span class="hljs-title class_">Reflect</span>.<span class="hljs-title function_">ownKeys</span>(obj);<span class="hljs-comment">// [Symbol(a), Symbol(b)]</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>或者使用<code>Object.getOwnPropertySymbols(obj)</code>遍历</p>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%89%8D%E7%AB%AF/" class="category-chain-item">前端</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/es6/">#es6</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>ES6 Symbol</div>
+      <div>http://example.com/2018/04/12/html+css+js+ts/4-Symbol/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>April 12, 2018</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Licensed under</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/04/15/html+css+js+ts/4-var%E3%80%81let%E3%80%81const/" title="es6 var、let、const">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">es6 var、let、const</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/04/10/html+css+js+ts/4-set+map/" title="ES6 Set-Map">
+                        <span class="hidden-mobile">ES6 Set-Map</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
